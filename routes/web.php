@@ -16,11 +16,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/home', 'HomeController@index')->name('home');
 
+	Route::get('/setting', 'SettingController@index')->name('setting.index')->middleware('can:Setting Index');
+	Route::put('/setting/update', 'SettingController@update')->name('setting.update')->middleware('can:Setting Index');
+
     require __DIR__.'/user-management.php';
 
     require __DIR__.'/patient-management.php';
     
-    require __DIR__.'/service-management.php';
+    require __DIR__.'/medicine-management.php';
     
     require __DIR__.'/location-management.php';
 

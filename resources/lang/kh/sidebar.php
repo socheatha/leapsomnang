@@ -30,10 +30,22 @@ return [
 		],
 	],
 
+	'doctor' => [
+		'main' => 'វេជ្ជបណ្ឌិត',
+	],
+
+	'medicine' => [
+		'main' => 'ថ្នាំ',
+	],
+
 	'patient' => [
 		'main' => 'អ្នកជំងឺ',
 	],
 
+
+	'setting' => [
+		'main' => 'ការកណត់',
+	],
 
 	'province' => [
 		'main' => 'ខេត្ត/ក្រុង',

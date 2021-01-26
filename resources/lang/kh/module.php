@@ -27,6 +27,10 @@ return [
 	    'age' => 'អាយុ',
     ],
 
+    'medicine' => [
+	    'code' => 'កូដ',
+    ],
+
     'user' => [
 	    'first_name' => 'គោត្តនាម',
 	    'last_name' => 'នាម',

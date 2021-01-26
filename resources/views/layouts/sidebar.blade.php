@@ -1,17 +1,17 @@
 
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar elevation-4  {{ ((Auth::user()->setting()->sidebar_color != '')? Auth::user()->setting()->sidebar_color : 'sidebar-dark-primary') }}">
 	<!-- Brand Logo -->
-	<a href="{{ route('home') }}" class="brand-link text-center">
-		DNK
-		<span class="brand-text font-weight-light">SYSTEM</span>
+	<a href="index3.html" class="brand-link">
+		<img src="/images/setting/{{ Auth::user()->setting()->logo }}" alt="{{ Auth::user()->setting()->clinic_name }}" class="brand-image img-circle elevation-3">
+		<span class="brand-text font-weight-light">{{ Auth::user()->setting()->clinic_name }}</span>
 	</a>
 
 	<!-- Sidebar -->
 	<div class="sidebar">
-		<!-- Sidebar Menu -->
 		<nav class="mt-2">
 			<ul class="nav nav-pills nav-sidebar flex-column nav-legacy nav-flat nav-child-indent text-sm" data-widget="treeview" role="menu" data-accordion="false">
+
 				<!-- Add icons to the links using the .nav-icon class
 						with font-awesome or any other icon font library -->
 				<li class="nav-item">
@@ -24,7 +24,7 @@
 
 
 				{{-- User Management --}}
-				@canany(['Patient Index', 'Patient Create', 'Patient Edit', 'Patient Delete'])
+				@canany(['Patient Index', 'Patient Create', 'Patient Edit', 'Patient Delete', 'Medicine Index', 'Medicine Create', 'Medicine Edit', 'Medicine Delete'])
 				
 					<li class="nav-header">{{ __('sidebar.header.main_data') }}</li>
 
@@ -33,6 +33,15 @@
 						<a href="{{ route('patient.index') }}" class="nav-link {{ ((Auth::user()->sidebarActive() == 'patient' )? 'active':'') }}">
 							<i class="fa fa-user-injured nav-icon"></i>
 							<p>{{ __('sidebar.patient.main') }}</p>
+						</a>
+					</li>
+					@endcan
+
+					@can('Medicine Index', 'Medicine Create', 'Medicine Edit', 'Medicine Delete')
+					<li class="nav-item">
+						<a href="{{ route('medicine.index') }}" class="nav-link {{ ((Auth::user()->sidebarActive() == 'medicine' )? 'active':'') }}">
+							<i class="fa fa-pills nav-icon"></i>
+							<p>{{ __('sidebar.medicine.main') }}</p>
 						</a>
 					</li>
 					@endcan
@@ -68,6 +77,15 @@
 						<a href="{{ route('permission.index') }}" class="nav-link {{ ((Auth::user()->sidebarActive() == 'permission' )? 'active':'') }}">
 							<i class="fa fa-shield-alt nav-icon"></i>
 							<p>{{ __('sidebar.user.sub.permission.sub.permission') }}</p>
+						</a>
+					</li>
+					@endcan
+
+					@can('Setting Index')
+					<li class="nav-item">
+						<a href="{{ route('setting.index') }}" class="nav-link {{ ((Auth::user()->sidebarActive() == 'setting' )? 'active':'') }}">
+							<i class="fa fa-cogs nav-icon"></i>
+							<p>{{ __('sidebar.setting.main') }}</p>
 						</a>
 					</li>
 					@endcan

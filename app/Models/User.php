@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Setting;
 use Route;
 use Auth;
 
@@ -32,6 +33,12 @@ class User extends Authenticatable
 		}
 		
 		return false;
+	}
+
+
+	public function setting(){
+		$setting = Setting::find(1);
+		return $setting;
 	}
 
 
