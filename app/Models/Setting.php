@@ -12,7 +12,13 @@ class Setting extends BaseModel
 	protected $table = 'setting';
 
 	protected $fillable = [
-		'clinic_name', 'logo', 'theme',
+		'logo',
+		'clinic_name_kh',
+		'clinic_name_en',
+		'phone',
+		'address',
+		'navbar_color',
+		'sidebar_color'
 	];
 
 
