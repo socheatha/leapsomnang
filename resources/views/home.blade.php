@@ -8,39 +8,67 @@
 
 @section('content')
 	<div class="row">
-			
-		<div class="col-12 col-sm-6 col-md-3">
-			<div class="info-box">
-				<span class="info-box-icon bg-info elevation-1"><i class="fa fa-user-injured"></i></span>
 
-				<div class="info-box-content">
-					<span class="info-box-text">Patient</span>
-					<span class="info-box-number">
-						10
-						<small>នាក់</small>
-					</span>
+		<div class="col-lg-3 col-6">
+			<!-- small box -->
+			<div class="small-box bg-danger">
+				<div class="inner">
+					<h3>{{ $patients->count() }}</h3>
+
+					<p>{{ __('label.form.home.patient') }}</p>
 				</div>
-				<!-- /.info-box-content -->
+				<div class="icon">
+					<i class="fa fa-user-injured"></i>
+				</div>
+				<a href="#" class="small-box-footer">{{ __('label.buttons.more_info') }} <i class="fas fa-arrow-circle-right"></i></a>
 			</div>
-			<!-- /.info-box -->
 		</div>
 
-		<div class="col-12 col-sm-6 col-md-3">
-			<div class="info-box">
-				<span class="info-box-icon bg-success elevation-1"><i class="fa fa-pills"></i></span>
+		<div class="col-lg-3 col-6">
+			<!-- small box -->
+			<div class="small-box bg-primary">
+				<div class="inner">
+					<h3>{{ $doctors->count() }}</h3>
 
-				<div class="info-box-content">
-					<span class="info-box-text">Medicine</span>
-					<span class="info-box-number">
-						10
-						<small>%</small>
-					</span>
+					<p>{{ __('label.form.home.doctor') }}</p>
 				</div>
-				<!-- /.info-box-content -->
+				<div class="icon">
+					<i class="fa fa-user-md"></i>
+				</div>
+				<a href="#" class="small-box-footer">{{ __('label.buttons.more_info') }} <i class="fas fa-arrow-circle-right"></i></a>
 			</div>
-			<!-- /.info-box -->
 		</div>
-	</div>
+
+		<div class="col-lg-3 col-6">
+			<!-- small box -->
+			<div class="small-box bg-info">
+				<div class="inner">
+					<h3>{{ $medicines->count() }}</h3>
+
+					<p>{{ __('label.form.home.medicine') }}</p>
+				</div>
+				<div class="icon">
+					<i class="fa fa-pills"></i>
+				</div>
+				<a href="#" class="small-box-footer">{{ __('label.buttons.more_info') }} <i class="fas fa-arrow-circle-right"></i></a>
+			</div>
+		</div>
+
+		<div class="col-lg-3 col-6">
+			<!-- small box -->
+			<div class="small-box bg-success">
+				<div class="inner">
+					<h3>{{ $medicines->count() }}</h3>
+
+					<p>{{ __('label.form.home.invoice') }}</p>
+				</div>
+				<div class="icon">
+					<i class="fa fa-file-invoice"></i>
+				</div>
+				<a href="#" class="small-box-footer">{{ __('label.buttons.more_info') }} <i class="fas fa-arrow-circle-right"></i></a>
+			</div>
+		</div>
+
 
 	{{-- <div class="card">
 		<div class="card-header">

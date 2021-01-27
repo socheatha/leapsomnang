@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="form-group">
-					{!! Html::decode(Form::label('name', __('label.form.name'))) !!}
+					{!! Html::decode(Form::label('name', __('label.form.name') .'<small>*</small>')) !!}
 					{!! Form::text('name', ((isset($patient->name))? $patient->name : '' ), ['class' => 'form-control '. (($errors->has("name"))? "is-invalid" : ""),'placeholder' => 'name','required']) !!}
 					{!! $errors->first('name', '<div class="invalid-feedback">:message</div>') !!}
 				</div>
@@ -86,13 +86,13 @@
 			<div class="col-sm-6">
 				<div class="form-group">
 					{!! Html::decode(Form::label('province_id', __('label.form.patient.province'))) !!}
-					{!! Form::select('address_province_id', $provinces, ((isset($patient->address_province_id))? $patient->address_province_id : '' ), ['class' => 'form-control select2 province_id','placeholder' => __('label.form.choose')]) !!}
+					{!! Form::select('address_province_id', $provinces, ((isset($patient->address_province_id))? $patient->address_province_id : '' ), ['class' => 'form-control select2 province_id', 'data-width'=>'100%', 'placeholder' => __('label.form.choose')]) !!}
 				</div>
 			</div>
 			<div class="col-sm-6">
 				<div class="form-group">
 					{!! Html::decode(Form::label('district_id', __('label.form.patient.district'))) !!}
-					{!! Form::select('address_district_id', $districts, ((isset($patient->address_district_id))? $patient->address_district_id : '' ), ['class' => 'form-control select2 district_id','placeholder' => __('label.form.choose'), (($districts==[])? 'disabled' : '' )]) !!}
+					{!! Form::select('address_district_id', $districts, ((isset($patient->address_district_id))? $patient->address_district_id : '' ), ['class' => 'form-control select2 district_id','data-width'=>'100%', 'placeholder' => __('label.form.choose'), (($districts==[])? 'disabled' : '' )]) !!}
 				</div>
 			</div>
 

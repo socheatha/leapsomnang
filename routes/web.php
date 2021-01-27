@@ -23,6 +23,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     require __DIR__.'/patient-management.php';
     
+    require __DIR__.'/doctor-management.php';
+    
     require __DIR__.'/medicine-management.php';
     
     require __DIR__.'/location-management.php';

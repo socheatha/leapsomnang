@@ -4,7 +4,7 @@
 	<!-- Brand Logo -->
 	<a href="index3.html" class="brand-link">
 		<img src="/images/setting/{{ Auth::user()->setting()->logo }}" alt="{{ Auth::user()->setting()->clinic_name }}" class="brand-image img-circle elevation-3">
-		<span class="brand-text font-weight-light">{{ Auth::user()->setting()->clinic_name }}</span>
+		<span class="brand-text font-weight-light">{{ Auth::user()->setting()->clinic_name_kh }}</span>
 	</a>
 
 	<!-- Sidebar -->
@@ -33,6 +33,15 @@
 						<a href="{{ route('patient.index') }}" class="nav-link {{ ((Auth::user()->sidebarActive() == 'patient' )? 'active':'') }}">
 							<i class="fa fa-user-injured nav-icon"></i>
 							<p>{{ __('sidebar.patient.main') }}</p>
+						</a>
+					</li>
+					@endcan
+
+					@can('Doctor Index', 'Doctor Create', 'Doctor Edit', 'Doctor Delete')
+					<li class="nav-item">
+						<a href="{{ route('doctor.index') }}" class="nav-link {{ ((Auth::user()->sidebarActive() == 'doctor' )? 'active':'') }}">
+							<i class="fa fa-user-md nav-icon"></i>
+							<p>{{ __('sidebar.doctor.main') }}</p>
 						</a>
 					</li>
 					@endcan

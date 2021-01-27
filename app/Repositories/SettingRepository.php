@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use Carbon\Carbon;
 use App\Models\Setting;
+use Image;
 
 
 class SettingRepository
@@ -11,19 +12,23 @@ class SettingRepository
 
 	public function update($request)
 	{
+
+		$setting = Setting::find(1)->update([
+			'clinic_name_kh'=> $request->clinic_name_kh,
+			'clinic_name_en'=> $request->clinic_name_en,
+			'phone'=> $request->phone,
+			'address'=> $request->address,
+			'navbar_color'=> $request->navbar_color,
+			'sidebar_color'=> (($request->sidebar_color==null)? 0 : 1)
+			]);
+
 		if ($request->file('logo')) {
-			$logo = $request->file('logo');
-			$user_logo = 'logo.png';
 			$path = public_path().'/images/setting/';
-			$img = Image::make($logo->getRealPath())->save($path.$user_logo);
-			// crop logo
-			// $img->crop(100, 100, 25, 25);
-			$user->update(['logo'=>$user_image]);
+			$logo = $request->file('logo');
+			$img = Image::make($logo->getRealPath())->save($path.'logo.png');
 		}
 
-		return Setting::find(1)->update([
-
-    ]);
+		return $setting;
 
 	}
 

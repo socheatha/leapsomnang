@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\User;
+use App\Models\Patient;
+use App\Models\Doctor;
+use App\Models\Medicine;
+// use App\Models\Invoice;
 use Auth;
 use DB;
 
@@ -28,8 +32,14 @@ class HomeController extends Controller
 	 */
 	public function index()
 	{
-		
-		return view('home');
+		$this->data =[
+			'patients' => Patient::all(),
+			'doctors' => Doctor::all(),
+			'medicines' => Medicine::all(),
+			// 'invoices' => Invoice::all(),
+			'users' => User::all(),
+		];
+		return view('home', $this->data);
 	}
 
 
