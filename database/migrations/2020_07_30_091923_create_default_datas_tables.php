@@ -1568,6 +1568,62 @@ class CreateDefaultDatasTables extends Migration
 				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
 			],
 			[
+				'name' => 'Medicine Index',
+				'guard_name' => 'web',
+				'description' => 'Visit Medicine Index',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Medicine Create',
+				'guard_name' => 'web',
+				'description' => 'Create new Medicine',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Medicine Edit',
+				'guard_name' => 'web',
+				'description' => 'Edit Existed Medicine',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Medicine Delete',
+				'guard_name' => 'web',
+				'description' => 'Delete Existed Medicine',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Usage Index',
+				'guard_name' => 'web',
+				'description' => 'Visit Usage Index',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Usage Create',
+				'guard_name' => 'web',
+				'description' => 'Create new Usage',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Usage Edit',
+				'guard_name' => 'web',
+				'description' => 'Edit Existed Usage',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Usage Delete',
+				'guard_name' => 'web',
+				'description' => 'Delete Existed Usage',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
 				'name' => 'Patient Index',
 				'guard_name' => 'web',
 				'description' => 'Visit Patient Index',
@@ -1599,6 +1655,111 @@ class CreateDefaultDatasTables extends Migration
 				'name' => 'Patient Show',
 				'guard_name' => 'web',
 				'description' => 'Show Patient detail',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Service Index',
+				'guard_name' => 'web',
+				'description' => 'Visit Service Index',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Service Create',
+				'guard_name' => 'web',
+				'description' => 'Create new Service',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Service Edit',
+				'guard_name' => 'web',
+				'description' => 'Edit Existed Service',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Service Delete',
+				'guard_name' => 'web',
+				'description' => 'Delete Existed Service',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Service Show',
+				'guard_name' => 'web',
+				'description' => 'Show Service detail',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Invoice Index',
+				'guard_name' => 'web',
+				'description' => 'Visit Invoice Index',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Invoice Create',
+				'guard_name' => 'web',
+				'description' => 'Create new Invoice',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Invoice Edit',
+				'guard_name' => 'web',
+				'description' => 'Edit Existed Invoice',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Invoice Delete',
+				'guard_name' => 'web',
+				'description' => 'Delete Existed Invoice',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Invoice Show',
+				'guard_name' => 'web',
+				'description' => 'Show Invoice detail',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Prescription Index',
+				'guard_name' => 'web',
+				'description' => 'Visit Prescription Index',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Prescription Create',
+				'guard_name' => 'web',
+				'description' => 'Create new Prescription',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Prescription Edit',
+				'guard_name' => 'web',
+				'description' => 'Edit Existed Prescription',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Prescription Delete',
+				'guard_name' => 'web',
+				'description' => 'Delete Existed Prescription',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Prescription Show',
+				'guard_name' => 'web',
+				'description' => 'Show Prescription detail',
 				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
 				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
 			],

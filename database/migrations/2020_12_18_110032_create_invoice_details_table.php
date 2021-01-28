@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMedicinesTable extends Migration
+class CreateInvoiceDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,21 @@ class CreateMedicinesTable extends Migration
      */
     public function up()
     {
-      Schema::create('medicines', function (Blueprint $table) {
+      Schema::create('invoice_details', function (Blueprint $table) {
           $table->bigIncrements('id');
-          $table->string('name');
-          $table->string('code')->nullable();
-          $table->text('description')->nullable();
-          $table->unsignedInteger('usage_id');
+          $table->double('amount');
+          $table->integer('qty');
+          $table->text('description');
+          $table->integer('index');
+          $table->double('discount')->default('0');
+          $table->unsignedBigInteger('invoice_id');
+          $table->unsignedBigInteger('service_id');
           $table->unsignedBigInteger('created_by');
           $table->unsignedBigInteger('updated_by');
           $table->timestamps();
 
-          $table->foreign('usage_id')
-              ->references('id')->on('usages')
+          $table->foreign('invoice_id')
+              ->references('id')->on('invoices')
               ->onDelete('no action')
               ->onUpdate('no action');
 
@@ -47,6 +50,6 @@ class CreateMedicinesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('medicines');
+        Schema::dropIfExists('invoice_details');
     }
 }

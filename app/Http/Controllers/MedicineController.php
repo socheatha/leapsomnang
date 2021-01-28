@@ -36,7 +36,10 @@ class MedicineController extends Controller
 
 	public function create()
 	{
-		return view('medicine.create');
+		$this->data = [
+				'usages' => Usage::getSelectData('id', 'name', '', 'id' ,'asc'),
+		];
+		return view('medicine.create', $this->data);
 	}
 
 	public function store(MedicineRequest $request)
@@ -53,6 +56,7 @@ class MedicineController extends Controller
 	{
 		$this->data = [
 				'medicine' => $medicine,
+				'usages' => Usage::getSelectData('id', 'name', '', 'id' ,'asc'),
 		];
 		
 		return view('medicine.edit', $this->data);

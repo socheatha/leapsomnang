@@ -20,13 +20,11 @@ class PatientRepository
 
 	public function getDetail($request)
 	{
-
 		$patient = Patient::find($request->id);
-
-		$detail = '';
-
+		$patient->no = 'PT-'. str_pad($patient->id, 6, "0", STR_PAD_LEFT);
+		$patient->pt_gender = (($patient->gender==1)? 'ប្រុស' : 'ស្រី');
 		return response()->json([
-			'detail' => $detail ,
+			'patient' => $patient ,
 		]);
 	}
 

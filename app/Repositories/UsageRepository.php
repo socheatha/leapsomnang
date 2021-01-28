@@ -3,53 +3,49 @@
 namespace App\Repositories;
 
 use Carbon\Carbon;
-use App\Models\Medicine;
+use App\Models\Usage;
 use Auth;
 
 
-class MedicineRepository
+class UsageRepository
 {
 
 
 	public function getData()
 	{
-		return Medicine::all();
+		return Usage::all();
 	}
 
 	public function create($request)
 	{
 
-		$medicine = Medicine::create([
+		$usage = Usage::create([
 			'name' => $request->name,
-			'code' => $request->code,
-			'usage_id' => $request->usage_id,
 			'description' => $request->description,
 			'created_by' => Auth::user()->id,
 			'updated_by' => Auth::user()->id,
 		]);
 
-		return $medicine;
+		return $usage;
 	}
 
 
-	public function update($request, $medicine)
+	public function update($request, $usage)
 	{
 
-		return $medicine->update([
+		return $usage->update([
 			'name' => $request->name,
-			'code' => $request->code,
-			'usage_id' => $request->usage_id,
 			'description' => $request->description,
 			'updated_by' => Auth::user()->id,
 		]);
 
 	}
 
-	public function destroy($medicine)
+	public function destroy($usage)
 	{
 
-		$name = $medicine->name;
-		if($medicine->delete()){
+		$name = $usage->name;
+		if($usage->delete()){
 			return $name ;
 		}
 

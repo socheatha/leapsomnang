@@ -2,7 +2,12 @@
 
 @section('css')
 	<style class="text/css">
-
+		label[for="father_status1"],
+		label[for="father_status0"],
+		label[for="mother_status1"],
+		label[for="mother_status0"] {
+			cursor: pointer;
+		}
 	</style>
 @endsection
 
@@ -17,13 +22,11 @@
         {{-- Action Dropdown --}}
         @component('components.action')
           @slot('otherBTN')
-            <a href="{{route('medicine.index')}}" class="dropdown-item text-danger"><i class="fa fa-arrow-left"></i> &nbsp;{{ __('label.buttons.back') }}</a>
+            <a href="{{route('service.index')}}" class="dropdown-item text-danger"><i class="fa fa-arrow-left"></i> &nbsp;{{ __('label.buttons.back') }}</a>
           @endslot
-				@endcomponent
-				
-				<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-					<i class="fas fa-minus"></i></button>
-				{{-- <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove"><i class="fas fa-times"></i></button> --}}
+        @endcomponent
+
+				<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fas fa-minus"></i></button>
 			</div>
 
 			<!-- Error Message -->
@@ -33,13 +36,10 @@
 		</div>
 
 
-		{!! Form::open(['url' => route('medicine.update', [$medicine->id, 'edit']),'method' => 'post','autocomplete'=>'off']) !!}
-		{!! Form::hidden('_method', 'PUT') !!}
+		{!! Form::open(['url' => route('service.store'),'method' => 'post','autocomplete'=>'off']) !!}
 
 		<div class="card-body">
-
-			@include('medicine.form')
-
+			@include('service.form')
 		</div>
 		<!-- ./card-body -->
 		
@@ -50,10 +50,17 @@
 		{{ Form::close() }}
 
 	</div>
+
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+
 @endsection
 
 @section('js')
 	<script type="text/javascript">
+
 
 	</script>
 @endsection

@@ -28,20 +28,29 @@
 				
 					<li class="nav-header">{{ __('sidebar.header.main_data') }}</li>
 
+					@can('Invoice Index', 'Invoice Create', 'Invoice Edit', 'Invoice Delete')
+					<li class="nav-item">
+						<a href="{{ route('invoice.index') }}" class="nav-link {{ ((Auth::user()->sidebarActive() == 'invoice' )? 'active':'') }}">
+							<i class="fa fa-file-invoice nav-icon"></i>
+							<p>{{ __('sidebar.invoice.main') }}</p>
+						</a>
+					</li>
+					@endcan
+
+					@can('Prescription Index', 'Prescription Create', 'Prescription Edit', 'Prescription Delete')
+					<li class="nav-item">
+						<a href="{{ route('prescription.index') }}" class="nav-link {{ ((Auth::user()->sidebarActive() == 'prescription' )? 'active':'') }}">
+							<i class="fa fa-file-medical-alt nav-icon"></i>
+							<p>{{ __('sidebar.prescription.main') }}</p>
+						</a>
+					</li>
+					@endcan
+
 					@can('Patient Index', 'Patient Create', 'Patient Edit', 'Patient Delete')
 					<li class="nav-item">
 						<a href="{{ route('patient.index') }}" class="nav-link {{ ((Auth::user()->sidebarActive() == 'patient' )? 'active':'') }}">
 							<i class="fa fa-user-injured nav-icon"></i>
 							<p>{{ __('sidebar.patient.main') }}</p>
-						</a>
-					</li>
-					@endcan
-
-					@can('Doctor Index', 'Doctor Create', 'Doctor Edit', 'Doctor Delete')
-					<li class="nav-item">
-						<a href="{{ route('doctor.index') }}" class="nav-link {{ ((Auth::user()->sidebarActive() == 'doctor' )? 'active':'') }}">
-							<i class="fa fa-user-md nav-icon"></i>
-							<p>{{ __('sidebar.doctor.main') }}</p>
 						</a>
 					</li>
 					@endcan
@@ -55,11 +64,29 @@
 					</li>
 					@endcan
 
+					@can('Service Index', 'Service Create', 'Service Edit', 'Service Delete')
+					<li class="nav-item">
+						<a href="{{ route('service.index') }}" class="nav-link {{ ((Auth::user()->sidebarActive() == 'service' )? 'active':'') }}">
+							<i class="fa fa-concierge-bell nav-icon"></i>
+							<p>{{ __('sidebar.service.main') }}</p>
+						</a>
+					</li>
+					@endcan
+
+					@can('Doctor Index', 'Doctor Create', 'Doctor Edit', 'Doctor Delete')
+					<li class="nav-item">
+						<a href="{{ route('doctor.index') }}" class="nav-link {{ ((Auth::user()->sidebarActive() == 'doctor' )? 'active':'') }}">
+							<i class="fa fa-user-md nav-icon"></i>
+							<p>{{ __('sidebar.doctor.main') }}</p>
+						</a>
+					</li>
+					@endcan
+
 				@endcan
 
 
 				{{-- User Management --}}
-				@canany(['User Index', 'User Create', 'User Edit', 'User Delete', 'User Assign Role', 'User Assign Permission', 'Role Index', 'Role Create', 'Role Edit', 'Role Delete', 'Role User Assign', 'Permission Index', 'Permission Create', 'Permission Edit', 'Permission Delete', 'Permission Role Assign', 'Permission User Assign', 'Province Index', 'Province Create', 'Province Edit', 'Province Delete', 'District Index', 'District Create', 'District Edit', 'District Delete'])
+				@canany(['User Index', 'User Create', 'User Edit', 'User Delete', 'User Assign Role', 'User Assign Permission', 'Role Index', 'Role Create', 'Role Edit', 'Role Delete', 'Role User Assign', 'Permission Index', 'Permission Create', 'Permission Edit', 'Permission Delete', 'Permission Role Assign', 'Permission User Assign', 'Province Index', 'Province Create', 'Province Edit', 'Province Delete', 'District Index', 'District Create', 'District Edit', 'District Delete','Usage Index', 'Usage Create', 'Usage Edit', 'Usage Delete'])
 				
 					<li class="nav-header">{{ __('sidebar.header.other_management') }}</li>
 
@@ -81,11 +108,20 @@
 					</li>
 					@endcan
 
-					@can('Permission Index', 'Permission Create', 'Permission Edit', 'Permission Delete', 'Permission Role Assign', 'Permission User Assign')
+					@can('Permission Index', 'Permission Create', 'Permission Edit', 'Permission Delete', 'Permission Role Assign', 'Permission User Assign', 'Usage Index', 'Usage Create', 'Usage Edit', 'Usage Delete')
 					<li class="nav-item">
 						<a href="{{ route('permission.index') }}" class="nav-link {{ ((Auth::user()->sidebarActive() == 'permission' )? 'active':'') }}">
 							<i class="fa fa-shield-alt nav-icon"></i>
 							<p>{{ __('sidebar.user.sub.permission.sub.permission') }}</p>
+						</a>
+					</li>
+					@endcan
+
+					@can('Usage Index', 'Usage Create', 'Usage Edit', 'Usage Delete')
+					<li class="nav-item">
+						<a href="{{ route('usage.index') }}" class="nav-link {{ ((Auth::user()->sidebarActive() == 'usage' )? 'active':'') }}">
+							<i class="fa fa-hand-holding-water nav-icon"></i>
+							<p>{{ __('sidebar.usage.main') }}</p>
 						</a>
 					</li>
 					@endcan

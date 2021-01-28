@@ -16,8 +16,8 @@
 			{{-- Action Dropdown --}}
 			@component('components.action')
 				@slot('otherBTN')
-					@can('Patient Create')
-					<a href="{{route('doctor.create')}}" class="dropdown-item"><i class="fa fa-plus"></i> &nbsp;{{ __('label.buttons.create') }}</a>
+					@can('Service Create')
+					<a href="{{route('service.create')}}" class="dropdown-item"><i class="fa fa-plus"></i> &nbsp;{{ __('label.buttons.create') }}</a>
 					@endcan
 				@endslot
 			@endcomponent
@@ -32,42 +32,34 @@
 	</div>
 
 	<div class="card-body">
-		<table id="datatables-2" class="table table-striped table-hover">
+		<table id="datatables-2" class="table table-striped table-bordered table-hover">
 			<thead>
 				<tr>
 					<th width="30px">{!! __('module.table.no') !!}</th>
-					<th>{!! __('module.table.name_kh') !!}</th>
-					<th>{!! __('module.table.name_en') !!}</th>
-					<th width="80px">{!! __('module.table.gender') !!}</th>
-					<th>{!! __('module.table.email') !!}</th>
-					<th>{!! __('module.table.phone') !!}</th>
+					<th>{!! __('module.table.name') !!}</th>
+					<th width="10%">{!! __('module.table.service.price') !!}</th>
+					<th>{!! __('module.table.description') !!}</th>
 					<th width="10%">{!! __('module.table.action') !!}</th>
 				</tr>
 			</thead>
 			<tbody>
-				@foreach($doctors as $i => $doctor)
+				@foreach($services as $i => $service)
 					<tr>
 						<td class="text-center">{{ ++$i }}</td>
-						<td>{{ $doctor->name_kh }}</td>
-						<td>{{ $doctor->name_en }}</td>
-						<td class="text-center">{{ (($doctor->gender==1)? __('label.form.male') : __('label.form.female')) }}</td>
-						<td>{{ $doctor->email }}</td>
-						<td>{{ $doctor->phone }}</td>
+						<td>{{ $service->name }}</td>
+						<td class="text-right"><span class="float-left">$</span>{{ number_format($service->price, 2) }}</td>
+						<td>{{ $service->description }}</td>
 						<td class="text-right">
 
-							{{-- @can('Patient Show')
-							<button type="button" class="btn btn-warning btn-sm btn-flat" onclick="getDetail({{ $doctor->id }})" data-toggle="tooltip" data-placement="left" title="{{ __('label.buttons.show') }}"><i class="fa fa-eye"></i></button>
-							@endcan --}}
-
-							@can('Patient Edit')
+							@can('Service Edit')
 							{{-- Edit Button --}}
-							<a href="{{ route('doctor.edit', $doctor->id) }}" class="btn btn-info btn-sm btn-flat" data-toggle="tooltip" data-placement="left" title="{{ __('label.buttons.edit') }}"><i class="fa fa-pencil-alt"></i></a>
+							<a href="{{ route('service.edit', $service->id) }}" class="btn btn-info btn-sm btn-flat" data-toggle="tooltip" data-placement="left" title="{{ __('label.buttons.edit') }}"><i class="fa fa-pencil-alt"></i></a>
 							@endcan
 
-							@can('Patient Delete')
+							@can('Service Delete')
 							{{-- Delete Button --}}
-							<button class="btn btn-danger btn-sm btn-flat BtnDeleteConfirm" value="{{ $doctor->id }}" data-toggle="tooltip" data-placement="left" title="{{ __('label.buttons.delete') }}"><i class="fa fa-trash-alt"></i></button>
-							{{ Form::open(['url'=>route('doctor.destroy', $doctor->id), 'id' => 'form-item-'.$doctor->id, 'class' => 'sr-only']) }}
+							<button class="btn btn-danger btn-sm btn-flat BtnDeleteConfirm" value="{{ $service->id }}" data-toggle="tooltip" data-placement="left" title="{{ __('label.buttons.delete') }}"><i class="fa fa-trash-alt"></i></button>
+							{{ Form::open(['url'=>route('service.destroy', $service->id), 'id' => 'form-item-'.$service->id, 'class' => 'sr-only']) }}
 							{{ Form::hidden('_method','DELETE') }}
 							{{ Form::hidden('passwordDelete','') }}
 							{{ Form::close() }}
@@ -87,45 +79,10 @@
 {{-- Password Confirm modal --}}
 @component('components.confirm_password')@endcomponent
 
-<div class="modal fade" id="modal_doctor_detail">
-  <div class="modal-dialog mw-100 " style="width: 75%;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">{{ __('alert.modal.title.detail') }}</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-				<div id="doctor_detail">
-
-				</div>
-      </div>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
-
 @endsection
 
 @section('js')
 	<script type="text/javascript">
-
-		function getDetail(id) {
-			$.ajax({
-				url: "{{ route('doctor.getDetail') }}",
-				method: 'post',
-				data: {
-					id: id,
-				},
-				success: function (rs) {
-					$('#doctor_detail').html(rs.detail);
-					$('#modal_doctor_detail').modal('show');
-				}
-			});
-		}
 
 		$('#datatables-2').DataTable({
 			"language": (($('html').attr('lang')) ? datatableKH : {}),

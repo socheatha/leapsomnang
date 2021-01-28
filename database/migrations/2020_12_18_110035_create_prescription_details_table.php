@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMedicinesTable extends Migration
+class CreatePrescriptionDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,28 @@ class CreateMedicinesTable extends Migration
      */
     public function up()
     {
-      Schema::create('medicines', function (Blueprint $table) {
+      Schema::create('prescription_details', function (Blueprint $table) {
           $table->bigIncrements('id');
-          $table->string('name');
-          $table->string('code')->nullable();
-          $table->text('description')->nullable();
-          $table->unsignedInteger('usage_id');
+          $table->integer('qty');
+          $table->boolean('morning')->default('0');
+          $table->boolean('noon')->default('0');
+          $table->boolean('evening')->default('0');
+          $table->boolean('night')->default('0');
+          $table->text('description');
+          $table->integer('index');
+          $table->unsignedBigInteger('medicine_id');
+          $table->unsignedBigInteger('prescription_id');
           $table->unsignedBigInteger('created_by');
           $table->unsignedBigInteger('updated_by');
           $table->timestamps();
 
-          $table->foreign('usage_id')
-              ->references('id')->on('usages')
+          $table->foreign('medicine_id')
+              ->references('id')->on('medicines')
+              ->onDelete('no action')
+              ->onUpdate('no action');
+
+          $table->foreign('prescription_id')
+              ->references('id')->on('prescriptions')
               ->onDelete('no action')
               ->onUpdate('no action');
 
@@ -47,6 +57,6 @@ class CreateMedicinesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('medicines');
+        Schema::dropIfExists('prescription_details');
     }
 }

@@ -16,7 +16,7 @@
 			{{-- Action Dropdown --}}
 			@component('components.action')
 				@slot('otherBTN')
-					@can('Patient Create')
+					@can('Medicine Create')
 					<a href="{{route('medicine.create')}}" class="dropdown-item"><i class="fa fa-plus"></i> &nbsp;{{ __('label.buttons.create') }}</a>
 					@endcan
 				@endslot
@@ -32,7 +32,7 @@
 	</div>
 
 	<div class="card-body">
-		<table id="datatables" class="table table-striped table-hover">
+		<table id="datatables-2" class="table table-striped table-hover">
 			<thead>
 				<tr>
 					<th width="30px">{!! __('module.table.no') !!}</th>
@@ -49,12 +49,12 @@
 						<td>{{ $medicine->name }}</td>
 						<td class="text-right">
 
-							@can('Patient Edit')
+							@can('Medicine Edit')
 							{{-- Edit Button --}}
 							<a href="{{ route('medicine.edit', $medicine->id) }}" class="btn btn-info btn-sm btn-flat" data-toggle="tooltip" data-placement="left" title="{{ __('label.buttons.edit') }}"><i class="fa fa-pencil-alt"></i></a>
 							@endcan
 
-							@can('Patient Delete')
+							@can('Medicine Delete')
 							{{-- Delete Button --}}
 							<button class="btn btn-danger btn-sm btn-flat BtnDeleteConfirm" value="{{ $medicine->id }}" data-toggle="tooltip" data-placement="left" title="{{ __('label.buttons.delete') }}"><i class="fa fa-trash-alt"></i></button>
 							{{ Form::open(['url'=>route('medicine.destroy', $medicine->id), 'id' => 'form-item-'.$medicine->id, 'class' => 'sr-only']) }}
@@ -82,59 +82,65 @@
 @section('js')
 	<script type="text/javascript">
 
-		$('.BtnDeleteConfirm').click(function () {
-			$('#item_id').val($(this).val());
-			$('#modal_confirm_delete').modal();
-		});
+		$('#datatables-2').DataTable({
+			"language": (($('html').attr('lang')) ? datatableKH : {}),
+			buttons: true,
+			"fnDrawCallback": function (oSettings) {
+				$('.BtnDeleteConfirm').click(function () {
+					$('#item_id').val($(this).val());
+					$('#modal_confirm_delete').modal();
+				});
 
-		$('.submit_confirm_password').click(function () {
-			var id = $('#item_id').val();
-			var password_confirm = $('#password_confirm').val();
-			$('[name="passwordDelete"]').val(password_confirm);
-			if (password_confirm!='') {
-				$.ajax({
-					url: "{{ route('user.password_confirm') }}",
-					type: 'post',
-					data: {id:id, _token:'{{ csrf_token() }}', password_confirm:password_confirm},
-				})
-				.done(function( result ) {
-					if(result == true){
-						Swal.fire({
-							icon: 'success',
-							title: "{{ __('alert.swal.result.title.success') }}",
-							confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-							timer: 1500
+				$('.submit_confirm_password').click(function () {
+					var id = $('#item_id').val();
+					var password_confirm = $('#password_confirm').val();
+					$('[name="passwordDelete"]').val(password_confirm);
+					if (password_confirm!='') {
+						$.ajax({
+							url: "{{ route('user.password_confirm') }}",
+							type: 'post',
+							data: {id:id, _token:'{{ csrf_token() }}', password_confirm:password_confirm},
 						})
-						.then((result) => {
-							$( "form" ).submit(function( event ) {
-								$('button').attr('disabled','disabled');
-							});
-							$('[name="passwordDelete"]').val(password_confirm);
-							$("#form-item-"+id).submit();
-						})
+						.done(function( result ) {
+							if(result == true){
+								Swal.fire({
+									icon: 'success',
+									title: "{{ __('alert.swal.result.title.success') }}",
+									confirmButtonText: "{{ __('alert.swal.button.yes') }}",
+									timer: 1500
+								})
+								.then((result) => {
+									$( "form" ).submit(function( event ) {
+										$('button').attr('disabled','disabled');
+									});
+									$('[name="passwordDelete"]').val(password_confirm);
+									$("#form-item-"+id).submit();
+								})
+							}else{
+								Swal.fire({
+									icon: 'warning',
+									title: "{{ __('alert.swal.result.title.wrong',['name'=>'ពាក្យសម្ងាត់']) }}",
+									confirmButtonText: "{{ __('alert.swal.button.yes') }}",
+									timer: 2500
+								})
+								.then((result) => {
+									$('#modal_confirm_delete').modal();
+								})
+							}
+						});
 					}else{
 						Swal.fire({
 							icon: 'warning',
-							title: "{{ __('alert.swal.result.title.wrong',['name'=>'ពាក្យសម្ងាត់']) }}",
+							title: "{{ __('alert.swal.title.empty') }}",
 							confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-							timer: 2500
+							timer: 1500
 						})
 						.then((result) => {
 							$('#modal_confirm_delete').modal();
 						})
 					}
 				});
-			}else{
-				Swal.fire({
-					icon: 'warning',
-					title: "{{ __('alert.swal.title.empty') }}",
-					confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-					timer: 1500
-				})
-				.then((result) => {
-					$('#modal_confirm_delete').modal();
-				})
-			}
+			},
 		});
 	</script>
 @endsection

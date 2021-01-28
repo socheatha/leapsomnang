@@ -61,26 +61,6 @@
 @section('js')
 	<script type="text/javascript">
 
-		$('[name="address_province_id"]').change( function(e){
-			if ($(this).val() != '') {
-				$.ajax({
-					url: "{{ route('province.getSelectDistrict') }}",
-					method: 'post',
-					data: {
-						id: $(this).val(),
-					},
-					success: function (data) {
-						$('[name="address_district_id"]').attr({"disabled":false});
-						$('[name="address_district_id"]').html(data);
-					}
-				});
-			}else{
-				$('[name="address_district_id"]').attr({"disabled":true});
-				$('[name="address_district_id"]').html('<option value="">{{ __("label.form.choose") }}</option>');
-				
-			}
-		});
-
 
 	</script>
 @endsection

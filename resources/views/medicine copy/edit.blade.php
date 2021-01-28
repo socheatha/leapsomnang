@@ -17,7 +17,7 @@
         {{-- Action Dropdown --}}
         @component('components.action')
           @slot('otherBTN')
-            <a href="{{route('medicine.index')}}" class="dropdown-item text-danger"><i class="fa fa-arrow-left"></i> &nbsp;{{ __('label.buttons.back') }}</a>
+            <a href="{{route('usage.index')}}" class="dropdown-item text-danger"><i class="fa fa-arrow-left"></i> &nbsp;{{ __('label.buttons.back') }}</a>
           @endslot
 				@endcomponent
 				
@@ -33,12 +33,12 @@
 		</div>
 
 
-		{!! Form::open(['url' => route('medicine.update', [$medicine->id, 'edit']),'method' => 'post','autocomplete'=>'off']) !!}
+		{!! Form::open(['url' => route('usage.update', [$usage->id, 'edit']),'method' => 'post','autocomplete'=>'off']) !!}
 		{!! Form::hidden('_method', 'PUT') !!}
 
 		<div class="card-body">
 
-			@include('medicine.form')
+			@include('usage.form')
 
 		</div>
 		<!-- ./card-body -->
