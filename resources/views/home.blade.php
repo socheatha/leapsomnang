@@ -20,7 +20,7 @@
 				<div class="icon">
 					<i class="fa fa-user-injured"></i>
 				</div>
-				<a href="#" class="small-box-footer">{{ __('label.buttons.more_info') }} <i class="fas fa-arrow-circle-right"></i></a>
+				<a href="{{ route('patient.index') }}" class="small-box-footer">{{ __('label.buttons.more_info') }} <i class="fas fa-arrow-circle-right"></i></a>
 			</div>
 		</div>
 
@@ -35,7 +35,7 @@
 				<div class="icon">
 					<i class="fa fa-user-md"></i>
 				</div>
-				<a href="#" class="small-box-footer">{{ __('label.buttons.more_info') }} <i class="fas fa-arrow-circle-right"></i></a>
+				<a href="{{ route('doctor.index') }}" class="small-box-footer">{{ __('label.buttons.more_info') }} <i class="fas fa-arrow-circle-right"></i></a>
 			</div>
 		</div>
 
@@ -50,7 +50,7 @@
 				<div class="icon">
 					<i class="fa fa-pills"></i>
 				</div>
-				<a href="#" class="small-box-footer">{{ __('label.buttons.more_info') }} <i class="fas fa-arrow-circle-right"></i></a>
+				<a href="{{ route('medicine.index') }}" class="small-box-footer">{{ __('label.buttons.more_info') }} <i class="fas fa-arrow-circle-right"></i></a>
 			</div>
 		</div>
 
@@ -90,30 +90,6 @@
 
 @section('js')
 	<script>
-
-		
-
-		// // Rest Javascript
-		// function makeDinner(...args) {
-		// 	return `Dinner includes the following items: ${args.join(':::')}`;
-		// }
-		// console.log(makeDinner('1','2','3','4','5','6'));
-
-		// // Arrow Function
-		// const makeWine = (qty)=> 'Wine '.repeat(qty);
-		// console.log(makeWine(5));
-
-		// let x = 0;
-
-		// const impure = () =>{
-		// 	x++;
-		// 	return x ** 2;
-		// }
-		// console.log(impure());
-
-
-		// const pure = (x) => x ** 2;
-		// console.log(pure(x));
 
 	</script>
 @endsection

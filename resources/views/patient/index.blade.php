@@ -32,7 +32,7 @@
 	</div>
 
 	<div class="card-body">
-		<table id="datatables" class="table table-bordered table-hover">
+		<table id="datatables" class="table table-striped table-hover">
 			<thead>
 				<tr>
 					<th width="30px">{!! __('module.table.no') !!}</th>

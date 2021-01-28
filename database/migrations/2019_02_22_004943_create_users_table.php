@@ -22,7 +22,6 @@ class CreateUsersTable extends Migration
             $table->string('image')->default('default_user.png');
             $table->string('phone')->nullable();
             $table->string('language')->default('kh');
-            $table->string('position');
             $table->boolean('gender')->default('1');
             $table->boolean('status')->default('0');
             $table->boolean('approval')->default('0');
