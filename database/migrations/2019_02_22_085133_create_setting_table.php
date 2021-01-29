@@ -18,8 +18,10 @@ class CreateSettingTable extends Migration
             $table->string('logo');
             $table->string('clinic_name_kh');
             $table->string('clinic_name_en');
+            $table->string('sign_invoice')->nullable();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
+            $table->string('description')->nullable();
             $table->string('navbar_color')->default('navbar-white navbar-light');
             $table->boolean('sidebar_color')->default(0);
             $table->timestamps();

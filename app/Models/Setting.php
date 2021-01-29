@@ -15,8 +15,10 @@ class Setting extends BaseModel
 		'logo',
 		'clinic_name_kh',
 		'clinic_name_en',
+		'sign_name',
 		'phone',
 		'address',
+		'description',
 		'navbar_color',
 		'sidebar_color'
 	];

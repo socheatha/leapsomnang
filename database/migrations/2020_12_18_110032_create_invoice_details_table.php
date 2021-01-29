@@ -28,8 +28,8 @@ class CreateInvoiceDetailsTable extends Migration
 
           $table->foreign('invoice_id')
               ->references('id')->on('invoices')
-              ->onDelete('no action')
-              ->onUpdate('no action');
+              ->onDelete('cascade')
+              ->onUpdate('cascade');
 
           $table->foreign('created_by')
               ->references('id')->on('users')

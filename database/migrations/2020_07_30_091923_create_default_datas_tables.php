@@ -1365,7 +1365,6 @@ class CreateDefaultDatasTables extends Migration
 				'last_name' => 'Dev',
 				'phone' => '0',
 				'gender' => '1',
-				'position' => 'Web Developer',
 				'email' => 'web@dev.com',
 				'password' => '$2y$10$t8QOzY6vEWArgzqEwGaj/etY/o09UHqwyFYw5K3eJogQbRFQkt6Xi',
 				'status' => '1',
@@ -1729,6 +1728,13 @@ class CreateDefaultDatasTables extends Migration
 				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
 			],
 			[
+				'name' => 'Invoice Print',
+				'guard_name' => 'web',
+				'description' => 'Show Invoice detail',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
 				'name' => 'Prescription Index',
 				'guard_name' => 'web',
 				'description' => 'Visit Prescription Index',
@@ -1760,6 +1766,13 @@ class CreateDefaultDatasTables extends Migration
 				'name' => 'Prescription Show',
 				'guard_name' => 'web',
 				'description' => 'Show Prescription detail',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Prescription Print',
+				'guard_name' => 'web',
+				'description' => 'Print Prescription detail',
 				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
 				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
 			],

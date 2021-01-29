@@ -77,26 +77,26 @@ class InvoiceController extends Controller
 		}
 	}
 
-	public function invoice_detail_store(InvoiceDetailRequest $request)
-	{
-		$invoice_detail = $this->invoice->create_invoice_detail($request);
-		if ($invoice_detail) {
-			// Redirect
-			return redirect()->route('invoice.edit', $request->invoice_id)
-				->with('success', __('alert.crud.success.create', ['name' => Auth::user()->module()]) . str_pad($invoice_detail->invoice->inv_number, 6, "0", STR_PAD_LEFT));
-		}
-	}
+	// public function invoice_detail_store(InvoiceDetailRequest $request)
+	// {
+	// 	$invoice_detail = $this->invoice->create_invoice_detail($request);
+	// 	if ($invoice_detail) {
+	// 		// Redirect
+	// 		return redirect()->route('invoice.edit', $request->invoice_id)
+	// 			->with('success', __('alert.crud.success.create', ['name' => Auth::user()->module()]) . str_pad($invoice_detail->invoice->inv_number, 6, "0", STR_PAD_LEFT));
+	// 	}
+	// }
 
-	public function invoice_detail_update(InvoiceDetailUpdateRequest $request)
-	{
+	// public function invoice_detail_update(InvoiceDetailUpdateRequest $request)
+	// {
 
-		$invoice_detail = $this->invoice->update_invoice_detail($request);
-		if ($invoice_detail) {
-			// Redirect
-			return redirect()->route('invoice.edit', $request->edit_invoice_id)
-				->with('success', __('alert.crud.success.update', ['name' => Auth::user()->module()]) . str_pad($invoice_detail->invoice->inv_number, 6, "0", STR_PAD_LEFT));
-		}
-	}
+	// 	$invoice_detail = $this->invoice->update_invoice_detail($request);
+	// 	if ($invoice_detail) {
+	// 		// Redirect
+	// 		return redirect()->route('invoice.edit', $request->edit_invoice_id)
+	// 			->with('success', __('alert.crud.success.update', ['name' => Auth::user()->module()]) . str_pad($invoice_detail->invoice->inv_number, 6, "0", STR_PAD_LEFT));
+	// 	}
+	// }
 
 	public function save_order(Request $request, Invoice $invoice)
 	{
@@ -112,14 +112,52 @@ class InvoiceController extends Controller
 		//
 	}
 
+	
+	public function getItemDetail(Request $request)
+	{
+		return response()->json([ 'invoice_detail' => InvoiceDetail::find($request->id) ]);
+	}
+
 	public function get_edit_detail(Request $request)
 	{
 		return $this->invoice->get_edit_detail($request->id);
 	}
-
-	public function get_invoice_preview(Request $request)
+	
+	public function invoiceDetailStore(Request $request)
 	{
-		return $this->invoice->get_invoice_preview($request->id);
+		$validator = \Validator::make($request->all(), [
+			'price' => 'required|numeric',
+			'qty' => 'required|numeric',
+			'discount' => 'required',
+			'description' => 'required',
+		]);
+		
+		if ($validator->fails())
+		{
+				return response()->json(['errors'=>$validator->errors()]);
+		}
+		return $this->invoice->invoiceDetailStore($request);
+	}
+
+	public function invoiceDetailUpdate(Request $request)
+	{
+		$validator = \Validator::make($request->all(), [
+			'price' => 'required|numeric',
+			'qty' => 'required|numeric',
+			'discount' => 'required',
+			'description' => 'required',
+		]);
+		
+		if ($validator->fails())
+		{
+				return response()->json(['errors'=>$validator->errors()]);
+		}
+		return $this->invoice->invoiceDetailUpdate($request);
+	}
+
+	public function getInvoicePreview(Request $request)
+	{
+		return $this->invoice->getInvoicePreview($request->id);
 	}
 
 	public function invoice_detail(Invoice $invoice)
@@ -127,7 +165,7 @@ class InvoiceController extends Controller
 		$this->data = [
 			'invoice' => $invoice,
 			'services' => Service::getSelectService($invoice->service_id),
-			'invoice_preview' => $this->invoice->get_invoice_preview($invoice->id),
+			'invoice_preview' => $this->invoice->getInvoicePreview($invoice->id),
 		];
 
 		return view('invoice.invoice_detail', $this->data);
@@ -139,27 +177,25 @@ class InvoiceController extends Controller
 
 		$this->data = [
 			'invoice' => $invoice,
-			'services' => Service::getSelectService(InvoiceDetail::select('service_id')->where('invoice_id', $invoice->id)),
+			// 'services' => Service::getSelectService(InvoiceDetail::select('service_id')->where('invoice_id', $invoice->id)),
+			'services' => Service::getSelectData('id', 'name', '', 'name' ,'asc'),
 			'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),
-			'invoice_preview' => $this->invoice->get_invoice_preview($invoice->id)->getData()->invoice_detail,
+			'invoice_preview' => $this->invoice->getInvoicePreview($invoice->id)->getData()->invoice_detail,
 		];
 
 		return view('invoice.edit', $this->data);
 	}
 
-	public function copy(Invoice $invoice)
+	public function print(Invoice $invoice)
 	{
+
 		$this->data = [
-			'inv_number' => $this->invoice->inv_number(),
 			'invoice' => $invoice,
-			'services' => Service::getSelectService(),
-			'index' => Service::sortIndex(),
-			'invoice_preview' => $this->invoice->get_invoice_preview($invoice->id)->getData()->invoice_detail,
+			'invoice_preview' => $this->invoice->getInvoicePreview($invoice->id)->getData()->invoice_detail,
 		];
 
-		return view('invoice.copy', $this->data);
+		return view('invoice.print', $this->data);
 	}
-
 
 	public function update(InvoiceRequest $request, Invoice $invoice)
 	{

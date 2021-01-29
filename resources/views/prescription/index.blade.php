@@ -2,14 +2,14 @@
 
 @section('css')
 <link href="{{ asset('/css/daterangepicker.css') }}" rel="stylesheet">
-{{ Html::style('/css/invoice-print-style.css') }}
+{{ Html::style('/css/prescription-print-style.css') }}
 <style type="text/css">
-	/* .btn-print-invoice{
+	/* .btn-print-prescription{
 		position: absolute;
 		top: 5px;
 		right: 35px;
 	} */
-	div.invoice-detail-expanded{
+	div.prescription-detail-expanded{
 		position: relative;
 	}
 	.dt-server td{
@@ -28,8 +28,8 @@
 				{{-- Action Dropdown --}}
 				@component('components.action')
 					@slot('otherBTN')
-						@can('Invoice Create')
-						<a href="{{route('invoice.create')}}" class="dropdown-item"><i class="fa fa-plus"></i> &nbsp;{{ __('label.buttons.create') }}</a>
+						@can('Prescription Create')
+						<a href="{{route('prescription.create')}}" class="dropdown-item"><i class="fa fa-plus"></i> &nbsp;{{ __('label.buttons.create') }}</a>
 						@endcan
 					@endslot
 				@endcomponent
@@ -48,7 +48,7 @@
 			<div class="row justify-content-center">
 				<div class="col-sm-3">
 					<div class="form-group">
-						{!! Html::decode(Form::label('date', __('label.form.invoice.choose_date')." <small>*</small>")) !!}
+						{!! Html::decode(Form::label('date', __('label.form.prescription.choose_date')." <small>*</small>")) !!}
 						<div class="input-group">
 							<div class="input-group-prepend">
 								<span class="input-group-text"><i class="fa fa-calendar-alt"></i></span>
@@ -61,18 +61,18 @@
 				</div>
 			</div>
 			
-      <table class="table table-bordered dt-server expandable-table" width="100%" id="invoice_table">
+      <table class="table table-bordered dt-server expandable-table" width="100%" id="prescription_table">
 				<thead>
 					<tr>
 						{{-- <th class="text-center" width="30px"></th> --}}
-						<th class="text-center" width="8%">{!! __('module.table.invoice.inv_number') !!}</th>
+						<th class="text-center" width="8%">{!! __('module.table.prescription.code') !!}</th>
 						<th class="text-center" width="8%">{!! __('module.table.date') !!}</th>
-						<th class="text-center" width="25%">{!! __('module.table.invoice.pt_name') !!}</th>
-						<th class="text-center" width="10%">{!! __('module.table.invoice.pt_phone') !!}</th>
-						<th class="text-center" width="7%">{!! __('module.table.invoice.status') !!}</th>
-						<th class="text-center">{!! __('module.table.invoice.sub_total') !!}</th>
-						<th class="text-center">{!! __('module.table.invoice.discount') !!}</th>
-						<th class="text-center">{!! __('module.table.invoice.grand_total') !!}</th>
+						<th class="text-center" width="25%">{!! __('module.table.prescription.pt_name') !!}</th>
+						<th class="text-center" width="10%">{!! __('module.table.prescription.pt_phone') !!}</th>
+						<th class="text-center" width="7%">{!! __('module.table.prescription.status') !!}</th>
+						<th class="text-center">{!! __('module.table.prescription.sub_total') !!}</th>
+						<th class="text-center">{!! __('module.table.prescription.discount') !!}</th>
+						<th class="text-center">{!! __('module.table.prescription.grand_total') !!}</th>
 						<th width="12%" class="text-center">{!! __('module.table.action') !!}</th>
 					</tr>
 				</thead>
@@ -123,8 +123,8 @@
 
 		function getDatatable(from, to) {
 			// Load Data to datatable
-			$('#invoice_table').DataTable().destroy();
-			dataTableInvoice = $('#invoice_table').DataTable({
+			$('#prescription_table').DataTable().destroy();
+			dataTablePrescription = $('#prescription_table').DataTable({
 				"language": (('{{ session('locale') }}' == 'en')? '' : datatableKH),
 				processing: true,
 				serverSide: true,
@@ -134,14 +134,14 @@
 					headers: {
 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 					},
-					url: '{{ route('invoice.getDatatable') }}',
+					url: '{{ route('prescription.getDatatable') }}',
 					data: { 'from' : from, 'to' : to },
 					type: 'post',
 					dataSrc: function(json) { return json.data;  }
 				},
 				columns: [
 					// {data: 'row_detail', defaultContent: '<i class="fa fa-plus-circle text-primary"></i>', className: 'details-control text-center', searchable: false, sortable: false },
-					{data: 'inv_number', name: 'inv_number', className: 'text-center'},
+					{data: 'code', name: 'code', className: 'text-center'},
 					{data: 'date', name: 'date', className: 'text-center'},
 					{data: 'pt_name', name: 'pt_name'},
 					{data: 'pt_phone', name: 'pt_phone'},
@@ -154,39 +154,39 @@
 				order: [[1, "desc"]],
 				rowCallback: function( row, data ) {
 
-					$('td:eq(8)', row).html( `@Can("Invoice Edit")
-																			<button type="button" data-url="/invoice/${ data.id }/print" class="btn btn-sm btn-flat btn-success btn-print-invoice"><i class="fa fa-print"></i></button>
+					$('td:eq(8)', row).html( `@Can("Prescription Edit")
+																			<button type="button" data-url="/prescription/${ data.id }/print" class="btn btn-sm btn-flat btn-success btn-print-prescription"><i class="fa fa-print"></i></button>
 																		@endCan 
-																		@Can("Invoice Edit")
-																			<a href="/invoice/${ data.id }/edit" class="btn btn-sm btn-flat btn-info"><i class="fa fa-pencil-alt"></i></a>
+																		@Can("Prescription Edit")
+																			<a href="/prescription/${ data.id }/edit" class="btn btn-sm btn-flat btn-info"><i class="fa fa-pencil-alt"></i></a>
 																		@endCan 
-																		@Can("Invoice Delete")
+																		@Can("Prescription Delete")
 																			<button type="button" class="btn btn-sm btn-flat btn-danger BtnDeleteConfirm" value="${ data.id }"><i class="fa fa-trash-alt"></i></button>
-																			<form action="/invoice/${ data.id }/delete" id="form-item-${ data.id }" class="sr-only" method="POST" accept-charset="UTF-8">
+																			<form action="/prescription/${ data.id }/delete" id="form-item-${ data.id }" class="sr-only" method="POST" accept-charset="UTF-8">
 																				{{ csrf_field() }}
 																				<input type="hidden" name="_method" value="DELETE" />
 																				<input type="hidden" name="passwordDelete" value="" />
 																			</form>
 																		@endCan` );
 																		
-					$('td:eq(4)', row).html( `@Can("Invoice Status")<span class="badge badge-${ ((data.status==1)? 'success' : '') }">${ ((data.status==1)? 'paid' : 'upaid') }</span>@endCan` );
+					$('td:eq(4)', row).html( `@Can("Prescription Status")<span class="badge badge-${ ((data.status==1)? 'success' : '') }">${ ((data.status==1)? 'paid' : 'upaid') }</span>@endCan` );
 
 				},
 				"initComplete": function( settings, json ) {
 
-					$('#invoice_table [type="search"]').addClass('sr-only');
-					$('#invoice_table_search_input').remove();
-					$('#invoice_table_table_filter').append('<input type="text" class="form-control input-sm" id="invoice_table_search_input">');
-					$('#invoice_table_search_input').keyup(function (e) {
+					$('#prescription_table [type="search"]').addClass('sr-only');
+					$('#prescription_table_search_input').remove();
+					$('#prescription_table_table_filter').append('<input type="text" class="form-control input-sm" id="prescription_table_search_input">');
+					$('#prescription_table_search_input').keyup(function (e) {
 						if (e.keyCode === 13) {
-							$('#invoice_table [type="search"]').val($(this).val()).keyup();
+							$('#prescription_table [type="search"]').val($(this).val()).keyup();
 						}
 					});
 
 					setTimeout( function () {
 						if ($('[name="txt_filter_search"]').val() != '' ) {
-							$('#invoice_table_search_input').val($('[name="txt_filter_search"]').val());
-							$('#invoice_table [type="search"]').val($('[name="txt_filter_search"]').val()).keyup();
+							$('#prescription_table_search_input').val($('[name="txt_filter_search"]').val());
+							$('#prescription_table [type="search"]').val($('[name="txt_filter_search"]').val()).keyup();
 							$('[name="txt_filter_search"]').val('');
 						}
 
@@ -215,7 +215,7 @@
 						}).then((result) => {
 							if (result.value) {
 								$.ajax({
-									url: "/invoice/"+ btn_status.data('id') +"/status",
+									url: "/prescription/"+ btn_status.data('id') +"/status",
 									type: 'post',
 									data: {  },
 								})
@@ -303,7 +303,7 @@
 					};
 
 					jQuery(document).ready(function ($) {
-						$(".btn-print-invoice").on("click", function (e) {
+						$(".btn-print-prescription").on("click", function (e) {
 							var myUrl = $(this).attr('data-url');
 							e.preventDefault();
 							openPrintWindow(myUrl, "to_print");
@@ -316,10 +316,10 @@
 
 		// function getDetail ( data ) {
 
-		// 	var div =  $('<div/>').text('loading...').addClass('invoice-detail-expanded');
+		// 	var div =  $('<div/>').text('loading...').addClass('prescription-detail-expanded');
 		// 	$.ajaxSetup({headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
 		// 	$.ajax({
-		// 		url: "{{ route('invoice.getInvoicePreview') }}",
+		// 		url: "{{ route('prescription.getPrescriptionPreview') }}",
 		// 		method: 'post',
 		// 		data: {
 		// 		 id: data.id,
@@ -327,9 +327,9 @@
 		// 		success: function(rs){
 		// 			div.empty();
 		// 			var htmlString = "";
-		// 			htmlString =  rs.invoice_detail;
+		// 			htmlString =  rs.prescription_detail;
 		// 			div.append(htmlString);
-		// 			div.append('@can("Invoice Print")<button type="button" class="btn btn-flat btn-success btn-print-invoice" data-url="/invoice/'+ rs.invoice_id +'/print" data-title="'+ rs.title +'"><i class="fa fa-print"></i> {{ __("label.buttons.print") }}</button>@endCan');
+		// 			div.append('@can("Prescription Print")<button type="button" class="btn btn-flat btn-success btn-print-prescription" data-url="/prescription/'+ rs.prescription_id +'/print" data-title="'+ rs.title +'"><i class="fa fa-print"></i> {{ __("label.buttons.print") }}</button>@endCan');
 
 		// 			$(function(){
 		// 				function openPrintWindow(url, name) {
@@ -345,7 +345,7 @@
 		// 				};
 
 		// 				jQuery(document).ready(function ($) {
-		// 					$(".btn-print-invoice").on("click", function (e) {
+		// 					$(".btn-print-prescription").on("click", function (e) {
 		// 						var myUrl = $(this).attr('data-url');
 		// 						e.preventDefault();
 		// 						openPrintWindow(myUrl, "to_print");
@@ -353,7 +353,7 @@
 		// 				});
 		// 			});
 
-		// 			$('#print-invoice').html(htmlString);
+		// 			$('#print-prescription').html(htmlString);
 
 		// 		},
 		// 		error: function () {
@@ -370,14 +370,14 @@
 		// // Add event listener for opening and closing details
 		// $('.expandable-table tbody').on('click', 'td.details-control', function () {
 		// 	var tr = $(this).closest('tr');
-		// 	var row = dataTableInvoice.row( tr );
+		// 	var row = dataTablePrescription.row( tr );
 		// 	if ( row.child.isShown() ) {
 		// 		// This row is already open - close it
 		// 		row.child.hide();
 		// 		tr.removeClass('shown');
 		// 		tr.find('td.details-control').html('<i class="fa fa-plus-circle text-primary"></i>');
 		// 	}else {
-		// 		dataTableInvoice.rows().every(function(){
+		// 		dataTablePrescription.rows().every(function(){
 		// 			// If row has details expanded
 		// 			if(this.child.isShown()){
 		// 				// Collapse row details

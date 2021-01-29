@@ -16,8 +16,10 @@ class SettingRepository
 		$setting = Setting::find(1)->update([
 			'clinic_name_kh'=> $request->clinic_name_kh,
 			'clinic_name_en'=> $request->clinic_name_en,
+			'sign_name'=> $request->sign_name,
 			'phone'=> $request->phone,
 			'address'=> $request->address,
+			'description'=> $request->description,
 			'navbar_color'=> $request->navbar_color,
 			'sidebar_color'=> (($request->sidebar_color==null)? 0 : 1)
 			]);

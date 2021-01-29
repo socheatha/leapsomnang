@@ -17,12 +17,11 @@ class CreatePrescriptionsTable extends Migration
           $table->bigIncrements('id');
           $table->date('date');
           $table->integer('code');
-          $table->integer('rate')->default('4000');
           $table->string('pt_no');
           $table->string('pt_name');
           $table->string('pt_age');
           $table->string('pt_gender')->nullable();
-          $table->string('phone')->nullable();
+          $table->string('pt_phone')->nullable();
           $table->tinyInteger('status')->default('0');
           $table->integer('remark')->nullable();
           $table->unsignedBigInteger('patient_id')->nullable();

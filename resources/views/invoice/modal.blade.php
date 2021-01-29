@@ -15,12 +15,7 @@
 							<div class="col-sm-12">
 								<div class="form-group">
 									{!! Html::decode(Form::label('item_service_id', __('label.form.invoice.service')." <small>*</small>")) !!}
-									<div class="input-group">
-										{!! Form::select('item_service_id', $services, '', ['class' => 'form-control select2 service','placeholder' => __('label.form.choose'),'required']) !!}
-										<div class="input-group-append">
-											<button type="button" class="btn btn-flat btn-info add_service"><i class="fa fa-plus-circle"></i></button>
-										</div>
-									</div>
+									{!! Form::select('item_service_id', $services, '', ['class' => 'form-control select2 service','placeholder' => __('label.form.choose'),'required']) !!}
 								</div>
 							</div>
 						</div>
@@ -29,11 +24,17 @@
 						<div class="row">
 							<div class="col-sm-6">
 								<div class="form-group">
-									{!! Html::decode(Form::label('item_price', __('label.form.invoice.price')." <small>*</small>")) !!}
+									{!! Html::decode(Form::label('item_discount', __('label.form.invoice.discount')." <small>*</small>")) !!}
+									{!! Form::select('item_discount', ['0'=>'0%', '0.05'=>'5%', '0.1'=>'10%', '0.15'=>'15%', '0.2'=>'20%', '0.25'=>'25%', '0.3'=>'30%', '0.35'=>'35%', '0.4'=>'40%', '0.45'=>'45%', '0.5'=>'50%', '0.55'=>'55%', '0.6'=>'60%', '0.65'=>'65%', '0.7'=>'70%', '0.75'=>'75%', '0.8'=>'80%', '0.85'=>'85%', '0.9'=>'90%', '0.95'=>'95%', '1'=>'100%'], '0', ['class' => 'form-control select2','required']) !!}
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
+									{!! Html::decode(Form::label('item_price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
 									{!! Form::text('item_price', '', ['class' => 'form-control','placeholder' => 'price','required']) !!}
 								</div>
 							</div>
-							<div class="col-sm-6">
+							<div class="col-sm-3">
 								<div class="form-group">
 									{!! Html::decode(Form::label('item_qty', __('label.form.invoice.qty')." <small>*</small>")) !!}
 									{!! Form::text('item_qty', '', ['class' => 'form-control','placeholder' => 'qauntity','required']) !!}

@@ -15,12 +15,13 @@ class CreatePrescriptionDetailsTable extends Migration
     {
       Schema::create('prescription_details', function (Blueprint $table) {
           $table->bigIncrements('id');
-          $table->integer('qty');
-          $table->boolean('morning')->default('0');
-          $table->boolean('noon')->default('0');
-          $table->boolean('evening')->default('0');
-          $table->boolean('night')->default('0');
-          $table->text('description');
+          $table->string('medicine_name');
+          $table->string('medicine_usage');
+          $table->double('morning')->default('1');
+          $table->double('afternoon')->default('1');
+          $table->double('evening')->default('1');
+          $table->double('night')->default('1');
+          $table->text('description')->nullable();
           $table->integer('index');
           $table->unsignedBigInteger('medicine_id');
           $table->unsignedBigInteger('prescription_id');
@@ -35,8 +36,8 @@ class CreatePrescriptionDetailsTable extends Migration
 
           $table->foreign('prescription_id')
               ->references('id')->on('prescriptions')
-              ->onDelete('no action')
-              ->onUpdate('no action');
+              ->onDelete('cascade')
+              ->onUpdate('cascade');
 
           $table->foreign('created_by')
               ->references('id')->on('users')

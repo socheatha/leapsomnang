@@ -1,4 +1,8 @@
 @font-face{
+  src: url('/fonts/cour.ttf');
+  font-family: 'Courier New';
+}
+@font-face{
   src: url('/fonts/calibri/calibrib.ttf');
   font-family: 'Calibri Bold';
 }
@@ -97,6 +101,10 @@ td.details-control {
 .roboto_b,
 .roboto_b *{
   font-family: 'Roboto Bold' !important;
+}
+.courier_new,
+.courier_new *{
+  font-family: 'Courier New' !important;
 }
 .roboto_r{
   font-family: 'Roboto Regular' !important;

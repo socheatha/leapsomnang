@@ -2,10 +2,10 @@
 <html>
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-		<title>Invoice</title>
+		<title>Prescription</title>
 		{{ Html::style('/css/bootstrap3.css') }}
 		{{ Html::style('/css/custom-style.css') }}
-		{{ Html::style('/css/invoice-print-style.css') }}
+		{{ Html::style('/css/prescription-print-style.css') }}
 		<style>
 			img{
 				max-width: 100%;
@@ -15,7 +15,7 @@
 	</head>
 	<body>
 
-		{!! $invoice_preview !!}
+		{!! $prescription_preview !!}
 
 	</body>
  </html>

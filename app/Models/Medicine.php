@@ -12,10 +12,13 @@ class Medicine extends BaseModel
 	protected $table = 'medicines';
 
 	protected $fillable = [
-		'name', 'code', 'description', 'created_by', 'updated_by',
+		'name', 'code', 'usage_id', 'description', 'created_by', 'updated_by',
 	];
 
 
 
+	public function usage(){
+		return $this->belongsTo(Usage::class,'usage_id');
+	}
 
 }

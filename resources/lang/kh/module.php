@@ -29,6 +29,7 @@ return [
 
     'medicine' => [
 	    'code' => 'កូដ',
+	    'usage' => 'ការប្រើប្រាស់',
     ],
 
     'service' => [
@@ -44,6 +45,16 @@ return [
 	    'discount' => 'បញ្ចុះតម្លៃ',
 	    'status' => 'ការបង់ប្រាក់',
 	    'exchange_rate' => 'អត្រាប្ដូរប្រាក់',
+    ],
+
+    'prescription' => [
+	    'code' => 'លេខវេជ្ជបញ្ជា',
+	    'pt_name' => 'ឈ្មោះអ្នកជំងឺ',
+	    'pt_phone' => 'លេខទូរស័ព្ទ',
+	    'sub_total' => 'តម្លៃ',
+	    'grand_total' => 'តម្លៃសរុបចុងក្រោយ',
+	    'discount' => 'បញ្ចុះតម្លៃ',
+	    'status' => 'ការបង់ប្រាក់',
     ],
 
     'user' => [

@@ -38,6 +38,8 @@
 					<th width="30px">{!! __('module.table.no') !!}</th>
 					<th width="10%">{!! __('module.table.medicine.code') !!}</th>
 					<th>{!! __('module.table.name') !!}</th>
+					<th width="10%">{!! __('module.table.medicine.usage') !!}</th>
+					<th>{!! __('module.table.description') !!}</th>
 					<th width="10%">{!! __('module.table.action') !!}</th>
 				</tr>
 			</thead>
@@ -47,6 +49,8 @@
 						<td class="text-center">{{ ++$i }}</td>
 						<td>{{ $medicine->code }}</td>
 						<td>{{ $medicine->name }}</td>
+						<td class="text-center">{{ $medicine->usage->name }}</td>
+						<td>{{ $medicine->description }}</td>
 						<td class="text-right">
 
 							@can('Medicine Edit')

@@ -88,6 +88,7 @@
 			$('.todo-list').append(	`<li class="${ id }">
 																<input type="hidden" name="service_id[]" value="${ $('[name="item_service_id"]').val() }" />
 																<input type="hidden" name="price[]" value="${ $('[name="item_price"]').val() }" />
+																<input type="hidden" name="discount[]" value="${ $('[name="item_discount"]').val() }" />
 																<input type="hidden" name="qty[]" value="${ $('[name="item_qty"]').val() }" />
 																<input type="hidden" name="description[]" value="${ $('[name="item_description"]').val() }" />
 																<!-- drag handle -->
@@ -103,6 +104,7 @@
 															</li>`);
 			$('[name="item_service_id"]').val('').trigger('change');
 			$('[name="item_price"]').val( '' );
+			$('[name="item_discount"]').val( '0' ).trigger('change');
 			$('[name="item_qty"]').val( '' );
 			$('[name="item_description"]').val( '' );
 			$('#create_invoice_item_modal').modal('hide');
@@ -117,6 +119,10 @@
 				title: "{{ __('alert.swal.title.empty_field') }}",
 				text: "{{ __('alert.swal.text.empty_field') }}",
 				confirmButtonText: "{{ __('alert.swal.button.yes') }}",
+			}).then((result) => {
+				if (result.value) {
+					$('#create_invoice_item_modal').modal('show');
+				}
 			})
 		}
 	});

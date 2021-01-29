@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Medicine;
+use App\Models\Usage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MedicineRequest;
@@ -28,9 +29,9 @@ class MedicineController extends Controller
 		return view('medicine.index', $this->data);
 	}
 
-	public function getSelectDistrict(Request $request)
+	public function getDetail(Request $request)
 	{
-		return $this->medicines->getSelectDistrict($request);
+		return $this->medicines->getDetail($request);
 	}
 
 

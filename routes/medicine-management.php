@@ -11,7 +11,8 @@ Route::group(['prefix' => 'medicine', 'as' => 'medicine.'], function () {
 	Route::get('/{medicine}/edit', 'MedicineController@edit')->name('edit')->middleware('can:Medicine Edit');
 	Route::put('/{medicine}/update', 'MedicineController@update')->name('update')->middleware('can:Medicine Edit');
 	Route::delete('/{medicine}/delete', 'MedicineController@destroy')->name('destroy')->middleware('can:Medicine Delete');
-
+	
+	Route::post('/getDetail', 'MedicineController@getDetail')->name('getDetail');
 });
 
 

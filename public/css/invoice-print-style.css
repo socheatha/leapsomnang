@@ -1,157 +1,72 @@
-.no-border{
-	border: none !important;
-}
-.border-color-black{
-	border-color: #000 !important;
-	border-left: 1px solid #000 !important;
-}
-.mt-1{
-	margin-top: 4px;
-}
-.pr_name_en{
-	text-transform: uppercase !important;
-}
-.invoice-print{
-	background: #fff;
-	border: 1px solid #ddd;
-	margin: 25px auto;
-	width: 21.2cm;
-	height: 29.7cm;
-	position: relative;
-	font-family: 'myriad_pro_r' !important;
-}
+
 .invoice-print *{
-	font-size: 13px;
-	color: #000;
-	font-family: 'myriad_pro_r', 'KHMERMEF1';
+  font-family: 'Courier New','Khmer OS Battambang';
 }
 
-.invoice-print .data-section thead th{
-	padding: 7px 0;
-}
-.invoice-print .data-section h4{
-	margin: 0;
-}
-
-.print-header-1{
-	padding: 0.8cm 1.4cm 0 1.15cm;
-}
-.print-header-2{
-	padding: 0 2cm 0 2cm;
-}
-.print-header-2 .title{
-	margin-top: -0.4cm;
-	padding: 0;
-}
-.print-header-2 .title h3.invoice-title-kh,
-.print-header-2 .title h3.invoice-title-kh *{
-	font-size: 16px !important;
-	text-align: center;
-	margin-top: -0.21cm;
-}
-.print-header-2 .title h3.invoice-title-en,
-.print-header-2 .title h3.invoice-title-en *{
-	font-size: 16px !important;
-	text-align: center;
-	margin-top: 0.1cm;
-}
-.print-header-2 table.num-date{
-	margin: 0.4cm 0 0 0;
-}
-.print-header-2 table.num-date td{
-	padding: 3px 6px;
-}
-.print-header-2 table.num-date td:last-child{
-	border: 1px solid #000;
-}
-.print-header-2 table.num-date tr:last-child td:last-child{
-	border-top: 3px double #000;
-}
-.print-header-2 table.info{
-	margin-bottom: 0.3cm;
-}
-.print-header-2 table.info td{
-	padding: 2px 0;
-}
-.print-header-2 table.info td div{
-	border-bottom: 1px dashed #000;
-	padding: 2px 0;
-}
-.print-header-2 table.info td div .title{
+.invoice-print{
+	width: 21cm;
+	height: 29.7cm;
+	margin: 0 auto;
 	background: #fff;
+	border: 1px solid #ededed;
+	padding: 1cm;
+}
+.invoice-print .table-information td{
 	padding-bottom: 8px;
 }
-.print-body{
-	padding: 0 2cm 0 2cm;
+.invoice-print .table-detail thead th,
+.invoice-print .table-detail tfoot th:nth-child(3),
+.invoice-print .table-detail tfoot th:nth-child(4),
+.invoice-print .table-detail td{
+	padding: 6px;
+	border: 1px solid #ededed;
 }
-.print-body .data-section th{
-	border: 1px solid #000 !important;
-	border-bottom: 3px double #000 !important;
-	text-align: center;
+
+.invoice-print .table-detail tfoot th{
+	padding: 6px;
 }
-.print-body .data-section th h4{
-	font-size: 13px !important;
-	margin-top: 3px !important;
+
+.invoice-print small{
+	font-size: 10px !important;
 }
-.print-body .data-section tbody tr td{
-	border-left: 1px solid #000 !important;
-	border-right: 1px solid #000 !important;
-	border-bottom: 1px dashed #000 !important;
-	padding: 5px;
+.sign_box{
+	height: 60px;
 }
-.print-body .data-section tbody tr.last-tr td,
-.print-body .data-section tbody tr:last-child td{
-	border-bottom: 1px solid #000 !important;
+
+.prescription-print *{
+  font-family: 'Courier New','Khmer OS Battambang';
 }
-.print-body .data-section tfoot tr td{
-	padding: 5px;
+
+.prescription-print{
+	width: 21cm;
+	height: 29.7cm;
+	margin: 0 auto;
+	background: #fff;
+	border: 1px solid #ededed;
+	padding: 1cm;
 }
-.print-body .data-section tfoot tr td:last-child{
-	border-left: 1px solid #000;
-	border-right: 1px solid #000;
-	border-bottom: 1px dashed #000;
-	font-weight: bold;
+.prescription-print .table-information td{
+	padding-bottom: 8px;
 }
-.print-body .data-section tfoot tr:last-child td:last-child{
-	border-bottom: 1px solid #000;
+.prescription-print .table-detail thead th,
+.prescription-print .table-detail td{
+	font-size: 13px;
+	padding: 6px;
+	border: 1px solid #ededed;
 }
-.print-body .signature-section .sinature_box{
-	height: 100px;
+
+.prescription-print .table-detail tfoot th{
+	padding: 6px;
 }
-.print-footer{
-	max-width: 100%;
-	position: absolute;
-	padding: 0.8cm 1.4cm 0.2cm 1.4cm;
-	left: 0;
-	bottom: 0;
-}
-.print-area{
-	display: none;
-}
-.qr-barcode img{
-	position: absolute;
-}
-.qr-barcode img.img-qr{
-	top: 5.5cm;
-	left: 4.2cm;
-	display: none;
-}
-.qr-barcode img.img-barcode{
-	top: 5.8cm;
-	right: 2.25cm;
+
+.prescription-print small{
+	font-size: 10px !important;
 }
 
 @media print {
 	@page {
 		size: A4;
 		margin: 0;
-	}
-	
-	.wrapper{
-		display: none;
-	}
-	.print-area{
-		display: block;
 	}
 
 	.invoice-print{
@@ -160,23 +75,17 @@
 		box-shadow: none;
 		border: none;
 	}
-
-	.print-header table.info td div .title{
-		background: #fff !important;
+	
+	td .color_blue{
+		color: blue !important;
 		-webkit-print-color-adjust: exact !important;
 		-moz-print-color-adjust: exact !important;
 		-o-print-color-adjust: exact !important;
 	}
-}
-
-.select2-container{
-	display: block;
-}
-
-.todo-list{
-	margin: 15px 0;
-}
-
-p{
-	margin: 0;
+	td .color_red{
+		color: red !important;
+		-webkit-print-color-adjust: exact !important;
+		-moz-print-color-adjust: exact !important;
+		-o-print-color-adjust: exact !important;
+	}
 }

@@ -16,6 +16,16 @@ class MedicineRepository
 		return Medicine::all();
 	}
 
+	public function getDetail($request)
+	{
+		$medicine = Medicine::find($request->id);
+		// dd($medicine->usage->name);
+		$name = $medicine->usage->name;
+		return response()->json([
+			'medicine' => $medicine ,
+		]);
+	}
+
 	public function create($request)
 	{
 

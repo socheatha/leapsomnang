@@ -47,16 +47,30 @@
 						</div>
 						<div class="col-sm-3">
 							<div class="form-group">
+								{!! Html::decode(Form::label('sign_name', __('label.form.setting.sign_name'))) !!}
+								{!! Form::text('sign_name', Auth::user()->setting()->sign_name, ['class' => 'form-control '. (($errors->has("sign_name"))? "is-invalid" : ""),'placeholder' => 'sign name']) !!}
+								{!! $errors->first('sign_name', '<div class="invalid-feedback">:message</div>') !!}
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<div class="form-group">
 								{!! Html::decode(Form::label('phone', __('label.form.phone'))) !!}
-								{!! Form::text('phone', Auth::user()->setting()->phone, ['class' => 'form-control '. (($errors->has("phone"))? "is-invalid" : ""),'placeholder' => 'commune']) !!}
+								{!! Form::text('phone', Auth::user()->setting()->phone, ['class' => 'form-control '. (($errors->has("phone"))? "is-invalid" : ""),'placeholder' => 'phone']) !!}
 								{!! $errors->first('phone', '<div class="invalid-feedback">:message</div>') !!}
 							</div>
 						</div>
-						<div class="col-sm-9">
+						<div class="col-sm-6">
 							<div class="form-group">
 								{!! Html::decode(Form::label('address', __('label.form.address'))) !!}
-								{!! Form::text('address', Auth::user()->setting()->address, ['class' => 'form-control '. (($errors->has("address"))? "is-invalid" : ""),'placeholder' => 'commune']) !!}
+								{!! Form::text('address', Auth::user()->setting()->address, ['class' => 'form-control '. (($errors->has("address"))? "is-invalid" : ""),'placeholder' => 'address']) !!}
 								{!! $errors->first('address', '<div class="invalid-feedback">:message</div>') !!}
+							</div>
+						</div>
+						<div class="col-sm-12">
+							<div class="form-group">
+								{!! Html::decode(Form::label('description', __('label.form.description'))) !!}
+								{!! Form::text('description', Auth::user()->setting()->description, ['class' => 'form-control '. (($errors->has("description"))? "is-invalid" : ""),'placeholder' => 'description']) !!}
+								{!! $errors->first('description', '<div class="invalid-feedback">:message</div>') !!}
 							</div>
 						</div>
 						<div class="col-sm-9">

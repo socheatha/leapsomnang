@@ -99,6 +99,7 @@ return [
 		'export_all' => 'នាំចេញទាំងអស់',
 		'edit_order' => 'ផ្លាសប្ដូរលំដាប់',
 		'invoice_detail' => 'វិក្កយបត្រលម្អិត',
+		'prescription_detail' => 'វេជ្ជបញ្ជាលម្អិត',
 		'list' => 'បញ្ជីឈ្មោះ',
 		'select' => 'ជ្រើសរើស',
 		'change' => 'ផ្លាសប្ដូរ',
@@ -156,6 +157,7 @@ return [
 		],
 
 		'invoice' => [
+			'choose_date' => 'ជ្រើសរើសកាលកំណត់',
 			'inv_number' => 'លេខរៀវិក្កយបត្រ',
 			'exchange_rate' => 'អត្រាប្ដូរប្រាក់',
 			'patient' => 'អ្នកជំងឺ',
@@ -164,9 +166,29 @@ return [
 			'pt_no' => 'លេខរៀងអ្នកជំងឺ',
 			'pt_age' => 'អាយុអ្នកជំងឺ',
 			'pt_gender' => 'ភេទអ្នកជំងឺ',
+	    'discount' => 'បញ្ចុះតម្លៃ',
 			'service' => 'សេវាកម្ម',
 			'price' => 'តម្លៃ',
 			'qty' => 'បរិមាណ',
+		],
+
+		'prescription' => [
+			'choose_date' => 'ជ្រើសរើសកាលកំណត់',
+			'code' => 'លេខរៀងវេជ្ជបញ្ជា',
+			'patient' => 'អ្នកជំងឺ',
+			'pt_name' => 'ឈ្មោះអ្នកជំងឺ',
+			'pt_phone' => 'ទូរស័ព្ទអ្នកជំងឺ',
+			'pt_no' => 'លេខរៀងអ្នកជំងឺ',
+			'pt_age' => 'អាយុអ្នកជំងឺ',
+			'pt_gender' => 'ភេទអ្នកជំងឺ',
+	    'discount' => 'បញ្ចុះតម្លៃ',
+			'medicine' => 'ថ្នាំ',
+			'morning' => 'ព្រឹក',
+			'afternoon' => 'ថ្ងៃ',
+			'evening' => 'ល្ងាច',
+			'night' => 'យប់',
+			'medicine_name' => 'ឈ្មោះថ្នាំ',
+			'medicine_usage' => 'របៀបប្រើប្រាស់',
 		],
 
 		'service' => [
@@ -175,6 +197,7 @@ return [
 
 		'medicine' => [
 			'code' => 'លេខកូដ',
+			'usage' => 'ការប្រើប្រាស់',
 		],
 
 		'doctor' => [
@@ -216,9 +239,10 @@ return [
 		'setting' => [
 			'clinic_name_kh' => 'ឈ្មោះគ្លីនិចជាភាសាខ្មែរ',
 			'clinic_name_en' => 'ឈ្មោះគ្លីនិចជាអង់គ្លេស',
+			'sign_name' => 'ឈ្មោះអ្នកចុះហត្ថលេខា',
 			'logo' => 'ឡូហ្គោ',
 			'sidebar_color' => 'ពណ៌កម្មវិធីរបាម៉ឹនុយចំហៀង',
-			'navbar_top_color' => 'ពណ៌របាលើ',
+			'navbar_color' => 'ពណ៌របាលើ',
 		],
 
 		'district' => [

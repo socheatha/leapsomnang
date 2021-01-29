@@ -7,10 +7,12 @@
 			top: -30px;
 			right: 55px;
 		}
+
 	</style>
 @endsection
 
 @section('content')
+
 <div class="card">
 	<div class="card-header">
 		<b>{!! Auth::user()->subModule() !!}</b>
@@ -60,8 +62,6 @@
 <div class="pb-2 print-preview">
 	{!! $invoice_preview !!}
 </div>
-
-@include('components.confirm_password')
 
 <!--Invoice Detail Modal -->
 <div class="modal fade" id="edit_invoice_detail_modal">
@@ -153,12 +153,18 @@
 					<div class="col-sm-6">
 						<div class="row">
 							<div class="col-sm-6">
+								<div class="form-group">
+									{!! Html::decode(Form::label('edit_item_discount', __('label.form.invoice.discount')." <small>*</small>")) !!}
+									{!! Form::select('edit_item_discount', ['0'=>'0%', '0.05'=>'5%', '0.1'=>'10%', '0.15'=>'15%', '0.2'=>'20%', '0.25'=>'25%', '0.3'=>'30%', '0.35'=>'35%', '0.4'=>'40%', '0.45'=>'45%', '0.5'=>'50%', '0.55'=>'55%', '0.6'=>'60%', '0.65'=>'65%', '0.7'=>'70%', '0.75'=>'75%', '0.8'=>'80%', '0.85'=>'85%', '0.9'=>'90%', '0.95'=>'95%', '1'=>'100%'], '0', ['class' => 'form-control select2','required']) !!}
+								</div>
+							</div>
+							<div class="col-sm-3">
 								<div class="form-group invoice_item_price">
 									{!! Html::decode(Form::label('edit_item_price', __('label.form.invoice.price')." <small>*</small>")) !!}
 									{!! Form::text('edit_item_price', '', ['class' => 'form-control','placeholder' => 'price','required']) !!}
 								</div>
 							</div>
-							<div class="col-sm-6">
+							<div class="col-sm-3">
 								<div class="form-group invoice_item_qty">
 									{!! Html::decode(Form::label('edit_item_qty', __('label.form.invoice.qty')." <small>*</small>")) !!}
 									{!! Form::text('edit_item_qty', '', ['class' => 'form-control','placeholder' => 'qauntity','required']) !!}
@@ -184,6 +190,8 @@
 	<!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+@include('components.confirm_password')
 
 @include('invoice.modal')
 <span class="sr-only" id="deleteAlert" data-title="{{ __('alert.swal.title.delete', ['name' => Auth::user()->module()]) }}" data-text="{{ __('alert.swal.text.unrevertible') }}" data-btnyes="{{ __('alert.swal.button.yes') }}" data-btnno="{{ __('alert.swal.button.no') }}" data-rstitle="{{ __('alert.swal.result.title.success') }}" data-rstext="{{ __('alert.swal.result.text.delete') }}"> Delete Message </span>
@@ -312,6 +320,7 @@
 		.done(function( result ) {
 			$('[name="edit_item_service_id"]').val(result.invoice_detail.service_id).trigger('change');
 			$('[name="edit_item_price"]').val(result.invoice_detail.amount);
+			$('[name="edit_item_discount"]').val(result.invoice_detail.discount).trigger('change');
 			$('[name="edit_item_qty"]').val(result.invoice_detail.qty);
 			$('[name="edit_item_description"]').val(result.invoice_detail.description);
 			$('[name="edit_item_id"]').val(result.invoice_detail.id);
@@ -384,6 +393,7 @@
 				id: $('[name="edit_item_id"]').val(),
 				qty: $('[name="edit_item_qty"]').val(),
 				price: $('[name="edit_item_price"]').val(),
+				discount: $('[name="edit_item_discount"]').val(),
 				service_id: $('[name="edit_item_service_id"]').val(),
 				description: $('[name="edit_item_description"]').val()
 			},
@@ -407,6 +417,7 @@
 			if (data.success) {
 				$('[name="edit_item_service_id"]').val('').trigger('change');
 				$('[name="edit_item_price"]').val('');
+				$('[name="edit_item_discount"]').val('').trigger('change');
 				$('[name="edit_item_qty"]').val('');
 				$('[name="edit_item_description"]').val('');
 				$('[name="edit_item_id"]').val('');
@@ -473,6 +484,7 @@
 																		</div>
 																	</li>`);
 					$('[name="item_service_id"]').val('').trigger('change');
+					$('[name="item_discount"]').val('0').trigger('change');
 					$('[name="item_price"]').val( '' );
 					$('[name="item_qty"]').val( '' );
 					$('[name="item_description"]').val( '' );
