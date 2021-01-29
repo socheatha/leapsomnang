@@ -85,7 +85,7 @@ class InvoiceRepository
 		$gtt_dollars = $gtt[0];
 		$gtt_cents = $gtt[1];
 
-		$grand_total_in_word = Auth::user()->num2khtext($gtt_dollars, false) . 'ដុល្លារ' . (($gtt_cents>0)? ' និង '. Auth::user()->num2khtext($gtt_cents, false) .'សេន' : '');
+		$grand_total_in_word = Auth::user()->num2khtext($gtt_dollars, false) . 'ដុល្លារ' . (($gtt_cents>0)? ' និង'. Auth::user()->num2khtext($gtt_cents, false) .'សេន' : '');
 		$grand_total_riel_in_word = Auth::user()->num2khtext(round($grand_total*$invoice->rate, 0), false);
 
 		$invoice_detail = '<section class="invoice-print">
@@ -177,7 +177,7 @@ class InvoiceRepository
 													<tfoot>
 														<tr>
 															<th colspan="2"><small>*** '. $grand_total_in_word .' ***</small></th>
-															<th colspan="2" class="text-right">សរុប/Total</th>
+															<th colspan="2" width="30%" class="text-right">សរុប/Total</th>
 															<th class="text-right sub_total_riel">'. $total_riel .' ៛</th>
 															<th class="text-right sub_total_dollar"><span class="float-left pull-left">$</span> '. number_format($total, 2) .'</th>
 														</tr>
