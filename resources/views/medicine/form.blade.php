@@ -17,8 +17,8 @@
 	</div>
 	<div class="col-sm-3">
 		<div class="form-group">
-			{!! Html::decode(Form::label('usage_id', __('label.form.medicine.usage'))) !!}
-			{!! Form::select('usage_id', $usages, ((isset($medicine->usage_id))? $medicine->usage_id : '' ), ['class' => 'form-control select2 usage_id','placeholder' => __('label.form.choose')]) !!}
+			{!! Html::decode(Form::label('usage_id', __('label.form.medicine.usage') .' <small>*</small>')) !!}
+			{!! Form::select('usage_id', $usages, ((isset($medicine->usage_id))? $medicine->usage_id : '' ), ['class' => 'form-control select2 usage_id','placeholder' => __('label.form.choose'), 'required']) !!}
 		</div>
 	</div>
 

@@ -231,6 +231,7 @@ class InvoiceRepository
 			'pt_name' => $request->pt_name,
 			'pt_gender' => $request->pt_gender,
 			'pt_phone' => $request->pt_phone,
+			'status' => (($request->status==null)? 0 : 1),
 			'remark' => $request->remark,
 			'patient_id' => $request->patient_id,
 			'created_by' => Auth::user()->id,
@@ -255,30 +256,6 @@ class InvoiceRepository
 
 		return $invoice;
 	}
-
-	// public function create_invoice_detail($request)
-	// {
-
-	// 	$invoice = Invoice::find($request->invoice_id);
-	// 	$last_item = $invoice->invoice_details()->first();
-	// 	$index = (($last_item !== null) ? $last_item->index + 1 : 1);
-	// 	$service_id = explode(":;:", $request->service_id);
-
-	// 	$invoice_detail = InvoiceDetail::create([
-	// 		'amount' => $request->price,
-	// 		'discount' => $request->discount,
-	// 		'qty' => $request->qty,
-	// 		'description' => $request->description,
-	// 		'index' => $index,
-	// 		'service_id' => $service_id[0],
-	// 		'invoice_id' => $request->invoice_id,
-	// 		'created_by' => Auth::user()->id,
-	// 		'updated_by' => Auth::user()->id,
-	// 	]);
-
-	// 	return $invoice_detail;
-	// }
-
 
 	public function invoiceDetailStore($request)
 	{
@@ -326,23 +303,6 @@ class InvoiceRepository
 			'invoice_preview' => $json->invoice_detail,
 		]);
 	}
-	
-	// public function update_invoice_detail($request)
-	// {
-	// 	$invoice = Invoice::find($request->edit_invoice_id);
-	// 	$service_id = explode(":;:", $request->edit_service_id);
-	// 	$invoice_detail = InvoiceDetail::find($request->edit_id);
-	// 	$invoice_detail->update([
-	// 		'amount' => $request->edit_price,
-	// 		'discount' => $request->edit_discount,
-	// 		'qty' => $request->edit_qty,
-	// 		'description' => $request->edit_description,
-	// 		'service_id' => $service_id[0],
-	// 		'updated_by' => Auth::user()->id,
-	// 	]);
-		
-	// 	return $invoice_detail;
-	// }
 
 	public function save_order($request)
 	{
@@ -370,6 +330,7 @@ class InvoiceRepository
 			'pt_name' => $request->pt_name,
 			'pt_gender' => $request->pt_gender,
 			'pt_phone' => $request->pt_phone,
+			'status' => (($request->status==null)? 0 : 1),
 			'remark' => $request->remark,
 			'patient_id' => $request->patient_id,
 			'updated_by' => Auth::user()->id,
@@ -379,10 +340,13 @@ class InvoiceRepository
 
 	}
 
-	public function status($invoice, $status)
+	public function status($request)
 	{
+		return false;
+		$invoice = Invoice::find($request->id);
+		$status = $invoice->status;
 		$invoice->update([
-			'status' => $status,
+			'status' => (($status==0)? '1' : '0'),
 		]);
 
 		return $invoice;

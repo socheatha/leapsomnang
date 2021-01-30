@@ -71,8 +71,7 @@
 								{!! Html::decode(Form::label('status', __('label.form.user.status'))) !!}
 								<div class="togglebutton mt-1">
 									<label>
-										{!! Form::checkbox('status',((isset($user->status))? $user->status : 1 ), ((isset($user->status))?
-										(($user->status==1)? true : false ) : true)) !!}
+										{!! Form::checkbox('status',((isset($user->status))? $user->status : 1 ), ((isset($user->status))? (($user->status==1)? true : false ) : true)) !!}
 										<span class="toggle toggle-success"></span>
 									</label>
 								</div>

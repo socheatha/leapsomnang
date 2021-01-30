@@ -25,7 +25,7 @@ Route::group(['prefix' => 'invoice', 'as' => 'invoice.', 'namespace' => 'Invoice
 	Route::put('/{invoice}/update', 'InvoiceController@update')->name('update')->middleware('can:Invoice Edit');
 	Route::delete('/{invoice}/delete', 'InvoiceController@destroy')->name('destroy')->middleware('can:Invoice Delete');
 	Route::get('/{invoice}/print', 'InvoiceController@print')->name('print');
-	Route::post('/{invoice}/status', 'InvoiceController@status')->name('status');
+	Route::post('/status', 'InvoiceController@status')->name('status');
 	
 	
 	Route::put('/{invoice}/save_order', 'InvoiceController@save_order')->name('save_order');

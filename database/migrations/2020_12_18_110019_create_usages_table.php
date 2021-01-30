@@ -53,6 +53,12 @@ class CreateUsagesTable extends Migration
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
           ],
+          [
+            'name' => 'ផ្សេងៗ',
+            'description' => '',
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+          ],
         ];
         DB::table('usages')->insert($usages);
     }

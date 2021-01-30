@@ -18,11 +18,22 @@
           </div>
         </div>
 
-        <div class="col-sm-12">
+        <div class="col-sm-8">
           <div class="form-group">
             {!! Html::decode(Form::label('exchange_rate', __('label.form.invoice.exchange_rate')." <small>*</small>")) !!}
             {!! Form::text('exchange_rate', ((isset($invoice->rate))? $invoice->rate : '4000' ), ['class' => 'form-control is_integer '. (($errors->has("exchange_rate"))? "is-invalid" : ""), 'placeholder' => 'exchange rate', 'autocomplete' => 'off','required']) !!}
             {!! $errors->first('exchange_rate', '<div class="invalid-feedback">:message</div>') !!}
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group text-center">
+            {!! Html::decode(Form::label('status', __('label.form.invoice.status'))) !!}
+            <div class="togglebutton mt-1">
+              <label>
+                {!! Form::checkbox('status',((isset($invoice->status))? $invoice->status : 1 ), ((isset($invoice->status))? (($invoice->status==1)? true : false ) : true)) !!}
+                <span class="toggle toggle-success"></span>
+              </label>
+            </div>
           </div>
         </div>
 

@@ -1811,6 +1811,13 @@ class CreateDefaultDatasTables extends Migration
 				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
 				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
 			],
+			[
+				'name' => 'Setting Index',
+				'guard_name' => 'web',
+				'description' => 'Change Setting',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
 		];
 		DB::table('permissions')->insert($permissions);
 		

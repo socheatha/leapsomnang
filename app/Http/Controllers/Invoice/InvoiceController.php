@@ -207,14 +207,10 @@ class InvoiceController extends Controller
 		}
 	}
 
-	public function status(Invoice $invoice, $status)
+	public function status(Request $request)
 	{
-		if ($this->invoice->status($invoice, $status)) {
-
-			// Redirect
-			return redirect()->route('invoice.index')
-				->with('success', __('alert.crud.success.update', ['name' => Auth::user()->module()]) . str_pad($invoice->inv_number, 6, "0", STR_PAD_LEFT));
-		}
+		// $invoice = Invoice::find($request->id);
+		return $this->invoice->status($request);
 	}
 
 

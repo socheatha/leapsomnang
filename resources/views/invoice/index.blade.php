@@ -54,8 +54,8 @@
 								<span class="input-group-text"><i class="fa fa-calendar-alt"></i></span>
 							</div>
 							<input type="text" class="form-control pull-right" id="dateRangePicker" autocomplete="off">
-							<input type="hidden" class="form-control" id="from">
-							<input type="hidden" class="form-control" id="to">
+							<input type="hidden" class="form-control" value="{{ date('Y-m-d') }}" id="from">
+							<input type="hidden" class="form-control" value="{{ date('Y-m-d') }}" id="to">
 						</div>
 					</div>
 				</div>
@@ -69,10 +69,10 @@
 						<th class="text-center" width="8%">{!! __('module.table.date') !!}</th>
 						<th class="text-center" width="25%">{!! __('module.table.invoice.pt_name') !!}</th>
 						<th class="text-center" width="10%">{!! __('module.table.invoice.pt_phone') !!}</th>
-						<th class="text-center" width="7%">{!! __('module.table.invoice.status') !!}</th>
 						<th class="text-center">{!! __('module.table.invoice.sub_total') !!}</th>
 						<th class="text-center">{!! __('module.table.invoice.discount') !!}</th>
 						<th class="text-center">{!! __('module.table.invoice.grand_total') !!}</th>
+						<th class="text-center" width="7%">{!! __('module.table.invoice.status') !!}</th>
 						<th width="12%" class="text-center">{!! __('module.table.action') !!}</th>
 					</tr>
 				</thead>
@@ -120,6 +120,52 @@
 	
 		getDatatable(moment().startOf('month').format('YYYY-MM-DD'), moment().endOf('month').format('YYYY-MM-DD'));
 
+		function updateStatus(id) {
+			
+			const swalWithBootstrapButtons = Swal.mixin({
+				customClass: {
+					confirmButton: 'btn btn-success btn-flat ml-2 py-2 px-3',
+					cancelButton: 'btn btn-danger btn-flat mr-2 py-2 px-3'
+				},
+				buttonsStyling: false
+			})
+			swalWithBootstrapButtons.fire({
+			title: '{{ __("alert.swal.title.invoice_status") }}',
+			icon: 'question',
+			showCancelButton: true,
+			confirmButtonText: '{{ __("alert.swal.button.yes") }}',
+			cancelButtonText: '{{ __("alert.swal.button.no") }}',
+			reverseButtons: true
+			}).then((result) => {
+				if (result.value) {
+					$.ajax({
+						url: "{{ route('invoice.status') }}",
+						method: 'post',
+						data: {
+								id: id,
+						},
+						success: function(data){
+							var from = $('#from').val();
+							var to = $('#to').val();
+							getDatatable(from, to);
+							Swal.fire({
+								icon: 'success',
+								title: "{{ __('alert.swal.result.title.success') }}",
+								confirmButtonText: "{{ __('alert.swal.button.yes') }}",
+								timer: 2500
+							})
+						},
+						error: function () {
+							Swal.fire({
+								icon: 'error',
+								title: 'Oops...',
+								text: 'Something went wrong!',
+							})
+						}
+					});
+				}
+			})
+		}
 
 		function getDatatable(from, to) {
 			// Load Data to datatable
@@ -145,16 +191,19 @@
 					{data: 'date', name: 'date', className: 'text-center'},
 					{data: 'pt_name', name: 'pt_name'},
 					{data: 'pt_phone', name: 'pt_phone'},
-					{data: 'status', name: 'status', className: 'text-center'},
 					{data: 'sub_total', name: 'sub_total', className: 'text-center'},
 					{data: 'discount', name: 'discount', className: 'text-right'},
 					{data: 'grand_total', name: 'grand_total', className: 'text-right'},
+					{data: 'status', name: 'status', className: 'text-center'},
 					{data: 'actions', name: 'actions', className: 'text-right', searchable: false, sortable: false}
 				],
 				order: [[1, "desc"]],
 				rowCallback: function( row, data ) {
 
 					$('td:eq(8)', row).html( `@Can("Invoice Edit")
+																			<button type="button" class="btn btn-sm btn-flat btn-primary" onclick="updateStatus(${ data.id })"><i class="fa fa-dollar-sign"></i></button>
+																		@endCan
+																		@Can("Invoice Print")
 																			<button type="button" data-url="/invoice/${ data.id }/print" class="btn btn-sm btn-flat btn-success btn-print-invoice"><i class="fa fa-print"></i></button>
 																		@endCan 
 																		@Can("Invoice Edit")
@@ -168,8 +217,8 @@
 																				<input type="hidden" name="passwordDelete" value="" />
 																			</form>
 																		@endCan` );
-																		
-					$('td:eq(4)', row).html( `@Can("Invoice Status")<span class="badge badge-${ ((data.status==1)? 'success' : '') }">${ ((data.status==1)? 'paid' : 'upaid') }</span>@endCan` );
+
+					$('td:eq(7)', row).html( `<span class="badge bg-${ ((data.status==1)? 'success' : 'secondary') }">${ ((data.status==1)? 'paid' : 'upaid') }</span>` );
 
 				},
 				"initComplete": function( settings, json ) {
@@ -312,86 +361,6 @@
 				}
 			});
 		}
-
-
-		// function getDetail ( data ) {
-
-		// 	var div =  $('<div/>').text('loading...').addClass('invoice-detail-expanded');
-		// 	$.ajaxSetup({headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
-		// 	$.ajax({
-		// 		url: "{{ route('invoice.getInvoicePreview') }}",
-		// 		method: 'post',
-		// 		data: {
-		// 		 id: data.id,
-		// 		},
-		// 		success: function(rs){
-		// 			div.empty();
-		// 			var htmlString = "";
-		// 			htmlString =  rs.invoice_detail;
-		// 			div.append(htmlString);
-		// 			div.append('@can("Invoice Print")<button type="button" class="btn btn-flat btn-success btn-print-invoice" data-url="/invoice/'+ rs.invoice_id +'/print" data-title="'+ rs.title +'"><i class="fa fa-print"></i> {{ __("label.buttons.print") }}</button>@endCan');
-
-		// 			$(function(){
-		// 				function openPrintWindow(url, name) {
-		// 					var printWindow = window.open(url, name, "width="+ screen.availWidth +",height="+ screen.availHeight +",_blank");
-		// 					var printAndClose = function () {
-		// 						if (printWindow.document.readyState == 'complete') {
-		// 							clearInterval(sched);
-		// 							printWindow.print();
-		// 							printWindow.close();
-		// 						}
-		// 					}  
-		// 						var sched = setInterval(printAndClose, 2000);
-		// 				};
-
-		// 				jQuery(document).ready(function ($) {
-		// 					$(".btn-print-invoice").on("click", function (e) {
-		// 						var myUrl = $(this).attr('data-url');
-		// 						e.preventDefault();
-		// 						openPrintWindow(myUrl, "to_print");
-		// 					});
-		// 				});
-		// 			});
-
-		// 			$('#print-invoice').html(htmlString);
-
-		// 		},
-		// 		error: function () {
-		// 			Swal.fire({
-		// 			  icon: 'error',
-		// 			  title: 'Oops...',
-		// 			  text: 'Something went wrong!',
-		// 			})
-		// 		}
-		// 	});
-		// 	return div;
-		// }
-
-		// // Add event listener for opening and closing details
-		// $('.expandable-table tbody').on('click', 'td.details-control', function () {
-		// 	var tr = $(this).closest('tr');
-		// 	var row = dataTableInvoice.row( tr );
-		// 	if ( row.child.isShown() ) {
-		// 		// This row is already open - close it
-		// 		row.child.hide();
-		// 		tr.removeClass('shown');
-		// 		tr.find('td.details-control').html('<i class="fa fa-plus-circle text-primary"></i>');
-		// 	}else {
-		// 		dataTableInvoice.rows().every(function(){
-		// 			// If row has details expanded
-		// 			if(this.child.isShown()){
-		// 				// Collapse row details
-		// 				this.child.hide();
-		// 				$(this.node()).removeClass('shown');
-		// 				$(this.node()).find('td.details-control').html('<i class="fa fa-plus-circle text-primary"></i>');
-		// 			}
-		// 		});
-		// 		row.child( getDetail( row.data() ) ).show();
-		// 		tr.addClass('shown');
-		// 		tr.find('td.details-control').html('<i class="fa fa-minus-circle text-danger"></i>');
-		// 	}
-
-		// });
 
 	</script>
 @endsection
