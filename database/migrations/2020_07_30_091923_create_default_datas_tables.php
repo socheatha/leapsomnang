@@ -1623,6 +1623,41 @@ class CreateDefaultDatasTables extends Migration
 				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
 			],
 			[
+				'name' => 'Doctor Index',
+				'guard_name' => 'web',
+				'description' => 'Visit Doctor Index',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Doctor Create',
+				'guard_name' => 'web',
+				'description' => 'Create new Doctor',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Doctor Edit',
+				'guard_name' => 'web',
+				'description' => 'Edit Existed Doctor',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Doctor Delete',
+				'guard_name' => 'web',
+				'description' => 'Delete Existed Doctor',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Doctor Show',
+				'guard_name' => 'web',
+				'description' => 'Show Doctor detail',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
 				'name' => 'Patient Index',
 				'guard_name' => 'web',
 				'description' => 'Visit Patient Index',

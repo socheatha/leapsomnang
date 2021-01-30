@@ -25,7 +25,6 @@ class UsageRequest extends FormRequest
 	{
 		return [
 			'name' => 'required',
-			'usage_id' => 'required',
 		];
 	}
 }

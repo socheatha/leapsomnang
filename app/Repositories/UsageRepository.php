@@ -22,8 +22,6 @@ class UsageRepository
 		$usage = Usage::create([
 			'name' => $request->name,
 			'description' => $request->description,
-			'created_by' => Auth::user()->id,
-			'updated_by' => Auth::user()->id,
 		]);
 
 		return $usage;
@@ -36,7 +34,6 @@ class UsageRepository
 		return $usage->update([
 			'name' => $request->name,
 			'description' => $request->description,
-			'updated_by' => Auth::user()->id,
 		]);
 
 	}

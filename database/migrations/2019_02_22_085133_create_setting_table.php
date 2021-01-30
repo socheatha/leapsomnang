@@ -34,6 +34,8 @@ class CreateSettingTable extends Migration
 				'logo' => 'logo.png',
 				'clinic_name_kh' => 'ឈ្មោះគ្លីនិច',
 				'clinic_name_en' => 'Clinic Name',
+				'sign_invoice' => 'ឈ្មោះវេជ្ជបណ្ឌិត',
+				'description' => 'បរិាយសេវាកម្មរបស់គ្លីនិច',
 				'phone' => '0',
 				'address' => '0',
 				'navbar_color' => 'navbar-white navbar-light',
