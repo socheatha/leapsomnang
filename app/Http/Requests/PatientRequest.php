@@ -24,8 +24,8 @@ class PatientRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'age' => 'required',
+            'name' => 'required|max:190',
+            'age' => 'required|max:3',
             'gender' => 'required',
         ];
     }

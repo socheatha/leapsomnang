@@ -25,9 +25,9 @@ class PrescriptionRequest extends FormRequest
     {
         return [
           'date' => 'required|date',
-          'code' => 'required',
-          'pt_no' => 'required',
-          'pt_name' => 'required',
+          'code' => 'required|max:8',
+          'pt_no' => 'required|max:190',
+          'pt_name' => 'required|max:190',
           'patient_id' => 'required',
         ];
     }

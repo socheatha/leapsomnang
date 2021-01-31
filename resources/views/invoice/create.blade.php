@@ -12,16 +12,15 @@
 	<div class="card-header">
 		<b>{!! Auth::user()->subModule() !!}</b>
 		<div class="card-tools">
+			<button type="button" class="btn btn-success btn-sm btn-flat" data-toggle="modal" data-target="#create_invoice_item_modal"><i class="fa fa-plus"></i> &nbsp; {!! __('label.buttons.add_item') !!}</button>
 			{{-- Action Dropdown --}}
 			@component('components.action')
 				@slot('otherBTN')
-					<a href="#addItem" data-toggle="modal" data-target="#create_invoice_item_modal" class="dropdown-item text-success"><i class="fa fa-plus"></i> &nbsp; {!! __('label.buttons.add_item') !!}</a>
 					<a href="{{route('invoice.index')}}" class="dropdown-item text-danger"><i class="fa fa-arrow-left"></i> &nbsp;{{ __('label.buttons.back') }}</a>
 				@endslot
 			@endcomponent
 
-			<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-				<i class="fas fa-minus"></i></button>
+			<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fas fa-minus"></i></button>
 		</div>
 
 		<!-- Error Message -->
@@ -73,7 +72,7 @@
 				success: function(data){
 					$('[name="item_price"]').val( data.service.price );
 					$('[name="item_qty"]').val( 1 );
-					$('[name="item_description"]').val( data.service.description );
+					$('[name="item_description"]').val( data.service.name );
 				}
 			});
 			

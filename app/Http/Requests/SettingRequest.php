@@ -24,10 +24,11 @@ class SettingRequest extends FormRequest
     public function rules()
     {
         return [
-            'clinic_name_kh' => 'required',
-            'clinic_name_en' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
+            'clinic_name_kh' => 'required|max:255',
+            'clinic_name_en' => 'required|max:255',
+            'phone' => 'required|max:190',
+            'address' => 'required|max:255',
+            'description' => 'required|max:255',
         ];
     }
 }

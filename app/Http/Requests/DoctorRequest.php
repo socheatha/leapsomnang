@@ -24,8 +24,8 @@ class DoctorRequest extends FormRequest
     public function rules()
     {
         return [
-            'name_kh' => 'required',
-            'name_en' => 'required',
+            'name_kh' => 'required|max:190',
+            'name_en' => 'required|max:190',
             'gender' => 'required',
         ];
     }

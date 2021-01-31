@@ -24,7 +24,8 @@ class MedicineRequest extends FormRequest
 	public function rules()
 	{
 		return [
-			'name' => 'required',
+			'name' => 'required|max:190',
+			'code' => 'max:190',
 			'usage_id' => 'required',
 		];
 	}

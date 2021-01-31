@@ -18,11 +18,11 @@
 		<b>{!! Auth::user()->subModule() !!}</b>
 		
 		<div class="card-tools">
-
+			
+			<button type="button" class="btn btn-success btn-flat btn-sm" data-toggle="modal" data-target="#edit_prescription_detail_modal"><i class="fa fa-list-ol"></i> &nbsp; {!! __('label.buttons.prescription_detail') !!}</button>
 			{{-- Action Dropdown --}}
 			@component('components.action')
 				@slot('otherBTN')
-					<a href="#PrescriptionDetail" data-toggle="modal" data-target="#edit_prescription_detail_modal" class="dropdown-item text-success"><i class="fa fa-list-ol"></i> &nbsp; {!! __('label.buttons.prescription_detail') !!}</a>
 					<a href="{{route('prescription.index')}}" class="dropdown-item text-danger"><i class="fa fa-arrow-left"></i> &nbsp;{{ __('label.buttons.back') }}</a>
 				@endslot
 			@endcomponent
@@ -30,10 +30,10 @@
 			<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
 				<i class="fas fa-minus"></i></button>
 		</div>
-
+{{-- 
 		<!-- Error Message -->
 		@component('components.crud_alert')
-		@endcomponent
+		@endcomponent --}}
 
 	</div>
 

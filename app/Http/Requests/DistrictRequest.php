@@ -24,8 +24,8 @@ class DistrictRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'name_en' => 'required',
+            'name' => 'required|max:190',
+            'name_en' => 'required|max:190',
             'province_id' => 'required',
         ];
     }

@@ -16,12 +16,12 @@ class CreateSettingTable extends Migration
         Schema::create('setting', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('logo');
-            $table->string('clinic_name_kh');
-            $table->string('clinic_name_en');
+            $table->string('clinic_name_kh', 255);
+            $table->string('clinic_name_en', 255);
             $table->string('sign_invoice')->nullable();
             $table->string('phone')->nullable();
-            $table->string('address')->nullable();
-            $table->string('description')->nullable();
+            $table->string('address', 255)->nullable();
+            $table->string('description', 255)->nullable();
             $table->string('navbar_color')->default('navbar-white navbar-light');
             $table->boolean('sidebar_color')->default(0);
             $table->timestamps();

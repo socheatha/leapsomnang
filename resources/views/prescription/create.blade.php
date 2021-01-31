@@ -12,10 +12,10 @@
 	<div class="card-header">
 		<b>{!! Auth::user()->subModule() !!}</b>
 		<div class="card-tools">
+			<button type="button" class="btn btn-success btn-sm btn-flat"  data-toggle="modal" data-target="#create_prescription_item_modal"><i class="fa fa-plus"></i> &nbsp; {!! __('label.buttons.add_item') !!}</button>
 			{{-- Action Dropdown --}}
 			@component('components.action')
 				@slot('otherBTN')
-					<a href="#addItem" data-toggle="modal" data-target="#create_prescription_item_modal" class="dropdown-item text-success"><i class="fa fa-plus"></i> &nbsp; {!! __('label.buttons.add_item') !!}</a>
 					<a href="{{route('prescription.index')}}" class="dropdown-item text-danger"><i class="fa fa-arrow-left"></i> &nbsp;{{ __('label.buttons.back') }}</a>
 				@endslot
 			@endcomponent

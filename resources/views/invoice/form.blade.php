@@ -5,8 +5,8 @@
         <div class="col-sm-6">
           <div class="form-group">
             {!! Form::hidden('date_hidden', '',) !!}
-            {!! Html::decode(Form::label('date', __('label.form.date')." <small>*</small>")) !!}
-            {!! Form::text('date', ((isset($invoice->date))? $invoice->date : date('Y-m-d H:i:s') ), ['class' => 'form-control datetimepicker-input '. (($errors->has("date"))? "is-invalid" : ""), 'id' => 'date_picker', 'data-toggle' => 'datetimepicker', 'data-target' => '#date_picker', 'placeholder' => 'date', 'autocomplete' => 'off', 'required']) !!}
+            {!! Html::decode(Form::label('date', __('label.form.date')."(YYYY-MM-DD) <small>*</small>")) !!}
+            {!! Form::text('date', ((isset($invoice->date))? $invoice->date :  date('Y-m-d') ), ['class' => 'form-control datetimepicker-input '. (($errors->has("date"))? "is-invalid" : ""), 'id' => 'date_picker', 'data-toggle' => 'datetimepicker', 'data-target' => '#date_picker', 'placeholder' => 'date', 'autocomplete' => 'off', 'required']) !!}
             {!! $errors->first('date', '<div class="invalid-feedback">:message</div>') !!}
           </div>
         </div>
