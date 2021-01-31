@@ -1812,6 +1812,69 @@ class CreateDefaultDatasTables extends Migration
 				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
 			],
 			[
+				'name' => 'Echo Default Description Create',
+				'guard_name' => 'web',
+				'description' => 'Create new Echo Default Description',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Echo Default Description Edit',
+				'guard_name' => 'web',
+				'description' => 'Edit Existed Echo Default Description',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Echo Default Description Delete',
+				'guard_name' => 'web',
+				'description' => 'Delete Existed Echo Default Description',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Echo Default Description Show',
+				'guard_name' => 'web',
+				'description' => 'Show Echo Default Description detail',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Echo Create',
+				'guard_name' => 'web',
+				'description' => 'Create new Echo',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Echo Edit',
+				'guard_name' => 'web',
+				'description' => 'Edit Existed Echo',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Echo Delete',
+				'guard_name' => 'web',
+				'description' => 'Delete Existed Echo',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Echo Show',
+				'guard_name' => 'web',
+				'description' => 'Show Echo detail',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
+				'name' => 'Echo Print',
+				'guard_name' => 'web',
+				'description' => 'Print Echo detail',
+				'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			],
+			[
 				'name' => 'Setting Index',
 				'guard_name' => 'web',
 				'description' => 'Change Setting',

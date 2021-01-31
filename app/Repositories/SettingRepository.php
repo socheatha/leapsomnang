@@ -12,14 +12,16 @@ class SettingRepository
 
 	public function update($request)
 	{
-
+		// dd($request->all());
 		$setting = Setting::find(1)->update([
 			'clinic_name_kh'=> $request->clinic_name_kh,
 			'clinic_name_en'=> $request->clinic_name_en,
-			'sign_name'=> $request->sign_name,
+			'sign_name_kh'=> $request->sign_name_kh,
+			'sign_name_en'=> $request->sign_name_en,
 			'phone'=> $request->phone,
 			'address'=> $request->address,
 			'description'=> $request->description,
+			'echo_description'=> $request->echo_description,
 			'navbar_color'=> $request->navbar_color,
 			'sidebar_color'=> (($request->sidebar_color==null)? 0 : 1)
 			]);

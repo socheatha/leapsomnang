@@ -62,6 +62,14 @@ return [
 		'main' => 'អ្នកជំងឺ',
 	],
 
+	'echo_default_description' => [
+		'main' => 'លំនាំការពិនិត្យអេកូ',
+	],
+
+	'echo' => [
+		'main' => 'ការពិនិត្យអេកូ',
+	],
+
 
 	'setting' => [
 		'main' => 'ការកណត់',

@@ -24,6 +24,8 @@ Route::group(['middleware' => ['auth']], function () {
     require __DIR__.'/invoice-management.php';
 
     require __DIR__.'/prescription-management.php';
+    
+    require __DIR__.'/echo-management.php';
 
     require __DIR__.'/patient-management.php';
     

@@ -18,10 +18,12 @@ class CreateSettingTable extends Migration
             $table->string('logo');
             $table->string('clinic_name_kh', 255);
             $table->string('clinic_name_en', 255);
-            $table->string('sign_invoice')->nullable();
+            $table->string('sign_name_kh')->nullable();
+            $table->string('sign_name_en')->nullable();
             $table->string('phone')->nullable();
             $table->string('address', 255)->nullable();
-            $table->string('description', 255)->nullable();
+            $table->text('description')->nullable();
+            $table->text('echo_description')->nullable();
             $table->string('navbar_color')->default('navbar-white navbar-light');
             $table->boolean('sidebar_color')->default(0);
             $table->timestamps();
@@ -34,8 +36,12 @@ class CreateSettingTable extends Migration
 				'logo' => 'logo.png',
 				'clinic_name_kh' => 'ឈ្មោះគ្លីនិច',
 				'clinic_name_en' => 'Clinic Name',
-				'sign_invoice' => 'ឈ្មោះវេជ្ជបណ្ឌិត',
-				'description' => 'បរិាយសេវាកម្មរបស់គ្លីនិច',
+				'sign_name_kh' => 'ឈ្មោះវេជ្ជបណ្ឌិត',
+				'sign_name_en' => 'Dr. Name',
+				'description' => 'បររិាយសេវាកម្មរបស់គ្លីនិច',
+				'echo_description' => '-ពិនិត្យអេកូពំណ៍​<br/>
+-ពិនិត្យឈាមដោយម៉ាស៊ីនស្វ័យប្រវត្ត<br/>
+-ព្យាបាលេជំងឺ កុមារ មនុស្សចាស់ រោគស្រ្តី​ និង​សម្ភព',
 				'phone' => '0',
 				'address' => '0',
 				'navbar_color' => 'navbar-white navbar-light',

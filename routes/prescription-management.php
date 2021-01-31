@@ -13,9 +13,6 @@ Route::group(['prefix' => 'prescription', 'as' => 'prescription.', 'namespace' =
 	Route::delete('/{prescription}/delete', 'PrescriptionController@destroy')->name('destroy')->middleware('can:Prescription Delete');
 	Route::get('/{prescription}/print', 'PrescriptionController@print')->name('print');
 	Route::post('/{prescription}/status', 'PrescriptionController@status')->name('status');
-	Route::get('/import', 'PrescriptionController@import')->name('import')->middleware('can:Prescription Create');
-	Route::post('/getPrescriptionsDB2nd', 'PrescriptionController@getPrescriptionsDB2nd')->name('getPrescriptionsDB2nd')->middleware('can:Prescription Create');
-	Route::post('/store_import', 'PrescriptionController@store_import')->name('store_import')->middleware('can:Prescription Create');
 	
 	Route::put('/{prescription}/save_order', 'PrescriptionController@save_order')->name('save_order');
 	Route::post('/getDatatable', 'PrescriptionController@getDatatable')->name('getDatatable');

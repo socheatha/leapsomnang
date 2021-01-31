@@ -28,12 +28,6 @@ class ServiceController extends Controller
 		return view('service.index', $this->data);
 	}
 
-	public function getSelectDistrict(Request $request)
-	{
-		return $this->services->getSelectDistrict($request);
-	}
-
-
 	public function getDetail(Request $request)
 	{
 		return $this->services->getDetail($request);

@@ -43,6 +43,8 @@ return [
 		'invoice' => 'វិក្កយបត្រ',
 		'province' => 'ខេត្ត/ក្រុង',
 		'district' => 'ស្រុក/ខណ្ឌ',
+		'echo_default_description' => 'លំនាំការពិនិត្យអេកូ',
+		'echoes' => 'ការពិនិត្យអេកូ',
 
 	],
 
@@ -84,6 +86,8 @@ return [
 			'setting' => 'ការកណត់',
 	  	'province' => 'ខេត្ត/ក្រុង',
       'district' => 'ស្រុក/ខណ្ឌ',
+			'echo_default_description' => 'លំនាំការពិនិត្យអេកូ',
+			'echoes' => 'ការពិនិត្យអេកូ',
 		],
 	],
 
@@ -196,6 +200,21 @@ return [
 			'price' => 'តម្លៃ',
 		],
 
+		'echo_default_description' => [
+			'slug' => 'Slug',
+		],
+
+		'echoes' => [
+			'choose_date' => 'ជ្រើសរើសកាលកំណត់',
+			'echo_default_description' => 'លំនាំការពិនិត្យអេកូ',
+			'patient' => 'អ្នកជំងឺ',
+			'pt_name' => 'ឈ្មោះអ្នកជំងឺ',
+			'pt_phone' => 'ទូរស័ព្ទអ្នកជំងឺ',
+			'pt_no' => 'លេខរៀងអ្នកជំងឺ',
+			'pt_age' => 'អាយុអ្នកជំងឺ',
+			'pt_gender' => 'ភេទអ្នកជំងឺ',
+		],
+
 		'medicine' => [
 			'code' => 'លេខកូដ',
 			'usage' => 'ការប្រើប្រាស់',
@@ -240,10 +259,12 @@ return [
 		'setting' => [
 			'clinic_name_kh' => 'ឈ្មោះគ្លីនិចជាភាសាខ្មែរ',
 			'clinic_name_en' => 'ឈ្មោះគ្លីនិចជាអង់គ្លេស',
-			'sign_name' => 'ឈ្មោះអ្នកចុះហត្ថលេខា',
+			'sign_name_kh' => 'ឈ្មោះអ្នកចុះហត្ថលេខាជាភាសាខ្មែរ',
+			'sign_name_en' => 'ឈ្មោះអ្នកចុះហត្ថលេខាជាភាសាអង់គ្លេស',
 			'logo' => 'ឡូហ្គោ',
 			'sidebar_color' => 'ពណ៌កម្មវិធីរបាម៉ឹនុយចំហៀង',
 			'navbar_color' => 'ពណ៌របាលើ',
+			'echo_description' => 'បរិយាយសម្រាប់ការពីនិត្យអេកូ',
 		],
 
 		'district' => [

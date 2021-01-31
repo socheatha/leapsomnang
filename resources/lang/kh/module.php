@@ -35,6 +35,15 @@ return [
     'service' => [
 	    'price' => 'តម្លៃ',
     ],
+    
+		'echo_default_description' => [
+			'slug' => 'Slug',
+		],
+
+    'echoes' => [
+	    'pt_name' => 'ឈ្មោះអ្នកជំងឺ',
+	    'pt_phone' => 'លេខទូរស័ព្ទ',
+    ],
 
     'invoice' => [
 	    'inv_number' => 'លេខវិក្កយបត្រ',

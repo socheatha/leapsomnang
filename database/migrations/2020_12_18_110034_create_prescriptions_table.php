@@ -23,7 +23,7 @@ class CreatePrescriptionsTable extends Migration
           $table->string('pt_gender')->nullable();
           $table->string('pt_phone')->nullable();
           $table->tinyInteger('status')->default('0');
-          $table->integer('remark')->nullable();
+          $table->text('remark')->nullable();
           $table->unsignedBigInteger('patient_id')->nullable();
           $table->unsignedBigInteger('created_by');
           $table->unsignedBigInteger('updated_by');

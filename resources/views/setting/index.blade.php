@@ -32,61 +32,81 @@
 				<div class="col-sm-8">
 					<div class="row">
 						<div class="col-sm-6">
-							<div class="form-group">
-								{!! Html::decode(Form::label('clinic_name_kh', __('label.form.setting.clinic_name_kh'))) !!}
-								{!! Form::text('clinic_name_kh', Auth::user()->setting()->clinic_name_kh, ['class' => 'form-control '. (($errors->has("clinic_name_kh"))? "is-invalid" : ""),'placeholder' => 'clinic name in khmer']) !!}
-								{!! $errors->first('clinic_name_kh', '<div class="invalid-feedback">:message</div>') !!}
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										{!! Html::decode(Form::label('clinic_name_kh', __('label.form.setting.clinic_name_kh'))) !!}
+										{!! Form::text('clinic_name_kh', Auth::user()->setting()->clinic_name_kh, ['class' => 'form-control '. (($errors->has("clinic_name_kh"))? "is-invalid" : ""),'placeholder' => 'clinic name in khmer']) !!}
+										{!! $errors->first('clinic_name_kh', '<div class="invalid-feedback">:message</div>') !!}
+									</div>
+								</div>
+								<div class="col-sm-12">
+									<div class="form-group">
+										{!! Html::decode(Form::label('clinic_name_en', __('label.form.setting.clinic_name_en'))) !!}
+										{!! Form::text('clinic_name_en', Auth::user()->setting()->clinic_name_en, ['class' => 'form-control '. (($errors->has("clinic_name_en"))? "is-invalid" : ""),'placeholder' => 'clinic name in english']) !!}
+										{!! $errors->first('clinic_name_en', '<div class="invalid-feedback">:message</div>') !!}
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										{!! Html::decode(Form::label('sign_name_kh', __('label.form.setting.sign_name_kh'))) !!}
+										{!! Form::text('sign_name_kh', Auth::user()->setting()->sign_name_kh, ['class' => 'form-control '. (($errors->has("sign_name_kh"))? "is-invalid" : ""),'placeholder' => 'sign name']) !!}
+										{!! $errors->first('sign_name_kh', '<div class="invalid-feedback">:message</div>') !!}
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										{!! Html::decode(Form::label('sign_name_en', __('label.form.setting.sign_name_en'))) !!}
+										{!! Form::text('sign_name_en', Auth::user()->setting()->sign_name_en, ['class' => 'form-control '. (($errors->has("sign_name_en"))? "is-invalid" : ""),'placeholder' => 'sign name']) !!}
+										{!! $errors->first('sign_name_en', '<div class="invalid-feedback">:message</div>') !!}
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										{!! Html::decode(Form::label('phone', __('label.form.phone'))) !!}
+										{!! Form::text('phone', Auth::user()->setting()->phone, ['class' => 'form-control '. (($errors->has("phone"))? "is-invalid" : ""),'placeholder' => 'phone']) !!}
+										{!! $errors->first('phone', '<div class="invalid-feedback">:message</div>') !!}
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										{!! Html::decode(Form::label('address', __('label.form.address'))) !!}
+										{!! Form::text('address', Auth::user()->setting()->address, ['class' => 'form-control '. (($errors->has("address"))? "is-invalid" : ""),'placeholder' => 'address']) !!}
+										{!! $errors->first('address', '<div class="invalid-feedback">:message</div>') !!}
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										{!! Html::decode(Form::label('navbar_color', __('label.form.setting.navbar_color'))) !!}
+										{!! Form::select('navbar_color', ['navbar-white navbar-light'=>'White', 'navbar-dark navbar-primary'=>'Primary', 'navbar-dark navbar-secondary'=>'Secondary', 'navbar-dark navbar-info'=>'Info', 'navbar-dark navbar-purple'=>'Purple', 'navbar-dark navbar-success'=>'Success', 'navbar-light navbar-dark'=>'Dark'], Auth::user()->setting()->navbar_color, ['class' => 'form-control select2','data-width'=>'100%', 'placeholder' => __('label.form.choose')]) !!}
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group text-center">
+										{!! Html::decode(Form::label('sidebar_color', __('label.form.setting.sidebar_color'))) !!}
+										<div class="togglebutton mt-1">
+											<label>
+												{!! Form::checkbox('sidebar_color', 0, Auth::user()->setting()->sidebar_color) !!}
+												<span class="toggle toggle-success"></span>
+											</label>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="col-sm-6">
-							<div class="form-group">
-								{!! Html::decode(Form::label('clinic_name_en', __('label.form.setting.clinic_name_en'))) !!}
-								{!! Form::text('clinic_name_en', Auth::user()->setting()->clinic_name_en, ['class' => 'form-control '. (($errors->has("clinic_name_en"))? "is-invalid" : ""),'placeholder' => 'clinic name in english']) !!}
-								{!! $errors->first('clinic_name_en', '<div class="invalid-feedback">:message</div>') !!}
-							</div>
-						</div>
-						<div class="col-sm-3">
-							<div class="form-group">
-								{!! Html::decode(Form::label('sign_name', __('label.form.setting.sign_name'))) !!}
-								{!! Form::text('sign_name', Auth::user()->setting()->sign_name, ['class' => 'form-control '. (($errors->has("sign_name"))? "is-invalid" : ""),'placeholder' => 'sign name']) !!}
-								{!! $errors->first('sign_name', '<div class="invalid-feedback">:message</div>') !!}
-							</div>
-						</div>
-						<div class="col-sm-3">
-							<div class="form-group">
-								{!! Html::decode(Form::label('phone', __('label.form.phone'))) !!}
-								{!! Form::text('phone', Auth::user()->setting()->phone, ['class' => 'form-control '. (($errors->has("phone"))? "is-invalid" : ""),'placeholder' => 'phone']) !!}
-								{!! $errors->first('phone', '<div class="invalid-feedback">:message</div>') !!}
-							</div>
-						</div>
-						<div class="col-sm-6">
-							<div class="form-group">
-								{!! Html::decode(Form::label('address', __('label.form.address'))) !!}
-								{!! Form::text('address', Auth::user()->setting()->address, ['class' => 'form-control '. (($errors->has("address"))? "is-invalid" : ""),'placeholder' => 'address']) !!}
-								{!! $errors->first('address', '<div class="invalid-feedback">:message</div>') !!}
-							</div>
-						</div>
-						<div class="col-sm-12">
-							<div class="form-group">
-								{!! Html::decode(Form::label('description', __('label.form.description'))) !!}
-								{!! Form::text('description', Auth::user()->setting()->description, ['class' => 'form-control '. (($errors->has("description"))? "is-invalid" : ""),'placeholder' => 'description']) !!}
-								{!! $errors->first('description', '<div class="invalid-feedback">:message</div>') !!}
-							</div>
-						</div>
-						<div class="col-sm-9">
-							<div class="form-group">
-								{!! Html::decode(Form::label('navbar_color', __('label.form.setting.navbar_color'))) !!}
-								{!! Form::select('navbar_color', ['navbar-dark navbar-primary'=>'Primary', 'navbar-dark navbar-secondary'=>'Secondary', 'navbar-dark navbar-info'=>'Info', 'navbar-dark navbar-purple'=>'Purple', 'navbar-dark navbar-success'=>'Success', 'navbar-light navbar-dark'=>'Dark'], Auth::user()->setting()->navbar_color, ['class' => 'form-control select2','data-width'=>'100%', 'placeholder' => __('label.form.choose')]) !!}
-							</div>
-						</div>
-						<div class="col-sm-3">
-							<div class="form-group text-center">
-								{!! Html::decode(Form::label('sidebar_color', __('label.form.setting.sidebar_color'))) !!}
-								<div class="togglebutton mt-1">
-									<label>
-										{!! Form::checkbox('sidebar_color', 0, Auth::user()->setting()->sidebar_color) !!}
-										<span class="toggle toggle-success"></span>
-									</label>
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										{!! Html::decode(Form::label('description', __('label.form.description'))) !!}
+										{!! Form::textarea('description', Auth::user()->setting()->description, ['class' => 'form-control ','style' => 'height: 121px;', 'placeholder' => 'description']) !!}
+									</div>
+								</div>
+								<div class="col-sm-12">
+									<div class="form-group">
+										{!! Html::decode(Form::label('echo_description', __('label.form.setting.echo_description'))) !!}
+										{!! Form::textarea('echo_description', Auth::user()->setting()->echo_description, ['class' => 'form-control ','style' => 'height: 121px;', 'placeholder' => 'echo description']) !!}
+									</div>
 								</div>
 							</div>
 						</div>

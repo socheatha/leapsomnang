@@ -46,6 +46,37 @@
 					</li>
 					@endcan
 
+					@if (count(Auth::user()->echoDefaultDescriptions()->get()))
+						@canany(['Echo Index','Echo Create', 'Echo Edit', 'Echo Delete','Echo Print'])
+					
+						<li class="nav-item has-treeview {{ ((in_array(Auth::user()->sidebarActive(), [ 'echoes' ]))? 'menu-open':'') }}">
+							<a href="#" class="nav-link {{ ((strpos('echoes', Auth::user()->sidebarActive()) !== false)? 'active':'') }}">
+								<i class="nav-icon fas fa-file-video"></i>
+								<p>
+									{{ __('sidebar.echo.main') }}
+									<i class="right fas fa-angle-left"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+
+							@foreach (Auth::user()->echoDefaultDescriptions()->get() as $kkey => $echo_default )
+								@can('Echo Index', 'Echo Create', 'Echo Edit', 'Echo Delete')
+								<li class="nav-item">
+									<a href="{{ route('echoes.index', $echo_default->slug) }}" class="nav-link {{ (($echo_default->slug == @$type )? 'active':'') }}">
+										<i class="far fa-circle nav-icon"></i>
+										<p>{{ $echo_default->name }}</p>
+									</a>
+								</li>
+								@endcan
+									
+							@endforeach
+		
+							</ul>
+						</li>
+						
+						@endcan
+					@endif
+
 					@can('Patient Index', 'Patient Create', 'Patient Edit', 'Patient Delete')
 					<li class="nav-item">
 						<a href="{{ route('patient.index') }}" class="nav-link {{ ((Auth::user()->sidebarActive() == 'patient' )? 'active':'') }}">
@@ -95,9 +126,18 @@
 
 
 				{{-- User Management --}}
-				@canany(['User Index', 'User Create', 'User Edit', 'User Delete', 'User Assign Role', 'User Assign Permission', 'Role Index', 'Role Create', 'Role Edit', 'Role Delete', 'Role User Assign', 'Permission Index', 'Permission Create', 'Permission Edit', 'Permission Delete', 'Permission Role Assign', 'Permission User Assign', 'Province Index', 'Province Create', 'Province Edit', 'Province Delete', 'District Index', 'District Create', 'District Edit', 'District Delete','Usage Index', 'Usage Create', 'Usage Edit', 'Usage Delete'])
+				@canany(['Echo Default Description Index', 'Echo Default Description Create', 'Echo Default Description Edit', 'Echo Default Description Delete', 'User Index', 'User Create', 'User Edit', 'User Delete', 'User Assign Role', 'User Assign Permission', 'Role Index', 'Role Create', 'Role Edit', 'Role Delete', 'Role User Assign', 'Permission Index', 'Permission Create', 'Permission Edit', 'Permission Delete', 'Permission Role Assign', 'Permission User Assign', 'Province Index', 'Province Create', 'Province Edit', 'Province Delete', 'District Index', 'District Create', 'District Edit', 'District Delete','Usage Index', 'Usage Create', 'Usage Edit', 'Usage Delete'])
 				
 					<li class="nav-header">{{ __('sidebar.header.other_management') }}</li>
+
+					@can('Echo Default Description Index', 'Echo Default Description Create', 'Echo Default Description Edit', 'Echo Default Description Delete')
+					<li class="nav-item">
+						<a href="{{ route('echo_default_description.index') }}" class="nav-link {{ ((Auth::user()->sidebarActive() == 'echo_default_description' )? 'active':'') }}">
+							<i class="far fa-file-video nav-icon"></i>
+							<p>{{ __('sidebar.echo_default_description.main') }}</p>
+						</a>
+					</li>
+					@endcan
 
 					@can('User Index', 'User Create', 'User Edit', 'User Delete', 'User Assign Role', 'User Assign Permission')
 					<li class="nav-item">

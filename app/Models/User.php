@@ -26,6 +26,11 @@ class User extends Authenticatable
 		'email_verified_at' => 'datetime',
 	];
 
+	public function echoDefaultDescriptions(){
+		$collection = EchoDefaultDescription::orderBy('slug', 'asc');
+		return $collection;
+	}
+
 	public function isApproved($user){
 
 		if ($user->approval == 1) {
@@ -114,7 +119,11 @@ class User extends Authenticatable
 				$li .= '<li class="breadcrumb-item active">'. $active .'</li>';
 
 		  } else if( $key === 0 ) {
-				$li .= '<li class="breadcrumb-item"><a href="'. route($value.'.index') .'">'. __('label.breadcrumb.routename.'. $value) .'</a></li>';
+				if ($value == 'echoes') {
+					
+				}else{
+					$li .= '<li class="breadcrumb-item"><a href="'. route($value.'.index') .'">'. __('label.breadcrumb.routename.'. $value) .'</a></li>';
+				}
 		  }else if ( count($routename) > 3) {
 		  	// if length 3 Level deep
 				$li .= '<li class="breadcrumb-item"><a href="'. route($routename[1].'.'.$routename[2].'.index') .'">'. __('label.breadcrumb.routename.'. $value) .'</a></li>';

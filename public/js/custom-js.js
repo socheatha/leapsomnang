@@ -138,6 +138,7 @@ $('#datatables').DataTable({
 	},
 });
 
+
 $(".is_number").keyup(function () {
 	isNumber($(this))
 });

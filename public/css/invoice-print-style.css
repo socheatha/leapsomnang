@@ -63,6 +63,35 @@
 	font-size: 10px !important;
 }
 
+.echoes-print *{
+  /* font-family: 'Courier New','Khmer OS Battambang'; */
+}
+
+.echoes-print{
+	width: 21cm;
+	height: 29.7cm;
+	margin: 0 auto;
+	background: #fff;
+	border: 1px solid #ededed;
+	padding: 1cm;
+}
+.echoes-print .table-information td{
+	padding-bottom: 8px;
+}
+.echoes-print .table-detail thead th,
+.echoes-print .table-detail td{
+	font-size: 13px;
+	padding: 6px;
+}
+
+.echoes-print .table-detail tfoot th{
+	padding: 6px;
+}
+
+.echoes-print small{
+	font-size: 10px !important;
+}
+
 @media print {
 	@page {
 		size: A4;

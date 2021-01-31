@@ -108,7 +108,7 @@ class PrescriptionRepository
 												<table class="table-information" width="100%" style="border-top: 4px solid red; border-bottom: 4px solid red; margin: 10px 0;">
 													<tr>
 														<td colspan="3">
-															<h5 class="text-center KHOSMoulLight" style="padding-top: 8px;">វិក្កយបត្រ</h5>
+															<h5 class="text-center KHOSMoulLight" style="padding-top: 8px;">វេជ្ជបញ្ជា</h5>
 														</td>
 													</tr>
 													<tr>
@@ -156,7 +156,7 @@ class PrescriptionRepository
 														<td width="32%" class="text-center">
 															<div>រៀបចំដោយ/Prepared By</div>
 															<div class="sign_box"></div>
-															<div style="color: blue;">វេជ្ជបណ្ឌិត.<span class="color_blue KHOSMoulLight">'. Auth::user()->setting()->sign_name .'</span></div>
+															<div style="color: blue;"><span class="color_blue KHOSMoulLight">'. Auth::user()->setting()->sign_name_kh .'</span></div>
 														</td>
 													</tr>
 												</table>
