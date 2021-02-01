@@ -27,7 +27,7 @@ class User extends Authenticatable
 	];
 
 	public function echoDefaultDescriptions(){
-		$collection = EchoDefaultDescription::orderBy('slug', 'asc');
+		$collection = EchoDefaultDescription::orderBy('id', 'asc');
 		return $collection;
 	}
 

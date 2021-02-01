@@ -10,18 +10,11 @@
             {!! $errors->first('date', '<div class="invalid-feedback">:message</div>') !!}
           </div>
         </div>
-
-        {{-- <div class="col-sm-6">
-          <div class="form-group">
-            {!! Html::decode(Form::label('echo_default_description_id', __('label.form.echoes.echo_default_description'))) !!}
-            {!! Form::select('echo_default_description_id', $echo_default_descriptions, ((isset($echoes->echo_default_description_id))? $echoes->echo_default_description_id : '' ), ['class' => 'form-control select2 echo_default_description_id','placeholder' => __('label.form.choose')]) !!}
-          </div>
-        </div> --}}
         
         <div class="col-sm-6">
           <div class="form-group">
-            {!! Html::decode(Form::label('patient_id', __('label.form.echoes.patient'))) !!}
-            {!! Form::select('patient_id', $patients, ((isset($echoes->patient_id))? $echoes->patient_id : '' ), ['class' => 'form-control select2 patient_id','placeholder' => __('label.form.choose')]) !!}
+            {!! Html::decode(Form::label('patient_id', __('label.form.echoes.patient')." <small>*</small>")) !!}
+            {!! Form::select('patient_id', $patients, ((isset($echoes->patient_id))? $echoes->patient_id : '' ), ['class' => 'form-control select2 patient_id','placeholder' => __('label.form.choose'),'required']) !!}
           </div>
         </div>
         
@@ -71,30 +64,32 @@
       
     </div>
     <div class="col-sm-6">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="row justify-content-center">
-            <div class="col-sm-4 text-center">
-              <div class="fileinput fileinput-new" data-provides="fileinput">
-                <div class="fileinput-new img-thumbnail" style="max-width: 100%;">
-                  <img data-src="" src="/images/echoes/{{ ((isset($echoes->image))? $echoes->image : 'default.png' ) }}" alt="{{ Auth::user()->name }}">
-                </div>
-                <div class="fileinput-preview fileinput-exists img-thumbnail" style="max-width: 248px;"></div>
-                <div class="mt-2">
-                  <span class="btn btn-outline-secondary btn-file">
-                    <span class="fileinput-new">{{ __('label.buttons.select') }}</span>
-                    <span class="fileinput-exists">{{ __('label.buttons.change') }}</span>
-                    <input type="file" name="image" />
-                  </span>
-                  <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput">{{ __('label.buttons.remove') }}</a>
+      @if ($type != 'letter-form-the-hospital')
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="row justify-content-center">
+              <div class="col-sm-4 text-center">
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+                  <div class="fileinput-new img-thumbnail" style="max-width: 100%;">
+                    <img data-src="" src="/images/echoes/{{ ((isset($echoes->image))? $echoes->image : 'default.png' ) }}" alt="{{ Auth::user()->name }}">
+                  </div>
+                  <div class="fileinput-preview fileinput-exists img-thumbnail" style="max-width: 248px;"></div>
+                  <div class="mt-2">
+                    <span class="btn btn-outline-secondary btn-file">
+                      <span class="fileinput-new">{{ __('label.buttons.select') }}</span>
+                      <span class="fileinput-exists">{{ __('label.buttons.change') }}</span>
+                      <input type="file" name="image" />
+                    </span>
+                    <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput">{{ __('label.buttons.remove') }}</a>
+                  </div>
                 </div>
               </div>
+              <div class="clearfix"></div>
+              <br />
             </div>
-            <div class="clearfix"></div>
-            <br />
           </div>
         </div>
-      </div>
+      @endif
     </div>
 
     <div class="col-sm-12">

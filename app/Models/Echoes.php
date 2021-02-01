@@ -17,6 +17,7 @@ class Echoes extends Model
 		'pt_phone',
 		'image',
 		'description',
+		'patient_id',
 		'echo_default_description_id',
 		'created_by',
 		'updated_by',

@@ -62,7 +62,7 @@
 							@foreach (Auth::user()->echoDefaultDescriptions()->get() as $kkey => $echo_default )
 								@can('Echo Index', 'Echo Create', 'Echo Edit', 'Echo Delete')
 								<li class="nav-item">
-									<a href="{{ route('echoes.index', $echo_default->slug) }}" class="nav-link {{ (($echo_default->slug == @$type )? 'active':'') }}">
+									<a href="{{ route('echoes.create', $echo_default->slug) }}" class="nav-link {{ (($echo_default->slug == @$type )? 'active':'') }}">
 										<i class="far fa-circle nav-icon"></i>
 										<p>{{ $echo_default->name }}</p>
 									</a>

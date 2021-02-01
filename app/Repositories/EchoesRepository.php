@@ -57,65 +57,93 @@ class EchoesRepository
 		$grand_total_in_word = Auth::user()->num2khtext($gtt_dollars, false) . 'ដុល្លារ' . (($gtt_cents>0)? ' និង'. Auth::user()->num2khtext($gtt_cents, false) .'សេន' : '');
 		$grand_total_riel_in_word = Auth::user()->num2khtext(round($grand_total*$echoes->rate, 0), false);
 
-		$echoes_detail = '<section class="echoes-print">
-												<table class="table-header" width="100%">
-													<tr>
-														<td width="40%">
-															<div class="KHOSMoulLight"style="color: red;">'. Auth::user()->setting()->sign_name_kh .'</div>
-															<div style="color: blue; font-weight: bold; text-transform: uppercase; padding: 5px 0;">'. Auth::user()->setting()->sign_name_en .'</div>
-															<div>'. Auth::user()->setting()->echo_description .'</div>
-														</td>
-														<td  width="20%">
-															<img src="/images/setting/Logo.png" alt="IMG">
-														</td>
-														<td width="40%" class="text-center">
-															<div>'. Auth::user()->setting()->address .'</div>
-															<div style="padding: 5px 0;">Tel: '. Auth::user()->setting()->phone .'</div>
-														</td>
-													</tr>
-												</table>
-												<table class="table-information" width="100%" style="border-top: 4px solid red; margin: 10px 0 15px 0;">
-													<tr>
-														<td colspan="3">
-															<h5 class="text-center KHOSMoulLight" style="padding: 20px 0 10px; color: blue;">'. $echoes->echo_default_description->name .'</h5>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															ឈ្មោះ/Name: <span class="pt_name">'. $echoes->pt_name .'</span>
-														</td>
-														<td>
-															ភេទ/Gender: <span class="pt_gender">'. $echoes->pt_gender .'</span>
-														</td>
-														<td>
-															អាយុ/Age: <span class="pt_age">'. $echoes->pt_age .'</span>
-														</td>
-													</tr>
-												</table>
-												<div class="echo_description">
-													'. $echoes->description .'
-												</div>
-												<table class="table-detail" width="100%">
-													<tr>
-														<td width="70%" style="padding: 10px;">
-															<img src="/images/echoes/'. $echoes->image .'" alt="IMG">
-														</td>
-														<td>
-															<div>Le. '. date('d-m-Y', strtotime($echoes->date)) .'</div>
-															<br/>
-															<br/>
-															<br/>
-															<br/>
-															<br/>
-															<br/>
-															<br/>
-															<div>'. Auth::user()->setting()->sign_name_en .'</div>
-														</td>
-													</tr>
-												</table>
-												<div style="color: red; margin-top: 15px;" class="text-center">សូមកាន់លទ្ធផលនេះមកជាមួយផង ពេលពិនិត្យលើកក្រោយ អរគុណ។</div>
-												<br/>
-											</section>';
+		if ($echoes->echo_default_description->slug == 'letter-form-the-hospital') {
+			$echoes_detail = '<section class="echoes-print">
+													<div class="KHOSMoulLight text-center" style=="font-size: 16px;">ព្រះរាជាណាចក្រកម្ពុជា</div>
+													<div class="KHOSMoulLight text-center" style=="font-size: 16px;">ជាតិ   សាសនា    ព្រះមហាក្សត្រ</div>
+													<table class="table-header" width="100%">
+														<tr>
+															<td  width="30%" class="text-center">
+																<div style="width: 3cm; height: 3cm; margin: 0 auto;"><img src="/images/setting/Logo.png" alt="IMG"></div>
+																<div class="KHOSMoulLight" style="padding: 5px 0;">មន្ទីសុខាភិបាលខេត្តកំពង់ចាម</div>
+																<div class="KHOSMoulLight">'. Auth::user()->setting()->clinic_name_kh .'</div>
+															</td>
+															<td width="30%" class="text-center">
+															</td>
+															<td width="40%" class="text-center">
+																<br/>
+																<div>'. Auth::user()->setting()->address .'</div>
+																<div style="padding: 5px 0;">Tel: '. Auth::user()->setting()->phone .'</div>
+															</td>
+														</tr>
+													</table>
+													<br/>
+													<br/>	
+													<div class="echo_description">
+														'. $echoes->description .'
+													</div>
+												</section>';
+		}else{
+			$echoes_detail = '<section class="echoes-print">
+													<table class="table-header" width="100%">
+														<tr>
+															<td width="40%">
+																<div class="KHOSMoulLight"style="color: red;">'. Auth::user()->setting()->sign_name_kh .'</div>
+																<div style="color: blue; font-weight: bold; text-transform: uppercase; padding: 5px 0;">'. Auth::user()->setting()->sign_name_en .'</div>
+																<div>'. Auth::user()->setting()->echo_description .'</div>
+															</td>
+															<td  width="20%">
+																<img src="/images/setting/Logo.png" alt="IMG">
+															</td>
+															<td width="40%" class="text-center">
+																<div>'. Auth::user()->setting()->address .'</div>
+																<div style="padding: 5px 0;">Tel: '. Auth::user()->setting()->phone .'</div>
+															</td>
+														</tr>
+													</table>
+													<table class="table-information" width="100%" style="border-top: 4px solid red; margin: 10px 0 15px 0;">
+														<tr>
+															<td colspan="3">
+																<h5 class="text-center KHOSMoulLight" style="padding: 20px 0 10px; color: blue;">'. $echoes->echo_default_description->name .'</h5>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																ឈ្មោះ/Name: <span class="pt_name">'. $echoes->pt_name .'</span>
+															</td>
+															<td>
+																ភេទ/Gender: <span class="pt_gender">'. $echoes->pt_gender .'</span>
+															</td>
+															<td>
+																អាយុ/Age: <span class="pt_age">'. $echoes->pt_age .'</span>
+															</td>
+														</tr>
+													</table>
+													<div class="echo_description">
+														'. $echoes->description .'
+													</div>
+													<table class="table-detail" width="100%">
+														<tr>
+															<td width="70%" style="padding: 10px;">
+																<img src="/images/echoes/'. $echoes->image .'" alt="IMG">
+															</td>
+															<td>
+																<div>Le. '. date('d-m-Y', strtotime($echoes->date)) .'</div>
+																<br/>
+																<br/>
+																<br/>
+																<br/>
+																<br/>
+																<br/>
+																<br/>
+																<div>'. Auth::user()->setting()->sign_name_en .'</div>
+															</td>
+														</tr>
+													</table>
+													<div style="color: red; margin-top: 15px;" class="text-center">សូមកាន់លទ្ធផលនេះមកជាមួយផង ពេលពិនិត្យលើកក្រោយ អរគុណ។</div>
+													<br/>
+												</section>';
+		}
 
 		return response()->json(['echoes_detail' => $echoes_detail, 'title' => $title]);
 		// return $echoes_detail;
@@ -134,6 +162,7 @@ class EchoesRepository
 			'pt_gender' => $request->pt_gender,
 			'pt_phone' => $request->pt_phone,
 			'description' => $request->description,
+			'patient_id' => $request->patient_id,
 			'echo_default_description_id' => $echo_default_description->id,
 			'created_by' => Auth::user()->id,
 			'updated_by' => Auth::user()->id,
@@ -159,6 +188,7 @@ class EchoesRepository
 			'pt_gender' => $request->pt_gender,
 			'pt_phone' => $request->pt_phone,
 			'description' => $request->description,
+			'patient_id' => $request->patient_id,
 			'updated_by' => Auth::user()->id,
 		]);
 		
