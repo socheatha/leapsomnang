@@ -54,6 +54,7 @@
 						<td>{{ $patient->email }}</td>
 						<td>{{ $patient->phone }}</td>
 						<td class="text-right">
+							<button type="button" class="btn btn-info btn-sm btn-flat" onclick="getDetail({{ $patient->id }})" data-toggle="tooltip" data-placement="left" title="{{ __('label.buttons.show') }}"><i class="fa fa-list"></i></button>
 
 							{{-- @can('Patient Show')
 							<button type="button" class="btn btn-warning btn-sm btn-flat" onclick="getDetail({{ $patient->id }})" data-toggle="tooltip" data-placement="left" title="{{ __('label.buttons.show') }}"><i class="fa fa-eye"></i></button>
@@ -97,9 +98,7 @@
         </button>
       </div>
       <div class="modal-body">
-				<div id="patient_detail">
-
-				</div>
+			<div id="patient_detail"></div>
       </div>
     </div>
     <!-- /.modal-content -->
@@ -121,7 +120,7 @@
 					id: id,
 				},
 				success: function (rs) {
-					$('#patient_detail').html(rs.detail);
+					$('#patient_detail').html(rs.P_history);
 					$('#modal_patient_detail').modal('show');
 				}
 			});
