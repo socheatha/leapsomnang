@@ -20,11 +20,20 @@ class PatientRepository
 
 	public function getDetail($request)
 	{
+		// find Precription + Invoice of this patient, then sort by date and return
+		// DB::enableQueryLog();
+		$P_history =
+			\DB::table('prescriptions')->select(['id', 'date'])
+			->unionAll(\DB::table('invoices')->select(['id', 'date']))
+			->get();
+		// dd(DB::getQueryLog());
+
 		$patient = Patient::find($request->id);
 		$patient->no = 'PT-'. str_pad($patient->id, 6, "0", STR_PAD_LEFT);
 		$patient->pt_gender = (($patient->gender==1)? 'ប្រុស' : 'ស្រី');
 		return response()->json([
-			'patient' => $patient ,
+			'patient' => $patient,
+			'P_history' => json_encode($P_history)
 		]);
 	}
 
