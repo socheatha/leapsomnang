@@ -120,7 +120,34 @@
 					id: id,
 				},
 				success: function (rs) {
-					$('#patient_detail').html(rs.P_history);
+					var patient = rs.patient;
+					var hisory = JSON.parse(rs.P_history);
+					var html_structure = `<table class="table table-striped">
+						<tr>
+							<th>{!! __('module.table.no') !!}</th>
+							<th>{!! __('module.table.date') !!}</th>
+							<th>{!! __('module.table.name') !!}</th>
+							<th></th>
+							<th>{!! __('module.table.patient.age') !!}</th>
+							<th>{!! __('module.table.gender') !!}</th>
+							<th>{!! __('module.table.phone') !!}</th>
+							<th></th>
+						</tr>
+					`;
+					hisory.forEach((h, i)=>{
+						html_structure += `<tr>
+							<td>${i+1}</td>
+							<td>${h['date']}</td>
+							<td>${patient['no']}</td>
+							<td>${h['pt_name']}</td>
+							<td>${h['pt_age']}</td>
+							<td>${patient['pt_gender']}</td>
+							<td>${h['pt_phone']}</td>
+							<td>${h['remark'] + h['type']}</td>
+						</tr>`;
+					});
+					html_structure += `</table>`;
+					$('#patient_detail').html(html_structure);
 					$('#modal_patient_detail').modal('show');
 				}
 			});

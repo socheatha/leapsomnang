@@ -21,12 +21,11 @@ class PatientRepository
 	public function getDetail($request)
 	{
 		// find Precription + Invoice of this patient, then sort by date and return
-		// DB::enableQueryLog();
 		$P_history =
-			\DB::table('prescriptions')->select(['id', 'date'])
-			->unionAll(\DB::table('invoices')->select(['id', 'date']))
-			->get();
-		// dd(DB::getQueryLog());
+			\DB::table('prescriptions')->select(['id', 'date', 'pt_no', 'pt_name', 'pt_age', 'pt_phone', 'remark', 'created_at', 'created_at as type'])->where('patient_id', $request->id)->orderBy('id', 'DESC')
+			->unionAll(\DB::table('invoices')->select(['id', 'date', 'pt_no', 'pt_name', 'pt_age', 'pt_phone', 'remark', 'created_at', 'created_at as type'])->where('patient_id', $request->id)->orderBy('id', 'DESC'))
+			->get()->toarray();
+		array_multisort(array_column($P_history, 'date'), SORT_DESC, $P_history);
 
 		$patient = Patient::find($request->id);
 		$patient->no = 'PT-'. str_pad($patient->id, 6, "0", STR_PAD_LEFT);
