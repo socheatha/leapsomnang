@@ -89,7 +89,7 @@
 @component('components.confirm_password')@endcomponent
 
 <div class="modal fade" id="modal_patient_detail">
-    <div class="modal-dialog mw-100 " style="width: 75%;">
+    <div class="modal-dialog mw-100 " style="width: 90%;">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">{{ __('alert.modal.title.detail') }}</h4>
@@ -104,7 +104,7 @@
                             <!-- Spare data for AJAX load -->
                         </div>
                         <div class="col xs-12 col-sm-8 col-md-8">
-                            <iframe id="print_page_result" data-srcdoc="<p align='center'>{!! __('alert.swal.title.empty') !!}</p>" width="100%" height="700"></iframe>
+                            <iframe id="print_page_result" data-srcdoc="<p align='center'>...</p>" width="100%" height="600" frameBorder="0"></iframe>
                         </div>
                     </div>
                 </div>
@@ -122,6 +122,7 @@
 <script type="text/javascript">
     function getDetail(id) {
         $('#print_page_result').attr('srcdoc', $('#print_page_result').data('srcdoc'));
+        getPatientInfo(id);
         $.ajax({
             url: "{{ route('patient.getDetail') }}",
             method: 'post',
@@ -133,18 +134,18 @@
                 var hisory = JSON.parse(rs.P_history);
                 var html_structure = `<table class="table table-striped table-hover">
 						<tr>
-							<th>{!! __('module.table.no') !!}</th>
-							<th>{!! __('module.table.date') !!}</th>
-							<th>{!! __('module.table.patient.age') !!}</th>
-							<th>{!! __('module.table.action') !!}</th>
+							<th class="text-center">{!! __('module.table.name') !!}</th>
+							<th class="text-center">{!! __('module.table.date') !!}</th>
+							<th class="text-center">{!! __('module.table.patient.age') !!}</th>
+							<th class="text-center">{!! __('module.table.action') !!}</th>
 						</tr>
 					`;
                 hisory.forEach((h, i) => {
-                    html_structure += `<tr style="cursor: pointer;" onclick="getPrintPage('${h['segment']}/${h.id}/print')">
-							<td class="text-center">${i+1}</td>
-							<td>${h['date']}</td>
-							<td>${h['pt_age']}</td>
-							<td>${h['segment'] == 'invoice' ? '{!! __("sidebar.invoice.main") !!}' : '{!! __("sidebar.prescription.main") !!}'}</td>
+                    html_structure += `<tr>
+							<td><a href="javascript:getPatientInfo(${id})">${h['pt_name']}</a></td>
+							<td class="text-center">${h['date']}</td>
+							<td class="text-center">${h['pt_age']}</td>
+							<td class="text-center"><a href="javascript:getPrintPage('${h['segment']}/${h.id}/print')">${h['segment'] == 'invoice' ? '{!! __("sidebar.invoice.main") !!}' : '{!! __("sidebar.prescription.main") !!}'}</a></td>
 						</tr>`;
                 });
                 html_structure += `</table>`;
@@ -155,12 +156,28 @@
     }
 
     function getPrintPage($url) {
-        $('#print_page_result').attr('srcdoc', '<p align=center>Please wait data loading ...</p>');
+        $('#print_page_result').attr('srcdoc', '<p align=center> ......... </p>');
         $.ajax({
             url: $url,
             method: 'get',
             success: function(rs) {
                 $('#print_page_result').attr('srcdoc', rs);
+            }
+        });
+    }
+
+    function getPatientInfo(p_id) {
+        $.ajax({
+            url: 'patient/'+p_id+'/edit',
+            method: 'get',
+            success: function(rs) {
+                // start to scrapt data (JSOP)
+                $form_edit = $(rs).find('.content');
+                $form_edit.find('.card-header').html(`<p class="text-center text-bold">{!! __("sidebar.patient.main") !!}</p>`);
+                $form_edit.find('.card-footer').remove();
+                $form_edit.find('small').remove();
+                $form_edit.find('*').attr('readonly', 'readonly');
+                $('#print_page_result').attr('srcdoc', `<body><link href="/css/app.css" rel="stylesheet"><link href="http://localhost:8000/css/custom-style.css" rel="stylesheet">${$form_edit.html()}</body>`);
             }
         });
     }
