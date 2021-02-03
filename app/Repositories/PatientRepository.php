@@ -21,18 +21,18 @@ class PatientRepository
 	public function getDetail($request)
 	{
 		// find Precription + Invoice of this patient, then sort by date and return
-		$P_history =
-			\DB::table('prescriptions')->select(['id', 'date', 'pt_no', 'pt_name', 'pt_age', 'pt_phone', 'remark', 'created_at', 'created_at as type'])->where('patient_id', $request->id)->orderBy('id', 'DESC')
-			->unionAll(\DB::table('invoices')->select(['id', 'date', 'pt_no', 'pt_name', 'pt_age', 'pt_phone', 'remark', 'created_at', 'created_at as type'])->where('patient_id', $request->id)->orderBy('id', 'DESC'))
-			->get()->toarray();
-		array_multisort(array_column($P_history, 'date'), SORT_DESC, $P_history);
+		$P_precription = \DB::table('prescriptions')->select(['id', 'date', 'pt_age'])->where('patient_id', $request->id)->orderBy('id', 'DESC')->get()->toarray();
+		$P_invoice = \DB::table('invoices')->select(['id', 'date', 'pt_age'])->where('patient_id', $request->id)->orderBy('id', 'DESC')->get()->toarray();
+		$P_result = array_merge(array_map(function ($P) { $P->segment = 'prescription'; return $P; }, $P_precription), array_map(function ($P) { $P->segment = 'invoice'; return $P; }, $P_invoice));
+		array_multisort(array_column($P_result, 'date'), SORT_DESC, $P_result);
 
 		$patient = Patient::find($request->id);
-		$patient->no = 'PT-'. str_pad($patient->id, 6, "0", STR_PAD_LEFT);
-		$patient->pt_gender = (($patient->gender==1)? 'ប្រុស' : 'ស្រី');
+		$patient->no = 'PT-' . str_pad($patient->id, 6, "0", STR_PAD_LEFT);
+		$patient->pt_gender = (($patient->gender == 1) ? 'ប្រុស' : 'ស្រី');
+
 		return response()->json([
 			'patient' => $patient,
-			'P_history' => json_encode($P_history)
+			'P_history' => json_encode($P_result)
 		]);
 	}
 
