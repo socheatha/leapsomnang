@@ -9,7 +9,7 @@
 					{!! $errors->first('name', '<div class="invalid-feedback">:message</div>') !!}
 				</div>
 			</div>
-			<div class="col-sm-8">
+			<div class="col-sm-6">
 				<div class="form-group">
 					{!! Html::decode(Form::label('age', __('label.form.patient.age')." <small>*</small>")) !!}
 					{!! Form::text('age', ((isset($patient->age))? $patient->age : '' ), ['class' => 'form-control is_integer '. (($errors->has("age"))? "is-invalid" : ""),'placeholder' => 'age']) !!}
@@ -17,7 +17,7 @@
 				</div>
 			</div>
 
-			<div class="col-sm-4">
+			<div class="col-sm-6">
 				<div class="form-group">
 					{!! Html::decode(Form::label('gender', __('label.form.gender')." <small>*</small>")) !!}
 					<div class="px-3 pt-2">
@@ -43,7 +43,7 @@
 				</div>
 			</div>
 
-			<div class="col-sm-4">
+			<div class="col-sm-12 col-md-12 col-lg-4">
 				<div class="form-group">
 					{!! Html::decode(Form::label('id_card', __('label.form.patient.id_card'))) !!}
 					{!! Form::text('id_card', ((isset($patient->id_card))? $patient->id_card : '' ), ['class' => 'form-control '. (($errors->has("id_card"))? "is-invalid" : ""),'placeholder' => 'id card']) !!}
@@ -51,7 +51,7 @@
 				</div>
 			</div>
 
-			<div class="col-sm-4">
+			<div class="col-sm-12 col-md-12 col-lg-4">
 				<div class="form-group">
 					{!! Html::decode(Form::label('phone', __('label.form.phone'))) !!}
 					{!! Form::text('phone', ((isset($patient->phone))? $patient->phone : '' ), ['class' => 'form-control '. (($errors->has("phone"))? "is-invalid" : ""),'placeholder' => 'phone']) !!}
@@ -59,7 +59,7 @@
 				</div>
 			</div>
 
-			<div class="col-sm-4">
+			<div class="col-sm-12 col-md-12 col-lg-4">
 				<div class="form-group">
 					{!! Html::decode(Form::label('email', __('label.form.email'))) !!}
 					{!! Form::email('email', ((isset($patient->email))? $patient->email : '' ), ['class' => 'form-control '. (($errors->has("email"))? "is-invalid" : ""),'placeholder' => 'email']) !!}
