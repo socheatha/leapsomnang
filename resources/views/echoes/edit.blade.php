@@ -88,7 +88,7 @@
 
 				var data = [];
 				$(".select2_pagination").each(function () {
-					data.push({id:'{{ $echoes->patient_id }}', text:'{{ $echoes->patient->name }}'});
+					data.push({id:'{{ $echoes->patient_id }}', text:'PT-{{ str_pad($echoes->patient_id, 6, "0", STR_PAD_LEFT) }} :: {{ $echoes->patient->name }}'});
 				});
 				$(".select2_pagination").select2({
 					theme: 'bootstrap4',
@@ -132,7 +132,7 @@
 		$('#patient_id').change(function () {
 			if ($(this).val()!='') {
 				$.ajax({
-					url: "{{ route('patient.getDetail') }}",
+					url: "{{ route('patient.getSelectDetail') }}",
 					type: 'post',
 					data: {
 						id : $(this).val()

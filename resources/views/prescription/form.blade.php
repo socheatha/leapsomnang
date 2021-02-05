@@ -33,7 +33,7 @@
         <div class="col-sm-12">
           <div class="form-group">
             {!! Html::decode(Form::label('patient_id', __('label.form.prescription.patient'))) !!}
-            {!! Form::select('patient_id', $patients, ((isset($prescription->patient_id))? $prescription->patient_id : '' ), ['class' => 'form-control select2 patient_id','placeholder' => __('label.form.choose')]) !!}
+            {!! Form::select('patient_id', [], ((isset($prescription->patient_id))? $prescription->patient_id : '' ), ['class' => 'form-control select2_pagination patient_id','placeholder' => __('label.form.choose')]) !!}
           </div>
         </div>
         

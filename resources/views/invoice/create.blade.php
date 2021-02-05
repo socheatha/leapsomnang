@@ -55,6 +55,36 @@
 <script type="text/javascript">
 
 
+		$(".select2_pagination").change(function () {
+			$('[name="txt_search_field"]').val($('.select2-search__field').val());
+		});
+		
+		function select2_search (term) {
+			$(".select2_pagination").select2('open');
+			var $search = $(".select2_pagination").data('select2').dropdown.$search || $(".select2_pagination").data('select2').selection.$search;
+			$search.val(term);
+			$search.trigger('keyup');
+		}
+
+		$(".select2_pagination").select2({
+			theme: 'bootstrap4',
+			placeholder: "{{ __('label.form.choose') }}",
+			allowClear: true,
+			ajax: {
+				url: "{{ route('patient.getSelect2Items') }}",
+				method: 'post',
+				dataType: 'json',
+				data: function(params) {
+					return {
+							term: params.term || '',
+							page: params.page || 1
+					}
+				},
+				cache: true
+			}
+		});
+
+
 	$('.service').change(function () {
 		if ($(this).val()!='') {
 			var service_id = $(this).val();
@@ -129,7 +159,7 @@
 	$('#patient_id').change(function () {
 		if ($(this).val()!='') {
 			$.ajax({
-				url: "{{ route('patient.getDetail') }}",
+				url: "{{ route('patient.getSelectDetail') }}",
 				type: 'post',
 				data: {
 					id : $(this).val()
