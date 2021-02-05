@@ -104,7 +104,7 @@
 		$('#patient_id').change(function () {
 			if ($(this).val()!='') {
 				$.ajax({
-					url: "{{ route('patient.getDetail') }}",
+					url: "{{ route('patient.getSelectDetail') }}",
 					type: 'post',
 					data: {
 						id : $(this).val()

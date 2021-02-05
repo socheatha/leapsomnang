@@ -218,6 +218,45 @@
 @section('js')
 <script type="text/javascript">
 
+	function select2_search (term) {
+		$(".select2_pagination").select2('open');
+		var $search = $(".select2_pagination").data('select2').dropdown.$search || $(".select2_pagination").data('select2').selection.$search;
+		$search.val(term);
+		$search.trigger('keyup');
+	}
+
+	$( document ).ready(function() {
+
+		setTimeout(() => {
+			$(".select2_pagination").val("{{ $prescription->patient_id }}").trigger("change");
+		}, 100);
+
+		var data = [];
+		$(".select2_pagination").each(function () {
+			data.push({id:'{{ $prescription->patient_id }}', text:'PT-{{ str_pad($prescription->patient_id, 6, "0", STR_PAD_LEFT) }} :: {{ $prescription->patient->name }}'});
+		});
+		$(".select2_pagination").select2({
+			theme: 'bootstrap4',
+			placeholder: "{{ __('label.form.choose') }}",
+			allowClear: true,
+			data: data,
+			ajax: {
+				url: "{{ route('patient.getSelect2Items') }}",
+				method: 'post',
+				dataType: 'json',
+				data: function(params) {
+					return {
+							term: params.term || '{{ $prescription->patient_id }}',
+							page: params.page || 1
+					}
+				},
+				cache: true
+			}
+		});
+	});
+
+	$('.select2_pagination').val('{{ $prescription->id }}').trigger('change')
+
 	// jQuery UI sortable for the todo list
 	$('.todo-list').sortable({
 		update: function( ) {
@@ -559,7 +598,7 @@
 	$('#patient_id').change(function () {
 		if ($(this).val()!='') {
 			$.ajax({
-				url: "{{ route('patient.getDetail') }}",
+				url: "{{ route('patient.getSelectDetail') }}",
 				type: 'post',
 				data: {
 					id : $(this).val()
