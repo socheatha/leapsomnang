@@ -30,6 +30,7 @@ return [
     'medicine' => [
 	    'code' => 'កូដ',
 	    'usage' => 'ការប្រើប្រាស់',
+	    'price' => 'តម្លៃ',
     ],
 
     'service' => [

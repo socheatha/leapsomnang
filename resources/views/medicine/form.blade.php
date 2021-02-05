@@ -1,10 +1,17 @@
 <div class="row">
 
-	<div class="col-sm-6">
+	<div class="col-sm-3">
 		<div class="form-group">
 			{!! Html::decode(Form::label('name', __('label.form.name') .' <small>*</small>')) !!}
 			{!! Form::text('name', ((isset($medicine->name))? $medicine->name : '' ), ['class' => 'form-control '. (($errors->has("name"))? "is-invalid" : ""),'placeholder' => 'name', 'required']) !!}
 			{!! $errors->first('name', '<div class="invalid-feedback">:message</div>') !!}
+		</div>
+	</div>
+	<div class="col-sm-3">
+		<div class="form-group">
+			{!! Html::decode(Form::label('price', __('label.form.medicine.price') .'($) <small>*</small>')) !!}
+			{!! Form::text('price', ((isset($medicine->price))? $medicine->price : '' ), ['class' => 'form-control is_number '. (($errors->has("price"))? "is-invalid" : ""),'placeholder' => 'price', 'required']) !!}
+			{!! $errors->first('price', '<div class="invalid-feedback">:message</div>') !!}
 		</div>
 	</div>
 

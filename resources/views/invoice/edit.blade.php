@@ -202,6 +202,89 @@
 @section('js')
 <script type="text/javascript">
 
+	$('[name="item_type"]').change(function () {
+		
+		if ($(this).val()==2) {
+
+			$('.item_type_select_option').html(`<div class="form-group">
+																							{!! Html::decode(Form::label('item_medicine_id', __('label.form.invoice.medicine')." <small>*</small>")) !!}
+																							{!! Form::select('item_medicine_id', $medicines, '', ['class' => 'form-control select2 medicine','placeholder' => __('label.form.choose'),'required']) !!}
+																						</div>`);
+			$('.medicine').select2({
+				theme: 'bootstrap4',
+			});
+			$('[name="item_qty"]').val('');
+			$('[name="item_discount"]').val('0').trigger('change');
+			$('[name="item_price"]').val('');
+			$('[name="item_description"]').val('');
+
+			$('.medicine').change(function () {
+				if ($(this).val()!='') {
+					var medicine_id = $(this).val();
+					$.ajaxSetup({
+						headers: {
+							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+						}
+					});
+					$.ajax({
+						url: "{{ route('medicine.getDetail') }}",
+						method: 'post',
+						data: {
+								id: medicine_id,
+						},
+						success: function(data){
+							$('[name="item_price"]').val( data.medicine.price );
+							$('[name="item_qty"]').val( 1 );
+							$('[name="item_description"]').val( data.medicine.name );
+						}
+					});
+					
+				}
+			});
+
+		}else{
+
+			$('.item_type_select_option').html(`<div class="form-group">
+																							{!! Html::decode(Form::label('item_service_id', __('label.form.invoice.service')." <small>*</small>")) !!}
+																							{!! Form::select('item_service_id', $services, '', ['class' => 'form-control select2 service','placeholder' => __('label.form.choose'),'required']) !!}
+																						</div>`);
+			$('.service').select2({
+				theme: 'bootstrap4',
+			});
+			$('[name="item_qty"]').val('');
+			$('[name="item_discount"]').val('0');
+			$('[name="item_price"]').val('');
+			$('[name="item_description"]').val('');
+
+			$('.service').change(function () {
+				if ($(this).val()!='') {
+					var service_id = $(this).val();
+					$.ajaxSetup({
+						headers: {
+							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+						}
+					});
+					$.ajax({
+						url: "{{ route('service.getDetail') }}",
+						method: 'post',
+						data: {
+								id: service_id,
+						},
+						success: function(data){
+							$('[name="item_price"]').val( data.service.price );
+							$('[name="item_qty"]').val( 1 );
+							$('[name="item_description"]').val( data.service.name );
+						}
+					});
+					
+				}
+			});
+
+		}
+
+	});
+
+
 	function select2_search (term) {
 		$(".select2_pagination").select2('open');
 		var $search = $(".select2_pagination").data('select2').dropdown.$search || $(".select2_pagination").data('select2').selection.$search;
@@ -325,6 +408,30 @@
 		});
 	});
 
+	$('.medicine').change(function () {
+		if ($(this).val()!='') {
+			var medicine_id = $(this).val();
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+			$.ajax({
+				url: "{{ route('medicine.getDetail') }}",
+				method: 'post',
+				data: {
+						id: medicine_id,
+				},
+				success: function(data){
+					$('[name="item_price"]').val( data.medicine.price );
+					$('[name="item_qty"]').val( 1 );
+					$('[name="item_description"]').val( data.medicine.name );
+				}
+			});
+			
+		}
+	});
+
 	$('.service').change(function () {
 		if ($(this).val()!='') {
 			var service_id = $(this).val();
@@ -348,7 +455,6 @@
 			
 		}
 	});
-
 	
 	function editInvoiceDetail(id) {
 		$.ajax({
@@ -496,7 +602,9 @@
 				method: 'post',
 				data: {
 						invoice_id: '{{ $invoice->id }}',
-						service_id: $('[name="item_service_id"]').val(),
+						medicine_id: (($('[name="item_medicine_id"]'))? $('[name="item_medicine_id"]').val() : ''),
+						service_id: (($('[name="item_service_id"]'))? $('[name="item_service_id"]').val() : ''),
+						discount: $('[name="item_discount"]').val(),
 						price: $('[name="item_price"]').val(),
 						qty: $('[name="item_qty"]').val(),
 						description: $('[name="item_description"]').val(),
@@ -524,6 +632,7 @@
 																			</form>
 																		</div>
 																	</li>`);
+					$('[name="item_medicine_id"]').val('').trigger('change');
 					$('[name="item_service_id"]').val('').trigger('change');
 					$('[name="item_discount"]').val('0').trigger('change');
 					$('[name="item_price"]').val( '' );

@@ -59,4 +59,9 @@ class Prescription extends Model
 		return $total;
 	}
 
+  public function patient()
+  {
+  	return $this->belongsTo(Patient::class, 'patient_id');
+	}
+	
 }

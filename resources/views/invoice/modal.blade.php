@@ -12,7 +12,22 @@
 				<div class="row">
 					<div class="col-sm-6">
 						<div class="row">
-							<div class="col-sm-12">
+							<div class="col-sm-5">
+								<div class="form-group">
+									{!! Html::decode(Form::label('item_type', __('label.form.invoice.item_type')." <small>*</small>")) !!}
+									<div>
+										<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<label class="btn btn-secondary active">
+												<input type="radio" name="item_type" id="option_a1" value="1" autocomplete="off" checked> {{ __('label.form.invoice.service') }}
+											</label>
+											<label class="btn btn-secondary">
+												<input type="radio" name="item_type" id="option_a2" value="2" autocomplete="off"> {{ __('label.form.invoice.medicine') }}
+											</label>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-7 item_type_select_option">
 								<div class="form-group">
 									{!! Html::decode(Form::label('item_service_id', __('label.form.invoice.service')." <small>*</small>")) !!}
 									{!! Form::select('item_service_id', $services, '', ['class' => 'form-control select2 service','placeholder' => __('label.form.choose'),'required']) !!}
@@ -52,7 +67,7 @@
 			</div>
 			<div class="modal-footer justify-content-between">
 				<button type="button" class="btn btn-flat btn-danger" data-dismiss="modal">{{ __('alert.swal.button.no') }}</button>
-				<button type="button" class="btn btn-flat btn btn-success" id="btn_add_item" data-dismiss="modal">{{ __('alert.swal.button.yes') }}</button>
+				<button type="button" class="btn btn-flat btn btn-success" id="btn_add_item">{{ __('alert.swal.button.yes') }}</button>
 			</div>
 		</div>
 		<!-- /.modal-content -->

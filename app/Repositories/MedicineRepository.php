@@ -31,6 +31,7 @@ class MedicineRepository
 
 		$medicine = Medicine::create([
 			'name' => $request->name,
+			'price' => $request->price,
 			'code' => $request->code,
 			'usage_id' => $request->usage_id,
 			'description' => $request->description,
@@ -47,6 +48,7 @@ class MedicineRepository
 
 		return $medicine->update([
 			'name' => $request->name,
+			'price' => $request->price,
 			'code' => $request->code,
 			'usage_id' => $request->usage_id,
 			'description' => $request->description,

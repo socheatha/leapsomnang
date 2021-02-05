@@ -32,12 +32,13 @@
 	</div>
 
 	<div class="card-body">
-		<table id="datatables-2" class="table table-striped table-hover">
+		<table id="datatables-2" class="table table-striped table-bordered table-hover">
 			<thead>
 				<tr>
 					<th width="30px">{!! __('module.table.no') !!}</th>
 					<th width="10%">{!! __('module.table.medicine.code') !!}</th>
 					<th>{!! __('module.table.name') !!}</th>
+					<th width="10%">{!! __('module.table.medicine.price') !!}</th>
 					<th width="10%">{!! __('module.table.medicine.usage') !!}</th>
 					<th>{!! __('module.table.description') !!}</th>
 					<th width="10%">{!! __('module.table.action') !!}</th>
@@ -49,6 +50,7 @@
 						<td class="text-center">{{ ++$i }}</td>
 						<td>{{ $medicine->code }}</td>
 						<td>{{ $medicine->name }}</td>
+						<td class="text-right"><span class="float-left">$</span> {{ number_format($medicine->price, 2) }}</td>
 						<td class="text-center">{{ $medicine->usage->name }}</td>
 						<td>{{ $medicine->description }}</td>
 						<td class="text-right">

@@ -25,6 +25,7 @@ class MedicineRequest extends FormRequest
 	{
 		return [
 			'name' => 'required|max:190',
+			'price' => 'required',
 			'code' => 'max:190',
 			'usage_id' => 'required',
 		];

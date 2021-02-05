@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Invoice;
 
+use App\Models\Medicine;
 use App\Models\Service;
 use App\Models\Patient;
 use App\Models\Invoice;
@@ -60,6 +61,7 @@ class InvoiceController extends Controller
 	{
 		$this->data = [
 			'inv_number' => $this->invoice->inv_number(),
+			'medicines' => Medicine::getSelectData('id', 'name', '', 'name' ,'asc'),
 			'services' => Service::getSelectData('id', 'name', '', 'name' ,'asc'),
 			'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),
 		];
@@ -156,6 +158,7 @@ class InvoiceController extends Controller
 
 		$this->data = [
 			'invoice' => $invoice,
+			'medicines' => Medicine::getSelectData('id', 'name', '', 'name' ,'asc'),
 			'services' => Service::getSelectData('id', 'name', '', 'name' ,'asc'),
 			'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),
 			'invoice_preview' => $this->invoice->getInvoicePreview($invoice->id)->getData()->invoice_detail,

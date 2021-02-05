@@ -12,7 +12,7 @@ class Medicine extends BaseModel
 	protected $table = 'medicines';
 
 	protected $fillable = [
-		'name', 'code', 'usage_id', 'description', 'created_by', 'updated_by',
+		'name', 'price', 'code', 'usage_id', 'description', 'created_by', 'updated_by',
 	];
 
 
