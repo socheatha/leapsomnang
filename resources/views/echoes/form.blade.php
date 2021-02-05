@@ -10,11 +10,10 @@
             {!! $errors->first('date', '<div class="invalid-feedback">:message</div>') !!}
           </div>
         </div>
-        
         <div class="col-sm-6">
           <div class="form-group">
             {!! Html::decode(Form::label('patient_id', __('label.form.echoes.patient')." <small>*</small>")) !!}
-            {!! Form::select('patient_id', $patients, ((isset($echoes->patient_id))? $echoes->patient_id : '' ), ['class' => 'form-control select2 patient_id','placeholder' => __('label.form.choose'),'required']) !!}
+            {!! Form::select('patient_id', [], ((isset($echoes->patient_id))? $echoes->patient_id : '' ), ['class' => 'form-control select2_pagination patient_id','placeholder' => __('label.form.choose'),'required']) !!}
           </div>
         </div>
         

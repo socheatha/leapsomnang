@@ -73,6 +73,46 @@
 <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 <script type="text/javascript">
 
+			function select2_search (term) {
+				$(".select2_pagination").select2('open');
+				var $search = $(".select2_pagination").data('select2').dropdown.$search || $(".select2_pagination").data('select2').selection.$search;
+				$search.val(term);
+				$search.trigger('keyup');
+			}
+
+			$( document ).ready(function() {
+
+				setTimeout(() => {
+					$(".select2_pagination").val("{{ $echoes->patient_id }}").trigger("change");
+				}, 100);
+
+				var data = [];
+				$(".select2_pagination").each(function () {
+					data.push({id:'{{ $echoes->patient_id }}', text:'{{ $echoes->patient->name }}'});
+				});
+				$(".select2_pagination").select2({
+					theme: 'bootstrap4',
+					placeholder: "{{ __('label.form.choose') }}",
+					allowClear: true,
+					data: data,
+					ajax: {
+						url: "{{ route('patient.getSelect2Items') }}",
+						method: 'post',
+						dataType: 'json',
+						data: function(params) {
+							return {
+									term: params.term || '{{ $echoes->patient_id }}',
+									page: params.page || 1
+							}
+						},
+						cache: true
+					}
+				});
+			});
+
+			$('.select2_pagination').val('{{ $echoes->id }}').trigger('change')
+
+
 		var editor = CKEDITOR.replace('my-editor', {
 			height: '750',
 			font_names: 'Calibrib Bold; Calibri Italic; Calibri; Roboto Regular; Roboto Bold; Khmer OS Battambang; Khmer OS Muol Light; Khmer OS Content; Khmer OS Kuolen;',

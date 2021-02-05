@@ -18,6 +18,45 @@ class PatientRepository
 	}
 
 
+	public function getSelect2Items($request)
+	{
+		
+		if ($request->ajax()){
+			$page = $request->page;
+			if($request->term != ''){
+				$resultCount = 5;
+			}else{
+				$resultCount = 1;
+			}
+			$offset = ($page - 1) * $resultCount;
+			$patients = Patient::orderBy('name', 'asc')->skip($offset)->take($resultCount)
+																	->where('name', 'LIKE',  '%' . $request->term. '%')
+																	->orWhere('id', 'LIKE',  '%' . $request->term. '%')
+																	->get();
+			$query_results = array();
+			$group_rs = array();
+			$children = array();
+			$group_array = array();
+			foreach ($patients as $i => $patient) {
+				$children = [];
+				$child['id'] = $patient->id;
+				$child['text'] = 'PT-'. str_pad($patient->id, 6, "0", STR_PAD_LEFT) .' :: '. $patient->name;
+				array_push($query_results, $child);
+			}
+			$count = Patient::count();
+			$endCount = $offset + $resultCount;
+			$morePages = $endCount > $count;
+			$results = array(
+				"results" => $query_results,
+				"pagination" => array(
+					"more" => $morePages
+				)
+			);
+			return response()->json($results);
+		}
+		
+	}
+
 	public function getDetail($request)
 	{
 		// find Precription + Invoice of this patient, then sort by date and return

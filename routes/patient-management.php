@@ -16,5 +16,6 @@ Route::group(['prefix' => 'patient', 'as' => 'patient.'], function () {
   Route::delete('/{patient}/delete', 'PatientController@destroy')->name('destroy')->middleware('can:Patient Delete');
 
   Route::post('/getDetail', 'PatientController@getDetail')->name('getDetail');
+  Route::post('/getSelect2Items', 'PatientController@getSelect2Items')->name('getSelect2Items');
 
 });

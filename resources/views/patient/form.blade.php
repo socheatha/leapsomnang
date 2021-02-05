@@ -11,7 +11,7 @@
 			</div>
 			<div class="col-sm-8">
 				<div class="form-group">
-					{!! Html::decode(Form::label('age', __('label.form.patient.age'))) !!}
+					{!! Html::decode(Form::label('age', __('label.form.patient.age')." <small>*</small>")) !!}
 					{!! Form::text('age', ((isset($patient->age))? $patient->age : '' ), ['class' => 'form-control is_integer '. (($errors->has("age"))? "is-invalid" : ""),'placeholder' => 'age']) !!}
 					{!! $errors->first('age', '<div class="invalid-feedback">:message</div>') !!}
 				</div>

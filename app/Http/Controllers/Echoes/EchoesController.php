@@ -52,7 +52,7 @@ class EchoesController extends Controller
 		if ($echo_default_description != null) {
 			$this->data = [
 				'echo_default_description' => $echo_default_description,
-				'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),
+				// 'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),
 				'type' => $type,
 			];
 			return view('echoes.create', $this->data);
@@ -89,7 +89,7 @@ class EchoesController extends Controller
 		if ($echo_default_description != null) {
 			$this->data = [
 				'echo_default_description' => $echo_default_description,
-				'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),
+				// 'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),
 				'echoes_preview' => $this->echoes->getEchoesPreview($echoes->id)->getData()->echoes_detail,
 				'echoes' => $echoes,
 				'type' => $type,

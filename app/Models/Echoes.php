@@ -28,4 +28,9 @@ class Echoes extends Model
   	return $this->belongsTo(EchoDefaultDescription::class, 'echo_default_description_id');
 	}
 
+  public function patient()
+  {
+  	return $this->belongsTo(Patient::class, 'patient_id');
+	}
+
 }

@@ -62,6 +62,11 @@ class PatientController extends Controller
 		return $this->patients->getDetail($request);
 	}
 
+	public function getSelect2Items(Request $request)
+	{
+		return $this->patients->getSelect2Items($request);
+	}
+
 	public function edit(Patient $patient)
 	{
 		$this->data = [

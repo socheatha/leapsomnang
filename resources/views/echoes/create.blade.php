@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-	{{ Html::style('/css/echoes-print-style.css') }}
+	{{-- {{ Html::style('/css/echoes-print-style.css') }} --}}
 	<style type="text/css">
 	
 	</style>
@@ -53,6 +53,36 @@
 @section('js')
 <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 <script type="text/javascript">
+
+
+		$(".select2_pagination").change(function () {
+			$('[name="txt_search_field"]').val($('.select2-search__field').val());
+		});
+		
+		function select2_search (term) {
+			$(".select2_pagination").select2('open');
+			var $search = $(".select2_pagination").data('select2').dropdown.$search || $(".select2_pagination").data('select2').selection.$search;
+			$search.val(term);
+			$search.trigger('keyup');
+		}
+
+		$(".select2_pagination").select2({
+			theme: 'bootstrap4',
+			placeholder: "{{ __('label.form.choose') }}",
+			allowClear: true,
+			ajax: {
+				url: "{{ route('patient.getSelect2Items') }}",
+				method: 'post',
+				dataType: 'json',
+				data: function(params) {
+					return {
+							term: params.term || '',
+							page: params.page || 1
+					}
+				},
+				cache: true
+			}
+		});
 
 
 		var editor = CKEDITOR.replace('my-editor', {
