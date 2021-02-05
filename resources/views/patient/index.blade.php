@@ -104,7 +104,7 @@
                             <!-- Spare data for AJAX load -->
                         </div>
                         <div class="col xs-12 col-sm-8 col-md-8">
-                            <iframe id="print_page_result" data-srcdoc="<p align='center'>...</p>" width="100%" height="600" frameBorder="0"></iframe>
+                            <iframe id="print_page_result" data-srcdoc="<p align='center'>...</p>" width="100%" height="500" frameBorder="1"></iframe>
                         </div>
                     </div>
                 </div>
