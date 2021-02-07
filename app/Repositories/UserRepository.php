@@ -29,8 +29,7 @@ class UserRepository
 													'gender' => $request->gender,
 													'status' => (($request->status==null)? 0 : 1),
 													'phone' => $request->phone,
-													'language' => $request->language,
-													'position' => $request->position,
+													'language' => 'kh',
 													'email' => $request->email,
 													'password' => Hash::make($request->password),
 												]);
@@ -46,9 +45,18 @@ class UserRepository
 			'gender' => $request->gender,
 			'status' => (($request->status==null)? 0 : 1),
 			'phone' => $request->phone,
-			'language' => $request->language,
-			'position' => $request->position,
+			'language' => 'kh',
 		]);
+
+	}
+
+	public function update_role($user, $request)
+	{
+		if (@$user->roles->first()->name) {
+			$user->removeRole($user->roles->first()->name);
+		}
+		
+		return $user->assignRole($request->role);
 
 	}
 

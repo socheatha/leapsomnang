@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 
 
 
-
 Route::group(['prefix' => 'user', 'as' => 'user.', 'namespace' => 'User'], function () {
 
   Route::get('/', 'UserController@index')->name('index')->middleware('can:User Index');

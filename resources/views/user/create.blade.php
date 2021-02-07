@@ -76,17 +76,11 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-sm-6">
+						<div class="col-sm-12">
 							<div class="form-group">
 								{!! Html::decode(Form::label('phone', __('label.form.user.phone'))) !!}
 								{!! Form::text('phone', '', ['class' => 'form-control ','placeholder' => 'phone']) !!}
 								{!! $errors->first('phone', '<span class="invalid-feedback">:message</span>') !!}
-							</div>
-						</div>
-						<div class="col-sm-6">
-							<div class="form-group">
-								{!! Html::decode(Form::label('language', __('label.form.user.language')." <small>*</small>")) !!}
-								{!! Form::select('language', [ 'kh' => __('label.lang.khmer'), 'en' => __('label.lang.english') ], '', ['class' => 'form-control custom-select','required']) !!}
 							</div>
 						</div>
 					</div>
@@ -94,25 +88,20 @@
 				{{-- / .col --}}
 	
 				<div class="col-sm-6">
-					<div class="form-group">
-						{!! Html::decode(Form::label('position', __('label.form.user.position')." <small>*</small>")) !!}
-						{!! Form::select('position', ['Team Tax'=>'Team Tax', 'Team Bookkeeping'=>'Team Bookkeeping', 'Office Assistant'=>'Office Assistant', 'Tax Supervisor'=>'Tax Supervisor','Operation Manager'=>'Operation Manager', 'Web Developer'=>'Web Developer', 'Director'=>'Director', 'Other'=>'Other'], '', ['class' => 'form-control custom-select '. (($errors->has("position"))? "is-invalid" : ""),'placeholder' => __('label.form.choose'),'required']) !!}
-						{!! $errors->first('position', '<span class="invalid-feedback">:message</span>') !!}
-					</div>
           <div class="form-group">
-            {!! Html::decode(Form::label('email', __('label.form.user.email') .'<small>*</small>')) !!}
+            {!! Html::decode(Form::label('email', __('label.form.email') .'<small>*</small>')) !!}
             {!! Form::email('email', '', ['class' => 'form-control '. (($errors->has("email"))? "is-invalid" : ""),'placeholder' => 'email', 'autocomplete'=>'new-password', 'required']) !!}
             {!! $errors->first('email', '<span class="invalid-feedback">:message</span>') !!}
           </div>
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-12">
               <div class="form-group">
                 {!! Html::decode(Form::label('password', __('label.form.user.password') .'<small>*</small>')) !!}
                 {!! Form::password('password', ['class' => 'form-control '. (($errors->has("password"))? "is-invalid" : ""),'placeholder' => 'password', 'autocomplete'=>'new-password', 'required']) !!}
                 {!! $errors->first('password', '<span class="invalid-feedback">:message</span>') !!}
               </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-12">
               <div class="form-group">
                 {!! Html::decode(Form::label('password_confirmation', __('label.form.user.confirm_password') .'<small>*</small>')) !!}
                 {!! Form::password('password_confirmation', ['class' => 'form-control '. (($errors->has("password_confirmation"))? "is-invalid" : ""),'placeholder' => 'confirm-password', 'autocomplete'=>'new-password', 'required']) !!}

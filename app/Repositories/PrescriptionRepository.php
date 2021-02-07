@@ -78,7 +78,7 @@ class PrescriptionRepository
 												<table class="table-header" width="100%">
 													<tr>
 														<td rowspan="5" width="20%" style="padding: 10px;">
-															<img src="/images/setting/Logo.png" alt="IMG">
+															<img src="/images/setting/logo.png" alt="IMG">
 														</td>
 														<td class="text-center" style="padding: 5px 0;">
 															<h3 class="color_blue KHOSMoulLight" style="color: blue;">'. Auth::user()->setting()->clinic_name_kh .'</h3>

@@ -26,7 +26,7 @@
 
 				<ul class="list-group list-group-unbordered mb-3">
 					<li class="list-group-item">
-						<b>{{ __('label.form.user.email') }}</b> <a class="float-right">{{ Auth::user()->email }}</a>
+						<b>{{ __('label.form.email') }}</b> <a class="float-right">{{ Auth::user()->email }}</a>
 					</li>
 					<li class="list-group-item">
 						<b>{{ __('label.form.user.phone') }}</b> <a class="float-right">{{ Auth::user()->phone }}</a>
@@ -148,21 +148,6 @@
 									{!! Form::text('first_name', Auth::user()->first_name, ['class' => 'form-control '. (($errors->has("first_name"))? "is-invalid" : ""),'placeholder' => 'first name','required']) !!}
 									{!! $errors->first('first_name', '<span class="help-block">:message</span>') !!}
 								</div>
-								<div class="form-group">
-									{!! Html::decode(Form::label('last_name', __('label.form.user.last_name')." <small>*</small>")) !!}
-									{!! Form::text('last_name', Auth::user()->last_name, ['class' => 'form-control '. (($errors->has("last_name"))? "is-invalid" : ""),'placeholder' =>
-									'last name','required']) !!}
-									{!! $errors->first('last_name', '<span class="help-block">:message</span>') !!}
-								</div>
-								<div class="form-group">
-									{!! Html::decode(Form::label('position', __('label.form.user.position')." <small>*</small>")) !!}
-									{!! Form::select('position', ['Team Tax'=>'Team Tax', 'Team Bookkeeping'=>'Team Bookkeeping', 'Office Assistant'=>'Office Assistant', 'Tax Supervisor'=>'Tax Supervisor', 'Operation Manager'=>'Operation Manager', 'Web Developer'=>'Web Developer', 'Director'=>'Director', 'Other'=>'Other'], Auth::user()->position, ['class' => 'form-control custom-select '. (($errors->has("last_name"))? "is-invalid" : ""),'placeholder' => __('label.form.choose'),'required']) !!}
-									{!! $errors->first('position', '<span class="help-block">:message</span>') !!}
-								</div>
-							</div>
-							{{-- / .col --}}
-				
-							<div class="col-sm-6">
 								<div class="row">
 									<div class="col-sm-9">
 										<div class="form-group">
@@ -183,14 +168,20 @@
 										</div>
 									</div>
 								</div>
+							</div>
+							{{-- / .col --}}
+				
+							<div class="col-sm-6">
+								<div class="form-group">
+									{!! Html::decode(Form::label('last_name', __('label.form.user.last_name')." <small>*</small>")) !!}
+									{!! Form::text('last_name', Auth::user()->last_name, ['class' => 'form-control '. (($errors->has("last_name"))? "is-invalid" : ""),'placeholder' =>
+									'last name','required']) !!}
+									{!! $errors->first('last_name', '<span class="help-block">:message</span>') !!}
+								</div>
 								<div class="form-group">
 									{!! Html::decode(Form::label('phone', __('label.form.user.phone'))) !!}
 									{!! Form::text('phone', Auth::user()->phone, ['class' => 'form-control ','placeholder' => 'phone']) !!}
 									{!! $errors->first('phone', '<span class="help-block">:message</span>') !!}
-								</div>
-								<div class="form-group">
-									{!! Html::decode(Form::label('language', __('label.form.user.language')." <small>*</small>")) !!}
-									{!! Form::select('language', [ 'kh' => __('label.lang.khmer'), 'en' => __('label.lang.english') ], Auth::user()->language, ['class' => 'form-control custom-select','required']) !!}
 								</div>
 							</div>
 					
@@ -217,7 +208,7 @@
 						{!! Form::hidden('profileTab', 'password') !!}
 						
 						<div class="form-group">
-							{!! Html::decode(Form::label('email', __('label.form.user.email'))) !!}
+							{!! Html::decode(Form::label('email', __('label.form.email'))) !!}
 							{!! Form::email('email', Auth::user()->email, ['class' => 'form-control '. (($errors->has("email"))? "is-invalid" : ""),'placeholder' => 'email','readonly']) !!}
 						</div>
 						<div class="row">

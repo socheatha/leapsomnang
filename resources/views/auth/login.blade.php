@@ -35,7 +35,7 @@
 		<div class="container-login100">
 			<div class="wrap-login100">
 				<div class="login100-pic js-tilt" data-tilt>
-					<img src="/images/setting/Logo.png" alt="IMG">
+					<img src="/images/setting/logo.png" alt="IMG">
 				</div>
 
 				<form method="POST" action="{{ route('login') }}" class="login100-form validate-form">
@@ -87,7 +87,7 @@
 					</div>
 
 					<div class="text-center p-t-136">
-						<a class="txt2" href="{{ route('register') }}">
+						<a class="txt2" href="#">
 							Create your Account
 							<i class="fa fa-long-arrow-alt-right m-l-5" aria-hidden="true"></i>
 						</a>

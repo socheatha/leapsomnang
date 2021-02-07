@@ -83,7 +83,7 @@ class UserController extends Controller
 
 	public function update_role(Request $request, User $user)
 	{
-		if ($user->assignRole($request->role)){
+		if ($this->users->update_role($user, $request)){
 			// Redirect
 			return redirect()->route('user.role', $user->id)
 					->with('success', __('alert.crud.success.update', ['name' => Auth::user()->module()]));

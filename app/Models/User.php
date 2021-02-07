@@ -15,7 +15,7 @@ class User extends Authenticatable
 	use Notifiable, HasRoles;
 
 	protected $fillable = [
-		'first_name', 'last_name', 'phone', 'gender', 'image', 'language', 'status', 'approval', 'email', 'password', 'position',
+		'first_name', 'last_name', 'phone', 'gender', 'image', 'language', 'status', 'approval', 'email', 'password',
 	];
 
 	protected $hidden = [
@@ -25,6 +25,11 @@ class User extends Authenticatable
 	protected $casts = [
 		'email_verified_at' => 'datetime',
 	];
+
+	// public function role()
+	// {
+	// 	return $this->belongToMany(HasRoles::class, 'model');
+	// }
 
 	public function echoDefaultDescriptions(){
 		$collection = EchoDefaultDescription::orderBy('id', 'asc');
