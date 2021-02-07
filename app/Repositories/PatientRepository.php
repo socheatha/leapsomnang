@@ -29,10 +29,14 @@ class PatientRepository
 				$resultCount = 1;
 			}
 			$offset = ($page - 1) * $resultCount;
-			$patients = Patient::orderBy('name', 'asc')->skip($offset)->take($resultCount)
-																	->where('name', 'LIKE',  '%' . $request->term. '%')
-																	->orWhere('id', 'LIKE',  '%' . $request->term. '%')
-																	->get();
+			if ($request->term == '') {
+				$patients = Patient::orderBy('name', 'asc')->limit(20)->get();
+			}else{
+				$patients = Patient::orderBy('name', 'asc')->skip($offset)->take($resultCount)
+																		->where('name', 'LIKE',  '%' . $request->term. '%')
+																		->orWhere('id', 'LIKE',  '%' . $request->term. '%')
+																		->get();
+			}
 			$query_results = array();
 			$group_rs = array();
 			$children = array();
