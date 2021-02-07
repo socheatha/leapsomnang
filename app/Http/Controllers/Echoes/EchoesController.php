@@ -45,6 +45,16 @@ class EchoesController extends Controller
 		
 	}
 
+	public function print($type, Echoes $echoes)
+	{
+
+		$this->data = [
+			'echoes' => $echoes,
+			'echoes_preview' => $this->echoes->getEchoesPreview($echoes->id)->getData()->echoes_detail,
+		];
+
+		return view('echoes.print', $this->data);
+	}
 
 	public function create($type)
 	{

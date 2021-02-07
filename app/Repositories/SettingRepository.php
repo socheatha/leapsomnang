@@ -21,6 +21,7 @@ class SettingRepository
 			'phone'=> $request->phone,
 			'address'=> $request->address,
 			'description'=> $request->description,
+			'echo_address'=> $request->echo_address,
 			'echo_description'=> $request->echo_description,
 			'navbar_color'=> $request->navbar_color,
 			'sidebar_color'=> (($request->sidebar_color==null)? 0 : 1)

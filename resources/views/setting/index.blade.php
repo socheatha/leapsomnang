@@ -33,46 +33,39 @@
 					<div class="row">
 						<div class="col-sm-6">
 							<div class="row">
-								<div class="col-sm-12">
+								<div class="col-sm-6">
 									<div class="form-group">
-										{!! Html::decode(Form::label('clinic_name_kh', __('label.form.setting.clinic_name_kh'))) !!}
-										{!! Form::text('clinic_name_kh', Auth::user()->setting()->clinic_name_kh, ['class' => 'form-control '. (($errors->has("clinic_name_kh"))? "is-invalid" : ""),'placeholder' => 'clinic name in khmer']) !!}
+										{!! Html::decode(Form::label('clinic_name_kh', __('label.form.setting.clinic_name_kh') .' <small>*</small>')) !!}
+										{!! Form::text('clinic_name_kh', Auth::user()->setting()->clinic_name_kh, ['class' => 'form-control '. (($errors->has("clinic_name_kh"))? "is-invalid" : ""),'placeholder' => 'clinic name in khmer', 'required']) !!}
 										{!! $errors->first('clinic_name_kh', '<div class="invalid-feedback">:message</div>') !!}
 									</div>
 								</div>
-								<div class="col-sm-12">
+								<div class="col-sm-6">
 									<div class="form-group">
-										{!! Html::decode(Form::label('clinic_name_en', __('label.form.setting.clinic_name_en'))) !!}
-										{!! Form::text('clinic_name_en', Auth::user()->setting()->clinic_name_en, ['class' => 'form-control '. (($errors->has("clinic_name_en"))? "is-invalid" : ""),'placeholder' => 'clinic name in english']) !!}
+										{!! Html::decode(Form::label('clinic_name_en', __('label.form.setting.clinic_name_en') .' <small>*</small>')) !!}
+										{!! Form::text('clinic_name_en', Auth::user()->setting()->clinic_name_en, ['class' => 'form-control '. (($errors->has("clinic_name_en"))? "is-invalid" : ""),'placeholder' => 'clinic name in english', 'required']) !!}
 										{!! $errors->first('clinic_name_en', '<div class="invalid-feedback">:message</div>') !!}
 									</div>
 								</div>
 								<div class="col-sm-6">
 									<div class="form-group">
-										{!! Html::decode(Form::label('sign_name_kh', __('label.form.setting.sign_name_kh'))) !!}
-										{!! Form::text('sign_name_kh', Auth::user()->setting()->sign_name_kh, ['class' => 'form-control '. (($errors->has("sign_name_kh"))? "is-invalid" : ""),'placeholder' => 'sign name']) !!}
+										{!! Html::decode(Form::label('sign_name_kh', __('label.form.setting.sign_name_kh') .' <small>*</small>')) !!}
+										{!! Form::text('sign_name_kh', Auth::user()->setting()->sign_name_kh, ['class' => 'form-control '. (($errors->has("sign_name_kh"))? "is-invalid" : ""),'placeholder' => 'sign name', 'required']) !!}
 										{!! $errors->first('sign_name_kh', '<div class="invalid-feedback">:message</div>') !!}
 									</div>
 								</div>
 								<div class="col-sm-6">
 									<div class="form-group">
-										{!! Html::decode(Form::label('sign_name_en', __('label.form.setting.sign_name_en'))) !!}
-										{!! Form::text('sign_name_en', Auth::user()->setting()->sign_name_en, ['class' => 'form-control '. (($errors->has("sign_name_en"))? "is-invalid" : ""),'placeholder' => 'sign name']) !!}
+										{!! Html::decode(Form::label('sign_name_en', __('label.form.setting.sign_name_en') .' <small>*</small>')) !!}
+										{!! Form::text('sign_name_en', Auth::user()->setting()->sign_name_en, ['class' => 'form-control '. (($errors->has("sign_name_en"))? "is-invalid" : ""),'placeholder' => 'sign name', 'required']) !!}
 										{!! $errors->first('sign_name_en', '<div class="invalid-feedback">:message</div>') !!}
 									</div>
 								</div>
-								<div class="col-sm-6">
+								<div class="col-sm-12">
 									<div class="form-group">
-										{!! Html::decode(Form::label('phone', __('label.form.phone'))) !!}
-										{!! Form::text('phone', Auth::user()->setting()->phone, ['class' => 'form-control '. (($errors->has("phone"))? "is-invalid" : ""),'placeholder' => 'phone']) !!}
+										{!! Html::decode(Form::label('phone', __('label.form.phone') .' <small>*</small>')) !!}
+										{!! Form::text('phone', Auth::user()->setting()->phone, ['class' => 'form-control '. (($errors->has("phone"))? "is-invalid" : ""),'placeholder' => 'phone', 'required']) !!}
 										{!! $errors->first('phone', '<div class="invalid-feedback">:message</div>') !!}
-									</div>
-								</div>
-								<div class="col-sm-6">
-									<div class="form-group">
-										{!! Html::decode(Form::label('address', __('label.form.address'))) !!}
-										{!! Form::text('address', Auth::user()->setting()->address, ['class' => 'form-control '. (($errors->has("address"))? "is-invalid" : ""),'placeholder' => 'address']) !!}
-										{!! $errors->first('address', '<div class="invalid-feedback">:message</div>') !!}
 									</div>
 								</div>
 								<div class="col-sm-6">
@@ -98,14 +91,26 @@
 							<div class="row">
 								<div class="col-sm-12">
 									<div class="form-group">
-										{!! Html::decode(Form::label('description', __('label.form.description'))) !!}
-										{!! Form::textarea('description', Auth::user()->setting()->description, ['class' => 'form-control ','style' => 'height: 121px;', 'placeholder' => 'description']) !!}
+										{!! Html::decode(Form::label('address', __('label.form.address') .' <small>*</small>')) !!}
+										{!! Form::textarea('address', Auth::user()->setting()->address, ['class' => 'form-control ','style' => 'height: 38px;', 'placeholder' => 'address', 'required']) !!}
 									</div>
 								</div>
 								<div class="col-sm-12">
 									<div class="form-group">
-										{!! Html::decode(Form::label('echo_description', __('label.form.setting.echo_description'))) !!}
-										{!! Form::textarea('echo_description', Auth::user()->setting()->echo_description, ['class' => 'form-control ','style' => 'height: 121px;', 'placeholder' => 'echo description']) !!}
+										{!! Html::decode(Form::label('description', __('label.form.description') .' <small>*</small>')) !!}
+										{!! Form::textarea('description', Auth::user()->setting()->description, ['class' => 'form-control ','style' => 'height: 121px;', 'placeholder' => 'description', 'required']) !!}
+									</div>
+								</div>
+								<div class="col-sm-12">
+									<div class="form-group">
+										{!! Html::decode(Form::label('echo_address', __('label.form.echo_address') .' <small>*</small>')) !!}
+										{!! Form::textarea('echo_address', Auth::user()->setting()->echo_address, ['class' => 'form-control ','style' => 'height: 38px;', 'placeholder' => 'echo address', 'required']) !!}
+									</div>
+								</div>
+								<div class="col-sm-12">
+									<div class="form-group">
+										{!! Html::decode(Form::label('echo_description', __('label.form.setting.echo_description') .' <small>*</small>')) !!}
+										{!! Form::textarea('echo_description', Auth::user()->setting()->echo_description, ['class' => 'form-control ','style' => 'height: 121px;', 'placeholder' => 'echo description', 'required']) !!}
 									</div>
 								</div>
 							</div>

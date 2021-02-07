@@ -27,8 +27,10 @@ class SettingRequest extends FormRequest
             'clinic_name_kh' => 'required|max:255',
             'clinic_name_en' => 'required|max:255',
             'phone' => 'required|max:190',
-            'address' => 'required|max:255',
-            'description' => 'required|max:255',
+            'address' => 'required',
+            'description' => 'required',
+            'echo_address' => 'required',
+            'echo_description' => 'required',
         ];
     }
 }

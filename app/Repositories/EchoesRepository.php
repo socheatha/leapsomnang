@@ -72,7 +72,7 @@ class EchoesRepository
 															</td>
 															<td width="40%" class="text-center">
 																<br/>
-																<div>'. Auth::user()->setting()->address .'</div>
+																<div>'. Auth::user()->setting()->echo_address .'</div>
 																<div style="padding: 5px 0;">Tel: '. Auth::user()->setting()->phone .'</div>
 															</td>
 														</tr>
@@ -96,7 +96,7 @@ class EchoesRepository
 																<img src="/images/setting/logo.png" alt="IMG">
 															</td>
 															<td width="40%" class="text-center">
-																<div>'. Auth::user()->setting()->address .'</div>
+																<div>'. Auth::user()->setting()->echo_address .'</div>
 																<div style="padding: 5px 0;">Tel: '. Auth::user()->setting()->phone .'</div>
 															</td>
 														</tr>
@@ -140,7 +140,7 @@ class EchoesRepository
 															</td>
 														</tr>
 													</table>
-													<div style="color: red; margin-top: 15px;" class="text-center">សូមកាន់លទ្ធផលនេះមកជាមួយផង ពេលពិនិត្យលើកក្រោយ អរគុណ។</div>
+													<div style="color: red; margin-top: 15px;" class="text-center color_red">សូមកាន់លទ្ធផលនេះមកជាមួយផង ពេលពិនិត្យលើកក្រោយ អរគុណ។</div>
 													<br/>
 												</section>';
 		}

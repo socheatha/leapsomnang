@@ -20,6 +20,7 @@ class Setting extends BaseModel
 		'phone',
 		'address',
 		'description',
+		'echo_address',
 		'echo_description',
 		'navbar_color',
 		'sidebar_color'

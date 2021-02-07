@@ -7,7 +7,7 @@
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 
-	<title>{!! Auth::user()->module() !!} | DNK Accountant System</title>
+	<title>{!! Auth::user()->module() !!} | Clinic</title>
 
 	<!-- Styles -->
 	<link href="{{ asset('css/app.css') }}" rel="stylesheet">

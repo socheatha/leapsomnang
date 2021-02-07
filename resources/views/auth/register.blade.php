@@ -7,7 +7,7 @@
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 
-	<title>Sign Up | DNK Accountant System</title>
+	<title>Sign Up</title>
 
 	<!-- Icons font CSS-->
 	<link href="/js/register/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
