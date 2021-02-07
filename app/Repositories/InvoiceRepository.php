@@ -342,7 +342,6 @@ class InvoiceRepository
 
 	public function status($request)
 	{
-		return false;
 		$invoice = Invoice::find($request->id);
 		$status = $invoice->status;
 		$invoice->update([

@@ -54,8 +54,8 @@
 								<span class="input-group-text"><i class="fa fa-calendar-alt"></i></span>
 							</div>
 							<input type="text" class="form-control pull-right" id="dateRangePicker" autocomplete="off">
-							<input type="hidden" class="form-control" value="{{ date('Y-m-d') }}" id="from">
-							<input type="hidden" class="form-control" value="{{ date('Y-m-d') }}" id="to">
+							<input type="hidden" class="form-control" value="" id="from">
+							<input type="hidden" class="form-control" value="" id="to">
 						</div>
 					</div>
 				</div>
@@ -118,6 +118,8 @@
     // $('#dateRangePicker').val('');
 
 	
+		$('#from').val(moment().startOf('month').format('YYYY-MM-DD'));
+		$('#to').val(moment().endOf('month').format('YYYY-MM-DD'));
 		getDatatable(moment().startOf('month').format('YYYY-MM-DD'), moment().endOf('month').format('YYYY-MM-DD'));
 
 		function updateStatus(id) {
@@ -147,6 +149,7 @@
 						success: function(data){
 							var from = $('#from').val();
 							var to = $('#to').val();
+
 							getDatatable(from, to);
 							Swal.fire({
 								icon: 'success',
