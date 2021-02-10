@@ -33,6 +33,12 @@ class ServiceController extends Controller
 		return $this->services->getDetail($request);
 	}
 
+	public function reloadSelectService()
+	{
+		return $this->services->reloadSelectService();
+	}
+
+
 	public function create()
 	{
 		return view('service.create');
@@ -46,6 +52,14 @@ class ServiceController extends Controller
 			return redirect()->route('service.create')
 				->with('success', __('alert.crud.success.create', ['name' => Auth::user()->module()]) . $request->name);
 		}
+	}
+
+	public function createService(ServiceRequest $request)
+	{
+		return response()->json([
+			'success' => 'success',
+			'service' => $this->services->create($request)
+		]);
 	}
 
 	public function edit(Service $service)

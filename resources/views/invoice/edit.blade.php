@@ -19,16 +19,7 @@
 		
 		<div class="card-tools">
 			<button type="button" class="btn btn-flat btn-success btn-sm" data-toggle="modal" data-target="#edit_invoice_detail_modal"><i class="fa fa-list-ol"></i> &nbsp; {!! __('label.buttons.invoice_detail') !!}</button>
-
-			{{-- Action Dropdown --}}
-			@component('components.action')
-				@slot('otherBTN')
-					<a href="{{route('invoice.index')}}" class="dropdown-item text-danger"><i class="fa fa-arrow-left"></i> &nbsp;{{ __('label.buttons.back') }}</a>
-				@endslot
-			@endcomponent
-
-			<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-				<i class="fas fa-minus"></i></button>
+			<a href="{{route('invoice.index')}}" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-table"></i> &nbsp;{{ __('label.buttons.back_to_list', [ 'name' => Auth::user()->module() ]) }}</a>
 		</div>
 {{-- 
 		<!-- Error Message -->
@@ -202,87 +193,157 @@
 @section('js')
 <script type="text/javascript">
 
-	$('[name="item_type"]').change(function () {
-		
-		if ($(this).val()==2) {
 
-			$('.item_type_select_option').html(`<div class="form-group">
-																							{!! Html::decode(Form::label('item_medicine_id', __('label.form.invoice.medicine')." <small>*</small>")) !!}
-																							{!! Form::select('item_medicine_id', $medicines, '', ['class' => 'form-control select2 medicine','placeholder' => __('label.form.choose'),'required']) !!}
-																						</div>`);
-			$('.medicine').select2({
-				theme: 'bootstrap4',
-			});
-			$('[name="item_qty"]').val('');
-			$('[name="item_discount"]').val('0').trigger('change');
-			$('[name="item_price"]').val('');
-			$('[name="item_description"]').val('');
+		$('#btn_save_service').click(function () {
+			if ($('[name="service_name"]').val()!='' && $('[name="service_price"]').val()!='') {
+				$.ajax({
+					url: "{{ route('service.createService') }}",
+					method: 'post',
+					data: {
+						name: $('[name="service_name"]').val(),
+						price: $('[name="service_price"]').val(),
+						description: $('[name="service_description"]').val(),
+					},
+					success: function(data){
+						$('#create_service_modal .invalid-feedback').remove();
+						$('#create_service_modal .form-control').removeClass('is-invalid');
+						if (data.errors) {
+							$.each(data.errors, function(key, value){
+								console.log(key);
+								$('#create_service_modal .service'+key+' input').addClass('is-invalid');
+								$('#create_service_modal .service'+key).append('<span class="invalid-feedback">'+value+'</span>');
+							});
+							Swal.fire({
+								icon: 'error',
+								title: "{{ __('alert.swal.result.title.error') }}",
+								confirmButtonText: "{{ __('alert.swal.button.yes') }}",
+								timer: 1500
+							})
+						}
+						if (data.success) {
+							$('[name="service_name"]').val('');
+							$('[name="service_price"]').val('');
+							$('[name="service_description"]').val('');
+							
+							$('#create_service_modal').modal('hide');
+							reloadSelectService(data.service.id)
+							Swal.fire({
+								icon: 'success',
+								title: "{{ __('alert.swal.result.title.success') }}",
+								confirmButtonText: "{{ __('alert.swal.button.yes') }}",
+								timer: 1500
+							})
+						}
+					}
+				});
+			}else{
+				Swal.fire({
+					icon: 'warning',
+					title: "{{ __('alert.swal.title.empty_field') }}",
+					confirmButtonText: "{{ __('alert.swal.button.yes') }}",
+				})
+			}
+		});
 
-			$('.medicine').change(function () {
-				if ($(this).val()!='') {
-					var medicine_id = $(this).val();
-					$.ajaxSetup({
-						headers: {
-							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-						}
-					});
-					$.ajax({
-						url: "{{ route('medicine.getDetail') }}",
-						method: 'post',
-						data: {
-								id: medicine_id,
-						},
-						success: function(data){
-							$('[name="item_price"]').val( data.medicine.price );
-							$('[name="item_qty"]').val( 1 );
-							$('[name="item_description"]').val( data.medicine.name );
-						}
-					});
-					
+		function reloadSelectService(id) {
+			
+			$.ajax({
+				url: "{{ route('service.reloadSelectService') }}",
+				method: 'post',
+				data: {
+				},
+				success: function(data){
+					$('#item_service_id').html(data);
+
+					// $('#item_service_id').select2();
+					$('#item_service_id').val(id).trigger('change');
+
 				}
 			});
-
-		}else{
-
-			$('.item_type_select_option').html(`<div class="form-group">
-																							{!! Html::decode(Form::label('item_service_id', __('label.form.invoice.service')." <small>*</small>")) !!}
-																							{!! Form::select('item_service_id', $services, '', ['class' => 'form-control select2 service','placeholder' => __('label.form.choose'),'required']) !!}
-																						</div>`);
-			$('.service').select2({
-				theme: 'bootstrap4',
-			});
-			$('[name="item_qty"]').val('');
-			$('[name="item_discount"]').val('0');
-			$('[name="item_price"]').val('');
-			$('[name="item_description"]').val('');
-
-			$('.service').change(function () {
-				if ($(this).val()!='') {
-					var service_id = $(this).val();
-					$.ajaxSetup({
-						headers: {
-							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-						}
-					});
-					$.ajax({
-						url: "{{ route('service.getDetail') }}",
-						method: 'post',
-						data: {
-								id: service_id,
-						},
-						success: function(data){
-							$('[name="item_price"]').val( data.service.price );
-							$('[name="item_qty"]').val( 1 );
-							$('[name="item_description"]').val( data.service.name );
-						}
-					});
-					
-				}
-			});
-
 		}
 
-	});
+
+	// $('[name="item_type"]').change(function () {
+		
+	// 	if ($(this).val()==2) {
+
+	// 		$('.item_type_select_option').html(`<div class="form-group">
+	// 																						{!! Html::decode(Form::label('item_medicine_id', __('label.form.invoice.medicine')." <small>*</small>")) !!}
+	// 																						{!! Form::select('item_medicine_id', $medicines, '', ['class' => 'form-control select2 medicine','placeholder' => __('label.form.choose'),'required']) !!}
+	// 																					</div>`);
+	// 		$('.medicine').select2({
+	// 			theme: 'bootstrap4',
+	// 		});
+	// 		$('[name="item_qty"]').val('');
+	// 		$('[name="item_discount"]').val('0').trigger('change');
+	// 		$('[name="item_price"]').val('');
+	// 		$('[name="item_description"]').val('');
+
+	// 		$('.medicine').change(function () {
+	// 			if ($(this).val()!='') {
+	// 				var medicine_id = $(this).val();
+	// 				$.ajaxSetup({
+	// 					headers: {
+	// 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	// 					}
+	// 				});
+	// 				$.ajax({
+	// 					url: "{{ route('medicine.getDetail') }}",
+	// 					method: 'post',
+	// 					data: {
+	// 							id: medicine_id,
+	// 					},
+	// 					success: function(data){
+	// 						$('[name="item_price"]').val( data.medicine.price );
+	// 						$('[name="item_qty"]').val( 1 );
+	// 						$('[name="item_description"]').val( data.medicine.name );
+	// 					}
+	// 				});
+					
+	// 			}
+	// 		});
+
+	// 	}else{
+
+	// 		$('.item_type_select_option').html(`<div class="form-group">
+	// 																						{!! Html::decode(Form::label('item_service_id', __('label.form.invoice.service')." <small>*</small>")) !!}
+	// 																						{!! Form::select('item_service_id', $services, '', ['class' => 'form-control select2 service','placeholder' => __('label.form.choose'),'required']) !!}
+	// 																					</div>`);
+	// 		$('.service').select2({
+	// 			theme: 'bootstrap4',
+	// 		});
+	// 		$('[name="item_qty"]').val('');
+	// 		$('[name="item_discount"]').val('0');
+	// 		$('[name="item_price"]').val('');
+	// 		$('[name="item_description"]').val('');
+
+	// 		$('.service').change(function () {
+	// 			if ($(this).val()!='') {
+	// 				var service_id = $(this).val();
+	// 				$.ajaxSetup({
+	// 					headers: {
+	// 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	// 					}
+	// 				});
+	// 				$.ajax({
+	// 					url: "{{ route('service.getDetail') }}",
+	// 					method: 'post',
+	// 					data: {
+	// 							id: service_id,
+	// 					},
+	// 					success: function(data){
+	// 						$('[name="item_price"]').val( data.service.price );
+	// 						$('[name="item_qty"]').val( 1 );
+	// 						$('[name="item_description"]').val( data.service.name );
+	// 					}
+	// 				});
+					
+	// 			}
+	// 		});
+
+	// 	}
+
+	// });
 
 
 	function select2_search (term) {
@@ -408,29 +469,29 @@
 		});
 	});
 
-	$('.medicine').change(function () {
-		if ($(this).val()!='') {
-			var medicine_id = $(this).val();
-			$.ajaxSetup({
-				headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				}
-			});
-			$.ajax({
-				url: "{{ route('medicine.getDetail') }}",
-				method: 'post',
-				data: {
-						id: medicine_id,
-				},
-				success: function(data){
-					$('[name="item_price"]').val( data.medicine.price );
-					$('[name="item_qty"]').val( 1 );
-					$('[name="item_description"]').val( data.medicine.name );
-				}
-			});
+	// $('.medicine').change(function () {
+	// 	if ($(this).val()!='') {
+	// 		var medicine_id = $(this).val();
+	// 		$.ajaxSetup({
+	// 			headers: {
+	// 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	// 			}
+	// 		});
+	// 		$.ajax({
+	// 			url: "{{ route('medicine.getDetail') }}",
+	// 			method: 'post',
+	// 			data: {
+	// 					id: medicine_id,
+	// 			},
+	// 			success: function(data){
+	// 				$('[name="item_price"]').val( data.medicine.price );
+	// 				$('[name="item_qty"]').val( 1 );
+	// 				$('[name="item_description"]').val( data.medicine.name );
+	// 			}
+	// 		});
 			
-		}
-	});
+	// 	}
+	// });
 
 	$('.service').change(function () {
 		if ($(this).val()!='') {

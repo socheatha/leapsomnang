@@ -32,28 +32,7 @@ class InvoiceController extends Controller
 
 	public function index()
 	{
-
-		$invoices = Invoice::all();
-		$invoice_description = '';
-		foreach ($invoices as $i => $invoice) {
-			foreach ($invoice->invoice_details as $j => $invoice_detial) {
-				if ($invoice->invoice_details->count() > 1) {
-					$invoice_description .= str_replace(' on ' . date('M-D', strtotime($invoice_detial->invoice->date)), "", strip_tags($invoice_detial->description, "</p>")) . ', ';
-				} else {
-
-					$invoice_description = str_replace(' on ' . date('M-D', strtotime($invoice_detial->invoice->date)), "", strip_tags($invoice_detial->description, "</p>"));
-				}
-			}
-		}
-		$from = '2020-05-01';
-		$to = '2020-05-31';
-		$invoice_ids = Invoice::whereBetween('date', [$from, $to])->select('id');
-		$this->data = [
-			'invoice_description' => $invoice_description,
-			'invoice_details' => InvoiceDetail::whereIn('service_id', ['59', '60', '61', '62', '63', '64', '65'])->whereIn('invoice_id', $invoice_ids)->get(),
-		];
-
-		return view('invoice.index', $this->data);
+		return view('invoice.index');
 	}
 
 

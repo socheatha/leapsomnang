@@ -12,17 +12,7 @@
 		<b>{!! Auth::user()->subModule() !!}</b>
 		
 		<div class="card-tools">
-			
-			{{-- Action Dropdown --}}
-			@component('components.action')
-				@slot('otherBTN')
-					@can('Medicine Create')
-					<a href="{{route('medicine.create')}}" class="dropdown-item"><i class="fa fa-plus"></i> &nbsp;{{ __('label.buttons.create') }}</a>
-					@endcan
-				@endslot
-			@endcomponent
-
-			<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fas fa-minus"></i></button>
+			<a href="{{route('medicine.create')}}" class="btn btn-success btn-flat btn-sm"><i class="fa fa-plus"></i> &nbsp;{{ __('label.buttons.create') }}</a>
 		</div>
 
 		<!-- Error Message -->

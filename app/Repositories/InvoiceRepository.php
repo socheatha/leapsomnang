@@ -5,6 +5,8 @@ namespace App\Repositories;
 use Carbon\Carbon;
 use App\Models\Invoice;
 use App\Models\InvoiceDetail;
+use App\Models\Patient;
+use App\Repositories\PatientRepository;
 use Yajra\DataTables\Facades\DataTables;
 use Hash;
 use Auth;
@@ -222,6 +224,29 @@ class InvoiceRepository
 
 	public function create($request)
 	{
+
+		$patient_id = $request->patient_id;
+
+		if (isset($request->patient_id) && $request->patient_id!='') {
+			# code...
+		}else{
+			$patient = Patient::where('name', $request->pt_name)->first();
+
+			if ($patient!=null) {
+				$patient_id = $patient->id;
+			}else{
+				$created_patient = Patient::create([
+					'name' => $request->pt_name,
+					'age' => $request->pt_age,
+					'gender' => (($request->pt_gender=='ប្រុស' || $request->pt_gender == 'male' || $request->pt_gender == 'Male')? '1' : '2'),
+					'age' => $request->pt_phone,
+					'created_by' => Auth::user()->id,
+					'updated_by' => Auth::user()->id,
+				]);
+				$patient_id = $created_patient->id;
+			}
+		}
+
 		$invoice = Invoice::create([
 			'date' => $request->date,
 			'inv_number' => $request->inv_number,
@@ -233,7 +258,7 @@ class InvoiceRepository
 			'pt_phone' => $request->pt_phone,
 			'status' => (($request->status==null)? 0 : 1),
 			'remark' => $request->remark,
-			'patient_id' => $request->patient_id,
+			'patient_id' => $patient_id,
 			'created_by' => Auth::user()->id,
 			'updated_by' => Auth::user()->id,
 		]);

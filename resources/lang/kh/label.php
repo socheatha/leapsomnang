@@ -105,6 +105,7 @@ return [
 		'invoice_detail' => 'វិក្កយបត្រលម្អិត',
 		'prescription_detail' => 'វេជ្ជបញ្ជាលម្អិត',
 		'list' => 'បញ្ជីឈ្មោះ',
+		'back_to_list' => 'បញ្ជី:name',
 		'select' => 'ជ្រើសរើស',
 		'change' => 'ផ្លាសប្ដូរ',
 		'assign' => 'ចាត់តាំង',

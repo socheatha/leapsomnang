@@ -99,6 +99,7 @@ return [
   
   'modal' => [
     'title' => [
+			'create_service' => 'បង្កើតសេវាកម្ម',
 			'detail' => 'លម្អិត',
 			'password_confirm' => 'បញ្ចូលពាក្យសម្ងាត់អ្នក',
 			'prescription_detail' => 'វេជ្ជបញ្ជាលម្អិត',

@@ -13,6 +13,8 @@ Route::group(['prefix' => 'service', 'as' => 'service.'], function () {
 	Route::delete('/{service}/delete', 'ServiceController@destroy')->name('destroy')->middleware('can:Service Delete');
 
 	Route::post('/getDetail', 'ServiceController@getDetail')->name('getDetail');
+	Route::post('/createService', 'ServiceController@createService')->name('createService');
+	Route::post('/reloadSelectService', 'ServiceController@reloadSelectService')->name('reloadSelectService');
 
 });
 

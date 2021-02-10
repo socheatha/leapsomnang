@@ -13,15 +13,7 @@
 			<b>{!! Auth::user()->subModule() !!}</b>
 			
 			<div class="card-tools">
-
-        {{-- Action Dropdown --}}
-        @component('components.action')
-          @slot('otherBTN')
-            <a href="{{route('user.index')}}" class="dropdown-item text-danger"><i class="fa fa-arrow-left"></i> &nbsp;{{ __('label.buttons.back') }}</a>
-          @endslot
-        @endcomponent
-
-				<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fas fa-minus"></i></button>
+				<a href="{{route('create.index')}}" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-table"></i> &nbsp;{{ __('label.buttons.back_to_list', [ 'name' => Auth::user()->module() ]) }}</a>
 			</div>
 
 			<!-- Error Message -->

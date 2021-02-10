@@ -12,7 +12,7 @@
 				<div class="row">
 					<div class="col-sm-6">
 						<div class="row">
-							<div class="col-sm-5">
+							{{-- <div class="col-sm-5">
 								<div class="form-group">
 									{!! Html::decode(Form::label('item_type', __('label.form.invoice.item_type')." <small>*</small>")) !!}
 									<div>
@@ -26,13 +26,19 @@
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="col-sm-7 item_type_select_option">
+							</div> --}}
+							<div class="col-sm-12 item_type_select_option">
 								<div class="form-group">
 									{!! Html::decode(Form::label('item_service_id', __('label.form.invoice.service')." <small>*</small>")) !!}
-									{!! Form::select('item_service_id', $services, '', ['class' => 'form-control select2 service','placeholder' => __('label.form.choose'),'required']) !!}
+									<div class="input-group mb-3">
+										{!! Form::select('item_service_id', $services, '', ['class' => 'form-control select2 service','placeholder' => __('label.form.choose'),'required']) !!}
+										<div class="input-group-append">
+											<span class="input-group-text bg-success" style="cursor: pointer;" data-toggle="modal" data-target="#create_service_modal"><i class="fas fa-plus"></i></span>
+										</div>
+									</div>
 								</div>
 							</div>
+
 						</div>
 					</div>
 					<div class="col-sm-6">
@@ -68,6 +74,58 @@
 			<div class="modal-footer justify-content-between">
 				<button type="button" class="btn btn-flat btn-danger" data-dismiss="modal">{{ __('alert.swal.button.no') }}</button>
 				<button type="button" class="btn btn-flat btn btn-success" id="btn_add_item">{{ __('alert.swal.button.yes') }}</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+<!-- New Invoice Item Modal -->
+<div class="modal add fade" id="create_service_modal">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">{{ __('alert.modal.title.create_service') }}</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+
+					<div class="col-sm-6">
+						<div class="form-group service-name">
+							{!! Html::decode(Form::label('service_name', __('label.form.name') .' <small>*</small>')) !!}
+							{!! Form::text('service_name', '', ['class' => 'form-control ','placeholder' => 'name', 'required']) !!}
+							{!! $errors->first('name', '<div class="invalid-feedback">:message</div>') !!}
+						</div>
+					</div>
+				
+					<div class="col-sm-6">
+						<div class="form-group service-price">
+							{!! Html::decode(Form::label('service_price', __('label.form.service.price') .'($) <small>*</small>')) !!}
+							{!! Form::text('service_price', '', ['class' => 'form-control is_number ','placeholder' => 'price', 'required']) !!}
+							{!! $errors->first('price', '<div class="invalid-feedback">:message</div>') !!}
+						</div>
+					</div>
+				
+					<div class="col-sm-12">
+						<div class="form-group service-description">
+							{!! Html::decode(Form::label('service_description', __('label.form.description'))) !!}
+							{!! Form::textarea('service_description', '', ['class' => 'form-control ','style' => 'height: 121px;','placeholder' => 'description']) !!}
+						</div>
+					</div>
+					{{-- / .col --}}
+				
+				</div>
+				{{-- / .row --}}				
+			</div>
+			<div class="modal-footer justify-content-between">
+				<button type="button" class="btn btn-flat btn-danger" data-dismiss="modal">{{ __('alert.swal.button.no') }}</button>
+				<button type="button" class="btn btn-flat btn btn-success" id="btn_save_service">{{ __('alert.swal.button.yes') }}</button>
 			</div>
 		</div>
 		<!-- /.modal-content -->
