@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 class Role extends Model
 {
@@ -19,14 +20,17 @@ class Role extends Model
   
   public static function getSelectData()
   {
-
+    if (Auth::user()->roles->first()->id == 1) {
+      $collection = parent::all();
+    }else{
       $collection = parent::where('id','>', 1)->get();
+    }
 
-      $items = [];
-      foreach ($collection as $model) {
-        $items[$model->name] = $model->name;
-      }
-      return $items;
+    $items = [];
+    foreach ($collection as $model) {
+      $items[$model->name] = $model->name;
+    }
+    return $items;
   }
 
 

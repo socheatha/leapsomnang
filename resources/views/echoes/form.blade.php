@@ -12,8 +12,8 @@
         </div>
         <div class="col-sm-6">
           <div class="form-group">
-            {!! Html::decode(Form::label('patient_id', __('label.form.echoes.patient')." <small>*</small>")) !!}
-            {!! Form::select('patient_id', [], ((isset($echoes->patient_id))? $echoes->patient_id : '' ), ['class' => 'form-control select2_pagination patient_id','placeholder' => __('label.form.choose'),'required']) !!}
+            {!! Html::decode(Form::label('patient_id', __('label.form.echoes.patient'))) !!}
+            {!! Form::select('patient_id', [], ((isset($echoes->patient_id))? $echoes->patient_id : '' ), ['class' => 'form-control select2_pagination patient_id','placeholder' => __('label.form.choose')]) !!}
           </div>
         </div>
         

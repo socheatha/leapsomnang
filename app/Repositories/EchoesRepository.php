@@ -152,8 +152,31 @@ class EchoesRepository
 
 	public function create($request, $path, $type)
 	{
+		
+		$patient_id = $request->patient_id;
+
+		if (isset($request->patient_id) && $request->patient_id!='') {
+			# code...
+		}else{
+			$patient = Patient::where('name', $request->pt_name)->first();
+
+			if ($patient!=null) {
+				$patient_id = $patient->id;
+			}else{
+				$created_patient = Patient::create([
+					'name' => $request->pt_name,
+					'age' => $request->pt_age,
+					'gender' => (($request->pt_gender=='ប្រុស' || $request->pt_gender == 'male' || $request->pt_gender == 'Male')? '1' : '2'),
+					'age' => $request->pt_phone,
+					'created_by' => Auth::user()->id,
+					'updated_by' => Auth::user()->id,
+				]);
+				$patient_id = $created_patient->id;
+			}
+		}
+
+
 		$echo_default_description = EchoDefaultDescription::where('slug', $type)->first();
-		// dd($echo_default_description->id);
 		$echoes = Echoes::create([
 			'date' => $request->date,
 			'pt_no' => $request->pt_no,
@@ -162,7 +185,7 @@ class EchoesRepository
 			'pt_gender' => $request->pt_gender,
 			'pt_phone' => $request->pt_phone,
 			'description' => $request->description,
-			'patient_id' => $request->patient_id,
+			'patient_id' => $patient_id,
 			'echo_default_description_id' => $echo_default_description->id,
 			'created_by' => Auth::user()->id,
 			'updated_by' => Auth::user()->id,

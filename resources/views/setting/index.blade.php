@@ -103,7 +103,7 @@
 								</div>
 								<div class="col-sm-12">
 									<div class="form-group">
-										{!! Html::decode(Form::label('echo_address', __('label.form.echo_address') .' <small>*</small>')) !!}
+										{!! Html::decode(Form::label('echo_address', __('label.form.setting.echo_address') .' <small>*</small>')) !!}
 										{!! Form::textarea('echo_address', Auth::user()->setting()->echo_address, ['class' => 'form-control ','style' => 'height: 38px;', 'placeholder' => 'echo address', 'required']) !!}
 									</div>
 								</div>

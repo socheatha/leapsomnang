@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use Carbon\Carbon;
+use App\Models\Patient;
 use App\Models\Prescription;
 use App\Models\PrescriptionDetail;
 use Yajra\DataTables\Facades\DataTables;
@@ -175,6 +176,29 @@ class PrescriptionRepository
 
 	public function create($request)
 	{
+
+		$patient_id = $request->patient_id;
+
+		if (isset($request->patient_id) && $request->patient_id!='') {
+			# code...
+		}else{
+			$patient = Patient::where('name', $request->pt_name)->first();
+
+			if ($patient!=null) {
+				$patient_id = $patient->id;
+			}else{
+				$created_patient = Patient::create([
+					'name' => $request->pt_name,
+					'age' => $request->pt_age,
+					'gender' => (($request->pt_gender=='ប្រុស' || $request->pt_gender == 'male' || $request->pt_gender == 'Male')? '1' : '2'),
+					'age' => $request->pt_phone,
+					'created_by' => Auth::user()->id,
+					'updated_by' => Auth::user()->id,
+				]);
+				$patient_id = $created_patient->id;
+			}
+		}
+
 		$prescription = Prescription::create([
 			'date' => $request->date,
 			'code' => $request->code,
@@ -184,13 +208,13 @@ class PrescriptionRepository
 			'pt_gender' => $request->pt_gender,
 			'pt_phone' => $request->pt_phone,
 			'remark' => $request->remark,
-			'patient_id' => $request->patient_id,
+			'patient_id' => $patient_id,
 			'created_by' => Auth::user()->id,
 			'updated_by' => Auth::user()->id,
 		]);
 		
-		if (isset($request->medicine_id) && isset($request->medicine_name) && isset($request->medicine_usage)) {
-			for ($i = 0; $i < count($request->medicine_id); $i++) {
+		if (isset($request->medicine_name) && isset($request->medicine_usage)) {
+			for ($i = 0; $i < count($request->medicine_name); $i++) {
 				$prescription_detail = PrescriptionDetail::create([
 						'medicine_name' => $request->medicine_name[$i],
 						'medicine_usage' => $request->medicine_usage[$i],
@@ -200,7 +224,7 @@ class PrescriptionRepository
 						'night' => $request->night[$i],
 						'description' => $request->description[$i],
 						'index' => $i + 1,
-						'medicine_id' => $request->medicine_id[$i],
+						// 'medicine_id' => $request->medicine_id[$i],
 						'prescription_id' => $prescription->id,
 						'created_by' => Auth::user()->id,
 						'updated_by' => Auth::user()->id,
@@ -210,34 +234,6 @@ class PrescriptionRepository
 
 		return $prescription;
 	}
-
-	// public function create_prescription_detail($request)
-	// {
-
-	// 	$prescription = Prescription::find($request->prescription_id);
-	// 	$last_item = $prescription->prescription_details()->first();
-	// 	$index = (($last_item !== null) ? $last_item->index + 1 : 1);
-	// 	$medicine_id = explode(":;:", $request->medicine_id);
-
-	// 	$prescription_detail = PrescriptionDetail::create([
-	// 		'medicine_name' => $request->medicine_name,
-	// 		'medicine_usage' => $request->medicine_usage,
-	// 		'morning' => $request->morning,
-	// 		'afternoon' => $request->afternoon,
-	// 		'evening' => $request->evening,
-	// 		'night' => $request->night,
-	// 		'description' => $request->description,
-	// 		'index' => $index,
-	// 		'medicine_id' => $medicine_id[0],
-	// 		'prescription_id' => $request->prescription_id,
-	// 		'created_by' => Auth::user()->id,
-	// 		'updated_by' => Auth::user()->id,
-	// 	]);
-
-	// 	return $prescription_detail;
-	// }
-
-
 	public function prescriptionDetailStore($request)
 	{
 
@@ -291,26 +287,6 @@ class PrescriptionRepository
 			'prescription_preview' => $json->prescription_detail,
 		]);
 	}
-	
-	// public function update_prescription_detail($request)
-	// {
-	// 	$prescription = Prescription::find($request->edit_prescription_id);
-	// 	$medicine_id = explode(":;:", $request->edit_medicine_id);
-	// 	$prescription_detail = PrescriptionDetail::find($request->edit_id);
-	// 	$prescription_detail->update([
-	// 		'medicine_name' => $request->edit_medicine_name,
-	// 		'medicine_usage' => $request->edit_medicine_usage,
-	// 		'morning' => $request->edit_morning,
-	// 		'afternoon' => $request->edit_afternoon,
-	// 		'evening' => $request->edit_evening,
-	// 		'night' => $request->edit_night,
-	// 		'description' => $request->edit_description,
-	// 		'medicine_id' => $medicine_id[0],
-	// 		'updated_by' => Auth::user()->id,
-	// 	]);
-		
-	// 	return $prescription_detail;
-	// }
 
 	public function save_order($request)
 	{
@@ -375,7 +351,11 @@ class PrescriptionRepository
 				
 			return $code;
 		}
-		
+	}
 
+	public function deletePrescriptionDetail($request)
+	{
+		$prescription_detail = PrescriptionDetail::find($request->id);
+		return $prescription_detail->delete();
 	}
 }

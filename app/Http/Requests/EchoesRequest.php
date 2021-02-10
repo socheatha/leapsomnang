@@ -27,7 +27,7 @@ class EchoesRequest extends FormRequest
       'date' => 'required|date',
       'pt_no' => 'required|max:190',
       'pt_name' => 'required|max:190',
-      'patient_id' => 'required',
+      // 'patient_id' => 'required',
 		];
 	}
 }

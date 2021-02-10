@@ -361,7 +361,7 @@
 
 		var data = [];
 		$(".select2_pagination").each(function () {
-			data.push({id:'{{ $invoice->patient_id }}', text:'PT-{{ str_pad($invoice->patient_id, 6, "0", STR_PAD_LEFT) }} :: {{ $invoice->patient->name }}'});
+			data.push({id:'{{ $invoice->patient_id }}', text:'PT-{{ str_pad($invoice->patient_id, 6, "0", STR_PAD_LEFT) }} :: {{ (($invoice->patient_id != '')? $invoice->patient->name : '' )}}'});
 		});
 		$(".select2_pagination").select2({
 			theme: 'bootstrap4',

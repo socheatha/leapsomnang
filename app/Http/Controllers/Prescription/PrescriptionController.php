@@ -29,6 +29,11 @@ class PrescriptionController extends Controller
 		return $this->prescription->getDatatable($request);
 	}
 
+	public function deletePrescriptionDetail(Request $request)
+	{
+		return $this->prescription->deletePrescriptionDetail($request);
+	}
+
 	public function index()
 	{
 
@@ -77,27 +82,6 @@ class PrescriptionController extends Controller
 		}
 	}
 
-	// public function prescription_detail_store(PrescriptionDetailRequest $request)
-	// {
-	// 	$prescription_detail = $this->prescription->create_prescription_detail($request);
-	// 	if ($prescription_detail) {
-	// 		// Redirect
-	// 		return redirect()->route('prescription.edit', $request->prescription_id)
-	// 			->with('success', __('alert.crud.success.create', ['name' => Auth::user()->module()]) . str_pad($prescription_detail->prescription->code, 6, "0", STR_PAD_LEFT));
-	// 	}
-	// }
-
-	// public function prescription_detail_update(PrescriptionDetailUpdateRequest $request)
-	// {
-
-	// 	$prescription_detail = $this->prescription->update_prescription_detail($request);
-	// 	if ($prescription_detail) {
-	// 		// Redirect
-	// 		return redirect()->route('prescription.edit', $request->edit_prescription_id)
-	// 			->with('success', __('alert.crud.success.update', ['name' => Auth::user()->module()]) . str_pad($prescription_detail->prescription->code, 6, "0", STR_PAD_LEFT));
-	// 	}
-	// }
-
 	public function save_order(Request $request, Prescription $prescription)
 	{
 		if ($this->prescription->save_order($request)) {
@@ -118,11 +102,6 @@ class PrescriptionController extends Controller
 		return response()->json([ 'prescription_detail' => PrescriptionDetail::find($request->id) ]);
 	}
 
-	// public function get_edit_detail(Request $request)
-	// {
-	// 	return $this->prescription->get_edit_detail($request->id);
-	// }
-	
 	public function prescriptionDetailStore(Request $request)
 	{
 		$validator = \Validator::make($request->all(), [
