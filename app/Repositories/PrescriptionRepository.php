@@ -25,15 +25,6 @@ class PrescriptionRepository
 			->editColumn('code', function ($prescription) {
 				return str_pad($prescription->code, 6, "0", STR_PAD_LEFT);
 			})
-			->addColumn('sub_total', function ($prescription) {
-				return number_format($prescription->prescription_detail_sub_total(), 2);
-			})
-			->addColumn('discount', function ($prescription) {
-				return number_format($prescription->prescription_discount_total(), 2);
-			})
-			->addColumn('grand_total', function ($prescription) {
-				return number_format($prescription->prescription_detail_grand_total(), 2);
-			})
 			->addColumn('actions', function () {
 				$button = '';
 				return $button;
@@ -356,6 +347,13 @@ class PrescriptionRepository
 	public function deletePrescriptionDetail($request)
 	{
 		$prescription_detail = PrescriptionDetail::find($request->id);
-		return $prescription_detail->delete();
+		$prescription_id = $prescription_detail->prescription_id;
+		$prescription_detail->delete();
+		$json = $this->getprescriptionPreview($prescription_id)->getData();
+
+		return response()->json([
+			'success'=>'success',
+			'prescription_preview' => $json->prescription_detail,
+		]);
 	}
 }

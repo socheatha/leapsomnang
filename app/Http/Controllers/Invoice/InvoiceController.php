@@ -82,12 +82,16 @@ class InvoiceController extends Controller
 	{
 		return $this->invoice->get_edit_detail($request->id);
 	}
+
+	public function deleteInvoiceDetail(Request $request)
+	{
+		return $this->invoice->deleteInvoiceDetail($request);
+	}
 	
 	public function invoiceDetailStore(Request $request)
 	{
 		$validator = \Validator::make($request->all(), [
 			'price' => 'required|numeric',
-			'qty' => 'required|numeric',
 			'discount' => 'required',
 			'description' => 'required',
 		]);
@@ -103,7 +107,6 @@ class InvoiceController extends Controller
 	{
 		$validator = \Validator::make($request->all(), [
 			'price' => 'required|numeric',
-			'qty' => 'required|numeric',
 			'discount' => 'required',
 			'description' => 'required',
 		]);

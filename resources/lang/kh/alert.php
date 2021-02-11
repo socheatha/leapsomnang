@@ -107,6 +107,8 @@ return [
 			'empty_data' => 'មិនទាន់មានទិន្នន័យ',
 			'add_item' => 'បង្កើតវិក្កយបត្រលម្អិត',
 			'edit_item' => 'កែប្រែវិក្កយបត្រលម្អិត',
+			'add_prescription_item' => 'បង្កើតវេជ្ជបញ្ជាលម្អិត',
+			'edit_prescription_item' => 'កែប្រែវេជ្ជបញ្ជាលម្អិត',
     ],
     'form' => [
       'password_confirm' => 'បញ្ចូលពាក្យសម្ងាត់អ្នក',

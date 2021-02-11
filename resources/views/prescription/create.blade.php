@@ -44,25 +44,25 @@
 					<div class="col-sm-1">
 						<div class="form-group">
 							{!! Html::decode(Form::label('morning', __('label.form.prescription.morning')."<small>*</small>")) !!}
-							{!! Form::number('morning[]', '0', ['class' => 'form-control is_number','min' => '1','placeholder' => 'morning','required']) !!}
+							{!! Form::number('morning[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'morning','required']) !!}
 						</div>
 					</div>
 					<div class="col-sm-1">
 						<div class="form-group">
 							{!! Html::decode(Form::label('afternoon', __('label.form.prescription.afternoon')."<small>*</small>")) !!}
-							{!! Form::number('afternoon[]', '0', ['class' => 'form-control is_number','min' => '1','placeholder' => 'afternoon','required']) !!}
+							{!! Form::number('afternoon[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'afternoon','required']) !!}
 						</div>
 					</div>
 					<div class="col-sm-1">
 						<div class="form-group">
 							{!! Html::decode(Form::label('evening', __('label.form.prescription.evening')." <small>*</small>")) !!}
-							{!! Form::number('evening[]', '0', ['class' => 'form-control is_number','min' => '1','placeholder' => 'evening','required']) !!}
+							{!! Form::number('evening[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'evening','required']) !!}
 						</div>
 					</div>
 					<div class="col-sm-1">
 						<div class="form-group">
 							{!! Html::decode(Form::label('night', __('label.form.prescription.night')." <small>*</small>")) !!}
-							{!! Form::number('night[]', '0', ['class' => 'form-control is_number','min' => '1','placeholder' => 'night','required']) !!}
+							{!! Form::number('night[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'night','required']) !!}
 						</div>
 					</div>
 					<div class="col-sm-2">
@@ -125,25 +125,25 @@
 				<div class="col-sm-1">
 					<div class="form-group">
 						{!! Html::decode(Form::label('morning', __('label.form.prescription.morning')."<small>*</small>")) !!}
-						{!! Form::number('morning[]', '0', ['class' => 'form-control is_number','min' => '1','placeholder' => 'morning','required']) !!}
+						{!! Form::number('morning[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'morning','required']) !!}
 					</div>
 				</div>
 				<div class="col-sm-1">
 					<div class="form-group">
 						{!! Html::decode(Form::label('afternoon', __('label.form.prescription.afternoon')."<small>*</small>")) !!}
-						{!! Form::number('afternoon[]', '0', ['class' => 'form-control is_number','min' => '1','placeholder' => 'afternoon','required']) !!}
+						{!! Form::number('afternoon[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'afternoon','required']) !!}
 					</div>
 				</div>
 				<div class="col-sm-1">
 					<div class="form-group">
 						{!! Html::decode(Form::label('evening', __('label.form.prescription.evening')." <small>*</small>")) !!}
-						{!! Form::number('evening[]', '0', ['class' => 'form-control is_number','min' => '1','placeholder' => 'evening','required']) !!}
+						{!! Form::number('evening[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'evening','required']) !!}
 					</div>
 				</div>
 				<div class="col-sm-1">
 					<div class="form-group">
 						{!! Html::decode(Form::label('night', __('label.form.prescription.night')." <small>*</small>")) !!}
-						{!! Form::number('night[]', '0', ['class' => 'form-control is_number','min' => '1','placeholder' => 'night','required']) !!}
+						{!! Form::number('night[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'night','required']) !!}
 					</div>
 				</div>
 				<div class="col-sm-2">

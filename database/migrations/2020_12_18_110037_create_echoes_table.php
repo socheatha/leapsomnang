@@ -16,7 +16,6 @@ class CreateEchoesTable extends Migration
       Schema::create('echoes', function (Blueprint $table) {
           $table->bigIncrements('id');
           $table->date('date');
-          $table->string('pt_no');
           $table->string('pt_name');
           $table->string('pt_age');
           $table->string('pt_gender')->nullable();

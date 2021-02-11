@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use Carbon\Carbon;
 use App\Models\Echoes;
+use App\Models\Patient;
 use App\Models\EchoDefaultDescription;
 use Yajra\DataTables\Facades\DataTables;
 use Hash;
@@ -179,7 +180,6 @@ class EchoesRepository
 		$echo_default_description = EchoDefaultDescription::where('slug', $type)->first();
 		$echoes = Echoes::create([
 			'date' => $request->date,
-			'pt_no' => $request->pt_no,
 			'pt_age' => $request->pt_age,
 			'pt_name' => $request->pt_name,
 			'pt_gender' => $request->pt_gender,
@@ -205,7 +205,6 @@ class EchoesRepository
 	{
 		$echoes->update([
 			'date' => $request->date,
-			'pt_no' => $request->pt_no,
 			'pt_age' => $request->pt_age,
 			'pt_name' => $request->pt_name,
 			'pt_gender' => $request->pt_gender,

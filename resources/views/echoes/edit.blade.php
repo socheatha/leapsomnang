@@ -94,6 +94,13 @@
 
 			setTimeout(() => {
 				$(".select2_pagination").val("{{ $echoes->patient_id }}").trigger("change");
+				setTimeout(() => {
+					$("[name='pt_no']").val("{{ $echoes->pt_no }}");
+					$("[name='pt_name']").val("{{ $echoes->pt_name }}");
+					$("[name='pt_age']").val("{{ $echoes->pt_age }}");
+					$("[name='pt_gender']").val("{{ $echoes->pt_gender }}");
+					$("[name='pt_phone']").val("{{ $echoes->pt_phone }}");
+				}, 200);
 			}, 100);
 
 			var data = [];

@@ -64,7 +64,7 @@ class InvoiceRepository
 		$title = 'Invoice (INV'. date('Y', strtotime($invoice->date)) .'-'.str_pad($invoice->inv_number, 6, "0", STR_PAD_LEFT) .')';
 
 		foreach ($invoice->invoice_details as $invoice_detail) {
-			$amount = ($invoice_detail->amount * $invoice_detail->qty);
+			$amount = ($invoice_detail->amount);
 			$discount = ($amount * $invoice_detail->discount);
 			$grand_amount = $amount - $discount;
 			$total += $amount;
@@ -263,12 +263,11 @@ class InvoiceRepository
 			'updated_by' => Auth::user()->id,
 		]);
 		
-		if (isset($request->service_id) && isset($request->price) && isset($request->qty) && isset($request->description)) {
+		if (isset($request->service_id) && isset($request->price) && isset($request->description)) {
 			for ($i = 0; $i < count($request->service_id); $i++) {
 				$invoice_detail = InvoiceDetail::create([
 						'amount' => $request->price[$i],
 						'discount' => $request->discount[$i],
-						'qty' => $request->qty[$i],
 						'description' => $request->description[$i],
 						'index' => $i + 1,
 						'service_id' => $request->service_id[$i],
@@ -284,14 +283,13 @@ class InvoiceRepository
 
 	public function invoiceDetailStore($request)
 	{
-
 		$invoice = Invoice::find($request->invoice_id);
 		$last_item = $invoice->invoice_details()->first();
 		$index = (($last_item !== null) ? $last_item->index + 1 : 1);
 
 		$invoice_detail = InvoiceDetail::create([
+												'discount' => $request->discount,
 												'amount' => $request->price,
-												'qty' => $request->qty,
 												'description' => $request->description,
 												'index' => $index,
 												'service_id' => $request->service_id,
@@ -314,7 +312,6 @@ class InvoiceRepository
 		$invoice_detail = InvoiceDetail::find($request->id);
 		$invoice_detail->update([
 			'amount' => $request->price,
-			'qty' => $request->qty,
 			'discount' => $request->discount,
 			'description' => $request->description,
 			'service_id' => $request->service_id,
@@ -398,5 +395,18 @@ class InvoiceRepository
 		}
 		
 
+	}
+
+	public function deleteInvoiceDetail($request)
+	{
+		$invoice_detail = InvoiceDetail::find($request->id);
+		$invoice_id = $invoice_detail->invoice_id;
+		$invoice_detail->delete();
+		$json = $this->getInvoicePreview($invoice_id)->getData();
+
+		return response()->json([
+			'success'=>'success',
+			'invoice_preview' => $json->invoice_detail,
+		]);
 	}
 }

@@ -35,7 +35,7 @@ class Invoice extends Model
 		$invoices = $this->hasMany(InvoiceDetail::class,'invoice_id')->get();
 		$total = 0;
 		foreach ($invoices as $key => $invoice) {
-			$total += ($invoice->amount * $invoice->qty);
+			$total += ($invoice->amount);
 		}
 
 		return $total;
@@ -45,7 +45,7 @@ class Invoice extends Model
 		$invoices = $this->hasMany(InvoiceDetail::class,'invoice_id')->get();
 		$total = 0;
 		foreach ($invoices as $key => $invoice) {
-			$total += ($invoice->amount * $invoice->qty) * $invoice->discount;
+			$total += ($invoice->amount) * $invoice->discount;
 		}
 
 		return $total;
@@ -55,7 +55,7 @@ class Invoice extends Model
 		$invoices = $this->hasMany(InvoiceDetail::class,'invoice_id')->get();
 		$total = 0;
 		foreach ($invoices as $key => $invoice) {
-			$total += ($invoice->amount * $invoice->qty) - ($invoice->amount * $invoice->discount);
+			$total += ($invoice->amount) - ($invoice->amount * $invoice->discount);
 		}
 
 		return $total;

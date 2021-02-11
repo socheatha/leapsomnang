@@ -42,6 +42,7 @@ Route::group(['prefix' => 'invoice', 'as' => 'invoice.', 'namespace' => 'Invoice
 		Route::delete('/{invoice_detail}/delete', 'InvoiceController@invoice_detail_destroy')->name('destroy');
 		Route::PUT('/{invoice}/save_order', 'InvoiceController@save_order')->name('save_order');
 		Route::post('/getItemDetail', 'InvoiceController@getItemDetail')->name('getDetail');
+		Route::post('/deleteInvoiceDetail', 'InvoiceController@deleteInvoiceDetail')->name('deleteInvoiceDetail');
 	});
 
 });

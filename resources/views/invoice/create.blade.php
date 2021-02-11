@@ -1,9 +1,15 @@
 @extends('layouts.app')
 
 @section('css')
-	{{ Html::style('/css/invoice-print-style.css') }}
 	<style type="text/css">
-	
+		.item_list{
+			padding: 20px;
+			margin-top: 10px;
+			background: #f1f1f1;
+		}
+		.prescription_item{
+			margin-top: 10px;
+		}
 	</style>
 @endsection
 
@@ -12,7 +18,8 @@
 	<div class="card-header">
 		<b>{!! Auth::user()->subModule() !!}</b>
 		<div class="card-tools">
-			<button type="button" class="btn btn-success btn-sm btn-flat" data-toggle="modal" data-target="#create_invoice_item_modal"><i class="fa fa-plus"></i> &nbsp; {!! __('label.buttons.add_item') !!}</button>
+			{{-- <button type="button" class="btn btn-success btn-sm btn-flat" data-toggle="modal" data-target="#create_invoice_item_modal"><i class="fa fa-plus"></i> &nbsp; {!! __('label.buttons.add_item') !!}</button> --}}
+			<button type="button" class="btn btn-success btn-sm btn-flat" id="btn_add_item"><i class="fa fa-plus"></i> &nbsp; {!! __('label.buttons.add_item') !!}</button>
 			<a href="{{route('invoice.index')}}" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-table"></i> &nbsp;{{ __('label.buttons.back_to_list', [ 'name' => Auth::user()->module() ]) }}</a>
 		</div>
 
@@ -26,9 +33,45 @@
 	<div class="card-body">
 		@include('invoice.form')
 
-		<ul class="todo-list" data-widget="todo-list">
 
-		</ul>
+		<div class="item_list my-4">
+			<div class="prescription_item" id="first-item">
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="form-group">
+							{!! Html::decode(Form::label('service_id', __('label.form.invoice.service')." <small>*</small>")) !!}
+							{!! Form::select('service_id[]', $services, '', ['class' => 'form-control select2 service', 'data-id'=>'first-item', 'id'=>'input-service_id-first-item','placeholder' => __('label.form.choose'),'required']) !!}
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="form-group">
+							{!! Html::decode(Form::label('discount', __('label.form.invoice.discount')." <small>*</small>")) !!}
+							{!! Form::select('discount[]', ['0'=>'0%', '0.05'=>'5%', '0.1'=>'10%', '0.15'=>'15%', '0.2'=>'20%', '0.25'=>'25%', '0.3'=>'30%', '0.35'=>'35%', '0.4'=>'40%', '0.45'=>'45%', '0.5'=>'50%', '0.55'=>'55%', '0.6'=>'60%', '0.65'=>'65%', '0.7'=>'70%', '0.75'=>'75%', '0.8'=>'80%', '0.85'=>'85%', '0.9'=>'90%', '0.95'=>'95%', '1'=>'100%'], '0', ['class' => 'form-control select2', 'id'=>'input-discount-first-item','required']) !!}
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="form-group">
+							{!! Html::decode(Form::label('price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
+							{!! Form::text('price[]', '', ['class' => 'form-control', 'id'=>'input-price-first-item','placeholder' => 'price','required']) !!}
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group">
+							{!! Html::decode(Form::label('description', __('label.form.description')." <small>*</small>")) !!}
+							{!! Form::textarea('description[]', '', ['class' => 'form-control', 'id'=>'input-description-first-item','placeholder' => 'description','style' => 'height: 38px','required']) !!}
+						</div>
+					</div>
+					<div class="col-sm-1">
+						<div class="form-group">
+							{!! Html::decode(Form::label('', __('label.buttons.remove'))) !!}
+							<div>
+								<button class="btn btn-danger btn-flat btn-block" onclick="removeItem('first-item')"><i class="fa fa-trash-alt"></i></button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 	</div>
 	<!-- ./card-body -->
@@ -48,219 +91,173 @@
 @section('js')
 <script type="text/javascript">
 
-	// $('[name="item_type"]').change(function () {
+	
+	
+	$('#btn_add_item').click(function () {
+
+		var id = Math.floor(Math.random() * 1000);
+
+		$('.item_list').append(`<div class="prescription_item" id="${ id }">
+															<div class="row">
+																<div class="col-sm-4">
+																	<div class="form-group">
+																		{!! Html::decode(Form::label('service_id', __('label.form.invoice.service')." <small>*</small>")) !!}
+																		{!! Form::select('service_id[]', $services, '', ['class' => 'form-control select2 service', 'data-id'=>'${ id }', 'id'=>'input-service_id-${ id }','placeholder' => __('label.form.choose'),'required']) !!}
+																	</div>
+																</div>
+																<div class="col-sm-2">
+																	<div class="form-group">
+																		{!! Html::decode(Form::label('discount', __('label.form.invoice.discount')." <small>*</small>")) !!}
+																		{!! Form::select('discount[]', ['0'=>'0%', '0.05'=>'5%', '0.1'=>'10%', '0.15'=>'15%', '0.2'=>'20%', '0.25'=>'25%', '0.3'=>'30%', '0.35'=>'35%', '0.4'=>'40%', '0.45'=>'45%', '0.5'=>'50%', '0.55'=>'55%', '0.6'=>'60%', '0.65'=>'65%', '0.7'=>'70%', '0.75'=>'75%', '0.8'=>'80%', '0.85'=>'85%', '0.9'=>'90%', '0.95'=>'95%', '1'=>'100%'], '0', ['class' => 'form-control select2', 'id'=>'input-discount-${ id }','required']) !!}
+																	</div>
+																</div>
+																<div class="col-sm-2">
+																	<div class="form-group">
+																		{!! Html::decode(Form::label('price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
+																		{!! Form::text('price[]', '', ['class' => 'form-control', 'id'=>'input-price-${ id }','placeholder' => 'price','required']) !!}
+																	</div>
+																</div>
+																<div class="col-sm-3">
+																	<div class="form-group">
+																		{!! Html::decode(Form::label('description', __('label.form.description')." <small>*</small>")) !!}
+																		{!! Form::textarea('description[]', '', ['class' => 'form-control', 'id'=>'input-description-${ id }','placeholder' => 'description','style' => 'height: 38px','required']) !!}
+																	</div>
+																</div>
+																<div class="col-sm-1">
+																	<div class="form-group">
+																		{!! Html::decode(Form::label('', __('label.buttons.remove'))) !!}
+																		<div>
+																			<button class="btn btn-danger btn-flat btn-block" onclick="removeItem(${ id })"><i class="fa fa-trash-alt"></i></button>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>`);
+
 		
-	// 	if ($(this).val()==2) {
-
-	// 		$('.item_type_select_option').html(`<div class="form-group">
-	// 																						{!! Html::decode(Form::label('item_medicine_id', __('label.form.invoice.medicine')." <small>*</small>")) !!}
-	// 																						{!! Form::select('item_medicine_id', $medicines, '', ['class' => 'form-control select2 medicine','placeholder' => __('label.form.choose'),'required']) !!}
-	// 																					</div>`);
-	// 		$('.medicine').select2({
-	// 			theme: 'bootstrap4',
-	// 		});
-	// 		$('[name="item_qty"]').val('');
-	// 		$('[name="item_discount"]').val('0').trigger('change');
-	// 		$('[name="item_price"]').val('');
-	// 		$('[name="item_description"]').val('');
-
-	// 		$('.medicine').change(function () {
-	// 			if ($(this).val()!='') {
-	// 				var medicine_id = $(this).val();
-	// 				$.ajaxSetup({
-	// 					headers: {
-	// 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	// 					}
-	// 				});
-	// 				$.ajax({
-	// 					url: "{{ route('medicine.getDetail') }}",
-	// 					method: 'post',
-	// 					data: {
-	// 							id: medicine_id,
-	// 					},
-	// 					success: function(data){
-	// 						$('[name="item_price"]').val( data.medicine.price );
-	// 						$('[name="item_qty"]').val( 1 );
-	// 						$('[name="item_description"]').val( data.medicine.name );
-	// 					}
-	// 				});
-					
-	// 			}
-	// 		});
-
-	// 	}else{
-
-	// 		$('.item_type_select_option').html(`<div class="form-group">
-	// 																						{!! Html::decode(Form::label('item_service_id', __('label.form.invoice.service')." <small>*</small>")) !!}
-	// 																						{!! Form::select('item_service_id', $services, '', ['class' => 'form-control select2 service','placeholder' => __('label.form.choose'),'required']) !!}
-	// 																					</div>`);
-	// 		$('.service').select2({
-	// 			theme: 'bootstrap4',
-	// 		});
-	// 		$('[name="item_qty"]').val('');
-	// 		$('[name="item_discount"]').val('0');
-	// 		$('[name="item_price"]').val('');
-	// 		$('[name="item_description"]').val('');
-
-	// 		$('.service').change(function () {
-	// 			if ($(this).val()!='') {
-	// 				var service_id = $(this).val();
-	// 				$.ajaxSetup({
-	// 					headers: {
-	// 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	// 					}
-	// 				});
-	// 				$.ajax({
-	// 					url: "{{ route('service.getDetail') }}",
-	// 					method: 'post',
-	// 					data: {
-	// 							id: service_id,
-	// 					},
-	// 					success: function(data){
-	// 						$('[name="item_price"]').val( data.service.price );
-	// 						$('[name="item_qty"]').val( 1 );
-	// 						$('[name="item_description"]').val( data.service.name );
-	// 					}
-	// 				});
-					
-	// 			}
-	// 		});
-
-	// 	}
-
-	// });
-
-		$('#btn_save_service').click(function () {
-			if ($('[name="service_name"]').val()!='' && $('[name="service_price"]').val()!='') {
+		$('.service').off().change(function () {
+			if ($(this).val()!='') {
+				var service_id = $(this).val();
+				var id = $(this).data('id');
 				$.ajax({
-					url: "{{ route('service.createService') }}",
+					url: "{{ route('service.getDetail') }}",
 					method: 'post',
 					data: {
-						name: $('[name="service_name"]').val(),
-						price: $('[name="service_price"]').val(),
-						description: $('[name="service_description"]').val(),
+							id: service_id,
 					},
 					success: function(data){
-						$('#create_service_modal .invalid-feedback').remove();
-						$('#create_service_modal .form-control').removeClass('is-invalid');
-						if (data.errors) {
-							$.each(data.errors, function(key, value){
-								console.log(key);
-								$('#create_service_modal .service'+key+' input').addClass('is-invalid');
-								$('#create_service_modal .service'+key).append('<span class="invalid-feedback">'+value+'</span>');
-							});
-							Swal.fire({
-								icon: 'error',
-								title: "{{ __('alert.swal.result.title.error') }}",
-								confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-								timer: 1500
-							})
-						}
-						if (data.success) {
-							$('[name="service_name"]').val('');
-							$('[name="service_price"]').val('');
-							$('[name="service_description"]').val('');
-							
-							$('#create_service_modal').modal('hide');
-							reloadSelectService(data.service.id)
-							Swal.fire({
-								icon: 'success',
-								title: "{{ __('alert.swal.result.title.success') }}",
-								confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-								timer: 1500
-							})
-						}
+						$('#input-price-'+ id).val( data.service.price );
+						$('#input-description-'+ id).val( data.service.name );
 					}
 				});
-			}else{
-				Swal.fire({
-					icon: 'warning',
-					title: "{{ __('alert.swal.title.empty_field') }}",
-					confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-				})
+				
 			}
 		});
+	});
 
-		function reloadSelectService(id) {
-			
+	function removeItem(id) {
+		$('#'+id).remove();
+	}
+
+	$('#btn_save_service').click(function () {
+		if ($('[name="service_name"]').val()!='' && $('[name="service_price"]').val()!='') {
 			$.ajax({
-				url: "{{ route('service.reloadSelectService') }}",
+				url: "{{ route('service.createService') }}",
 				method: 'post',
 				data: {
+					name: $('[name="service_name"]').val(),
+					price: $('[name="service_price"]').val(),
+					description: $('[name="service_description"]').val(),
 				},
 				success: function(data){
-					$('#item_service_id').html(data);
-
-					// $('#item_service_id').select2();
-					$('#item_service_id').val(id).trigger('change');
-
+					$('#create_service_modal .invalid-feedback').remove();
+					$('#create_service_modal .form-control').removeClass('is-invalid');
+					if (data.errors) {
+						$.each(data.errors, function(key, value){
+							console.log(key);
+							$('#create_service_modal .service'+key+' input').addClass('is-invalid');
+							$('#create_service_modal .service'+key).append('<span class="invalid-feedback">'+value+'</span>');
+						});
+						Swal.fire({
+							icon: 'error',
+							title: "{{ __('alert.swal.result.title.error') }}",
+							confirmButtonText: "{{ __('alert.swal.button.yes') }}",
+							timer: 1500
+						})
+					}
+					if (data.success) {
+						$('[name="service_name"]').val('');
+						$('[name="service_price"]').val('');
+						$('[name="service_description"]').val('');
+						
+						$('#create_service_modal').modal('hide');
+						reloadSelectService(data.service.id)
+						Swal.fire({
+							icon: 'success',
+							title: "{{ __('alert.swal.result.title.success') }}",
+							confirmButtonText: "{{ __('alert.swal.button.yes') }}",
+							timer: 1500
+						})
+					}
 				}
 			});
+		}else{
+			Swal.fire({
+				icon: 'warning',
+				title: "{{ __('alert.swal.title.empty_field') }}",
+				confirmButtonText: "{{ __('alert.swal.button.yes') }}",
+			})
 		}
+	});
 
-
-		$(".select2_pagination").change(function () {
-			$('[name="txt_search_field"]').val($('.select2-search__field').val());
-		});
+	function reloadSelectService(id) {
 		
-		function select2_search (term) {
-			$(".select2_pagination").select2('open');
-			var $search = $(".select2_pagination").data('select2').dropdown.$search || $(".select2_pagination").data('select2').selection.$search;
-			$search.val(term);
-			$search.trigger('keyup');
-		}
+		$.ajax({
+			url: "{{ route('service.reloadSelectService') }}",
+			method: 'post',
+			data: {
+			},
+			success: function(data){
+				$('#item_service_id').html(data);
+				$('#item_service_id').val(id).trigger('change');
 
-		$(".select2_pagination").select2({
-			theme: 'bootstrap4',
-			placeholder: "{{ __('label.form.choose') }}",
-			allowClear: true,
-			ajax: {
-				url: "{{ route('patient.getSelect2Items') }}",
-				method: 'post',
-				dataType: 'json',
-				data: function(params) {
-					return {
-							term: params.term || '',
-							page: params.page || 1
-					}
-				},
-				cache: true
 			}
 		});
+	}
 
+	$(".select2_pagination").change(function () {
+		$('[name="txt_search_field"]').val($('.select2-search__field').val());
+	});
+	
+	function select2_search (term) {
+		$(".select2_pagination").select2('open');
+		var $search = $(".select2_pagination").data('select2').dropdown.$search || $(".select2_pagination").data('select2').selection.$search;
+		$search.val(term);
+		$search.trigger('keyup');
+	}
 
-	// $('.medicine').change(function () {
-	// 	if ($(this).val()!='') {
-	// 		var medicine_id = $(this).val();
-	// 		$.ajaxSetup({
-	// 			headers: {
-	// 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	// 			}
-	// 		});
-	// 		$.ajax({
-	// 			url: "{{ route('medicine.getDetail') }}",
-	// 			method: 'post',
-	// 			data: {
-	// 					id: medicine_id,
-	// 			},
-	// 			success: function(data){
-	// 				$('[name="item_price"]').val( data.medicine.price );
-	// 				$('[name="item_qty"]').val( 1 );
-	// 				$('[name="item_description"]').val( data.medicine.name );
-	// 			}
-	// 		});
-			
-	// 	}
-	// });
+	$(".select2_pagination").select2({
+		theme: 'bootstrap4',
+		placeholder: "{{ __('label.form.choose') }}",
+		allowClear: true,
+		ajax: {
+			url: "{{ route('patient.getSelect2Items') }}",
+			method: 'post',
+			dataType: 'json',
+			data: function(params) {
+				return {
+						term: params.term || '',
+						page: params.page || 1
+				}
+			},
+			cache: true
+		}
+	});
 
 	$('.service').change(function () {
 		if ($(this).val()!='') {
 			var service_id = $(this).val();
-			$.ajaxSetup({
-				headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				}
-			});
+			var id = $(this).data('id');
 			$.ajax({
 				url: "{{ route('service.getDetail') }}",
 				method: 'post',
@@ -268,61 +265,13 @@
 						id: service_id,
 				},
 				success: function(data){
-					$('[name="item_price"]').val( data.service.price );
-					$('[name="item_qty"]').val( 1 );
-					$('[name="item_description"]').val( data.service.name );
+					// var id = $(this).val();
+					// console.log(id);
+					$('#input-price-'+ id).val( data.service.price );
+					$('#input-description-'+ id).val( data.service.name );
 				}
 			});
 			
-		}
-	});
-
-	
-	$('#btn_add_item').click(function () {
-
-		if ($('[name="item_service_id"]').val() !='' && $('[name="item_price"]').val() !='' && $('[name="item_qty"]').val() !='' && $('[name="item_description"]').val() !='') {	
-			var id = Math.floor(Math.random() * 1000);
-			$('.todo-list').append(	`<li class="${ id }">
-																<input type="hidden" name="medicine_id[]" value="${ (($('[name="item_medicine_id"]').val())? $('[name="item_medicine_id"]').val() : '') }" />
-																<input type="hidden" name="service_id[]" value="${ (($('[name="item_service_id"]').val())? $('[name="item_service_id"]').val() : '') }" />
-																<input type="hidden" name="price[]" value="${ $('[name="item_price"]').val() }" />
-																<input type="hidden" name="discount[]" value="${ $('[name="item_discount"]').val() }" />
-																<input type="hidden" name="qty[]" value="${ $('[name="item_qty"]').val() }" />
-																<input type="hidden" name="description[]" value="${ $('[name="item_description"]').val() }" />
-																<!-- drag handle -->
-																<span class="handle">
-																	<i class="fas fa-ellipsis-v"></i>
-																	<i class="fas fa-ellipsis-v"></i>
-																</span>
-																<span class="text">${ $('[name="item_description"]').val() }</span>
-																<small class="badge badge-danger"><i class="fa fa-dollar-sign"></i> ${ $('[name="item_price"]').val() * $('[name="item_qty"]').val() }</small>
-																<div class="tools">
-																	<i class="fa fa-times text-danger btn_remove_item" data-id="${ id }"></i>
-																</div>
-															</li>`);
-			$('[name="item_medicine_id"]').val('').trigger('change');
-			$('[name="item_service_id"]').val('').trigger('change');
-			$('[name="item_price"]').val( '' );
-			$('[name="item_discount"]').val( '0' ).trigger('change');
-			$('[name="item_qty"]').val( '' );
-			$('[name="item_description"]').val( '' );
-			// $('#create_invoice_item_modal').modal('hide');
-
-			$('.btn_remove_item').click( function () {
-				$('.'+ $(this).data('id')).remove();
-			});
-
-		}else{
-			Swal.fire({
-				icon: 'warning',
-				title: "{{ __('alert.swal.title.empty_field') }}",
-				text: "{{ __('alert.swal.text.empty_field') }}",
-				confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-			}).then((result) => {
-				if (result.value) {
-					$('#create_invoice_item_modal').modal('show');
-				}
-			})
 		}
 	});
 

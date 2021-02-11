@@ -59,10 +59,6 @@
 						<th class="text-center" width="8%">{!! __('module.table.date') !!}</th>
 						<th class="text-center" width="25%">{!! __('module.table.prescription.pt_name') !!}</th>
 						<th class="text-center" width="10%">{!! __('module.table.prescription.pt_phone') !!}</th>
-						<th class="text-center" width="7%">{!! __('module.table.prescription.status') !!}</th>
-						<th class="text-center">{!! __('module.table.prescription.sub_total') !!}</th>
-						<th class="text-center">{!! __('module.table.prescription.discount') !!}</th>
-						<th class="text-center">{!! __('module.table.prescription.grand_total') !!}</th>
 						<th width="12%" class="text-center">{!! __('module.table.action') !!}</th>
 					</tr>
 				</thead>
@@ -135,16 +131,12 @@
 					{data: 'date', name: 'date', className: 'text-center'},
 					{data: 'pt_name', name: 'pt_name'},
 					{data: 'pt_phone', name: 'pt_phone'},
-					{data: 'status', name: 'status', className: 'text-center'},
-					{data: 'sub_total', name: 'sub_total', className: 'text-center'},
-					{data: 'discount', name: 'discount', className: 'text-right'},
-					{data: 'grand_total', name: 'grand_total', className: 'text-right'},
 					{data: 'actions', name: 'actions', className: 'text-right', searchable: false, sortable: false}
 				],
 				order: [[1, "desc"]],
 				rowCallback: function( row, data ) {
 
-					$('td:eq(8)', row).html( `@Can("Prescription Edit")
+					$('td:eq(4)', row).html( `@Can("Prescription Edit")
 																			<button type="button" data-url="/prescription/${ data.id }/print" class="btn btn-sm btn-flat btn-success btn-print-prescription"><i class="fa fa-print"></i></button>
 																		@endCan 
 																		@Can("Prescription Edit")
@@ -158,8 +150,6 @@
 																				<input type="hidden" name="passwordDelete" value="" />
 																			</form>
 																		@endCan` );
-																		
-					$('td:eq(4)', row).html( `@Can("Prescription Status")<span class="badge badge-${ ((data.status==1)? 'success' : '') }">${ ((data.status==1)? 'paid' : 'upaid') }</span>@endCan` );
 
 				},
 				"initComplete": function( settings, json ) {
