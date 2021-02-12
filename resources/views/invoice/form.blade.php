@@ -84,7 +84,8 @@
         <div class="col-sm-3">
           <div class="form-group">
             {!! Html::decode(Form::label('pt_gender', __('label.form.invoice.pt_gender'))) !!}
-            {!! Form::text('pt_gender', ((isset($invoice->pt_gender))? $invoice->pt_gender : '' ), ['class' => 'form-control '. (($errors->has("pt_gender"))? "is-invalid" : ""),'placeholder' => 'patient gender']) !!}
+            {!! Form::select('pt_gender', ['ប្រុស' => 'ប្រុស', 'ស្រី' => 'ស្រី'], ((isset($invoice->pt_gender))? $invoice->pt_gender : '' ), ['class' => 'form-control custom-select']) !!}
+            {{-- {!! Form::text('pt_gender', ((isset($invoice->pt_gender))? $invoice->pt_gender : '' ), ['class' => 'form-control '. (($errors->has("pt_gender"))? "is-invalid" : ""),'placeholder' => 'patient gender']) !!} --}}
             {!! $errors->first('pt_gender', '<div class="invalid-feedback">:message</div>') !!}
           </div>
         </div>

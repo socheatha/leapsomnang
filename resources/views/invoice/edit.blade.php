@@ -7,15 +7,6 @@
 			top: -30px;
 			right: 55px;
 		}
-
-		.item_list{
-			padding: 20px;
-			margin-top: 10px;
-			background: #fff;
-		}
-		.prescription_item{
-			margin-top: 10px;
-		}
 	</style>
 @endsection
 
@@ -26,8 +17,6 @@
 		<b>{!! Auth::user()->subModule() !!}</b>
 		
 		<div class="card-tools">
-			{{-- <button type="button" class="btn btn-flat btn-success btn-sm" data-toggle="modal" data-target="#edit_invoice_detail_modal"><i class="fa fa-list-ol"></i> &nbsp; {!! __('label.buttons.invoice_detail') !!}</button> --}}
-			<button type="button" class="btn btn-flat btn-sm btn-success" data-toggle="modal" data-target="#create_invoice_item_modal"><i class="fa fa-plus"></i> {!! __('label.buttons.add') !!}</button>
 			<a href="{{route('invoice.index')}}" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-table"></i> &nbsp;{{ __('label.buttons.back_to_list', [ 'name' => Auth::user()->module() ]) }}</a>
 		</div>
 {{-- 
@@ -37,57 +26,76 @@
 
 	</div>
 
-	{!! Form::open(['url' => route('invoice.update', $invoice->id),'method' => 'post','class' => 'mt-3']) !!}
+	{!! Form::open(['url' => route('invoice.update', $invoice->id),'id' => 'submitForm','method' => 'post','class' => 'mt-3']) !!}
 	{!! Form::hidden('_method', 'PUT') !!}
+	{{ Form::close() }}
 
 	<div class="card-body">
 		@include('invoice.form')
+		
+		<div class="card card-outline card-primary mt-4">
+			<div class="card-header">
+				<h3 class="card-title">
+					<i class="fas fa-list"></i>&nbsp;
+					{{ __('alert.modal.title.invoice_detail') }}
+				</h3>
+				<div class="card-tools">
+					<button type="button" class="btn btn-flat btn-sm btn-success" data-toggle="modal" data-target="#create_invoice_item_modal"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button>
+				</div>
+			</div>
+			<!-- /.card-header -->
+			<div class="card-body item_list">
+				@foreach ($invoice->invoice_details as $order => $invoice_detail)
+					<div class="prescription_item" id="{{ $invoice_detail->id }}">
+						<div class="row">
+							<div class="col-sm-7">
+								<div class="form-group">
+									{!! Html::decode(Form::label('show_description', __('label.form.description')." <small>*</small>")) !!}
+									{!! Form::text('show_description', $invoice_detail->description, ['class' => 'form-control','form' => 'description','placeholder' => 'description','style' => 'height: 38px','id' => 'input-description-'. $invoice_detail->id ,'readonly']) !!}
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<div class="form-group">
+									{!! Html::decode(Form::label('show_discount', __('label.form.invoice.discount')." <small>*</small>")) !!}
+									{!! Form::text('show_discount', ($invoice_detail->discount*100).'%', ['class' => 'form-control','placeholder' => 'discount','id' => 'input-discount-'. $invoice_detail->id ,'readonly']) !!}
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<div class="form-group">
+									{!! Html::decode(Form::label('show_price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
+									{!! Form::text('show_price', $invoice_detail->amount, ['class' => 'form-control','placeholder' => 'price','id' => 'input-amount-'. $invoice_detail->id ,'readonly']) !!}
+								</div>
+							</div>
+							<div class="col-sm-1">
+								<div class="form-group">
+									{!! Html::decode(Form::label('', __('label.buttons.action'))) !!}
+									<div>
+										<button class="btn btn-info btn-flat btn-prevent-submit" onclick="editInvoiceDetail('{{ $invoice_detail->id }}')"><i class="fa fa-pencil-alt"></i></button>
+										<button class="btn btn-danger btn-flat btn-prevent-submit" onclick="deleteInvoiceDetail({{ $invoice_detail->id }})"><i class="fa fa-trash-alt"></i></button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				@endforeach
+			</div>
+			<!-- /.card-body -->
+		</div>
+
 	</div>
 	<!-- ./card-body -->
 	
 	<div class="card-footer text-muted text-center">
-		@include('components.submit')
+		{{-- @include('components.submit') --}}
+		<button type="reset" form="submitForm" class="btn btn-danger btn-flat">
+			<i class="fa fa-redo"></i>&nbsp; {{ __('label.buttons.reset') }} &nbsp;
+		</button>
+		<button type="submit" form="submitForm" class="btn btn-success btn-flat">
+			<i class="fa fa-save"></i>&nbsp; {{ __('label.buttons.save') }} &nbsp;
+		</button>
 	</div>
 	<!-- ./card-Footer -->
-	{{ Form::close() }}
 
-</div>
-
-
-<div class="item_list my-4">
-	@foreach ($invoice->invoice_details as $order => $invoice_detail)
-		<div class="prescription_item" id="{{ $invoice_detail->id }}">
-			<div class="row">
-				<div class="col-sm-7">
-					<div class="form-group">
-						{!! Html::decode(Form::label('show_description', __('label.form.description')." <small>*</small>")) !!}
-						{!! Form::text('show_description', $invoice_detail->description, ['class' => 'form-control','placeholder' => 'description','style' => 'height: 38px','id' => 'input-description-'. $invoice_detail->id ,'readonly']) !!}
-					</div>
-				</div>
-				<div class="col-sm-2">
-					<div class="form-group">
-						{!! Html::decode(Form::label('show_discount', __('label.form.invoice.discount')." <small>*</small>")) !!}
-						{!! Form::text('show_discount', ($invoice_detail->discount*100).'%', ['class' => 'form-control','placeholder' => 'discount','id' => 'input-discount-'. $invoice_detail->id ,'readonly']) !!}
-					</div>
-				</div>
-				<div class="col-sm-2">
-					<div class="form-group">
-						{!! Html::decode(Form::label('show_price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
-						{!! Form::text('show_price', $invoice_detail->amount, ['class' => 'form-control','placeholder' => 'price','id' => 'input-amount-'. $invoice_detail->id ,'readonly']) !!}
-					</div>
-				</div>
-				<div class="col-sm-1">
-					<div class="form-group">
-						{!! Html::decode(Form::label('', __('label.buttons.action'))) !!}
-						<div>
-							<button class="btn btn-info btn-flat" onclick="editInvoiceDetail('{{ $invoice_detail->id }}')"><i class="fa fa-pencil-alt"></i></button>
-							<button class="btn btn-danger btn-flat" onclick="deleteInvoiceDetail({{ $invoice_detail->id }})"><i class="fa fa-trash-alt"></i></button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	@endforeach
 </div>
 
 <div class="position-relative">
@@ -165,6 +173,10 @@
 
 @section('js')
 <script type="text/javascript">
+
+	$('.btn-prevent-submit').click(function (event) {
+		event.preventDefault();
+	});
 
 
 		$('#btn_save_service').click(function () {
@@ -530,13 +542,17 @@
 																				<div class="form-group">
 																					{!! Html::decode(Form::label('', __('label.buttons.action'))) !!}
 																					<div>
-																						<button class="btn btn-info btn-flat" onclick="editInvoiceDetail('${ data.invoice_detail.id }')"><i class="fa fa-pencil-alt"></i></button>
-																						<button class="btn btn-danger btn-flat" onclick="deleteInvoiceDetail(${ data.invoice_detail.id })"><i class="fa fa-trash-alt"></i></button>
+																						<button class="btn btn-info btn-flat btn-prevent-submit" onclick="editInvoiceDetail('${ data.invoice_detail.id }')"><i class="fa fa-pencil-alt"></i></button>
+																						<button class="btn btn-danger btn-flat btn-prevent-submit" onclick="deleteInvoiceDetail(${ data.invoice_detail.id })"><i class="fa fa-trash-alt"></i></button>
 																					</div>
 																				</div>
 																			</div>
 																		</div>
 																	</div>`);
+					
+					$('.btn-prevent-submit').click(function (event) {
+						event.preventDefault();
+					});
 					
 					Swal.fire({
 						icon: 'success',

@@ -2,14 +2,6 @@
 
 @section('css')
 	<style type="text/css">
-		.item_list{
-			padding: 20px;
-			margin-top: 10px;
-			background: #f1f1f1;
-		}
-		.prescription_item{
-			margin-top: 10px;
-		}
 	</style>
 @endsection
 
@@ -18,9 +10,7 @@
 	<div class="card-header">
 		<b>{!! Auth::user()->subModule() !!}</b>
 		<div class="card-tools">
-			{{-- <button type="button" class="btn btn-success btn-sm btn-flat" data-toggle="modal" data-target="#create_invoice_item_modal"><i class="fa fa-plus"></i> &nbsp; {!! __('label.buttons.add_item') !!}</button> --}}
 			<button type="button" class="btn btn-primary btn-sm btn-flat" data-toggle="modal" data-target="#create_service_modal"><i class="fa fa-plus-circle"></i> {!! __('label.buttons.create_service') !!}</button>
-			<button type="button" class="btn btn-success btn-sm btn-flat" id="btn_add_item"><i class="fa fa-plus"></i> &nbsp; {!! __('label.buttons.add_item') !!}</button>
 			<a href="{{route('invoice.index')}}" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-table"></i> &nbsp;{{ __('label.buttons.back_to_list', [ 'name' => Auth::user()->module() ]) }}</a>
 		</div>
 
@@ -30,48 +20,60 @@
 
 	</div>
 
-	{!! Form::open(['url' => route('invoice.store'),'method' => 'post','class' => 'mt-3']) !!}
+	{!! Form::open(['url' => route('invoice.store'),'id' => 'submitForm','method' => 'post','class' => 'mt-3']) !!}
 	<div class="card-body">
 		@include('invoice.form')
 
-
-		<div class="item_list my-4">
-			<div class="prescription_item" id="first-item">
-				<div class="row">
-					<div class="col-sm-4">
-						<div class="form-group">
-							{!! Html::decode(Form::label('service_id', __('label.form.invoice.service')." <small>*</small>")) !!}
-							{!! Form::select('service_id[]', $services, '', ['class' => 'form-control select2 service', 'data-id'=>'first-item', 'id'=>'input-service_id-first-item','placeholder' => __('label.form.choose'),'required']) !!}
+		<div class="card card-outline card-primary mt-4">
+			<div class="card-header">
+				<h3 class="card-title">
+					<i class="fas fa-list"></i>&nbsp;
+					{{ __('alert.modal.title.invoice_detail') }}
+				</h3>
+				<div class="card-tools">
+					<button type="button" class="btn btn-success btn-sm btn-flat" id="btn_add_item"><i class="fa fa-plus"></i> &nbsp; {!! __('label.buttons.add_item') !!}</button>
+				</div>
+			</div>
+			<!-- /.card-header -->
+			<div class="card-body item_list">
+				<div class="mb-2" id="first-item">
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="form-group">
+								{!! Html::decode(Form::label('service_id', __('label.form.invoice.service')." <small>*</small>")) !!}
+								{!! Form::select('service_id[]', $services, '', ['class' => 'form-control select2 service', 'data-id'=>'first-item', 'id'=>'input-service_id-first-item','placeholder' => __('label.form.choose'),'required']) !!}
+							</div>
 						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="form-group">
-							{!! Html::decode(Form::label('discount', __('label.form.invoice.discount')." <small>*</small>")) !!}
-							{!! Form::select('discount[]', ['0'=>'0%', '0.05'=>'5%', '0.1'=>'10%', '0.15'=>'15%', '0.2'=>'20%', '0.25'=>'25%', '0.3'=>'30%', '0.35'=>'35%', '0.4'=>'40%', '0.45'=>'45%', '0.5'=>'50%', '0.55'=>'55%', '0.6'=>'60%', '0.65'=>'65%', '0.7'=>'70%', '0.75'=>'75%', '0.8'=>'80%', '0.85'=>'85%', '0.9'=>'90%', '0.95'=>'95%', '1'=>'100%'], '0', ['class' => 'form-control select2', 'id'=>'input-discount-first-item','required']) !!}
+						<div class="col-sm-2">
+							<div class="form-group">
+								{!! Html::decode(Form::label('discount', __('label.form.invoice.discount')." <small>*</small>")) !!}
+								{!! Form::select('discount[]', ['0'=>'0%', '0.05'=>'5%', '0.1'=>'10%', '0.15'=>'15%', '0.2'=>'20%', '0.25'=>'25%', '0.3'=>'30%', '0.35'=>'35%', '0.4'=>'40%', '0.45'=>'45%', '0.5'=>'50%', '0.55'=>'55%', '0.6'=>'60%', '0.65'=>'65%', '0.7'=>'70%', '0.75'=>'75%', '0.8'=>'80%', '0.85'=>'85%', '0.9'=>'90%', '0.95'=>'95%', '1'=>'100%'], '0', ['class' => 'form-control select2', 'id'=>'input-discount-first-item','required']) !!}
+							</div>
 						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="form-group">
-							{!! Html::decode(Form::label('price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
-							{!! Form::text('price[]', '', ['class' => 'form-control', 'id'=>'input-price-first-item','placeholder' => 'price','required']) !!}
+						<div class="col-sm-2">
+							<div class="form-group">
+								{!! Html::decode(Form::label('price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
+								{!! Form::text('price[]', '', ['class' => 'form-control', 'id'=>'input-price-first-item','placeholder' => 'price','required']) !!}
+							</div>
 						</div>
-					</div>
-					<div class="col-sm-3">
-						<div class="form-group">
-							{!! Html::decode(Form::label('description', __('label.form.description')." <small>*</small>")) !!}
-							{!! Form::textarea('description[]', '', ['class' => 'form-control', 'id'=>'input-description-first-item','placeholder' => 'description','style' => 'height: 38px','required']) !!}
+						<div class="col-sm-3">
+							<div class="form-group">
+								{!! Html::decode(Form::label('description', __('label.form.description')." <small>*</small>")) !!}
+								{!! Form::textarea('description[]', '', ['class' => 'form-control', 'id'=>'input-description-first-item','placeholder' => 'description','style' => 'height: 38px','required']) !!}
+							</div>
 						</div>
-					</div>
-					<div class="col-sm-1">
-						<div class="form-group">
-							{!! Html::decode(Form::label('', __('label.buttons.remove'))) !!}
-							<div>
-								<button class="btn btn-danger btn-flat btn-block" onclick="removeItem('first-item')"><i class="fa fa-trash-alt"></i></button>
+						<div class="col-sm-1">
+							<div class="form-group">
+								{!! Html::decode(Form::label('', __('label.buttons.remove'))) !!}
+								<div>
+									<button class="btn btn-danger btn-flat btn-block btn-prevent-submit" onclick="removeItem('first-item')"><i class="fa fa-trash-alt"></i></button>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			<!-- /.card-body -->
 		</div>
 
 	</div>
@@ -92,18 +94,20 @@
 @section('js')
 <script type="text/javascript">
 
-	
+	$('.btn-prevent-submit').click(function (event) {
+		event.preventDefault();
+	});
 	
 	$('#btn_add_item').click(function () {
 
 		var id = Math.floor(Math.random() * 1000);
 
-		$('.item_list').append(`<div class="prescription_item" id="${ id }">
+		$('.item_list').append(`<div class="mb-2" id="${ id }">
 															<div class="row">
 																<div class="col-sm-4">
 																	<div class="form-group">
 																		{!! Html::decode(Form::label('service_id', __('label.form.invoice.service')." <small>*</small>")) !!}
-																		{!! Form::select('service_id[]', $services, '', ['class' => 'form-control select2 service', 'data-id'=>'${ id }', 'id'=>'input-service_id-${ id }','placeholder' => __('label.form.choose'),'required']) !!}
+																		{!! Form::select('service_id[]', $services, '', ['class' => 'form-control service_add', 'data-id'=>'${ id }', 'id'=>'input-service_id-${ id }','placeholder' => __('label.form.choose'),'required']) !!}
 																	</div>
 																</div>
 																<div class="col-sm-2">
@@ -128,15 +132,18 @@
 																	<div class="form-group">
 																		{!! Html::decode(Form::label('', __('label.buttons.remove'))) !!}
 																		<div>
-																			<button class="btn btn-danger btn-flat btn-block" onclick="removeItem(${ id })"><i class="fa fa-trash-alt"></i></button>
+																			<button class="btn btn-danger btn-flat btn-block btn-prevent-submit" onclick="removeItem(${ id })"><i class="fa fa-trash-alt"></i></button>
 																		</div>
 																	</div>
 																</div>
 															</div>
 														</div>`);
+														
+		// $('#input-service_id-'+id).select2({
+		// 	theme: 'bootstrap4',
+		// });
 
-		
-		$('.service').off().change(function () {
+		$('.service_add').off().change(function () {
 			if ($(this).val()!='') {
 				var service_id = $(this).val();
 				var id = $(this).data('id');
@@ -154,6 +161,7 @@
 				
 			}
 		});
+		
 	});
 
 	function removeItem(id) {
@@ -260,7 +268,8 @@
 		}
 	});
 
-	$('.service').change(function () {
+	$('#input-service_id-first-item').change(function () {
+		console.log($(this).val());
 		if ($(this).val()!='') {
 			var service_id = $(this).val();
 			var id = $(this).data('id');

@@ -50,6 +50,7 @@ class InvoiceController extends Controller
 
 	public function store(InvoiceRequest $request)
 	{
+		
 		$invoice = $this->invoice->create($request);
 		if ($invoice) {
 			// Redirect

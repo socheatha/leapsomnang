@@ -2,14 +2,7 @@
 
 @section('css')
 	<style type="text/css">
-		.item_list{
-			padding: 20px;
-			margin-top: 10px;
-			background: #f1f1f1;
-		}
-		.prescription_item{
-			margin-top: 10px;
-		}
+	
 	</style>
 @endsection
 
@@ -18,7 +11,6 @@
 	<div class="card-header">
 		<b>{!! Auth::user()->subModule() !!}</b>
 		<div class="card-tools">
-			<button type="button" class="btn btn-success btn-sm btn-flat" id="btn_add_item"><i class="fa fa-plus"></i> &nbsp; {!! __('label.buttons.add_item') !!}</button>
 			<a href="{{route('prescription.index')}}" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-table"></i> &nbsp;{{ __('label.buttons.back_to_list', [ 'name' => Auth::user()->module() ]) }}</a>
 		</div>
 
@@ -32,63 +24,76 @@
 	<div class="card-body">
 		@include('prescription.form')
 
-		<div class="item_list">
-			<div class="prescription_item" id="first-item">
-				<div class="row">
-					<div class="col-sm-3">
-						<div class="form-group">
-							{!! Html::decode(Form::label('medicine_name', __('label.form.prescription.medicine_name')."<small>*</small>")) !!}
-							{!! Form::text('medicine_name[]', '', ['class' => 'form-control','placeholder' => 'name','required']) !!}
+		<div class="card card-outline card-primary mt-4">
+			<div class="card-header">
+				<h3 class="card-title">
+					<i class="fas fa-list"></i>&nbsp;
+					{{ __('alert.modal.title.prescription_detail') }}
+				</h3>
+				<div class="card-tools">
+					<button type="button" class="btn btn-success btn-sm btn-flat" id="btn_add_item"><i class="fa fa-plus"></i> &nbsp; {!! __('label.buttons.add_item') !!}</button>
+				</div>
+			</div>
+			<!-- /.card-header -->
+			<div class="card-body item_list">
+				<div class="mb-2" id="first-item">
+					<div class="row">
+						<div class="col-sm-3">
+							<div class="form-group">
+								{!! Html::decode(Form::label('medicine_name', __('label.form.prescription.medicine_name')."<small>*</small>")) !!}
+								{!! Form::text('medicine_name[]', '', ['class' => 'form-control','placeholder' => 'name','required']) !!}
+							</div>
 						</div>
-					</div>
-					<div class="col-sm-1">
-						<div class="form-group">
-							{!! Html::decode(Form::label('morning', __('label.form.prescription.morning')."<small>*</small>")) !!}
-							{!! Form::number('morning[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'morning','required']) !!}
+						<div class="col-sm-1">
+							<div class="form-group">
+								{!! Html::decode(Form::label('morning', __('label.form.prescription.morning')."<small>*</small>")) !!}
+								{!! Form::number('morning[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'morning','required']) !!}
+							</div>
 						</div>
-					</div>
-					<div class="col-sm-1">
-						<div class="form-group">
-							{!! Html::decode(Form::label('afternoon', __('label.form.prescription.afternoon')."<small>*</small>")) !!}
-							{!! Form::number('afternoon[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'afternoon','required']) !!}
+						<div class="col-sm-1">
+							<div class="form-group">
+								{!! Html::decode(Form::label('afternoon', __('label.form.prescription.afternoon')."<small>*</small>")) !!}
+								{!! Form::number('afternoon[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'afternoon','required']) !!}
+							</div>
 						</div>
-					</div>
-					<div class="col-sm-1">
-						<div class="form-group">
-							{!! Html::decode(Form::label('evening', __('label.form.prescription.evening')." <small>*</small>")) !!}
-							{!! Form::number('evening[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'evening','required']) !!}
+						<div class="col-sm-1">
+							<div class="form-group">
+								{!! Html::decode(Form::label('evening', __('label.form.prescription.evening')." <small>*</small>")) !!}
+								{!! Form::number('evening[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'evening','required']) !!}
+							</div>
 						</div>
-					</div>
-					<div class="col-sm-1">
-						<div class="form-group">
-							{!! Html::decode(Form::label('night', __('label.form.prescription.night')." <small>*</small>")) !!}
-							{!! Form::number('night[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'night','required']) !!}
+						<div class="col-sm-1">
+							<div class="form-group">
+								{!! Html::decode(Form::label('night', __('label.form.prescription.night')." <small>*</small>")) !!}
+								{!! Form::number('night[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'night','required']) !!}
+							</div>
 						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="form-group">
-							{!! Html::decode(Form::label('medicine_usage', __('label.form.prescription.medicine_usage')."<small>*</small>")) !!}
-							{!! Form::text('medicine_usage[]', '', ['class' => 'form-control','placeholder' => 'usage','required']) !!}
+						<div class="col-sm-2">
+							<div class="form-group">
+								{!! Html::decode(Form::label('medicine_usage', __('label.form.prescription.medicine_usage')."<small>*</small>")) !!}
+								{!! Form::text('medicine_usage[]', '', ['class' => 'form-control','placeholder' => 'usage','required']) !!}
+							</div>
 						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="form-group">
-							{!! Html::decode(Form::label('description', __('label.form.description'))) !!}
-							{!! Form::textarea('description[]', '', ['class' => 'form-control','placeholder' => 'description','style' => 'height: 38px']) !!}
+						<div class="col-sm-2">
+							<div class="form-group">
+								{!! Html::decode(Form::label('description', __('label.form.description'))) !!}
+								{!! Form::textarea('description[]', '', ['class' => 'form-control','placeholder' => 'description','style' => 'height: 38px']) !!}
+							</div>
 						</div>
-					</div>
-					<div class="col-sm-1">
-						<div class="form-group">
-							{!! Html::decode(Form::label('', __('label.buttons.remove'))) !!}
-							<div>
-								<button class="btn btn-danger btn-flat btn-block" onclick="removeItem('first-item')"><i class="fa fa-trash-alt"></i></button>
+						<div class="col-sm-1">
+							<div class="form-group">
+								{!! Html::decode(Form::label('', __('label.buttons.remove'))) !!}
+								<div>
+									<button class="btn btn-danger btn-flat btn-block btn-prevent-submit" onclick="removeItem('first-item')"><i class="fa fa-trash-alt"></i></button>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			<!-- /.card-body -->
 		</div>
-
+		
 	</div>
 	<!-- ./card-body -->
 	
@@ -108,66 +113,67 @@
 <script type="text/javascript">
 
 
+	$('.btn-prevent-submit').click(function (event) {
+		event.preventDefault();
+	});
 	
-	$('#btn_add_item').click(function () {
-
-	var id = Math.floor(Math.random() * 1000);
-
-	$('.item_list').append(`
-		<div class="prescription_item" id="${ id }">
-			<div class="row">
-				<div class="col-sm-3">
-					<div class="form-group">
-						{!! Html::decode(Form::label('medicine_name', __('label.form.prescription.medicine_name')."<small>*</small>")) !!}
-						{!! Form::text('medicine_name[]', '', ['class' => 'form-control','placeholder' => 'name','required']) !!}
-					</div>
-				</div>
-				<div class="col-sm-1">
-					<div class="form-group">
-						{!! Html::decode(Form::label('morning', __('label.form.prescription.morning')."<small>*</small>")) !!}
-						{!! Form::number('morning[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'morning','required']) !!}
-					</div>
-				</div>
-				<div class="col-sm-1">
-					<div class="form-group">
-						{!! Html::decode(Form::label('afternoon', __('label.form.prescription.afternoon')."<small>*</small>")) !!}
-						{!! Form::number('afternoon[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'afternoon','required']) !!}
-					</div>
-				</div>
-				<div class="col-sm-1">
-					<div class="form-group">
-						{!! Html::decode(Form::label('evening', __('label.form.prescription.evening')." <small>*</small>")) !!}
-						{!! Form::number('evening[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'evening','required']) !!}
-					</div>
-				</div>
-				<div class="col-sm-1">
-					<div class="form-group">
-						{!! Html::decode(Form::label('night', __('label.form.prescription.night')." <small>*</small>")) !!}
-						{!! Form::number('night[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'night','required']) !!}
-					</div>
-				</div>
-				<div class="col-sm-2">
-					<div class="form-group">
-						{!! Html::decode(Form::label('medicine_usage', __('label.form.prescription.medicine_usage')."<small>*</small>")) !!}
-						{!! Form::text('medicine_usage[]', '', ['class' => 'form-control','placeholder' => 'usage','required']) !!}
-					</div>
-				</div>
-				<div class="col-sm-2">
-					<div class="form-group">
-						{!! Html::decode(Form::label('description', __('label.form.description'))) !!}
-						{!! Form::textarea('description[]', '', ['class' => 'form-control','placeholder' => 'description','style' => 'height: 38px']) !!}
-					</div>
-				</div>
-				<div class="col-sm-1">
-					<div class="form-group">
-						{!! Html::decode(Form::label('', __('label.buttons.remove'))) !!}
-						<div>
-							<button class="btn btn-danger btn-flat btn-block" onclick="removeItem(${ id })"><i class="fa fa-trash-alt"></i></button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>`);
+	$('#btn_add_item').click(function (event) {
+		event.preventDefault();
+		var id = Math.floor(Math.random() * 1000);
+		$('.item_list').append(`<div class="prescription_item" id="${ id }">
+															<div class="row">
+																<div class="col-sm-3">
+																	<div class="form-group">
+																		{!! Html::decode(Form::label('medicine_name', __('label.form.prescription.medicine_name')."<small>*</small>")) !!}
+																		{!! Form::text('medicine_name[]', '', ['class' => 'form-control','placeholder' => 'name','required']) !!}
+																	</div>
+																</div>
+																<div class="col-sm-1">
+																	<div class="form-group">
+																		{!! Html::decode(Form::label('morning', __('label.form.prescription.morning')."<small>*</small>")) !!}
+																		{!! Form::number('morning[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'morning','required']) !!}
+																	</div>
+																</div>
+																<div class="col-sm-1">
+																	<div class="form-group">
+																		{!! Html::decode(Form::label('afternoon', __('label.form.prescription.afternoon')."<small>*</small>")) !!}
+																		{!! Form::number('afternoon[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'afternoon','required']) !!}
+																	</div>
+																</div>
+																<div class="col-sm-1">
+																	<div class="form-group">
+																		{!! Html::decode(Form::label('evening', __('label.form.prescription.evening')." <small>*</small>")) !!}
+																		{!! Form::number('evening[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'evening','required']) !!}
+																	</div>
+																</div>
+																<div class="col-sm-1">
+																	<div class="form-group">
+																		{!! Html::decode(Form::label('night', __('label.form.prescription.night')." <small>*</small>")) !!}
+																		{!! Form::number('night[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'night','required']) !!}
+																	</div>
+																</div>
+																<div class="col-sm-2">
+																	<div class="form-group">
+																		{!! Html::decode(Form::label('medicine_usage', __('label.form.prescription.medicine_usage')."<small>*</small>")) !!}
+																		{!! Form::text('medicine_usage[]', '', ['class' => 'form-control','placeholder' => 'usage','required']) !!}
+																	</div>
+																</div>
+																<div class="col-sm-2">
+																	<div class="form-group">
+																		{!! Html::decode(Form::label('description', __('label.form.description'))) !!}
+																		{!! Form::textarea('description[]', '', ['class' => 'form-control','placeholder' => 'description','style' => 'height: 38px']) !!}
+																	</div>
+																</div>
+																<div class="col-sm-1">
+																	<div class="form-group">
+																		{!! Html::decode(Form::label('', __('label.buttons.remove'))) !!}
+																		<div>
+																			<button class="btn btn-danger btn-flat btn-block btn-prevent-submit" onclick="removeItem(${ id })"><i class="fa fa-trash-alt"></i></button>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>`);
 	});
 
 	function removeItem(id) {

@@ -7,14 +7,14 @@
 			top: -30px;
 			right: 55px;
 		}
-		.item_list{
+		/* .item_list{
 			padding: 20px;
 			margin-top: 10px;
 			background: #fff;
 		}
 		.prescription_item{
 			margin-top: 10px;
-		}
+		} */
 
 	</style>
 @endsection
@@ -26,8 +26,6 @@
 		<b>{!! Auth::user()->subModule() !!}</b>
 		
 		<div class="card-tools">
-			<button type="button" class="btn btn-flat btn-success" data-toggle="modal" data-target="#create_prescription_item_modal"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button>
-			{{-- <button type="button" class="btn btn-success btn-flat btn-sm" data-toggle="modal" data-target="#edit_prescription_detail_modal"><i class="fa fa-list"></i> &nbsp; {!! __('label.buttons.prescription_detail') !!}</button> --}}
 			<a href="{{route('prescription.index')}}" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-table"></i> &nbsp;{{ __('label.buttons.back_to_list', [ 'name' => Auth::user()->module() ]) }}</a>
 		</div>
 
@@ -43,6 +41,79 @@
 
 	<div class="card-body">
 		@include('prescription.form')
+
+		<div class="card card-outline card-primary mt-4">
+			<div class="card-header">
+				<h3 class="card-title">
+					<i class="fas fa-list"></i>&nbsp;
+					{{ __('alert.modal.title.prescription_detail') }}
+				</h3>
+				<div class="card-tools">
+					<button type="button" class="btn btn-flat btn-success" data-toggle="modal" data-target="#create_prescription_item_modal"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button>
+				</div>
+			</div>
+			<!-- /.card-header -->
+			<div class="card-body item_list">
+				@foreach ($prescription->prescription_details as $order => $prescription_detail)
+					<div class="mb-2" id="{{ $prescription_detail->id }}">
+						<div class="row">
+							<div class="col-sm-3">
+								<div class="form-group">
+									{!! Html::decode(Form::label('medicine_name', __('label.form.prescription.medicine_name')."<small>*</small>")) !!}
+									{!! Form::text('show_medicine_name', $prescription_detail->medicine_name, ['class' => 'form-control', 'id' => 'input-medicine_name-'. $prescription_detail->id,'placeholder' => 'name','readonly']) !!}
+								</div>
+							</div>
+							<div class="col-sm-1">
+								<div class="form-group">
+									{!! Html::decode(Form::label('morning', __('label.form.prescription.morning')."<small>*</small>")) !!}
+									{!! Form::number('show_morning', $prescription_detail->morning, ['class' => 'form-control is_number', 'id' => 'input-morning-'. $prescription_detail->id,'min' => '0','placeholder' => 'morning','readonly']) !!}
+								</div>
+							</div>
+							<div class="col-sm-1">
+								<div class="form-group">
+									{!! Html::decode(Form::label('afternoon', __('label.form.prescription.afternoon')."<small>*</small>")) !!}
+									{!! Form::number('show_afternoon', $prescription_detail->afternoon, ['class' => 'form-control is_number', 'id' => 'input-afternoon-'. $prescription_detail->id,'min' => '0','placeholder' => 'afternoon','readonly']) !!}
+								</div>
+							</div>
+							<div class="col-sm-1">
+								<div class="form-group">
+									{!! Html::decode(Form::label('evening', __('label.form.prescription.evening')." <small>*</small>")) !!}
+									{!! Form::number('show_evening', $prescription_detail->evening, ['class' => 'form-control is_number', 'id' => 'input-evening-'. $prescription_detail->id,'min' => '0','placeholder' => 'evening','readonly']) !!}
+								</div>
+							</div>
+							<div class="col-sm-1">
+								<div class="form-group">
+									{!! Html::decode(Form::label('night', __('label.form.prescription.night')." <small>*</small>")) !!}
+									{!! Form::number('show_night', $prescription_detail->night, ['class' => 'form-control is_number', 'id' => 'input-night-'. $prescription_detail->id,'min' => '0','placeholder' => 'night','readonly']) !!}
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<div class="form-group">
+									{!! Html::decode(Form::label('medicine_usage', __('label.form.prescription.medicine_usage')."<small>*</small>")) !!}
+									{!! Form::text('show_medicine_usage', $prescription_detail->medicine_usage, ['class' => 'form-control', 'id' => 'input-medicine_usage-'. $prescription_detail->id,'placeholder' => 'usage','readonly']) !!}
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<div class="form-group">
+									{!! Html::decode(Form::label('description', __('label.form.description'))) !!}
+									{!! Form::textarea('show_description', $prescription_detail->description, ['class' => 'form-control', 'id' => 'input-description-'. $prescription_detail->id,'placeholder' => 'description','style' => 'height: 38px','readonly']) !!}
+								</div>
+							</div>
+							<div class="col-sm-1">
+								<div class="form-group">
+									{!! Html::decode(Form::label('', __('label.buttons.action'))) !!}
+									<div>
+										<button class="btn btn-info btn-flat btn-prevent-submit" onclick="editPrescriptionDetail('{{ $prescription_detail->id }}')"><i class="fa fa-pencil-alt"></i></button>
+										<button class="btn btn-danger btn-flat btn-prevent-submit" onclick="deletePrescriptionDetail({{ $prescription_detail->id }})"><i class="fa fa-trash-alt"></i></button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				@endforeach
+			</div>
+			<!-- /.card-body -->
+		</div>
 			
 	</div>
 	<!-- ./card-body -->
@@ -53,67 +124,6 @@
 	<!-- ./card-Footer -->
 	{{ Form::close() }}
 
-</div>
-
-
-<div class="item_list my-4">
-	@foreach ($prescription->prescription_details as $order => $prescription_detail)
-		<div class="prescription_item" id="{{ $prescription_detail->id }}">
-			<div class="row">
-				<div class="col-sm-3">
-					<div class="form-group">
-						{!! Html::decode(Form::label('medicine_name', __('label.form.prescription.medicine_name')."<small>*</small>")) !!}
-						{!! Form::text('show_medicine_name', $prescription_detail->medicine_name, ['class' => 'form-control', 'id' => 'input-medicine_name-'. $prescription_detail->id,'placeholder' => 'name','readonly']) !!}
-					</div>
-				</div>
-				<div class="col-sm-1">
-					<div class="form-group">
-						{!! Html::decode(Form::label('morning', __('label.form.prescription.morning')."<small>*</small>")) !!}
-						{!! Form::number('show_morning', $prescription_detail->morning, ['class' => 'form-control is_number', 'id' => 'input-morning-'. $prescription_detail->id,'min' => '0','placeholder' => 'morning','readonly']) !!}
-					</div>
-				</div>
-				<div class="col-sm-1">
-					<div class="form-group">
-						{!! Html::decode(Form::label('afternoon', __('label.form.prescription.afternoon')."<small>*</small>")) !!}
-						{!! Form::number('show_afternoon', $prescription_detail->afternoon, ['class' => 'form-control is_number', 'id' => 'input-afternoon-'. $prescription_detail->id,'min' => '0','placeholder' => 'afternoon','readonly']) !!}
-					</div>
-				</div>
-				<div class="col-sm-1">
-					<div class="form-group">
-						{!! Html::decode(Form::label('evening', __('label.form.prescription.evening')." <small>*</small>")) !!}
-						{!! Form::number('show_evening', $prescription_detail->evening, ['class' => 'form-control is_number', 'id' => 'input-evening-'. $prescription_detail->id,'min' => '0','placeholder' => 'evening','readonly']) !!}
-					</div>
-				</div>
-				<div class="col-sm-1">
-					<div class="form-group">
-						{!! Html::decode(Form::label('night', __('label.form.prescription.night')." <small>*</small>")) !!}
-						{!! Form::number('show_night', $prescription_detail->night, ['class' => 'form-control is_number', 'id' => 'input-night-'. $prescription_detail->id,'min' => '0','placeholder' => 'night','readonly']) !!}
-					</div>
-				</div>
-				<div class="col-sm-2">
-					<div class="form-group">
-						{!! Html::decode(Form::label('medicine_usage', __('label.form.prescription.medicine_usage')."<small>*</small>")) !!}
-						{!! Form::text('show_medicine_usage', $prescription_detail->medicine_usage, ['class' => 'form-control', 'id' => 'input-medicine_usage-'. $prescription_detail->id,'placeholder' => 'usage','readonly']) !!}
-					</div>
-				</div>
-				<div class="col-sm-2">
-					<div class="form-group">
-						{!! Html::decode(Form::label('description', __('label.form.description'))) !!}
-						{!! Form::textarea('show_description', $prescription_detail->description, ['class' => 'form-control', 'id' => 'input-description-'. $prescription_detail->id,'placeholder' => 'description','style' => 'height: 38px','readonly']) !!}
-					</div>
-				</div>
-				<div class="col-sm-1">
-					<div class="form-group">
-						{!! Html::decode(Form::label('', __('label.buttons.action'))) !!}
-						<div>
-							<button class="btn btn-info btn-flat" onclick="editPrescriptionDetail('{{ $prescription_detail->id }}')"><i class="fa fa-pencil-alt"></i></button>
-							<button class="btn btn-danger btn-flat" onclick="deletePrescriptionDetail({{ $prescription_detail->id }})"><i class="fa fa-trash-alt"></i></button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	@endforeach
 </div>
 
 <div class="position-relative">
@@ -206,6 +216,10 @@
 @section('js')
 <script type="text/javascript">
 
+	$('.btn-prevent-submit').click(function (event) {
+		event.preventDefault();
+	});
+	
 	$( document ).ready(function() {
 
 		setTimeout(() => {
@@ -461,13 +475,17 @@
 																					<div class="form-group">
 																						{!! Html::decode(Form::label('', __('label.buttons.action'))) !!}
 																						<div>
-																							<button class="btn btn-info btn-flat" onclick="editPrescriptionDetail('${ data.prescription_detail.id }')"><i class="fa fa-pencil-alt"></i></button>
-																							<button class="btn btn-danger btn-flat" onclick="deletePrescriptionDetail(${ data.prescription_detail.id })"><i class="fa fa-trash-alt"></i></button>
+																							<button class="btn btn-info btn-flat btn-prevent-submit" onclick="editPrescriptionDetail('${ data.prescription_detail.id }')"><i class="fa fa-pencil-alt"></i></button>
+																							<button class="btn btn-danger btn-flat btn-prevent-submit" onclick="deletePrescriptionDetail(${ data.prescription_detail.id })"><i class="fa fa-trash-alt"></i></button>
 																						</div>
 																					</div>
 																				</div>
 																			</div>
 																		</div>`);
+					
+					$('.btn-prevent-submit').click(function (event) {
+						event.preventDefault();
+					});
 
 					$('[name="item_medicine_name"]').val( '' );
 					$('[name="item_medicine_usage"]').val( '' );
