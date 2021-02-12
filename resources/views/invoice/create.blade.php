@@ -19,6 +19,7 @@
 		<b>{!! Auth::user()->subModule() !!}</b>
 		<div class="card-tools">
 			{{-- <button type="button" class="btn btn-success btn-sm btn-flat" data-toggle="modal" data-target="#create_invoice_item_modal"><i class="fa fa-plus"></i> &nbsp; {!! __('label.buttons.add_item') !!}</button> --}}
+			<button type="button" class="btn btn-primary btn-sm btn-flat" data-toggle="modal" data-target="#create_service_modal"><i class="fa fa-plus-circle"></i> {!! __('label.buttons.create_service') !!}</button>
 			<button type="button" class="btn btn-success btn-sm btn-flat" id="btn_add_item"><i class="fa fa-plus"></i> &nbsp; {!! __('label.buttons.add_item') !!}</button>
 			<a href="{{route('invoice.index')}}" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-table"></i> &nbsp;{{ __('label.buttons.back_to_list', [ 'name' => Auth::user()->module() ]) }}</a>
 		</div>
@@ -189,9 +190,14 @@
 						$('[name="service_name"]').val('');
 						$('[name="service_price"]').val('');
 						$('[name="service_description"]').val('');
+						$('.service').append('<option value="'+ data.service.id  +'">'+ data.service.name +'</option>');
+						
+						$('.service').select2({
+							theme: 'bootstrap4',
+						});
 						
 						$('#create_service_modal').modal('hide');
-						reloadSelectService(data.service.id)
+						// reloadSelectService(data.service.id)
 						Swal.fire({
 							icon: 'success',
 							title: "{{ __('alert.swal.result.title.success') }}",
@@ -219,7 +225,7 @@
 			},
 			success: function(data){
 				$('#item_service_id').html(data);
-				$('#item_service_id').val(id).trigger('change');
+				// $('#item_service_id').val(id).trigger('change');
 
 			}
 		});

@@ -27,7 +27,7 @@
 		
 		<div class="card-tools">
 			{{-- <button type="button" class="btn btn-flat btn-success btn-sm" data-toggle="modal" data-target="#edit_invoice_detail_modal"><i class="fa fa-list-ol"></i> &nbsp; {!! __('label.buttons.invoice_detail') !!}</button> --}}
-			<button type="button" class="btn btn-flat btn-success" data-toggle="modal" data-target="#create_invoice_item_modal"><i class="fa fa-plus"></i> {!! __('label.buttons.add') !!}</button>
+			<button type="button" class="btn btn-flat btn-sm btn-success" data-toggle="modal" data-target="#create_invoice_item_modal"><i class="fa fa-plus"></i> {!! __('label.buttons.add') !!}</button>
 			<a href="{{route('invoice.index')}}" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-table"></i> &nbsp;{{ __('label.buttons.back_to_list', [ 'name' => Auth::user()->module() ]) }}</a>
 		</div>
 {{-- 

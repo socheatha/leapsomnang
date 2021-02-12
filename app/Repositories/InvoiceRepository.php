@@ -20,7 +20,13 @@ class InvoiceRepository
 		
 		$from = $request->from;
 		$to = $request->to;
+		$inv_number = $request->inv_number;
+		$conditions = '';
+		if ($inv_number!='') {
+			$conditions = ' AND inv_number LIKE "%'. intval($inv_number) .'%"';
+		}
 		$invoices = Invoice::whereBetween('date', [$from, $to])->orderBy('inv_number', 'asc')->get();
+		// $invoices = Invoice::whereRaw('date BETWEEN "'. $from .'" AND "'. $to .'"'. $conditions)->orderBy('inv_number', 'asc')->get();
 
 		return Datatables::of($invoices)
 			->editColumn('inv_number', function ($invoice) {
