@@ -31,7 +31,8 @@
 					{{ __('alert.modal.title.invoice_detail') }}
 				</h3>
 				<div class="card-tools">
-					<button type="button" class="btn btn-success btn-sm btn-flat" id="btn_add_item"><i class="fa fa-plus"></i> &nbsp; {!! __('label.buttons.add_item') !!}</button>
+					{{-- <button type="button" class="btn btn-success btn-sm btn-flat" id="btn_add_item"><i class="fa fa-plus"></i> &nbsp; {!! __('label.buttons.add_item') !!}</button> --}}
+					<button type="button" class="btn btn-flat btn-sm btn-success btn-prevent-submit" data-toggle="modal" data-target="#create_invoice_item_modal"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button>
 				</div>
 			</div>
 			<!-- /.card-header -->
@@ -100,67 +101,92 @@
 	
 	$('#btn_add_item').click(function () {
 
-		var id = Math.floor(Math.random() * 1000);
-
-		$('.item_list').append(`<div class="mb-2" id="${ id }">
-															<div class="row">
-																<div class="col-sm-4">
-																	<div class="form-group">
-																		{!! Html::decode(Form::label('service_id', __('label.form.invoice.service')." <small>*</small>")) !!}
-																		{!! Form::select('service_id[]', $services, '', ['class' => 'form-control service_add', 'data-id'=>'${ id }', 'id'=>'input-service_id-${ id }','placeholder' => __('label.form.choose'),'required']) !!}
+		if ($('[name="item_service_id"]').val()!='' && $('[name="item_discount"]').val()!='' && $('[name="item_price"]').val()!='' && $('[name="item_description"]').val()!='') {
+			
+			var service_id = $('[name="item_service_id"]').val();
+			var discount = $('[name="item_discount"]').val();
+			var price = $('[name="item_price"]').val();
+			var description = $('[name="item_description"]').val();
+	
+			var id = Math.floor(Math.random() * 1000);
+			$('.item_list').append(`<div class="mb-2" id="${ id }">
+																<div class="row">
+																	<div class="col-sm-4">
+																		<div class="form-group">
+																			{!! Html::decode(Form::label('service_id', __('label.form.invoice.service')." <small>*</small>")) !!}
+																			{!! Form::select('service_id[]', $services, '', ['class' => 'form-control service_add', 'data-id'=>'${ id }', 'id'=>'input-service_id-${ id }','placeholder' => __('label.form.choose'),'required']) !!}
+																		</div>
 																	</div>
-																</div>
-																<div class="col-sm-2">
-																	<div class="form-group">
-																		{!! Html::decode(Form::label('discount', __('label.form.invoice.discount')." <small>*</small>")) !!}
-																		{!! Form::select('discount[]', ['0'=>'0%', '0.05'=>'5%', '0.1'=>'10%', '0.15'=>'15%', '0.2'=>'20%', '0.25'=>'25%', '0.3'=>'30%', '0.35'=>'35%', '0.4'=>'40%', '0.45'=>'45%', '0.5'=>'50%', '0.55'=>'55%', '0.6'=>'60%', '0.65'=>'65%', '0.7'=>'70%', '0.75'=>'75%', '0.8'=>'80%', '0.85'=>'85%', '0.9'=>'90%', '0.95'=>'95%', '1'=>'100%'], '0', ['class' => 'form-control select2', 'id'=>'input-discount-${ id }','required']) !!}
+																	<div class="col-sm-2">
+																		<div class="form-group">
+																			{!! Html::decode(Form::label('discount', __('label.form.invoice.discount')." <small>*</small>")) !!}
+																			{!! Form::select('discount[]', ['0'=>'0%', '0.05'=>'5%', '0.1'=>'10%', '0.15'=>'15%', '0.2'=>'20%', '0.25'=>'25%', '0.3'=>'30%', '0.35'=>'35%', '0.4'=>'40%', '0.45'=>'45%', '0.5'=>'50%', '0.55'=>'55%', '0.6'=>'60%', '0.65'=>'65%', '0.7'=>'70%', '0.75'=>'75%', '0.8'=>'80%', '0.85'=>'85%', '0.9'=>'90%', '0.95'=>'95%', '1'=>'100%'], '0', ['class' => 'form-control select2', 'id'=>'input-discount-${ id }','required']) !!}
+																		</div>
 																	</div>
-																</div>
-																<div class="col-sm-2">
-																	<div class="form-group">
-																		{!! Html::decode(Form::label('price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
-																		{!! Form::text('price[]', '', ['class' => 'form-control', 'id'=>'input-price-${ id }','placeholder' => 'price','required']) !!}
+																	<div class="col-sm-2">
+																		<div class="form-group">
+																			{!! Html::decode(Form::label('price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
+																			{!! Form::text('price[]', '', ['class' => 'form-control', 'id'=>'input-price-${ id }','placeholder' => 'price','required']) !!}
+																		</div>
 																	</div>
-																</div>
-																<div class="col-sm-3">
-																	<div class="form-group">
-																		{!! Html::decode(Form::label('description', __('label.form.description')." <small>*</small>")) !!}
-																		{!! Form::textarea('description[]', '', ['class' => 'form-control', 'id'=>'input-description-${ id }','placeholder' => 'description','style' => 'height: 38px','required']) !!}
+																	<div class="col-sm-3">
+																		<div class="form-group">
+																			{!! Html::decode(Form::label('description', __('label.form.description')." <small>*</small>")) !!}
+																			{!! Form::textarea('description[]', '', ['class' => 'form-control', 'id'=>'input-description-${ id }','placeholder' => 'description','style' => 'height: 38px','required']) !!}
+																		</div>
 																	</div>
-																</div>
-																<div class="col-sm-1">
-																	<div class="form-group">
-																		{!! Html::decode(Form::label('', __('label.buttons.remove'))) !!}
-																		<div>
-																			<button class="btn btn-danger btn-flat btn-block btn-prevent-submit" onclick="removeItem(${ id })"><i class="fa fa-trash-alt"></i></button>
+																	<div class="col-sm-1">
+																		<div class="form-group">
+																			{!! Html::decode(Form::label('', __('label.buttons.remove'))) !!}
+																			<div>
+																				<button class="btn btn-danger btn-flat btn-block btn-prevent-submit" onclick="removeItem(${ id })"><i class="fa fa-trash-alt"></i></button>
+																			</div>
 																		</div>
 																	</div>
 																</div>
-															</div>
-														</div>`);
-														
-		// $('#input-service_id-'+id).select2({
-		// 	theme: 'bootstrap4',
-		// });
+															</div>`);
 
-		$('.service_add').off().change(function () {
-			if ($(this).val()!='') {
-				var service_id = $(this).val();
-				var id = $(this).data('id');
-				$.ajax({
-					url: "{{ route('service.getDetail') }}",
-					method: 'post',
-					data: {
-							id: service_id,
-					},
-					success: function(data){
-						$('#input-price-'+ id).val( data.service.price );
-						$('#input-description-'+ id).val( data.service.name );
-					}
-				});
-				
-			}
-		});
+			Swal.fire({
+				icon: 'success',
+				title: "{{ __('alert.swal.result.title.success') }}",
+				confirmButtonText: "{{ __('alert.swal.button.yes') }}",
+				timer: 1500
+			})
+			$('[name="item_service_id"]').val('').trigger('change');
+			$('[name="item_discount"]').val('0').trigger('change');
+			$('[name="item_price"]').val('');
+			$('[name="item_description"]').val('');
+
+			$('#input-service_id-'+id).val(service_id);
+			$('#input-discount-'+id).val(discount);
+			$('#input-price-'+id).val(price);
+			$('#input-description-'+id).val(description);
+			$('.service_add').off().change(function () {
+				if ($(this).val()!='') {
+					var service_id = $(this).val();
+					var id = $(this).data('id');
+					$.ajax({
+						url: "{{ route('service.getDetail') }}",
+						method: 'post',
+						data: {
+								id: service_id,
+						},
+						success: function(data){
+							$('#input-price-'+ id).val( data.service.price );
+							$('#input-description-'+ id).val( data.service.name );
+						}
+					});
+					
+				}
+			});
+		}else{
+			Swal.fire({
+				icon: 'warning',
+				title: "{{ __('alert.swal.title.empty_field') }}",
+				confirmButtonText: "{{ __('alert.swal.button.yes') }}",
+			})
+		}
+		
 		
 	});
 
@@ -284,6 +310,26 @@
 					// console.log(id);
 					$('#input-price-'+ id).val( data.service.price );
 					$('#input-description-'+ id).val( data.service.name );
+				}
+			});
+			
+		}
+	});
+
+	$('[name="item_service_id"]').change(function () {
+		console.log($(this).val());
+		if ($(this).val()!='') {
+			var service_id = $(this).val();
+			var id = $(this).data('id');
+			$.ajax({
+				url: "{{ route('service.getDetail') }}",
+				method: 'post',
+				data: {
+						id: service_id,
+				},
+				success: function(data){
+					$('[name="item_price"]').val( data.service.price );
+					$('[name="item_description"]').val( data.service.name );
 				}
 			});
 			

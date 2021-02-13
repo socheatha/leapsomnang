@@ -40,7 +40,7 @@
 					{{ __('alert.modal.title.invoice_detail') }}
 				</h3>
 				<div class="card-tools">
-					<button type="button" class="btn btn-flat btn-sm btn-success" data-toggle="modal" data-target="#create_invoice_item_modal"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button>
+					<button type="button" class="btn btn-flat btn-sm btn-success btn-prevent-submit" data-toggle="modal" data-target="#create_invoice_item_modal"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button>
 				</div>
 			</div>
 			<!-- /.card-header -->
