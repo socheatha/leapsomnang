@@ -37,7 +37,8 @@
         <div class="col-sm-3">
           <div class="form-group">
             {!! Html::decode(Form::label('pt_gender', __('label.form.echoes.pt_gender'))) !!}
-            {!! Form::text('pt_gender', ((isset($echoes->pt_gender))? $echoes->pt_gender : '' ), ['class' => 'form-control '. (($errors->has("pt_gender"))? "is-invalid" : ""),'placeholder' => 'patient gender']) !!}
+            {!! Form::select('pt_gender', ['ប្រុស' => 'ប្រុស', 'ស្រី' => 'ស្រី'], ((isset($invoice->pt_gender))? $invoice->pt_gender : '' ), ['class' => 'form-control custom-select']) !!}
+            {{-- {!! Form::text('pt_gender', ((isset($echoes->pt_gender))? $echoes->pt_gender : '' ), ['class' => 'form-control '. (($errors->has("pt_gender"))? "is-invalid" : ""),'placeholder' => 'patient gender']) !!} --}}
             {!! $errors->first('pt_gender', '<div class="invalid-feedback">:message</div>') !!}
           </div>
         </div>
@@ -50,6 +51,15 @@
           </div>
         </div>
 
+        @if ($type != 'letter-form-the-hospital')
+        <div class="col-sm-12">
+          <div class="form-group">
+            {!! Html::decode(Form::label('pt_diagnosis', __('label.form.echoes.pt_diagnosis'))) !!}
+            {!! Form::text('pt_diagnosis', ((isset($echoes->pt_diagnosis))? $echoes->pt_diagnosis : '' ), ['class' => 'form-control '. (($errors->has("pt_diagnosis"))? "is-invalid" : ""),'placeholder' => 'patient diagnosis']) !!}
+            {!! $errors->first('pt_diagnosis', '<div class="invalid-feedback">:message</div>') !!}
+          </div>
+        </div>
+        @endif
         
       </div>
       

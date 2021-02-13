@@ -135,24 +135,24 @@ class InvoiceRepository
 													</tr>
 													<tr>
 														<td>
-															កាលបរិច្ឆេទ/Date:<span class="date">'. date('d/m/Y', strtotime($invoice->date)) .'</span>
+															កាលបរិច្ឆេទ:<span class="date">'. date('d/m/Y', strtotime($invoice->date)) .'</span>
 														</td>
 														<td width="29%">
-															Patient ID:<span class="pt_no">PT-'. str_pad($invoice->inv_number, 6, "0", STR_PAD_LEFT) .'</span>
+															លេខអ្នកជំងឺ:<span class="pt_no">PT-'. str_pad($invoice->inv_number, 6, "0", STR_PAD_LEFT) .'</span>
 														</td>
 														<td width="29%">
-															No.:<span class="inv_number">INV'. date('Y', strtotime($invoice->date)) .'-'.str_pad($invoice->inv_number, 6, "0", STR_PAD_LEFT) .'</span>
+															វិក្កយបត្រ:<span class="inv_number">INV'. date('Y', strtotime($invoice->date)) .'-'.str_pad($invoice->inv_number, 6, "0", STR_PAD_LEFT) .'</span>
 														</td>
 													</tr>
 													<tr>
 														<td>
-															ឈ្មោះ/Name:<span class="pt_name">'. $invoice->pt_name .'</span>
+															ឈ្មោះ:<span class="pt_name">'. $invoice->pt_name .'</span>
 														</td>
 														<td>
-															ភេទ/Gender:<span class="pt_gender">'. $invoice->pt_gender .'</span>
+															ភេទ:<span class="pt_gender">'. $invoice->pt_gender .'</span>
 														</td>
 														<td>
-															ទូរស័ព្ទ/Phone:<span class="pt_phone">'. $invoice->pt_phone .'</span>
+															ទូរស័ព្ទ:<span class="pt_phone">'. $invoice->pt_phone .'</span>
 														</td>
 													</tr>
 												</table>
@@ -160,23 +160,18 @@ class InvoiceRepository
 													<thead>
 														<th class="text-center" width="8%">
 															<div>ល.រ</div>
-															<div>No.</div>
 														</th>
 														<th colspan="2" class="text-center">
 															<div>បរិយាយ</div>
-															<div>description</div>
 														</th>
 														<th class="text-center" width="16%">
 															<div>តម្លៃ</div>
-															<div>Price</div>
 														</th>
 														<th class="text-center" width="16%">
 															<div>បញ្ចុះតម្លៃ</div>
-															<div>Discount</div>
 														</th>
 														<th class="text-center" width="14%">
 															<div>តម្លៃសរុប</div>
-															<div>Amount</div>
 														</th>
 													</thead>
 													<tbody>
@@ -185,19 +180,19 @@ class InvoiceRepository
 													<tfoot>
 														<tr>
 															<th colspan="2"><small>*** '. $grand_total_in_word .' ***</small></th>
-															<th colspan="2" width="30%" class="text-right">សរុប/Total</th>
+															<th colspan="2" width="30%" class="text-right">សរុប</th>
 															<th class="text-right sub_total_riel">'. $total_riel .' ៛</th>
 															<th class="text-right sub_total_dollar"><span class="float-left pull-left">$</span> '. number_format($total, 2) .'</th>
 														</tr>
 														<tr>
 															<th colspan="2"><small>*** '. $grand_total_riel_in_word .' ***</small></th>
-															<th colspan="2" class="text-right">បញ្ចុះតម្លៃ/Discount</th>
+															<th colspan="2" class="text-right">បញ្ចុះតម្លៃ</th>
 															<th class="text-right discount_total_riel">'. $total_discount_riel .' ៛</th>
 															<th class="text-right discount_total_dollar"><span class="float-left pull-left">$</span> '. number_format($total_discount, 2) .'</th>
 														</tr>
 														<tr>
 															<th colspan="2"></th>
-															<th colspan="2" class="text-right">តម្លៃសរុបទាំងអស់/Grand Total</th>
+															<th colspan="2" class="text-right">តម្លៃសរុបទាំងអស់</th>
 															<th class="text-right grand_total_riel">'. $grand_total_riel .' ៛</th>
 															<th class="text-right grand_total_dollar"><span class="float-left pull-left">$</span> '. number_format($grand_total, 2) .'</th>
 														</tr>
@@ -209,7 +204,7 @@ class InvoiceRepository
 													<tr>
 														<td></td>
 														<td width="32%" class="text-center">
-															<div>រៀបចំដោយ/Prepared By</div>
+															<div>រៀបចំដោយ</div>
 															<div class="sign_box"></div>
 															<div style="color: blue;"><span class="color_blue KHOSMoulLight">'. Auth::user()->setting()->sign_name_kh .'</span></div>
 														</td>

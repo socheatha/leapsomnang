@@ -105,24 +105,24 @@ class PrescriptionRepository
 													</tr>
 													<tr>
 														<td>
-															កាលបរិច្ឆេទ/Date:<span class="date">'. date('d/m/Y', strtotime($prescription->date)) .'</span>
+															កាលបរិច្ឆេទ:<span class="date">'. date('d/m/Y', strtotime($prescription->date)) .'</span>
 														</td>
 														<td width="29%">
-															Patient ID:<span class="pt_no">PT-'. str_pad($prescription->code, 6, "0", STR_PAD_LEFT) .'</span>
+															លេខអ្នកជំងឺ:<span class="pt_no">PT-'. str_pad($prescription->code, 6, "0", STR_PAD_LEFT) .'</span>
 														</td>
 														<td width="29%">
-															No.:<span class="code">PRE'. str_pad($prescription->code, 6, "0", STR_PAD_LEFT) .'</span>
+															វិក្កយបត្រ:<span class="code">PRE'. str_pad($prescription->code, 6, "0", STR_PAD_LEFT) .'</span>
 														</td>
 													</tr>
 													<tr>
 														<td>
-															ឈ្មោះ/Name:<span class="pt_name">'. $prescription->pt_name .'</span>
+															ឈ្មោះ:<span class="pt_name">'. $prescription->pt_name .'</span>
 														</td>
 														<td>
-														អាយុ/Age:<span class="pt_age">'. $prescription->pt_age .'</span>
+														អាយុ:<span class="pt_age">'. $prescription->pt_age .'</span>
 														</td>
 														<td>
-															ភេទ/Gender:<span class="pt_gender">'. $prescription->pt_gender .'</span>
+															ភេទ:<span class="pt_gender">'. $prescription->pt_gender .'</span>
 														</td>
 													</tr>
 												</table>
@@ -146,7 +146,7 @@ class PrescriptionRepository
 													<tr>
 														<td></td>
 														<td width="32%" class="text-center">
-															<div>រៀបចំដោយ/Prepared By</div>
+															<div>រៀបចំដោយ</div>
 															<div class="sign_box"></div>
 															<div style="color: blue;"><span class="color_blue KHOSMoulLight">'. Auth::user()->setting()->sign_name_kh .'</span></div>
 														</td>

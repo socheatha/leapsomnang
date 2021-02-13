@@ -110,17 +110,18 @@ class EchoesRepository
 														</tr>
 														<tr>
 															<td>
-																ឈ្មោះ/Name: <span class="pt_name">'. $echoes->pt_name .'</span>
+																ឈ្មោះ: <span class="pt_name">'. $echoes->pt_name .'</span>
 															</td>
 															<td>
-																ភេទ/Gender: <span class="pt_gender">'. $echoes->pt_gender .'</span>
+																ភេទ: <span class="pt_gender">'. $echoes->pt_gender .'</span>
 															</td>
 															<td>
-																អាយុ/Age: <span class="pt_age">'. $echoes->pt_age .'</span>
+																អាយុ: <span class="pt_age">'. $echoes->pt_age .'</span>
 															</td>
 														</tr>
 													</table>
 													<div class="echo_description">
+														'. $echoes->pt_diagnosis .'
 														'. $echoes->description .'
 													</div>
 													<table class="table-detail" width="100%">
@@ -184,6 +185,7 @@ class EchoesRepository
 			'pt_name' => $request->pt_name,
 			'pt_gender' => $request->pt_gender,
 			'pt_phone' => $request->pt_phone,
+			'pt_diagnosis' => $request->pt_diagnosis,
 			'description' => $request->description,
 			'patient_id' => $patient_id,
 			'echo_default_description_id' => $echo_default_description->id,
@@ -209,6 +211,7 @@ class EchoesRepository
 			'pt_name' => $request->pt_name,
 			'pt_gender' => $request->pt_gender,
 			'pt_phone' => $request->pt_phone,
+			'pt_diagnosis' => $request->pt_diagnosis,
 			'description' => $request->description,
 			'patient_id' => $request->patient_id,
 			'updated_by' => Auth::user()->id,
