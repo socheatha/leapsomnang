@@ -10,7 +10,6 @@
 	<div class="card-header">
 		<b>{!! Auth::user()->subModule() !!}</b>
 		<div class="card-tools">
-			<button type="button" class="btn btn-primary btn-sm btn-flat" data-toggle="modal" data-target="#create_service_modal"><i class="fa fa-plus-circle"></i> {!! __('label.buttons.create_service') !!}</button>
 			<a href="{{route('invoice.index')}}" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-table"></i> &nbsp;{{ __('label.buttons.back_to_list', [ 'name' => Auth::user()->module() ]) }}</a>
 		</div>
 
@@ -145,6 +144,16 @@
 																	</div>
 																</div>
 															</div>`);
+			
+			$.ajax({
+				url: "{{ route('service.reloadSelectService') }}",
+				method: 'post',
+				data: {
+				},
+				success: function(data){
+					$('#input-service_id-'+id).html(data);
+				}
+			});
 
 			Swal.fire({
 				icon: 'success',
@@ -157,7 +166,9 @@
 			$('[name="item_price"]').val('');
 			$('[name="item_description"]').val('');
 
-			$('#input-service_id-'+id).val(service_id);
+			setTimeout(() => {
+				$('#input-service_id-'+id).val(service_id);
+			}, 300);
 			$('#input-discount-'+id).val(discount);
 			$('#input-price-'+id).val(price);
 			$('#input-description-'+id).val(description);
