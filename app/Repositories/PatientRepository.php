@@ -59,10 +59,15 @@ class PatientRepository
 
 	public function getDetail($request)
 	{
-		// find Precription + Invoice of this patient, then sort by date and return
+		// find Precription + Invoice + Echo of this patient, then sort by date and return
 		$P_precription = \DB::table('prescriptions')->select(['id', 'pt_name', 'date', 'pt_age'])->where('patient_id', $request->id)->orderBy('id', 'DESC')->get()->toarray();
 		$P_invoice = \DB::table('invoices')->select(['id', 'pt_name', 'date', 'pt_age'])->where('patient_id', $request->id)->orderBy('id', 'DESC')->get()->toarray();
-		$P_result = array_merge(array_map(function ($P) { $P->segment = 'prescription'; return $P; }, $P_precription), array_map(function ($P) { $P->segment = 'invoice'; return $P; }, $P_invoice));
+		$P_echo = \DB::table('echoes')->select(['id', 'pt_name', 'date', 'pt_age'])->where('patient_id', $request->id)->orderBy('id', 'DESC')->get()->toarray();
+		$P_result = array_merge(
+			array_map(function ($P) { $P->segment = 'prescription'; return $P; }, $P_precription), 
+			array_map(function ($P) { $P->segment = 'invoice'; return $P; }, $P_invoice),
+			array_map(function ($P) { $P->segment = 'echo'; return $P; }, $P_echo)
+		);
 		array_multisort(array_column($P_result, 'date'), SORT_DESC, $P_result);
 
 		return response()->json([
