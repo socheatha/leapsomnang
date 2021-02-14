@@ -21,8 +21,9 @@ class CreateSettingTable extends Migration
             $table->string('sign_name_kh')->nullable();
             $table->string('sign_name_en')->nullable();
             $table->string('phone')->nullable();
-            $table->string('address', 255)->nullable();
+            $table->text('address')->nullable();
             $table->text('description')->nullable();
+            $table->text('echo_address')->nullable();
             $table->text('echo_description')->nullable();
             $table->string('navbar_color')->default('navbar-white navbar-light');
             $table->boolean('sidebar_color')->default(0);

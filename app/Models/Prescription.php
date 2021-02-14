@@ -29,36 +29,6 @@ class Prescription extends Model
 		'asc');
 	}
 
-	public function prescription_detail_sub_total(){
-		$prescriptions = $this->hasMany(PrescriptionDetail::class,'prescription_id')->get();
-		$total = 0;
-		foreach ($prescriptions as $key => $prescription) {
-			$total += ($prescription->amount * $prescription->qty);
-		}
-
-		return $total;
-	}
-
-	public function prescription_discount_total(){
-		$prescriptions = $this->hasMany(PrescriptionDetail::class,'prescription_id')->get();
-		$total = 0;
-		foreach ($prescriptions as $key => $prescription) {
-			$total += ($prescription->amount * $prescription->qty) * $prescription->discount;
-		}
-
-		return $total;
-	}
-
-	public function prescription_detail_grand_total(){
-		$prescriptions = $this->hasMany(PrescriptionDetail::class,'prescription_id')->get();
-		$total = 0;
-		foreach ($prescriptions as $key => $prescription) {
-			$total += ($prescription->amount * $prescription->qty) - ($prescription->amount * $prescription->discount);
-		}
-
-		return $total;
-	}
-
   public function patient()
   {
   	return $this->belongsTo(Patient::class, 'patient_id');

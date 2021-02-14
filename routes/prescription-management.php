@@ -26,6 +26,7 @@ Route::group(['prefix' => 'prescription', 'as' => 'prescription.', 'namespace' =
 		Route::delete('/{prescription_detail}/delete', 'PrescriptionController@prescription_detail_destroy')->name('destroy');
 		Route::PUT('/{prescription}/save_order', 'PrescriptionController@save_order')->name('save_order');
 		Route::post('/getItemDetail', 'PrescriptionController@getItemDetail')->name('getDetail');
+		Route::post('/deletePrescriptionDetail', 'PrescriptionController@deletePrescriptionDetail')->name('deletePrescriptionDetail');
 	});
 
 });

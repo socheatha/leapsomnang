@@ -13,6 +13,8 @@ Route::group(['prefix' => 'service', 'as' => 'service.'], function () {
 	Route::delete('/{service}/delete', 'ServiceController@destroy')->name('destroy')->middleware('can:Service Delete');
 
 	Route::post('/getDetail', 'ServiceController@getDetail')->name('getDetail');
+	Route::post('/createService', 'ServiceController@createService')->name('createService');
+	Route::post('/reloadSelectService', 'ServiceController@reloadSelectService')->name('reloadSelectService');
 
 });
 
@@ -40,6 +42,7 @@ Route::group(['prefix' => 'invoice', 'as' => 'invoice.', 'namespace' => 'Invoice
 		Route::delete('/{invoice_detail}/delete', 'InvoiceController@invoice_detail_destroy')->name('destroy');
 		Route::PUT('/{invoice}/save_order', 'InvoiceController@save_order')->name('save_order');
 		Route::post('/getItemDetail', 'InvoiceController@getItemDetail')->name('getDetail');
+		Route::post('/deleteInvoiceDetail', 'InvoiceController@deleteInvoiceDetail')->name('deleteInvoiceDetail');
 	});
 
 });

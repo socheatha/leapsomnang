@@ -24,17 +24,7 @@
 			<b>{!! Auth::user()->subModule() !!}</b>
 			
 			<div class="card-tools">
-				
-				{{-- Action Dropdown --}}
-				@component('components.action')
-					@slot('otherBTN')
-						@can('Invoice Create')
-						<a href="{{route('invoice.create')}}" class="dropdown-item"><i class="fa fa-plus"></i> &nbsp;{{ __('label.buttons.create') }}</a>
-						@endcan
-					@endslot
-				@endcomponent
-
-				<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fas fa-minus"></i></button>
+				<a href="{{route('invoice.create')}}" class="btn btn-sm btn-success btn-flat"><i class="fa fa-plus"></i> &nbsp;{{ __('label.buttons.create') }}</a>
 			</div>
 
 			<!-- Error Message -->
@@ -54,11 +44,25 @@
 								<span class="input-group-text"><i class="fa fa-calendar-alt"></i></span>
 							</div>
 							<input type="text" class="form-control pull-right" id="dateRangePicker" autocomplete="off">
-							<input type="hidden" class="form-control" value="{{ date('Y-m-d') }}" id="from">
-							<input type="hidden" class="form-control" value="{{ date('Y-m-d') }}" id="to">
+							<input type="hidden" class="form-control" value="" id="from">
+							<input type="hidden" class="form-control" value="" id="to">
 						</div>
 					</div>
 				</div>
+				{{-- <div class="col-sm-3">
+					<div class="form-group">
+						{!! Html::decode(Form::label('inv_number', __('label.form.invoice.inv_number'))) !!}
+						{!! Form::text('inv_number', '', ['class'=>'form-control', 'id'=>'inv_number', 'placeholder'=>'invoice number']) !!}
+					</div>
+				</div>
+				<div class="col-sm-1">
+					<div class="form-group">
+						{!! Html::decode(Form::label('date', "​​​")) !!}
+						<div>
+							<button class="btn btn-success btn-flat btn-block" id="btn-search-filter"><i class="fa fa-search"></i>{{ __('label.buttons.search') }}</button>
+						</div>
+					</div>
+				</div> --}}
 			</div>
 			
       <table class="table table-bordered dt-server expandable-table" width="100%" id="invoice_table">
@@ -67,11 +71,11 @@
 						{{-- <th class="text-center" width="30px"></th> --}}
 						<th class="text-center" width="8%">{!! __('module.table.invoice.inv_number') !!}</th>
 						<th class="text-center" width="8%">{!! __('module.table.date') !!}</th>
-						<th class="text-center" width="25%">{!! __('module.table.invoice.pt_name') !!}</th>
+						<th class="text-center">{!! __('module.table.invoice.pt_name') !!}</th>
 						<th class="text-center" width="10%">{!! __('module.table.invoice.pt_phone') !!}</th>
-						<th class="text-center">{!! __('module.table.invoice.sub_total') !!}</th>
-						<th class="text-center">{!! __('module.table.invoice.discount') !!}</th>
-						<th class="text-center">{!! __('module.table.invoice.grand_total') !!}</th>
+						<th class="text-center" width="10%">{!! __('module.table.invoice.sub_total') !!}</th>
+						<th class="text-center" width="10%">{!! __('module.table.invoice.discount') !!}</th>
+						<th class="text-center" width="10%">{!! __('module.table.invoice.grand_total') !!}</th>
 						<th class="text-center" width="7%">{!! __('module.table.invoice.status') !!}</th>
 						<th width="12%" class="text-center">{!! __('module.table.action') !!}</th>
 					</tr>
@@ -112,13 +116,22 @@
       function (start, end) {
         $('#from').val(start.format('YYYY-MM-DD'));
         $('#to').val(end.format('YYYY-MM-DD'));
-        getDatatable(start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'))
+				getDatatable($('#from').val(), $('#to').val(), $('#inv_number').val())
       }
     )
     // $('#dateRangePicker').val('');
 
 	
-		getDatatable(moment().startOf('month').format('YYYY-MM-DD'), moment().endOf('month').format('YYYY-MM-DD'));
+		$('#from').val(moment().startOf('month').format('YYYY-MM-DD'));
+		$('#to').val(moment().endOf('month').format('YYYY-MM-DD'));
+		getDatatable($('#from').val(), $('#to').val(), $('#inv_number').val());
+
+
+		$('#btn-search-filter').click(function () {
+			if ($('#from').val()!='' && $('#to').val()!='') {
+				getDatatable($('#from').val(), $('#to').val(), $('#inv_number').val())
+			}
+		});
 
 		function updateStatus(id) {
 			
@@ -147,6 +160,7 @@
 						success: function(data){
 							var from = $('#from').val();
 							var to = $('#to').val();
+
 							getDatatable(from, to);
 							Swal.fire({
 								icon: 'success',
@@ -167,7 +181,7 @@
 			})
 		}
 
-		function getDatatable(from, to) {
+		function getDatatable(from, to, inv_number) {
 			// Load Data to datatable
 			$('#invoice_table').DataTable().destroy();
 			dataTableInvoice = $('#invoice_table').DataTable({
@@ -181,17 +195,16 @@
 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 					},
 					url: '{{ route('invoice.getDatatable') }}',
-					data: { 'from' : from, 'to' : to },
+					data: { 'from' : from, 'to' : to, 'inv_number' : inv_number },
 					type: 'post',
 					dataSrc: function(json) { return json.data;  }
 				},
 				columns: [
-					// {data: 'row_detail', defaultContent: '<i class="fa fa-plus-circle text-primary"></i>', className: 'details-control text-center', searchable: false, sortable: false },
 					{data: 'inv_number', name: 'inv_number', className: 'text-center'},
 					{data: 'date', name: 'date', className: 'text-center'},
 					{data: 'pt_name', name: 'pt_name'},
 					{data: 'pt_phone', name: 'pt_phone'},
-					{data: 'sub_total', name: 'sub_total', className: 'text-center'},
+					{data: 'sub_total', name: 'sub_total', className: 'text-right'},
 					{data: 'discount', name: 'discount', className: 'text-right'},
 					{data: 'grand_total', name: 'grand_total', className: 'text-right'},
 					{data: 'status', name: 'status', className: 'text-center'},
@@ -218,6 +231,9 @@
 																			</form>
 																		@endCan` );
 
+					$('td:eq(4)', row).append('<span class="float-left">$</span>');
+					$('td:eq(5)', row).append('<span class="float-left">$</span>');
+					$('td:eq(6)', row).append('<span class="float-left">$</span>');
 					$('td:eq(7)', row).html( `<span class="badge bg-${ ((data.status==1)? 'success' : 'secondary') }">${ ((data.status==1)? 'paid' : 'upaid') }</span>` );
 
 				},

@@ -12,18 +12,7 @@
 		<b>{!! Auth::user()->subModule() !!}</b>
 		
 		<div class="card-tools">
-			
-			{{-- Action Dropdown --}}
-			@component('components.action')
-				@slot('otherBTN')
-					@can('User Create')
-					<a href="{{route('user.create')}}" class="dropdown-item"><i class="fa fa-plus"></i> &nbsp;{{ __('label.buttons.create') }}</a>
-					@endcan
-				@endslot
-			@endcomponent
-
-			<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fas fa-minus"></i></button>
-			{{-- <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove"><i class="fas fa-times"></i></button> --}}
+			<a href="{{route('user.create')}}" class="btn btn-success btn-flat btn-sm"><i class="fa fa-plus"></i> &nbsp;{{ __('label.buttons.create') }}</a>
 		</div>
 
 		<!-- Error Message -->
@@ -48,6 +37,43 @@
 			<tbody>
 				@foreach($users as $i => $user)
 					@if (@$user->roles->first()->id == 1)
+						@if (Auth::user()->roles->first()->id == 1)
+							<tr>
+								<td class="text-center">{{ ++$i }}</td>
+								<td>{{ $user->first_name }}</td>
+								<td>{{ $user->last_name }}</td>
+								<td>{{ $user->email }}</td>
+								<td>{{ $user->phone }}</td>
+								<td>{{ @$user->roles->first()->name }}</td>
+								<td class="text-right">
+
+									@can('User Assign Role')
+										{{-- Edit Button --}}
+										<a href="{{ route('user.role',$user->id) }}" class="btn btn-primary btn-sm btn-flat" data-toggle="tooltip" data-placement="left" title="{{ __('label.buttons.assign') }}"><i class="fa fa-user-graduate"></i></a>
+									@endcan
+
+									@can('User Password')
+										{{-- Password Button --}}
+										<a href="{{ route('user.password',$user->id) }}" class="btn btn-warning btn-sm btn-flat" data-toggle="tooltip" data-placement="left" title="{{ __('label.buttons.password') }}"><i class="fa fa-key"></i></a>
+									@endcan
+
+									@can('User Edit')
+									{{-- Edit Button --}}
+									<a href="{{ route('user.edit',$user->id) }}" class="btn btn-info btn-sm btn-flat" data-toggle="tooltip" data-placement="left" title="{{ __('label.buttons.edit') }}"><i class="fa fa-pencil-alt"></i></a>
+									@endcan
+
+									@can('User Delete')
+									{{-- Delete Button --}}
+									<button class="btn btn-danger btn-sm btn-flat BtnDeleteConfirm" value="{{ $user->id }}" data-toggle="tooltip" data-placement="left" title="{{ __('label.buttons.delete') }}"><i class="fa fa-trash-alt"></i></button>
+									{{ Form::open(['url'=>route('user.destroy', $user->id), 'id' => 'form-item-'.$user->id, 'class' => 'sr-only']) }}
+									{{ Form::hidden('_method','DELETE') }}
+									{{ Form::hidden('passwordDelete','') }}
+									{{ Form::close() }}
+									@endcan
+
+								</td>
+							</tr>
+						@endif
 					@else
 						<tr>
 							<td class="text-center">{{ ++$i }}</td>

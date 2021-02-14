@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use Carbon\Carbon;
 use App\Models\Echoes;
+use App\Models\Patient;
 use App\Models\EchoDefaultDescription;
 use Yajra\DataTables\Facades\DataTables;
 use Hash;
@@ -72,7 +73,7 @@ class EchoesRepository
 															</td>
 															<td width="40%" class="text-center">
 																<br/>
-																<div>'. Auth::user()->setting()->address .'</div>
+																<div>'. Auth::user()->setting()->echo_address .'</div>
 																<div style="padding: 5px 0;">Tel: '. Auth::user()->setting()->phone .'</div>
 															</td>
 														</tr>
@@ -96,7 +97,7 @@ class EchoesRepository
 																<img src="/images/setting/logo.png" alt="IMG">
 															</td>
 															<td width="40%" class="text-center">
-																<div>'. Auth::user()->setting()->address .'</div>
+																<div>'. Auth::user()->setting()->echo_address .'</div>
 																<div style="padding: 5px 0;">Tel: '. Auth::user()->setting()->phone .'</div>
 															</td>
 														</tr>
@@ -109,17 +110,18 @@ class EchoesRepository
 														</tr>
 														<tr>
 															<td>
-																ឈ្មោះ/Name: <span class="pt_name">'. $echoes->pt_name .'</span>
+																ឈ្មោះ: <span class="pt_name">'. $echoes->pt_name .'</span>
 															</td>
 															<td>
-																ភេទ/Gender: <span class="pt_gender">'. $echoes->pt_gender .'</span>
+																ភេទ: <span class="pt_gender">'. $echoes->pt_gender .'</span>
 															</td>
 															<td>
-																អាយុ/Age: <span class="pt_age">'. $echoes->pt_age .'</span>
+																អាយុ: <span class="pt_age">'. $echoes->pt_age .'</span>
 															</td>
 														</tr>
 													</table>
 													<div class="echo_description">
+														'. $echoes->pt_diagnosis .'
 														'. $echoes->description .'
 													</div>
 													<table class="table-detail" width="100%">
@@ -140,7 +142,7 @@ class EchoesRepository
 															</td>
 														</tr>
 													</table>
-													<div style="color: red; margin-top: 15px;" class="text-center">សូមកាន់លទ្ធផលនេះមកជាមួយផង ពេលពិនិត្យលើកក្រោយ អរគុណ។</div>
+													<div style="color: red; margin-top: 15px;" class="text-center color_red">សូមកាន់លទ្ធផលនេះមកជាមួយផង ពេលពិនិត្យលើកក្រោយ អរគុណ។</div>
 													<br/>
 												</section>';
 		}
@@ -152,17 +154,40 @@ class EchoesRepository
 
 	public function create($request, $path, $type)
 	{
+		
+		$patient_id = $request->patient_id;
+
+		if (isset($request->patient_id) && $request->patient_id!='') {
+			# code...
+		}else{
+			$patient = Patient::where('name', $request->pt_name)->first();
+
+			if ($patient!=null) {
+				$patient_id = $patient->id;
+			}else{
+				$created_patient = Patient::create([
+					'name' => $request->pt_name,
+					'age' => $request->pt_age,
+					'gender' => (($request->pt_gender=='ប្រុស' || $request->pt_gender == 'male' || $request->pt_gender == 'Male')? '1' : '2'),
+					'age' => $request->pt_phone,
+					'created_by' => Auth::user()->id,
+					'updated_by' => Auth::user()->id,
+				]);
+				$patient_id = $created_patient->id;
+			}
+		}
+
+
 		$echo_default_description = EchoDefaultDescription::where('slug', $type)->first();
-		// dd($echo_default_description->id);
 		$echoes = Echoes::create([
 			'date' => $request->date,
-			'pt_no' => $request->pt_no,
 			'pt_age' => $request->pt_age,
 			'pt_name' => $request->pt_name,
 			'pt_gender' => $request->pt_gender,
 			'pt_phone' => $request->pt_phone,
+			'pt_diagnosis' => $request->pt_diagnosis,
 			'description' => $request->description,
-			'patient_id' => $request->patient_id,
+			'patient_id' => $patient_id,
 			'echo_default_description_id' => $echo_default_description->id,
 			'created_by' => Auth::user()->id,
 			'updated_by' => Auth::user()->id,
@@ -182,11 +207,11 @@ class EchoesRepository
 	{
 		$echoes->update([
 			'date' => $request->date,
-			'pt_no' => $request->pt_no,
 			'pt_age' => $request->pt_age,
 			'pt_name' => $request->pt_name,
 			'pt_gender' => $request->pt_gender,
 			'pt_phone' => $request->pt_phone,
+			'pt_diagnosis' => $request->pt_diagnosis,
 			'description' => $request->description,
 			'patient_id' => $request->patient_id,
 			'updated_by' => Auth::user()->id,

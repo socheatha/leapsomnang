@@ -117,4 +117,10 @@
 		-moz-print-color-adjust: exact !important;
 		-o-print-color-adjust: exact !important;
 	}
+	.echoes-print .color_red{
+		color: red !important;
+		-webkit-print-color-adjust: exact !important;
+		-moz-print-color-adjust: exact !important;
+		-o-print-color-adjust: exact !important;
+	}
 }

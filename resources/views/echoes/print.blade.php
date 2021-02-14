@@ -5,7 +5,7 @@
 		<title>Invoice</title>
 		{{ Html::style('/css/bootstrap3.css') }}
 		{{ Html::style('/css/custom-style.css') }}
-		{{ Html::style('/css/echoes-print-style.css') }}
+		{{ Html::style('/css/invoice-print-style.css') }}
 		<style>
 			img{
 				max-width: 100%;

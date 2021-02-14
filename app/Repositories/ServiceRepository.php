@@ -15,6 +15,17 @@ class ServiceRepository
 	{
 		return Service::all();
 	}
+
+	public function reloadSelectService()
+	{
+		$services = Service::orderBy('name', 'asc')->get();
+		$options = '<option value="">'. __('label.form.choose') .'</option>';
+		foreach ($services as $key => $service) {
+			$options .= '<option value="'. $service->id .'">'. $service->name .'</option>';
+		}
+		return $options;
+
+	}
 	
 
 	public function getDetail($request)

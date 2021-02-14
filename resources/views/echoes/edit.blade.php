@@ -7,7 +7,6 @@
 			top: -30px;
 			right: 55px;
 		}
-
 	</style>
 @endsection
 
@@ -18,15 +17,7 @@
 		<b>{!! Auth::user()->subModule() !!}</b>
 		
 		<div class="card-tools">
-			{{-- Action Dropdown --}}
-			@component('components.action')
-				@slot('otherBTN')
-					<a href="{{route('echoes.index', $type)}}" class="dropdown-item text-danger"><i class="fa fa-arrow-left"></i> &nbsp;{{ __('label.buttons.back') }}</a>
-				@endslot
-			@endcomponent
-
-			<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-				<i class="fas fa-minus"></i></button>
+			<a href="{{route('echoes.index', $type)}}" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-table"></i> &nbsp;{{ __('label.buttons.back_to_list', [ 'name' => Auth::user()->module() ]) }}</a>
 		</div>
 
 		<!-- Error Message -->
@@ -73,48 +64,74 @@
 <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 <script type="text/javascript">
 
-			function select2_search (term) {
-				$(".select2_pagination").select2('open');
-				var $search = $(".select2_pagination").data('select2').dropdown.$search || $(".select2_pagination").data('select2').selection.$search;
-				$search.val(term);
-				$search.trigger('keyup');
+	function openPrintWindow(url, name) {
+		var printWindow = window.open(url, name, "width="+ screen.availWidth +",height="+ screen.availHeight +",_blank");
+		var printAndClose = function () {
+			if (printWindow.document.readyState == 'complete') {
+				clearInterval(sched);
+				printWindow.print();
+				printWindow.close();
 			}
+		}  
+			var sched = setInterval(printAndClose, 2000);
+	};
 
-			$( document ).ready(function() {
+	jQuery(document).ready(function ($) {
+		$(".btn-print-echoes").on("click", function (e) {
+			var myUrl = $(this).attr('data-url');
+			e.preventDefault();
+			openPrintWindow(myUrl, "to_print");
+		});
+	});
+		function select2_search (term) {
+			$(".select2_pagination").select2('open');
+			var $search = $(".select2_pagination").data('select2').dropdown.$search || $(".select2_pagination").data('select2').selection.$search;
+			$search.val(term);
+			$search.trigger('keyup');
+		}
 
+		$( document ).ready(function() {
+
+			setTimeout(() => {
+				$(".select2_pagination").val("{{ $echoes->patient_id }}").trigger("change");
 				setTimeout(() => {
-					$(".select2_pagination").val("{{ $echoes->patient_id }}").trigger("change");
-				}, 100);
+					$("[name='pt_no']").val("{{ $echoes->pt_no }}");
+					$("[name='pt_name']").val("{{ $echoes->pt_name }}");
+					$("[name='pt_age']").val("{{ $echoes->pt_age }}");
+					$("[name='pt_gender']").val("{{ $echoes->pt_gender }}");
+					$("[name='pt_phone']").val("{{ $echoes->pt_phone }}");
+				}, 200);
+			}, 100);
 
-				var data = [];
-				$(".select2_pagination").each(function () {
-					data.push({id:'{{ $echoes->patient_id }}', text:'PT-{{ str_pad($echoes->patient_id, 6, "0", STR_PAD_LEFT) }} :: {{ $echoes->patient->name }}'});
-				});
-				$(".select2_pagination").select2({
-					theme: 'bootstrap4',
-					placeholder: "{{ __('label.form.choose') }}",
-					allowClear: true,
-					data: data,
-					ajax: {
-						url: "{{ route('patient.getSelect2Items') }}",
-						method: 'post',
-						dataType: 'json',
-						data: function(params) {
-							return {
-									term: params.term || '{{ $echoes->patient_id }}',
-									page: params.page || 1
-							}
-						},
-						cache: true
-					}
-				});
+			var data = [];
+			$(".select2_pagination").each(function () {
+				data.push({id:'{{ $echoes->patient_id }}', text:'PT-{{ str_pad($echoes->patient_id, 6, "0", STR_PAD_LEFT) }} :: {{ $echoes->patient->name }}'});
 			});
+			$(".select2_pagination").select2({
+				theme: 'bootstrap4',
+				placeholder: "{{ __('label.form.choose') }}",
+				allowClear: true,
+				data: data,
+				ajax: {
+					url: "{{ route('patient.getSelect2Items') }}",
+					method: 'post',
+					dataType: 'json',
+					data: function(params) {
+						return {
+								term: params.term || '{{ $echoes->patient_id }}',
+								page: params.page || 1
+						}
+					},
+					cache: true
+				}
+			});
+		});
 
-			$('.select2_pagination').val('{{ $echoes->id }}').trigger('change')
+		$('.select2_pagination').val('{{ $echoes->id }}').trigger('change')
 
 
 		var editor = CKEDITOR.replace('my-editor', {
-			height: '750',
+			height: '350',
 			font_names: 'Calibrib Bold; Calibri Italic; Calibri; Roboto Regular; Roboto Bold; Khmer OS Battambang; Khmer OS Muol Light; Khmer OS Content; Khmer OS Kuolen;',
 			toolbar: [
 				{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'CopyFormatting', 'RemoveFormat' ] },

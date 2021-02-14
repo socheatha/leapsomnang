@@ -19,8 +19,8 @@ class CreatePatientsTable extends Migration
           $table->string('id_card')->nullable();
           $table->string('email')->nullable();
           $table->string('phone')->nullable();
-          $table->boolean('gender')->default('1');
-          $table->integer('age')->nullable();
+          $table->string('gender')->nullable();
+          $table->string('age')->nullable();
           $table->text('description')->nullable();
 
           $table->string('full_address')->nullable();

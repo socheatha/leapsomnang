@@ -5,6 +5,8 @@ namespace App\Repositories;
 use Carbon\Carbon;
 use App\Models\Invoice;
 use App\Models\InvoiceDetail;
+use App\Models\Patient;
+use App\Repositories\PatientRepository;
 use Yajra\DataTables\Facades\DataTables;
 use Hash;
 use Auth;
@@ -18,7 +20,13 @@ class InvoiceRepository
 		
 		$from = $request->from;
 		$to = $request->to;
+		$inv_number = $request->inv_number;
+		$conditions = '';
+		if ($inv_number!='') {
+			$conditions = ' AND inv_number LIKE "%'. intval($inv_number) .'%"';
+		}
 		$invoices = Invoice::whereBetween('date', [$from, $to])->orderBy('inv_number', 'asc')->get();
+		// $invoices = Invoice::whereRaw('date BETWEEN "'. $from .'" AND "'. $to .'"'. $conditions)->orderBy('inv_number', 'asc')->get();
 
 		return Datatables::of($invoices)
 			->editColumn('inv_number', function ($invoice) {
@@ -62,7 +70,7 @@ class InvoiceRepository
 		$title = 'Invoice (INV'. date('Y', strtotime($invoice->date)) .'-'.str_pad($invoice->inv_number, 6, "0", STR_PAD_LEFT) .')';
 
 		foreach ($invoice->invoice_details as $invoice_detail) {
-			$amount = ($invoice_detail->amount * $invoice_detail->qty);
+			$amount = ($invoice_detail->amount);
 			$discount = ($amount * $invoice_detail->discount);
 			$grand_amount = $amount - $discount;
 			$total += $amount;
@@ -127,24 +135,24 @@ class InvoiceRepository
 													</tr>
 													<tr>
 														<td>
-															កាលបរិច្ឆេទ/Date:<span class="date">'. date('d/m/Y', strtotime($invoice->date)) .'</span>
+															កាលបរិច្ឆេទ:<span class="date">'. date('d/m/Y', strtotime($invoice->date)) .'</span>
 														</td>
 														<td width="29%">
-															Patient ID:<span class="pt_no">PT-'. str_pad($invoice->inv_number, 6, "0", STR_PAD_LEFT) .'</span>
+															លេខអ្នកជំងឺ:<span class="pt_no">PT-'. str_pad($invoice->inv_number, 6, "0", STR_PAD_LEFT) .'</span>
 														</td>
 														<td width="29%">
-															No.:<span class="inv_number">INV'. date('Y', strtotime($invoice->date)) .'-'.str_pad($invoice->inv_number, 6, "0", STR_PAD_LEFT) .'</span>
+															វិក្កយបត្រ:<span class="inv_number">INV'. date('Y', strtotime($invoice->date)) .'-'.str_pad($invoice->inv_number, 6, "0", STR_PAD_LEFT) .'</span>
 														</td>
 													</tr>
 													<tr>
 														<td>
-															ឈ្មោះ/Name:<span class="pt_name">'. $invoice->pt_name .'</span>
+															ឈ្មោះ:<span class="pt_name">'. $invoice->pt_name .'</span>
 														</td>
 														<td>
-															ភេទ/Gender:<span class="pt_gender">'. $invoice->pt_gender .'</span>
+															ភេទ:<span class="pt_gender">'. $invoice->pt_gender .'</span>
 														</td>
 														<td>
-															ទូរស័ព្ទ/Phone:<span class="pt_phone">'. $invoice->pt_phone .'</span>
+															ទូរស័ព្ទ:<span class="pt_phone">'. $invoice->pt_phone .'</span>
 														</td>
 													</tr>
 												</table>
@@ -152,23 +160,18 @@ class InvoiceRepository
 													<thead>
 														<th class="text-center" width="8%">
 															<div>ល.រ</div>
-															<div>No.</div>
 														</th>
 														<th colspan="2" class="text-center">
 															<div>បរិយាយ</div>
-															<div>description</div>
 														</th>
 														<th class="text-center" width="16%">
 															<div>តម្លៃ</div>
-															<div>Price</div>
 														</th>
 														<th class="text-center" width="16%">
 															<div>បញ្ចុះតម្លៃ</div>
-															<div>Discount</div>
 														</th>
 														<th class="text-center" width="14%">
 															<div>តម្លៃសរុប</div>
-															<div>Amount</div>
 														</th>
 													</thead>
 													<tbody>
@@ -177,19 +180,19 @@ class InvoiceRepository
 													<tfoot>
 														<tr>
 															<th colspan="2"><small>*** '. $grand_total_in_word .' ***</small></th>
-															<th colspan="2" width="30%" class="text-right">សរុប/Total</th>
+															<th colspan="2" width="30%" class="text-right">សរុប</th>
 															<th class="text-right sub_total_riel">'. $total_riel .' ៛</th>
 															<th class="text-right sub_total_dollar"><span class="float-left pull-left">$</span> '. number_format($total, 2) .'</th>
 														</tr>
 														<tr>
 															<th colspan="2"><small>*** '. $grand_total_riel_in_word .' ***</small></th>
-															<th colspan="2" class="text-right">បញ្ចុះតម្លៃ/Discount</th>
+															<th colspan="2" class="text-right">បញ្ចុះតម្លៃ</th>
 															<th class="text-right discount_total_riel">'. $total_discount_riel .' ៛</th>
 															<th class="text-right discount_total_dollar"><span class="float-left pull-left">$</span> '. number_format($total_discount, 2) .'</th>
 														</tr>
 														<tr>
 															<th colspan="2"></th>
-															<th colspan="2" class="text-right">តម្លៃសរុបទាំងអស់/Grand Total</th>
+															<th colspan="2" class="text-right">តម្លៃសរុបទាំងអស់</th>
 															<th class="text-right grand_total_riel">'. $grand_total_riel .' ៛</th>
 															<th class="text-right grand_total_dollar"><span class="float-left pull-left">$</span> '. number_format($grand_total, 2) .'</th>
 														</tr>
@@ -201,7 +204,7 @@ class InvoiceRepository
 													<tr>
 														<td></td>
 														<td width="32%" class="text-center">
-															<div>រៀបចំដោយ/Prepared By</div>
+															<div>រៀបចំដោយ</div>
 															<div class="sign_box"></div>
 															<div style="color: blue;"><span class="color_blue KHOSMoulLight">'. Auth::user()->setting()->sign_name_kh .'</span></div>
 														</td>
@@ -222,6 +225,29 @@ class InvoiceRepository
 
 	public function create($request)
 	{
+
+		$patient_id = $request->patient_id;
+
+		if (isset($request->patient_id) && $request->patient_id!='') {
+			# code...
+		}else{
+			$patient = Patient::where('name', $request->pt_name)->first();
+
+			if ($patient!=null) {
+				$patient_id = $patient->id;
+			}else{
+				$created_patient = Patient::create([
+					'name' => $request->pt_name,
+					'age' => $request->pt_age,
+					'gender' => (($request->pt_gender=='ប្រុស' || $request->pt_gender == 'male' || $request->pt_gender == 'Male')? '1' : '2'),
+					'age' => $request->pt_phone,
+					'created_by' => Auth::user()->id,
+					'updated_by' => Auth::user()->id,
+				]);
+				$patient_id = $created_patient->id;
+			}
+		}
+
 		$invoice = Invoice::create([
 			'date' => $request->date,
 			'inv_number' => $request->inv_number,
@@ -233,17 +259,16 @@ class InvoiceRepository
 			'pt_phone' => $request->pt_phone,
 			'status' => (($request->status==null)? 0 : 1),
 			'remark' => $request->remark,
-			'patient_id' => $request->patient_id,
+			'patient_id' => $patient_id,
 			'created_by' => Auth::user()->id,
 			'updated_by' => Auth::user()->id,
 		]);
 		
-		if (isset($request->service_id) && isset($request->price) && isset($request->qty) && isset($request->description)) {
+		if (isset($request->service_id) && isset($request->price) && isset($request->description)) {
 			for ($i = 0; $i < count($request->service_id); $i++) {
 				$invoice_detail = InvoiceDetail::create([
 						'amount' => $request->price[$i],
 						'discount' => $request->discount[$i],
-						'qty' => $request->qty[$i],
 						'description' => $request->description[$i],
 						'index' => $i + 1,
 						'service_id' => $request->service_id[$i],
@@ -259,14 +284,13 @@ class InvoiceRepository
 
 	public function invoiceDetailStore($request)
 	{
-
 		$invoice = Invoice::find($request->invoice_id);
 		$last_item = $invoice->invoice_details()->first();
 		$index = (($last_item !== null) ? $last_item->index + 1 : 1);
 
 		$invoice_detail = InvoiceDetail::create([
+												'discount' => $request->discount,
 												'amount' => $request->price,
-												'qty' => $request->qty,
 												'description' => $request->description,
 												'index' => $index,
 												'service_id' => $request->service_id,
@@ -289,7 +313,6 @@ class InvoiceRepository
 		$invoice_detail = InvoiceDetail::find($request->id);
 		$invoice_detail->update([
 			'amount' => $request->price,
-			'qty' => $request->qty,
 			'discount' => $request->discount,
 			'description' => $request->description,
 			'service_id' => $request->service_id,
@@ -342,7 +365,6 @@ class InvoiceRepository
 
 	public function status($request)
 	{
-		return false;
 		$invoice = Invoice::find($request->id);
 		$status = $invoice->status;
 		$invoice->update([
@@ -374,5 +396,18 @@ class InvoiceRepository
 		}
 		
 
+	}
+
+	public function deleteInvoiceDetail($request)
+	{
+		$invoice_detail = InvoiceDetail::find($request->id);
+		$invoice_id = $invoice_detail->invoice_id;
+		$invoice_detail->delete();
+		$json = $this->getInvoicePreview($invoice_id)->getData();
+
+		return response()->json([
+			'success'=>'success',
+			'invoice_preview' => $json->invoice_detail,
+		]);
 	}
 }

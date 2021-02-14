@@ -28,7 +28,7 @@ class InvoiceRequest extends FormRequest
           'inv_number' => 'required|max:8',
           'pt_no' => 'required|max:190',
           'pt_name' => 'required|max:190',
-          'patient_id' => 'required',
+        //   'patient_id' => 'required',
           'exchange_rate' => 'required',
         ];
     }
