@@ -90,11 +90,11 @@
             <div class="modal-body">
                 <div id="patient_detail">
                     <div class="row">
-                        <div class="col xs-12 col-sm-4 col-md-4" id="history_list">
+                        <div class="col xs-12 col-sm-4 col-md-4" id="history_list" style="max-height: 650px; overflow: auto;">
                             <!-- Spare data for AJAX load -->
                         </div>
                         <div class="col xs-12 col-sm-8 col-md-8">
-                            <iframe id="print_page_result" data-srcdoc="<p align='center'>...</p>" width="100%" height="500" frameBorder="1"></iframe>
+                            <iframe id="print_page_result" data-srcdoc="<p align='center'>...</p>" width="100%" height="650" frameBorder="1"></iframe>
                         </div>
                     </div>
                 </div>
@@ -135,7 +135,7 @@
 							<td><a href="javascript:getPatientInfo(${id})">${h['pt_name']}</a></td>
 							<td class="text-center">${h['date']}</td>
 							<td class="text-center">${h['pt_age']}</td>
-							<td class="text-center"><a href="javascript:getPrintPage('${h['segment']}/${h.id}/print')">${h['segment'] == 'invoice' ? '{!! __("sidebar.invoice.main") !!}' : '{!! __("sidebar.prescription.main") !!}'}</a></td>
+							<td class="text-center"><a href="javascript:getPrintPage('${h['link']}')">${h['label_info']}</a></td>
 						</tr>`;
                 });
                 html_structure += `</table>`;
