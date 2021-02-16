@@ -19,7 +19,7 @@ class CreatePrescriptionsTable extends Migration
           $table->integer('code');
           $table->string('pt_no');
           $table->string('pt_name');
-          $table->string('pt_age');
+          $table->string('pt_age')->nullable();
           $table->string('pt_gender')->nullable();
           $table->string('pt_phone')->nullable();
           $table->text('pt_address')->nullable();

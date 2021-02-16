@@ -100,7 +100,7 @@
 					$("[name='pt_age']").val("{{ $echoes->pt_age }}");
 					$("[name='pt_gender']").val("{{ $echoes->pt_gender }}");
 					$("[name='pt_phone']").val("{{ $echoes->pt_phone }}");
-				}, 200);
+				}, 500);
 			}, 100);
 
 			var data = [];

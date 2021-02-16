@@ -17,7 +17,7 @@ class CreateEchoesTable extends Migration
           $table->bigIncrements('id');
           $table->date('date');
           $table->string('pt_name');
-          $table->string('pt_age');
+          $table->string('pt_age')->nullable();
           $table->string('pt_gender')->nullable();
           $table->string('pt_phone')->nullable();
           $table->text('pt_address')->nullable();

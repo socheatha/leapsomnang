@@ -257,7 +257,7 @@
 				$("[name='pt_age']").val("{{ $invoice->pt_age }}");
 				$("[name='pt_gender']").val("{{ $invoice->pt_gender }}");
 				$("[name='pt_phone']").val("{{ $invoice->pt_phone }}");
-			}, 200);
+			}, 500);
 		}, 100);
 
 		var data = [];

@@ -230,7 +230,7 @@
 				$("[name='pt_age']").val("{{ $prescription->pt_age }}");
 				$("[name='pt_gender']").val("{{ $prescription->pt_gender }}");
 				$("[name='pt_phone']").val("{{ $prescription->pt_phone }}");
-			}, 200);
+			}, 500);
 		}, 100);
 
 		var data = [];
