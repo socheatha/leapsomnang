@@ -107,10 +107,6 @@ class PrescriptionController extends Controller
 		$validator = \Validator::make($request->all(), [
 			'medicine_name' => 'required',
 			'medicine_usage' => 'required',
-			'morning' => 'required',
-			'afternoon' => 'required',
-			'evening' => 'required',
-			'night' => 'required',
 		]);
 		
 		if ($validator->fails())
@@ -125,10 +121,6 @@ class PrescriptionController extends Controller
 		$validator = \Validator::make($request->all(), [
 			'medicine_name' => 'required',
 			'medicine_usage' => 'required',
-			'morning' => 'required',
-			'afternoon' => 'required',
-			'evening' => 'required',
-			'night' => 'required',
 		]);
 		
 		if ($validator->fails())

@@ -15,6 +15,7 @@ class Echoes extends Model
 		'pt_name',
 		'pt_gender',
 		'pt_phone',
+		'pt_address',
 		'pt_diagnosis',
 		'image',
 		'description',

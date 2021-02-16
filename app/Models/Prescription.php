@@ -16,6 +16,7 @@ class Prescription extends Model
 		'pt_name',
 		'pt_gender',
 		'pt_phone',
+		'pt_address',
 		'remark',
 		'patient_id',
 		'created_by',

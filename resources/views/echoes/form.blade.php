@@ -51,6 +51,14 @@
           </div>
         </div>
 
+        <div class="col-sm-12">
+          <div class="form-group">
+            {!! Html::decode(Form::label('pt_address', __('label.form.echoes.pt_address'))) !!}
+            {!! Form::text('pt_address', ((isset($echoes->pt_address))? $echoes->pt_address : '' ), ['class' => 'form-control '. (($errors->has("pt_address"))? "is-invalid" : ""),'placeholder' => 'patient address']) !!}
+            {!! $errors->first('pt_address', '<div class="invalid-feedback">:message</div>') !!}
+          </div>
+        </div>
+
         @if ($type != 'letter-form-the-hospital')
         <div class="col-sm-12">
           <div class="form-group">

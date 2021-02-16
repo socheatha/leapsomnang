@@ -17,10 +17,10 @@ class CreatePrescriptionDetailsTable extends Migration
           $table->bigIncrements('id');
           $table->string('medicine_name');
           $table->string('medicine_usage');
-          $table->double('morning')->default('1');
-          $table->double('afternoon')->default('1');
-          $table->double('evening')->default('1');
-          $table->double('night')->default('1');
+          $table->string('morning')->nullable();
+          $table->string('afternoon')->nullable();
+          $table->string('evening')->nullable();
+          $table->string('night')->nullable();
           $table->text('description')->nullable();
           $table->integer('index');
           $table->unsignedBigInteger('medicine_id');

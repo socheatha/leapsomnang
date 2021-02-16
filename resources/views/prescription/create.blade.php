@@ -31,7 +31,7 @@
 					{{ __('alert.modal.title.prescription_detail') }}
 				</h3>
 				<div class="card-tools">
-					<button type="button" class="btn btn-success btn-sm btn-flat" id="btn_add_item"><i class="fa fa-plus"></i> &nbsp; {!! __('label.buttons.add_item') !!}</button>
+					<button type="button" class="btn btn-success btn-sm btn-flat" id="btn_add_item"><i class="fa fa-plus"></i> &nbsp; {!! __('label.buttons.add_medicine') !!}</button>
 				</div>
 			</div>
 			<!-- /.card-header -->
@@ -46,26 +46,26 @@
 						</div>
 						<div class="col-sm-1">
 							<div class="form-group">
-								{!! Html::decode(Form::label('morning', __('label.form.prescription.morning')."<small>*</small>")) !!}
-								{!! Form::number('morning[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'morning','required']) !!}
+								{!! Html::decode(Form::label('morning', __('label.form.prescription.morning'))) !!}
+								{!! Form::text('morning[]', '', ['class' => 'form-control is_number','placeholder' => 'morning']) !!}
 							</div>
 						</div>
 						<div class="col-sm-1">
 							<div class="form-group">
-								{!! Html::decode(Form::label('afternoon', __('label.form.prescription.afternoon')."<small>*</small>")) !!}
-								{!! Form::number('afternoon[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'afternoon','required']) !!}
+								{!! Html::decode(Form::label('afternoon', __('label.form.prescription.afternoon'))) !!}
+								{!! Form::text('afternoon[]', '', ['class' => 'form-control is_number','placeholder' => 'afternoon']) !!}
 							</div>
 						</div>
 						<div class="col-sm-1">
 							<div class="form-group">
-								{!! Html::decode(Form::label('evening', __('label.form.prescription.evening')." <small>*</small>")) !!}
-								{!! Form::number('evening[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'evening','required']) !!}
+								{!! Html::decode(Form::label('evening', __('label.form.prescription.evening'))) !!}
+								{!! Form::text('evening[]', '', ['class' => 'form-control is_number','placeholder' => 'evening']) !!}
 							</div>
 						</div>
 						<div class="col-sm-1">
 							<div class="form-group">
-								{!! Html::decode(Form::label('night', __('label.form.prescription.night')." <small>*</small>")) !!}
-								{!! Form::number('night[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'night','required']) !!}
+								{!! Html::decode(Form::label('night', __('label.form.prescription.night'))) !!}
+								{!! Form::text('night[]', '', ['class' => 'form-control is_number','placeholder' => 'night']) !!}
 							</div>
 						</div>
 						<div class="col-sm-2">
@@ -130,26 +130,26 @@
 																</div>
 																<div class="col-sm-1">
 																	<div class="form-group">
-																		{!! Html::decode(Form::label('morning', __('label.form.prescription.morning')."<small>*</small>")) !!}
-																		{!! Form::number('morning[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'morning','required']) !!}
+																		{!! Html::decode(Form::label('morning', __('label.form.prescription.morning'))) !!}
+																		{!! Form::text('morning[]', '', ['class' => 'form-control is_number','placeholder' => 'morning']) !!}
 																	</div>
 																</div>
 																<div class="col-sm-1">
 																	<div class="form-group">
-																		{!! Html::decode(Form::label('afternoon', __('label.form.prescription.afternoon')."<small>*</small>")) !!}
-																		{!! Form::number('afternoon[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'afternoon','required']) !!}
+																		{!! Html::decode(Form::label('afternoon', __('label.form.prescription.afternoon'))) !!}
+																		{!! Form::text('afternoon[]', '', ['class' => 'form-control is_number','placeholder' => 'afternoon']) !!}
 																	</div>
 																</div>
 																<div class="col-sm-1">
 																	<div class="form-group">
-																		{!! Html::decode(Form::label('evening', __('label.form.prescription.evening')." <small>*</small>")) !!}
-																		{!! Form::number('evening[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'evening','required']) !!}
+																		{!! Html::decode(Form::label('evening', __('label.form.prescription.evening'))) !!}
+																		{!! Form::text('evening[]', '', ['class' => 'form-control is_number','placeholder' => 'evening']) !!}
 																	</div>
 																</div>
 																<div class="col-sm-1">
 																	<div class="form-group">
-																		{!! Html::decode(Form::label('night', __('label.form.prescription.night')." <small>*</small>")) !!}
-																		{!! Form::number('night[]', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'night','required']) !!}
+																		{!! Html::decode(Form::label('night', __('label.form.prescription.night'))) !!}
+																		{!! Form::text('night[]', '', ['class' => 'form-control is_number','placeholder' => 'night']) !!}
 																	</div>
 																</div>
 																<div class="col-sm-2">
@@ -208,80 +208,6 @@
 			cache: true
 		}
 	});
-
-
-	// $('.medicine').change(function () {
-	// 	if ($(this).val()!='') {
-	// 		var medicine_id = $(this).val();
-	// 		$.ajaxSetup({
-	// 			headers: {
-	// 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	// 			}
-	// 		});
-	// 		$.ajax({
-	// 			url: "{{ route('medicine.getDetail') }}",
-	// 			method: 'post',
-	// 			data: {
-	// 					id: medicine_id,
-	// 			},
-	// 			success: function(data){
-	// 				$('[name="item_medicine_name"]').val( data.medicine.name );
-	// 				$('[name="item_medicine_usage"]').val( data.medicine.usage.name );
-	// 			}
-	// 		});
-			
-	// 	}
-	// });
-
-	
-	// $('#btn_add_item').click(function () {
-
-	// 	if ($('[name="item_medicine_id"]').val() !='' && $('[name="item_medicine_name"]').val() !='' && $('[name="item_medicine_usage"]').val() !='' && $('[name="item_morning"]').val() !='' && $('[name="item_afternoon"]').val() !='' && $('[name="item_evening"]').val() !='' && $('[name="item_night"]').val() !='') {	
-	// 		var id = Math.floor(Math.random() * 1000);
-	// 		$('.todo-list').append(	`<li class="${ id }">
-	// 															<input type="hidden" name="medicine_id[]" value="${ $('[name="item_medicine_id"]').val() }" />
-	// 															<input type="hidden" name="medicine_name[]" value="${ $('[name="item_medicine_name"]').val() }" />
-	// 															<input type="hidden" name="medicine_usage[]" value="${ $('[name="item_medicine_usage"]').val() }" />
-	// 															<input type="hidden" name="morning[]" value="${ $('[name="item_morning"]').val() }" />
-	// 															<input type="hidden" name="afternoon[]" value="${ $('[name="item_afternoon"]').val() }" />
-	// 															<input type="hidden" name="evening[]" value="${ $('[name="item_evening"]').val() }" />
-	// 															<input type="hidden" name="night[]" value="${ $('[name="item_night"]').val() }" />
-	// 															<input type="hidden" name="description[]" value="${ $('[name="item_description"]').val() }" />
-	// 															<!-- drag handle -->
-	// 															<span class="handle">
-	// 																<i class="fas fa-ellipsis-v"></i>
-	// 																<i class="fas fa-ellipsis-v"></i>
-	// 															</span>
-	// 															<span class="text">${ $('[name="item_medicine_name"]').val() }</span>
-	// 															<small class="badge badge-info">${ $('[name="item_medicine_usage"]').val() }</small>
-	// 															<small class="badge badge-danger">morning:${ $('[name="item_morning"]').val() }, afternoon:${ $('[name="item_afternoon"]').val() }, evening:${ $('[name="item_evening"]').val() }, night:${ $('[name="item_night"]').val() }</small>
-	// 															<div class="tools">
-	// 																<i class="fa fa-times text-danger btn_remove_item" data-id="${ id }"></i>
-	// 															</div>
-	// 														</li>`);
-	// 		$('[name="item_medicine_id"]').val('').trigger('change');
-	// 		$('[name="item_medicine_name"]').val( '' );
-	// 		$('[name="item_medicine_usage"]').val( '' );
-	// 		$('[name="item_morning"]').val( '0' );
-	// 		$('[name="item_afternoon"]').val( '0' );
-	// 		$('[name="item_evening"]').val( '0' );
-	// 		$('[name="item_night"]').val( '0' );
-	// 		$('[name="item_description"]').val( '' );
-	// 		$('#create_prescription_item_modal').modal('hide');
-
-	// 		$('.btn_remove_item').click( function () {
-	// 			$('.'+ $(this).data('id')).remove();
-	// 		});
-
-	// 	}else{
-	// 		Swal.fire({
-	// 			icon: 'warning',
-	// 			title: "{{ __('alert.swal.title.empty_field') }}",
-	// 			text: "{{ __('alert.swal.text.empty_field') }}",
-	// 			confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-	// 		})
-	// 	}
-	// });
 
 	$('#patient_id').change(function () {
 		if ($(this).val()!='') {

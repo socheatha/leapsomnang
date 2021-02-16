@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-12">
           <div class="form-group">
             {!! Form::hidden('date_hidden', '',) !!}
             {!! Html::decode(Form::label('date', __('label.form.date')."(YYYY-MM-DD) <small>*</small>")) !!}
@@ -10,7 +10,7 @@
             {!! $errors->first('date', '<div class="invalid-feedback">:message</div>') !!}
           </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-12">
           <div class="form-group">
             {!! Html::decode(Form::label('code', __('label.form.prescription.code')." <small>*</small>")) !!}
             {!! Form::text('code', ((isset($prescription->code))? str_pad($prescription->code, 6, "0", STR_PAD_LEFT) : str_pad($code, 6, "0", STR_PAD_LEFT) ), ['class' => 'form-control is_integer '. (($errors->has("code"))? "is-invalid" : ""), 'placeholder' => 'prescription number', 'autocomplete' => 'off', 'readonly'=>'readonly', 'required']) !!}
@@ -66,7 +66,6 @@
           <div class="form-group">
             {!! Html::decode(Form::label('pt_gender', __('label.form.prescription.pt_gender'))) !!}
             {!! Form::select('pt_gender', ['ប្រុស' => 'ប្រុស', 'ស្រី' => 'ស្រី'], ((isset($invoice->pt_gender))? $invoice->pt_gender : '' ), ['class' => 'form-control custom-select']) !!}
-            {{-- {!! Form::text('pt_gender', ((isset($prescription->pt_gender))? $prescription->pt_gender : '' ), ['class' => 'form-control '. (($errors->has("pt_gender"))? "is-invalid" : ""),'placeholder' => 'patient gender']) !!} --}}
             {!! $errors->first('pt_gender', '<div class="invalid-feedback">:message</div>') !!}
           </div>
         </div>
@@ -76,6 +75,14 @@
             {!! Html::decode(Form::label('pt_phone', __('label.form.prescription.pt_phone'))) !!}
             {!! Form::text('pt_phone', ((isset($prescription->pt_phone))? $prescription->pt_phone : '' ), ['class' => 'form-control '. (($errors->has("pt_phone"))? "is-invalid" : ""),'placeholder' => 'patient phone']) !!}
             {!! $errors->first('pt_phone', '<div class="invalid-feedback">:message</div>') !!}
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <div class="form-group">
+            {!! Html::decode(Form::label('pt_address', __('label.form.prescription.pt_address'))) !!}
+            {!! Form::text('pt_address', ((isset($prescription->pt_address))? $prescription->pt_address : '' ), ['class' => 'form-control '. (($errors->has("pt_address"))? "is-invalid" : ""),'placeholder' => 'patient address']) !!}
+            {!! $errors->first('pt_address', '<div class="invalid-feedback">:message</div>') !!}
           </div>
         </div>
 

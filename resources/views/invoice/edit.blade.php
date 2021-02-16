@@ -28,7 +28,6 @@
 
 	{!! Form::open(['url' => route('invoice.update', $invoice->id),'id' => 'submitForm','method' => 'post','class' => 'mt-3']) !!}
 	{!! Form::hidden('_method', 'PUT') !!}
-	{{ Form::close() }}
 
 	<div class="card-body">
 		@include('invoice.form')
@@ -86,15 +85,10 @@
 	<!-- ./card-body -->
 	
 	<div class="card-footer text-muted text-center">
-		{{-- @include('components.submit') --}}
-		<button type="reset" form="submitForm" class="btn btn-danger btn-flat">
-			<i class="fa fa-redo"></i>&nbsp; {{ __('label.buttons.reset') }} &nbsp;
-		</button>
-		<button type="submit" form="submitForm" class="btn btn-success btn-flat">
-			<i class="fa fa-save"></i>&nbsp; {{ __('label.buttons.save') }} &nbsp;
-		</button>
+		@include('components.submit')
 	</div>
 	<!-- ./card-Footer -->
+	{{ Form::close() }}
 
 </div>
 

@@ -17,6 +17,7 @@ class Invoice extends Model
 		'pt_name',
 		'pt_gender',
 		'pt_phone',
+		'pt_address',
 		'status',
 		'remark',
 		'patient_id',

@@ -22,6 +22,7 @@ class CreatePrescriptionsTable extends Migration
           $table->string('pt_age');
           $table->string('pt_gender')->nullable();
           $table->string('pt_phone')->nullable();
+          $table->text('pt_address')->nullable();
           $table->tinyInteger('status')->default('0');
           $table->text('remark')->nullable();
           $table->unsignedBigInteger('patient_id')->nullable();

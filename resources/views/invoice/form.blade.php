@@ -40,7 +40,7 @@
         <div class="col-sm-12">
           <div class="form-group">
             {!! Html::decode(Form::label('remark', __('label.form.remark'))) !!}
-            {!! Form::text('remark', ((isset($invoice->remark))? $invoice->remark : '' ), ['class' => 'form-control '. (($errors->has("remark"))? "is-invalid" : ""),'placeholder' => 'remark']) !!}
+            {!! Form::textarea('remark', ((isset($invoice->remark))? $invoice->remark : '' ), ['class' => 'form-control '. (($errors->has("remark"))? "is-invalid" : ""),'style' => 'height: 121px;', 'placeholder' => 'remark']) !!}
           </div>
         </div>
     
@@ -85,7 +85,6 @@
           <div class="form-group">
             {!! Html::decode(Form::label('pt_gender', __('label.form.invoice.pt_gender'))) !!}
             {!! Form::select('pt_gender', ['ប្រុស' => 'ប្រុស', 'ស្រី' => 'ស្រី'], ((isset($invoice->pt_gender))? $invoice->pt_gender : '' ), ['class' => 'form-control custom-select']) !!}
-            {{-- {!! Form::text('pt_gender', ((isset($invoice->pt_gender))? $invoice->pt_gender : '' ), ['class' => 'form-control '. (($errors->has("pt_gender"))? "is-invalid" : ""),'placeholder' => 'patient gender']) !!} --}}
             {!! $errors->first('pt_gender', '<div class="invalid-feedback">:message</div>') !!}
           </div>
         </div>
@@ -95,6 +94,14 @@
             {!! Html::decode(Form::label('pt_phone', __('label.form.invoice.pt_phone'))) !!}
             {!! Form::text('pt_phone', ((isset($invoice->pt_phone))? $invoice->pt_phone : '' ), ['class' => 'form-control '. (($errors->has("pt_phone"))? "is-invalid" : ""),'placeholder' => 'patient phone']) !!}
             {!! $errors->first('pt_phone', '<div class="invalid-feedback">:message</div>') !!}
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <div class="form-group">
+            {!! Html::decode(Form::label('pt_address', __('label.form.invoice.pt_address'))) !!}
+            {!! Form::text('pt_address', ((isset($invoice->pt_address))? $invoice->pt_address : '' ), ['class' => 'form-control '. (($errors->has("pt_address"))? "is-invalid" : ""),'placeholder' => 'patient address']) !!}
+            {!! $errors->first('pt_address', '<div class="invalid-feedback">:message</div>') !!}
           </div>
         </div>
 

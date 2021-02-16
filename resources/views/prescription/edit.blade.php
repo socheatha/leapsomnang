@@ -49,7 +49,7 @@
 					{{ __('alert.modal.title.prescription_detail') }}
 				</h3>
 				<div class="card-tools">
-					<button type="button" class="btn btn-flat btn-success" data-toggle="modal" data-target="#create_prescription_item_modal"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button>
+					<button type="button" class="btn btn-flat btn-success" data-toggle="modal" data-target="#create_prescription_item_modal"><i class="fa fa-plus"></i> {!! __('label.buttons.add_medicine') !!}</button>
 				</div>
 			</div>
 			<!-- /.card-header -->
@@ -65,26 +65,26 @@
 							</div>
 							<div class="col-sm-1">
 								<div class="form-group">
-									{!! Html::decode(Form::label('morning', __('label.form.prescription.morning')."<small>*</small>")) !!}
-									{!! Form::number('show_morning', $prescription_detail->morning, ['class' => 'form-control is_number', 'id' => 'input-morning-'. $prescription_detail->id,'min' => '0','placeholder' => 'morning','readonly']) !!}
+									{!! Html::decode(Form::label('morning', __('label.form.prescription.morning'))) !!}
+									{!! Form::text('show_morning', $prescription_detail->morning, ['class' => 'form-control is_number', 'id' => 'input-morning-'. $prescription_detail->id,'min' => '0','placeholder' => 'morning','readonly']) !!}
 								</div>
 							</div>
 							<div class="col-sm-1">
 								<div class="form-group">
-									{!! Html::decode(Form::label('afternoon', __('label.form.prescription.afternoon')."<small>*</small>")) !!}
-									{!! Form::number('show_afternoon', $prescription_detail->afternoon, ['class' => 'form-control is_number', 'id' => 'input-afternoon-'. $prescription_detail->id,'min' => '0','placeholder' => 'afternoon','readonly']) !!}
+									{!! Html::decode(Form::label('afternoon', __('label.form.prescription.afternoon'))) !!}
+									{!! Form::text('show_afternoon', $prescription_detail->afternoon, ['class' => 'form-control is_number', 'id' => 'input-afternoon-'. $prescription_detail->id,'min' => '0','placeholder' => 'afternoon','readonly']) !!}
 								</div>
 							</div>
 							<div class="col-sm-1">
 								<div class="form-group">
-									{!! Html::decode(Form::label('evening', __('label.form.prescription.evening')." <small>*</small>")) !!}
-									{!! Form::number('show_evening', $prescription_detail->evening, ['class' => 'form-control is_number', 'id' => 'input-evening-'. $prescription_detail->id,'min' => '0','placeholder' => 'evening','readonly']) !!}
+									{!! Html::decode(Form::label('evening', __('label.form.prescription.evening'))) !!}
+									{!! Form::text('show_evening', $prescription_detail->evening, ['class' => 'form-control is_number', 'id' => 'input-evening-'. $prescription_detail->id,'min' => '0','placeholder' => 'evening','readonly']) !!}
 								</div>
 							</div>
 							<div class="col-sm-1">
 								<div class="form-group">
-									{!! Html::decode(Form::label('night', __('label.form.prescription.night')." <small>*</small>")) !!}
-									{!! Form::number('show_night', $prescription_detail->night, ['class' => 'form-control is_number', 'id' => 'input-night-'. $prescription_detail->id,'min' => '0','placeholder' => 'night','readonly']) !!}
+									{!! Html::decode(Form::label('night', __('label.form.prescription.night'))) !!}
+									{!! Form::text('show_night', $prescription_detail->night, ['class' => 'form-control is_number', 'id' => 'input-night-'. $prescription_detail->id,'min' => '0','placeholder' => 'night','readonly']) !!}
 								</div>
 							</div>
 							<div class="col-sm-2">
@@ -158,26 +158,26 @@
 					</div>
 					<div class="col-sm-1">
 						<div class="form-group">
-							{!! Html::decode(Form::label('edit_item_morning', __('label.form.prescription.morning')."<small>*</small>")) !!}
-							{!! Form::number('edit_item_morning', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'morning','required']) !!}
+							{!! Html::decode(Form::label('edit_item_morning', __('label.form.prescription.morning'))) !!}
+							{!! Form::text('edit_item_morning', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'morning']) !!}
 						</div>
 					</div>
 					<div class="col-sm-1">
 						<div class="form-group">
-							{!! Html::decode(Form::label('edit_item_afternoon', __('label.form.prescription.afternoon')."<small>*</small>")) !!}
-							{!! Form::number('edit_item_afternoon', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'afternoon','required']) !!}
+							{!! Html::decode(Form::label('edit_item_afternoon', __('label.form.prescription.afternoon'))) !!}
+							{!! Form::text('edit_item_afternoon', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'afternoon']) !!}
 						</div>
 					</div>
 					<div class="col-sm-1">
 						<div class="form-group">
-							{!! Html::decode(Form::label('edit_item_evening', __('label.form.prescription.evening')." <small>*</small>")) !!}
-							{!! Form::number('edit_item_evening', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'evening','required']) !!}
+							{!! Html::decode(Form::label('edit_item_evening', __('label.form.prescription.evening'))) !!}
+							{!! Form::text('edit_item_evening', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'evening']) !!}
 						</div>
 					</div>
 					<div class="col-sm-1">
 						<div class="form-group">
-							{!! Html::decode(Form::label('edit_item_night', __('label.form.prescription.night')." <small>*</small>")) !!}
-							{!! Form::number('edit_item_night', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'night','required']) !!}
+							{!! Html::decode(Form::label('edit_item_night', __('label.form.prescription.night'))) !!}
+							{!! Form::text('edit_item_night', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'night']) !!}
 						</div>
 					</div>
 					<div class="col-sm-2">
@@ -408,7 +408,7 @@
 	});
 
 	$('#btn_add_item').click(function () {
-		if ($('[name="item_medicine_name"]').val() !='' && $('[name="item_medicine_usage"]').val() !='' && $('[name="item_morning"]').val() !='' && $('[name="item_afternoon"]').val() !='' && $('[name="item_evening"]').val() !='' && $('[name="item_night"]').val() !='') {
+		if ($('[name="item_medicine_name"]').val() !='' && $('[name="item_medicine_usage"]').val() !='') {
 		
 			$.ajax({
 				url: "{{ route('prescription.prescription_detail.store') }}",
@@ -437,26 +437,26 @@
 																				</div>
 																				<div class="col-sm-1">
 																					<div class="form-group">
-																						{!! Html::decode(Form::label('morning', __('label.form.prescription.morning')."<small>*</small>")) !!}
-																						<input name="show_morning" class="form-control" min="0" id="input-morning-${ data.prescription_detail.id }" value="${ data.prescription_detail.morning }" placeholder="morning" readonly="" />
+																						{!! Html::decode(Form::label('morning', __('label.form.prescription.morning'))) !!}
+																						<input name="show_morning" class="form-control" min="0" id="input-morning-${ data.prescription_detail.id }" value="${ ((data.prescription_detail.morning=='null' || data.prescription_detail.morning==null || data.prescription_detail.morning=='' )? '': data.prescription_detail.morning) }" placeholder="morning" readonly="" />
 																					</div>
 																				</div>
 																				<div class="col-sm-1">
 																					<div class="form-group">
-																						{!! Html::decode(Form::label('afternoon', __('label.form.prescription.afternoon')."<small>*</small>")) !!}
-																						<input name="show_afternoon" class="form-control" min="0" id="input-afternoon-${ data.prescription_detail.id }" value="${ data.prescription_detail.afternoon }" placeholder="afternoon" readonly="" />
+																						{!! Html::decode(Form::label('afternoon', __('label.form.prescription.afternoon'))) !!}
+																						<input name="show_afternoon" class="form-control" min="0" id="input-afternoon-${ data.prescription_detail.id }" value="${ ((data.prescription_detail.afternoon=='null' || data.prescription_detail.afternoon==null || data.prescription_detail.afternoon=='' )? '': data.prescription_detail.afternoon) }" placeholder="afternoon" readonly="" />
 																					</div>
 																				</div>
 																				<div class="col-sm-1">
 																					<div class="form-group">
-																						{!! Html::decode(Form::label('evening', __('label.form.prescription.evening')." <small>*</small>")) !!}
-																						<input name="show_evening" class="form-control is_number" min="0" id="input-evening-${ data.prescription_detail.id }" value="${ data.prescription_detail.evening }" placeholder="evening" readonly="" />
+																						{!! Html::decode(Form::label('evening', __('label.form.prescription.evening'))) !!}
+																						<input name="show_evening" class="form-control is_number" min="0" id="input-evening-${ data.prescription_detail.id }" value="${ ((data.prescription_detail.evening=='null' || data.prescription_detail.evening==null || data.prescription_detail.evening=='' )? '': data.prescription_detail.evening) }" placeholder="evening" readonly="" />
 																					</div>
 																				</div>
 																				<div class="col-sm-1">
 																					<div class="form-group">
-																						{!! Html::decode(Form::label('night', __('label.form.prescription.night')." <small>*</small>")) !!}
-																						<input name="show_night" class="form-control is_number" min="0" id="input-night-${ data.prescription_detail.id }" value="${ data.prescription_detail.night }" placeholder="night" readonly="" />
+																						{!! Html::decode(Form::label('night', __('label.form.prescription.night'))) !!}
+																						<input name="show_night" class="form-control is_number" min="0" id="input-night-${ data.prescription_detail.id }" value="${ ((data.prescription_detail.night=='null' || data.prescription_detail.night==null || data.prescription_detail.night=='' )? '': data.prescription_detail.night) }" placeholder="night" readonly="" />
 																					</div>
 																				</div>
 																				<div class="col-sm-2">
