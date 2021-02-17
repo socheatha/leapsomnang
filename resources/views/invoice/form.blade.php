@@ -36,6 +36,13 @@
             </div>
           </div>
         </div>
+        <div class="col-sm-12">
+          <div class="form-group">
+            {!! Html::decode(Form::label('pt_diagnosis', __('label.form.echoes.pt_diagnosis'))) !!}
+            {!! Form::text('pt_diagnosis', ((isset($invoice->pt_diagnosis))? $invoice->pt_diagnosis : '' ), ['class' => 'form-control '. (($errors->has("pt_diagnosis"))? "is-invalid" : ""),'placeholder' => 'diagnosis']) !!}
+            {!! $errors->first('pt_diagnosis', '<div class="invalid-feedback">:message</div>') !!}
+          </div>
+        </div>
 
         <div class="col-sm-12">
           <div class="form-group">
@@ -97,13 +104,41 @@
           </div>
         </div>
 
-        <div class="col-sm-12">
+        <div class="col-sm-6">
+          <div class="form-group">
+            {!! Html::decode(Form::label('province_id', __('label.form.patient.province'))) !!}
+            {!! Form::select('pt_province_id', $provinces, ((isset($invoice->pt_province_id))? $invoice->pt_province_id : '' ), ['class' => 'form-control select2 province_id', 'data-width'=>'100%', 'placeholder' => __('label.form.choose')]) !!}
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            {!! Html::decode(Form::label('district_id', __('label.form.patient.district'))) !!}
+            {!! Form::select('pt_district_id', $districts, ((isset($invoice->pt_district_id))? $invoice->pt_district_id : '' ), ['class' => 'form-control select2 district_id','data-width'=>'100%', 'placeholder' => __('label.form.choose'), (($districts==[])? 'disabled' : '' )]) !!}
+          </div>
+        </div>
+  
+        <div class="col-sm-6">
+          <div class="form-group">
+            {!! Html::decode(Form::label('pt_commune', __('label.form.patient.commune'))) !!}
+            {!! Form::text('pt_commune', ((isset($invoice->pt_commune))? $invoice->pt_commune : '' ), ['class' => 'form-control '. (($errors->has("pt_commune"))? "is-invalid" : ""),'placeholder' => 'commune']) !!}
+            {!! $errors->first('pt_commune', '<div class="invalid-feedback">:message</div>') !!}
+          </div>
+        </div>
+  
+        <div class="col-sm-6">
+          <div class="form-group">
+            {!! Html::decode(Form::label('pt_village', __('label.form.patient.village'))) !!}
+            {!! Form::text('pt_village', ((isset($invoice->pt_village))? $invoice->pt_village : '' ), ['class' => 'form-control '. (($errors->has("pt_village"))? "is-invalid" : ""),'placeholder' => 'village']) !!}
+            {!! $errors->first('pt_village', '<div class="invalid-feedback">:message</div>') !!}
+          </div>
+        </div>
+        {{-- <div class="col-sm-12">
           <div class="form-group">
             {!! Html::decode(Form::label('pt_address', __('label.form.invoice.pt_address'))) !!}
             {!! Form::text('pt_address', ((isset($invoice->pt_address))? $invoice->pt_address : '' ), ['class' => 'form-control '. (($errors->has("pt_address"))? "is-invalid" : ""),'placeholder' => 'patient address']) !!}
             {!! $errors->first('pt_address', '<div class="invalid-feedback">:message</div>') !!}
           </div>
-        </div>
+        </div> --}}
 
       </div>
     </div>

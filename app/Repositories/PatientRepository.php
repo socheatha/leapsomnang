@@ -44,7 +44,7 @@ class PatientRepository
 			foreach ($patients as $i => $patient) {
 				$children = [];
 				$child['id'] = $patient->id;
-				$child['text'] = 'PT-'. str_pad($patient->id, 6, "0", STR_PAD_LEFT) .' :: '. $patient->name;
+				$child['text'] = str_pad($patient->id, 6, "0", STR_PAD_LEFT) .' :: '. $patient->name;
 				array_push($query_results, $child);
 			}
 			$count = Patient::count();
@@ -82,7 +82,7 @@ class PatientRepository
 	public function getSelectDetail($request)
 	{
 		$patient = Patient::find($request->id);
-		$patient->no = 'PT-'. str_pad($patient->id, 6, "0", STR_PAD_LEFT);
+		$patient->no = str_pad($patient->id, 6, "0", STR_PAD_LEFT);
 		$patient->pt_gender = (($patient->gender==1)? 'ប្រុស' : 'ស្រី');
 		return response()->json([
 			'patient' => $patient

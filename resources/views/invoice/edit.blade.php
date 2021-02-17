@@ -53,13 +53,13 @@
 									{!! Form::text('show_description', $invoice_detail->description, ['class' => 'form-control','form' => 'description','placeholder' => 'description','style' => 'height: 38px','id' => 'input-description-'. $invoice_detail->id ,'readonly']) !!}
 								</div>
 							</div>
-							<div class="col-sm-2">
+							{{-- <div class="col-sm-2">
 								<div class="form-group">
 									{!! Html::decode(Form::label('show_discount', __('label.form.invoice.discount')." <small>*</small>")) !!}
 									{!! Form::text('show_discount', ($invoice_detail->discount*100).'%', ['class' => 'form-control','placeholder' => 'discount','id' => 'input-discount-'. $invoice_detail->id ,'readonly']) !!}
 								</div>
-							</div>
-							<div class="col-sm-2">
+							</div> --}}
+							<div class="col-sm-4">
 								<div class="form-group">
 									{!! Html::decode(Form::label('show_price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
 									{!! Form::text('show_price', $invoice_detail->amount, ['class' => 'form-control','placeholder' => 'price','id' => 'input-amount-'. $invoice_detail->id ,'readonly']) !!}
@@ -126,19 +126,19 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-2">
+					{{-- <div class="col-sm-2">
 						<div class="form-group">
 							{!! Html::decode(Form::label('edit_item_discount', __('label.form.invoice.discount')." <small>*</small>")) !!}
 							{!! Form::select('edit_item_discount', ['0'=>'0%', '0.05'=>'5%', '0.1'=>'10%', '0.15'=>'15%', '0.2'=>'20%', '0.25'=>'25%', '0.3'=>'30%', '0.35'=>'35%', '0.4'=>'40%', '0.45'=>'45%', '0.5'=>'50%', '0.55'=>'55%', '0.6'=>'60%', '0.65'=>'65%', '0.7'=>'70%', '0.75'=>'75%', '0.8'=>'80%', '0.85'=>'85%', '0.9'=>'90%', '0.95'=>'95%', '1'=>'100%'], '0', ['class' => 'form-control select2','required']) !!}
 						</div>
-					</div>
+					</div> --}}
 					<div class="col-sm-2">
 						<div class="form-group invoice_item_price">
 							{!! Html::decode(Form::label('edit_item_price', __('label.form.invoice.price')." <small>*</small>")) !!}
 							{!! Form::text('edit_item_price', '', ['class' => 'form-control','placeholder' => 'price','required']) !!}
 						</div>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-5">
 						<div class="form-group invoice_item_description">
 							{!! Html::decode(Form::label('edit_item_description', __('label.form.description')." <small>*</small>")) !!}
 							{!! Form::textarea('edit_item_description', '', ['class' => 'form-control','placeholder' => 'description','style' => 'height: 38px','required']) !!}
@@ -167,6 +167,27 @@
 
 @section('js')
 <script type="text/javascript">
+
+	$('[name="pt_province_id"]').change( function(e){
+		if ($(this).val() != '') {
+			$.ajax({
+				url: "{{ route('province.getSelectDistrict') }}",
+				method: 'post',
+				data: {
+					id: $(this).val(),
+				},
+				success: function (data) {
+					$('[name="pt_district_id"]').attr({"disabled":false});
+					$('[name="pt_district_id"]').html(data);
+				}
+			});
+		}else{
+			$('[name="pt_district_id"]').attr({"disabled":true});
+			$('[name="pt_district_id"]').html('<option value="">{{ __("label.form.choose") }}</option>');
+			
+		}
+	});
+
 
 	$('.btn-prevent-submit').click(function (event) {
 		event.preventDefault();
@@ -257,12 +278,18 @@
 				$("[name='pt_age']").val("{{ $invoice->pt_age }}");
 				$("[name='pt_gender']").val("{{ $invoice->pt_gender }}");
 				$("[name='pt_phone']").val("{{ $invoice->pt_phone }}");
+				$("[name='pt_village']").val("{{ $invoice->pt_village }}");
+				$("[name='pt_commune']").val("{{ $invoice->pt_commune }}");
+				$("[name='pt_province_id']").val("{{ $invoice->pt_province_id }}").trigger('change');
+				setTimeout(() => {
+					$("[name='pt_district_id']").val("{{ $invoice->pt_district_id }}").trigger('change');
+				}, 300);
 			}, 500);
 		}, 100);
 
 		var data = [];
 		$(".select2_pagination").each(function () {
-			data.push({id:'{{ $invoice->patient_id }}', text:'PT-{{ str_pad($invoice->patient_id, 6, "0", STR_PAD_LEFT) }} :: {{ (($invoice->patient_id != '')? $invoice->patient->name : '' )}}'});
+			data.push({id:'{{ $invoice->patient_id }}', text:'{{ str_pad($invoice->patient_id, 6, "0", STR_PAD_LEFT) }} :: {{ (($invoice->patient_id != '')? $invoice->patient->name : '' )}}'});
 		});
 		$(".select2_pagination").select2({
 			theme: 'bootstrap4',
@@ -589,6 +616,12 @@
 				$('[name="pt_phone"]').val(result.patient.phone);
 				$('[name="pt_age"]').val(result.patient.age);
 				$('[name="pt_gender"]').val(result.patient.pt_gender);
+				$('[name="pt_village"]').val(result.patient.address_village);
+				$('[name="pt_commune"]').val(result.patient.address_commune);
+				$('[name="pt_province_id"]').val(result.patient.address_province_id).trigger('change');
+				setTimeout(() => {
+					$('[name="pt_district_id"]').val(result.patient.address_district_id).trigger('change');
+				}, 300);
 			});
 		}
 		

@@ -30,7 +30,6 @@
 					{{ __('alert.modal.title.invoice_detail') }}
 				</h3>
 				<div class="card-tools">
-					{{-- <button type="button" class="btn btn-success btn-sm btn-flat" id="btn_add_item"><i class="fa fa-plus"></i> &nbsp; {!! __('label.buttons.add_item') !!}</button> --}}
 					<button type="button" class="btn btn-flat btn-sm btn-success btn-prevent-submit" data-toggle="modal" data-target="#create_invoice_item_modal"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button>
 				</div>
 			</div>
@@ -44,19 +43,19 @@
 								{!! Form::select('service_id[]', $services, '', ['class' => 'form-control select2 service', 'data-id'=>'first-item', 'id'=>'input-service_id-first-item','placeholder' => __('label.form.choose'),'required']) !!}
 							</div>
 						</div>
-						<div class="col-sm-2">
+						{{-- <div class="col-sm-2">
 							<div class="form-group">
 								{!! Html::decode(Form::label('discount', __('label.form.invoice.discount')." <small>*</small>")) !!}
 								{!! Form::select('discount[]', ['0'=>'0%', '0.05'=>'5%', '0.1'=>'10%', '0.15'=>'15%', '0.2'=>'20%', '0.25'=>'25%', '0.3'=>'30%', '0.35'=>'35%', '0.4'=>'40%', '0.45'=>'45%', '0.5'=>'50%', '0.55'=>'55%', '0.6'=>'60%', '0.65'=>'65%', '0.7'=>'70%', '0.75'=>'75%', '0.8'=>'80%', '0.85'=>'85%', '0.9'=>'90%', '0.95'=>'95%', '1'=>'100%'], '0', ['class' => 'form-control select2', 'id'=>'input-discount-first-item','required']) !!}
 							</div>
-						</div>
+						</div> --}}
 						<div class="col-sm-2">
 							<div class="form-group">
 								{!! Html::decode(Form::label('price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
 								{!! Form::text('price[]', '', ['class' => 'form-control', 'id'=>'input-price-first-item','placeholder' => 'price','required']) !!}
 							</div>
 						</div>
-						<div class="col-sm-3">
+						<div class="col-sm-5">
 							<div class="form-group">
 								{!! Html::decode(Form::label('description', __('label.form.description')." <small>*</small>")) !!}
 								{!! Form::textarea('description[]', '', ['class' => 'form-control', 'id'=>'input-description-first-item','placeholder' => 'description','style' => 'height: 38px','required']) !!}
@@ -94,16 +93,38 @@
 @section('js')
 <script type="text/javascript">
 
+
+	$('[name="pt_province_id"]').change( function(e){
+		if ($(this).val() != '') {
+			$.ajax({
+				url: "{{ route('province.getSelectDistrict') }}",
+				method: 'post',
+				data: {
+					id: $(this).val(),
+				},
+				success: function (data) {
+					$('[name="pt_district_id"]').attr({"disabled":false});
+					$('[name="pt_district_id"]').html(data);
+				}
+			});
+		}else{
+			$('[name="pt_district_id"]').attr({"disabled":true});
+			$('[name="pt_district_id"]').html('<option value="">{{ __("label.form.choose") }}</option>');
+			
+		}
+	});
+
+
 	$('.btn-prevent-submit').click(function (event) {
 		event.preventDefault();
 	});
 	
 	$('#btn_add_item').click(function () {
 
-		if ($('[name="item_service_id"]').val()!='' && $('[name="item_discount"]').val()!='' && $('[name="item_price"]').val()!='' && $('[name="item_description"]').val()!='') {
+		if ($('[name="item_service_id"]').val()!='' && $('[name="item_price"]').val()!='' && $('[name="item_description"]').val()!='') {
 			
 			var service_id = $('[name="item_service_id"]').val();
-			var discount = $('[name="item_discount"]').val();
+			// var discount = $('[name="item_discount"]').val();
 			var price = $('[name="item_price"]').val();
 			var description = $('[name="item_description"]').val();
 	
@@ -118,17 +139,11 @@
 																	</div>
 																	<div class="col-sm-2">
 																		<div class="form-group">
-																			{!! Html::decode(Form::label('discount', __('label.form.invoice.discount')." <small>*</small>")) !!}
-																			{!! Form::select('discount[]', ['0'=>'0%', '0.05'=>'5%', '0.1'=>'10%', '0.15'=>'15%', '0.2'=>'20%', '0.25'=>'25%', '0.3'=>'30%', '0.35'=>'35%', '0.4'=>'40%', '0.45'=>'45%', '0.5'=>'50%', '0.55'=>'55%', '0.6'=>'60%', '0.65'=>'65%', '0.7'=>'70%', '0.75'=>'75%', '0.8'=>'80%', '0.85'=>'85%', '0.9'=>'90%', '0.95'=>'95%', '1'=>'100%'], '0', ['class' => 'form-control select2', 'id'=>'input-discount-${ id }','required']) !!}
-																		</div>
-																	</div>
-																	<div class="col-sm-2">
-																		<div class="form-group">
 																			{!! Html::decode(Form::label('price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
 																			{!! Form::text('price[]', '', ['class' => 'form-control', 'id'=>'input-price-${ id }','placeholder' => 'price','required']) !!}
 																		</div>
 																	</div>
-																	<div class="col-sm-3">
+																	<div class="col-sm-5">
 																		<div class="form-group">
 																			{!! Html::decode(Form::label('description', __('label.form.description')." <small>*</small>")) !!}
 																			{!! Form::textarea('description[]', '', ['class' => 'form-control', 'id'=>'input-description-${ id }','placeholder' => 'description','style' => 'height: 38px','required']) !!}
@@ -162,14 +177,14 @@
 				timer: 1500
 			})
 			$('[name="item_service_id"]').val('').trigger('change');
-			$('[name="item_discount"]').val('0').trigger('change');
+			// $('[name="item_discount"]').val('0').trigger('change');
 			$('[name="item_price"]').val('');
 			$('[name="item_description"]').val('');
 
 			setTimeout(() => {
 				$('#input-service_id-'+id).val(service_id);
 			}, 300);
-			$('#input-discount-'+id).val(discount);
+			// $('#input-discount-'+id).val(discount);
 			$('#input-price-'+id).val(price);
 			$('#input-description-'+id).val(description);
 			$('.service_add').off().change(function () {
@@ -362,6 +377,12 @@
 				$('[name="pt_phone"]').val(result.patient.phone);
 				$('[name="pt_age"]').val(result.patient.age);
 				$('[name="pt_gender"]').val(result.patient.pt_gender);
+				$('[name="pt_village"]').val(result.patient.address_village);
+				$('[name="pt_commune"]').val(result.patient.address_commune);
+				$('[name="pt_province_id"]').val(result.patient.address_province_id).trigger('change');
+				setTimeout(() => {
+					$('[name="pt_district_id"]').val(result.patient.address_district_id).trigger('change');
+				}, 300);
 			});
 		}
 		
