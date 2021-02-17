@@ -109,7 +109,7 @@ class PrescriptionRepository
 															កាលបរិច្ឆេទ:<span class="date">'. date('d/m/Y', strtotime($prescription->date)) .'</span>
 														</td>
 														<td width="29%">
-															លេខអ្នកជំងឺ:<span class="pt_no">PT-'. str_pad($prescription->code, 6, "0", STR_PAD_LEFT) .'</span>
+															លេខអ្នកជំងឺ:<span class="pt_no">'. str_pad($prescription->code, 6, "0", STR_PAD_LEFT) .'</span>
 														</td>
 														<td width="29%">
 															វិក្កយបត្រ:<span class="code">PRE'. str_pad($prescription->code, 6, "0", STR_PAD_LEFT) .'</span>
@@ -124,6 +124,11 @@ class PrescriptionRepository
 														</td>
 														<td>
 															ភេទ:<span class="pt_gender">'. $prescription->pt_gender .'</span>
+														</td>
+													</tr>
+													<tr>
+														<td colspan="3">
+															អាសយដ្ឋាន: <span class="pt_name">'. (($prescription->pt_village!='')? 'ភូមិ'.$prescription->pt_village : '') . (($prescription->pt_commune!='')? (($prescription->province->name=='ភ្នំពេញ')? ' សង្កាត់'.$prescription->pt_commune : ' ឃុំ'.$prescription->pt_commune) : '') . (($prescription->district->name!='')? (($prescription->province->name=='ភ្នំពេញ')? ' ខណ្ឌ'.$prescription->district->name : ' ស្រុក'.$prescription->district->name) : ''). (($prescription->province->name!='')? (($prescription->province->name=='ភ្នំពេញ')? ' រាជធានីភ្នំពេញ'.$prescription->province->name : ' ខេត្ត'.$prescription->province->name) : '') .'</span>
 														</td>
 													</tr>
 												</table>
@@ -143,6 +148,9 @@ class PrescriptionRepository
 														'. $tbody .'
 													</tbody>
 												</table>
+												<small class="remark">'. $prescription->remark .'</small>
+												<br/>
+												<div style="color: red; text-align: center;"><u>សូមយកវិក្កយបត្រមកវិញពេលមកពិនិត្យលើក្រោយ</u></div>
 												<table class="table-footer" style="margin-top: 15px;" width="100%">
 													<tr>
 														<td></td>
@@ -184,7 +192,10 @@ class PrescriptionRepository
 					'age' => $request->pt_age,
 					'gender' => (($request->pt_gender=='ប្រុស' || $request->pt_gender == 'male' || $request->pt_gender == 'Male')? '1' : '2'),
 					'phone' => $request->pt_phone,
-					'address' => $request->pt_address,
+					'address_village' => $request->pt_village,
+					'address_commune' => $request->pt_commune,
+					'address_district_id' => $request->pt_district_id,
+					'address_province_id' => $request->pt_province_id,
 					'created_by' => Auth::user()->id,
 					'updated_by' => Auth::user()->id,
 				]);
@@ -200,7 +211,11 @@ class PrescriptionRepository
 			'pt_name' => $request->pt_name,
 			'pt_gender' => $request->pt_gender,
 			'pt_phone' => $request->pt_phone,
-			'pt_address' => $request->pt_address,
+			'pt_village' => $request->pt_village,
+			'pt_commune' => $request->pt_commune,
+			'pt_district_id' => $request->pt_district_id,
+			'pt_province_id' => $request->pt_province_id,
+			'pt_diagnosis' => $request->pt_diagnosis,
 			'remark' => $request->remark,
 			'patient_id' => $patient_id,
 			'created_by' => Auth::user()->id,
@@ -315,7 +330,11 @@ class PrescriptionRepository
 			'pt_name' => $request->pt_name,
 			'pt_gender' => $request->pt_gender,
 			'pt_phone' => $request->pt_phone,
-			'pt_address' => $request->pt_address,
+			'pt_village' => $request->pt_village,
+			'pt_commune' => $request->pt_commune,
+			'pt_district_id' => $request->pt_district_id,
+			'pt_province_id' => $request->pt_province_id,
+			'pt_diagnosis' => $request->pt_diagnosis,
 			'remark' => $request->remark,
 			'patient_id' => $request->patient_id,
 			'updated_by' => Auth::user()->id,

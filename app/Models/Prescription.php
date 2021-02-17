@@ -16,7 +16,11 @@ class Prescription extends Model
 		'pt_name',
 		'pt_gender',
 		'pt_phone',
-		'pt_address',
+		'pt_village',
+		'pt_commune',
+		'pt_district_id',
+		'pt_province_id',
+		'pt_diagnosis',
 		'remark',
 		'patient_id',
 		'created_by',
@@ -34,5 +38,15 @@ class Prescription extends Model
   {
   	return $this->belongsTo(Patient::class, 'patient_id');
 	}
+	
+  public function province()
+  {
+  	return $this->belongsTo(Province::class, 'pt_province_id');
+  }
+
+  public function district()
+  {
+  	return $this->belongsTo(District::class, 'pt_district_id');
+  }
 	
 }
