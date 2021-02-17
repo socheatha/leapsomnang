@@ -153,7 +153,7 @@
 					<div class="col-sm-3">
 						<div class="form-group">
 							{!! Html::decode(Form::label('edit_item_medicine_name', __('label.form.prescription.medicine_name')."<small>*</small>")) !!}
-							{!! Form::text('edit_item_medicine_name', '', ['class' => 'form-control','placeholder' => 'name','required']) !!}
+							{!! Form::text('edit_item_medicine_name', '', ['class' => 'form-control','placeholder' => 'name','required', 'list' => 'medicine_list']) !!}
 						</div>
 					</div>
 					<div class="col-sm-1">
@@ -204,7 +204,6 @@
 	<!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-
 @include('components.confirm_password')
 
 @include('prescription.modal')
