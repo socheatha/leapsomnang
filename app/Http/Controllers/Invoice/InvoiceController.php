@@ -45,7 +45,7 @@ class InvoiceController extends Controller
 			'districts' => [],
 			'inv_number' => $this->invoice->inv_number(),
 			'medicines' => Medicine::getSelectData('id', 'name', '', 'name' ,'asc'),
-			'services' => Service::getSelectData('id', 'name', '', 'name' ,'asc'),
+			'services' => Service::select('id', 'name', 'price', 'description')->orderBy('name' ,'asc')->get(),
 			'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),
 		];
 		return view('invoice.create', $this->data);
@@ -148,7 +148,7 @@ class InvoiceController extends Controller
 			'provinces' => Province::getSelectData(),
 			'districts' => (($invoice->pt_district_id=='')? [] : $invoice->province->getSelectDistrict()),
 			'medicines' => Medicine::getSelectData('id', 'name', '', 'name' ,'asc'),
-			'services' => Service::getSelectData('id', 'name', '', 'name' ,'asc'),
+			'services' => Service::select('id', 'name', 'price', 'description')->orderBy('name' ,'asc')->get(),
 			'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),
 			'invoice_preview' => $this->invoice->getInvoicePreview($invoice->id)->getData()->invoice_detail,
 		];

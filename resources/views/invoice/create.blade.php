@@ -19,7 +19,7 @@
 
 	</div>
 
-	{!! Form::open(['url' => route('invoice.store'),'id' => 'submitForm','method' => 'post','class' => 'mt-3']) !!}
+	{!! Form::open(['url' => route('invoice.store'),'id' => 'submitForm','method' => 'post','class' => 'mt-3', 'autocomplete' => 'off']) !!}
 	<div class="card-body">
 		@include('invoice.form')
 
@@ -30,48 +30,11 @@
 					{{ __('alert.modal.title.invoice_detail') }}
 				</h3>
 				<div class="card-tools">
-					<button type="button" class="btn btn-flat btn-sm btn-success btn-prevent-submit" data-toggle="modal" data-target="#create_invoice_item_modal"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button>
+					<button type="button" class="btn btn-flat btn-sm btn-success btn-prevent-submit" id="btn_add_item"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button>
 				</div>
 			</div>
 			<!-- /.card-header -->
-			<div class="card-body item_list">
-				<div class="mb-2" id="first-item">
-					<div class="row">
-						<div class="col-sm-4">
-							<div class="form-group">
-								{!! Html::decode(Form::label('service_id', __('label.form.invoice.service')." <small>*</small>")) !!}
-								{!! Form::select('service_id[]', $services, '', ['class' => 'form-control select2 service', 'data-id'=>'first-item', 'id'=>'input-service_id-first-item','placeholder' => __('label.form.choose'),'required']) !!}
-							</div>
-						</div>
-						{{-- <div class="col-sm-2">
-							<div class="form-group">
-								{!! Html::decode(Form::label('discount', __('label.form.invoice.discount')." <small>*</small>")) !!}
-								{!! Form::select('discount[]', ['0'=>'0%', '0.05'=>'5%', '0.1'=>'10%', '0.15'=>'15%', '0.2'=>'20%', '0.25'=>'25%', '0.3'=>'30%', '0.35'=>'35%', '0.4'=>'40%', '0.45'=>'45%', '0.5'=>'50%', '0.55'=>'55%', '0.6'=>'60%', '0.65'=>'65%', '0.7'=>'70%', '0.75'=>'75%', '0.8'=>'80%', '0.85'=>'85%', '0.9'=>'90%', '0.95'=>'95%', '1'=>'100%'], '0', ['class' => 'form-control select2', 'id'=>'input-discount-first-item','required']) !!}
-							</div>
-						</div> --}}
-						<div class="col-sm-2">
-							<div class="form-group">
-								{!! Html::decode(Form::label('price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
-								{!! Form::text('price[]', '', ['class' => 'form-control', 'id'=>'input-price-first-item','placeholder' => 'price','required']) !!}
-							</div>
-						</div>
-						<div class="col-sm-5">
-							<div class="form-group">
-								{!! Html::decode(Form::label('description', __('label.form.description')." <small>*</small>")) !!}
-								{!! Form::textarea('description[]', '', ['class' => 'form-control', 'id'=>'input-description-first-item','placeholder' => 'description','style' => 'height: 38px','required']) !!}
-							</div>
-						</div>
-						<div class="col-sm-1">
-							<div class="form-group">
-								{!! Html::decode(Form::label('', __('label.buttons.remove'))) !!}
-								<div>
-									<button class="btn btn-danger btn-flat btn-block btn-prevent-submit" onclick="removeItem('first-item')"><i class="fa fa-trash-alt"></i></button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			<div class="card-body item_list"></div>
 			<!-- /.card-body -->
 		</div>
 
@@ -92,7 +55,9 @@
 
 @section('js')
 <script type="text/javascript">
-
+	$(document).ready(function(){
+		$('#btn_add_item').click();
+	});
 
 	$('[name="pt_province_id"]').change( function(e){
 		if ($(this).val() != '') {
@@ -118,177 +83,44 @@
 	$('.btn-prevent-submit').click(function (event) {
 		event.preventDefault();
 	});
-	
-	$('#btn_add_item').click(function () {
 
-		if ($('[name="item_service_id"]').val()!='' && $('[name="item_price"]').val()!='' && $('[name="item_description"]').val()!='') {
-			
-			var service_id = $('[name="item_service_id"]').val();
-			// var discount = $('[name="item_discount"]').val();
-			var price = $('[name="item_price"]').val();
-			var description = $('[name="item_description"]').val();
-	
-			var id = Math.floor(Math.random() * 1000);
-			$('.item_list').append(`<div class="mb-2" id="${ id }">
-																<div class="row">
-																	<div class="col-sm-4">
-																		<div class="form-group">
-																			{!! Html::decode(Form::label('service_id', __('label.form.invoice.service')." <small>*</small>")) !!}
-																			{!! Form::select('service_id[]', $services, '', ['class' => 'form-control service_add', 'data-id'=>'${ id }', 'id'=>'input-service_id-${ id }','placeholder' => __('label.form.choose'),'required']) !!}
-																		</div>
-																	</div>
-																	<div class="col-sm-2">
-																		<div class="form-group">
-																			{!! Html::decode(Form::label('price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
-																			{!! Form::text('price[]', '', ['class' => 'form-control', 'id'=>'input-price-${ id }','placeholder' => 'price','required']) !!}
-																		</div>
-																	</div>
-																	<div class="col-sm-5">
-																		<div class="form-group">
-																			{!! Html::decode(Form::label('description', __('label.form.description')." <small>*</small>")) !!}
-																			{!! Form::textarea('description[]', '', ['class' => 'form-control', 'id'=>'input-description-${ id }','placeholder' => 'description','style' => 'height: 38px','required']) !!}
-																		</div>
-																	</div>
-																	<div class="col-sm-1">
-																		<div class="form-group">
-																			{!! Html::decode(Form::label('', __('label.buttons.remove'))) !!}
-																			<div>
-																				<button class="btn btn-danger btn-flat btn-block btn-prevent-submit" onclick="removeItem(${ id })"><i class="fa fa-trash-alt"></i></button>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</div>`);
-			
-			$.ajax({
-				url: "{{ route('service.reloadSelectService') }}",
-				method: 'post',
-				data: {
-				},
-				success: function(data){
-					$('#input-service_id-'+id).html(data);
-				}
-			});
-
-			Swal.fire({
-				icon: 'success',
-				title: "{{ __('alert.swal.result.title.success') }}",
-				confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-				timer: 1500
-			})
-			$('[name="item_service_id"]').val('').trigger('change');
-			// $('[name="item_discount"]').val('0').trigger('change');
-			$('[name="item_price"]').val('');
-			$('[name="item_description"]').val('');
-
-			setTimeout(() => {
-				$('#input-service_id-'+id).val(service_id);
-			}, 300);
-			// $('#input-discount-'+id).val(discount);
-			$('#input-price-'+id).val(price);
-			$('#input-description-'+id).val(description);
-			$('.service_add').off().change(function () {
-				if ($(this).val()!='') {
-					var service_id = $(this).val();
-					var id = $(this).data('id');
-					$.ajax({
-						url: "{{ route('service.getDetail') }}",
-						method: 'post',
-						data: {
-								id: service_id,
-						},
-						success: function(data){
-							$('#input-price-'+ id).val( data.service.price );
-							$('#input-description-'+ id).val( data.service.name );
-						}
-					});
-					
-				}
-			});
-		}else{
-			Swal.fire({
-				icon: 'warning',
-				title: "{{ __('alert.swal.title.empty_field') }}",
-				confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-			})
-		}
-		
-		
+	$('#btn_add_item').click(function (event) {
+		event.preventDefault();
+		var id = Math.floor(Math.random() * 1000);
+		$('.item_list').append(`<div class="prescription_item" id="${ id }">
+		<div class="row">
+				<div class="col-sm-4">
+					<div class="form-group">
+						{!! Html::decode(Form::label('service_id', __('label.form.invoice.service')." <small>*</small>")) !!}
+						{!! Form::text('service_id[]', '', ['class' => 'form-control service_add', 'data-id'=>'${ id }', 'id'=>'input-service_id-${ id }','placeholder' => 'name','required', 'list' => 'service_list', 'onchange' => 'load_service_info(\'${id}\', this)']) !!}
+					</div>
+				</div>
+				<div class="col-sm-2">
+					<div class="form-group">
+						{!! Html::decode(Form::label('price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
+						{!! Form::text('price[]', '', ['class' => 'form-control', 'id'=>'input-price-${ id }','placeholder' => 'price','required']) !!}
+					</div>
+				</div>
+				<div class="col-sm-5">
+					<div class="form-group">
+						{!! Html::decode(Form::label('description', __('label.form.description')." <small>*</small>")) !!}
+						{!! Form::textarea('description[]', '', ['class' => 'form-control', 'id'=>'input-description-${ id }','placeholder' => 'description','style' => 'height: 38px','required']) !!}
+					</div>
+				</div>
+				<div class="col-sm-1">
+					<div class="form-group">
+						{!! Html::decode(Form::label('', __('label.buttons.remove'))) !!}
+						<div>
+							<button class="btn btn-danger btn-flat btn-block btn-prevent-submit" onclick="removeItem(${ id })"><i class="fa fa-trash-alt"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>`);
 	});
 
 	function removeItem(id) {
 		$('#'+id).remove();
-	}
-
-	$('#btn_save_service').click(function () {
-		if ($('[name="service_name"]').val()!='' && $('[name="service_price"]').val()!='') {
-			$.ajax({
-				url: "{{ route('service.createService') }}",
-				method: 'post',
-				data: {
-					name: $('[name="service_name"]').val(),
-					price: $('[name="service_price"]').val(),
-					description: $('[name="service_description"]').val(),
-				},
-				success: function(data){
-					$('#create_service_modal .invalid-feedback').remove();
-					$('#create_service_modal .form-control').removeClass('is-invalid');
-					if (data.errors) {
-						$.each(data.errors, function(key, value){
-							console.log(key);
-							$('#create_service_modal .service'+key+' input').addClass('is-invalid');
-							$('#create_service_modal .service'+key).append('<span class="invalid-feedback">'+value+'</span>');
-						});
-						Swal.fire({
-							icon: 'error',
-							title: "{{ __('alert.swal.result.title.error') }}",
-							confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-							timer: 1500
-						})
-					}
-					if (data.success) {
-						$('[name="service_name"]').val('');
-						$('[name="service_price"]').val('');
-						$('[name="service_description"]').val('');
-						$('.service').append('<option value="'+ data.service.id  +'">'+ data.service.name +'</option>');
-						
-						$('.service').select2({
-							theme: 'bootstrap4',
-						});
-						
-						$('#create_service_modal').modal('hide');
-						// reloadSelectService(data.service.id)
-						Swal.fire({
-							icon: 'success',
-							title: "{{ __('alert.swal.result.title.success') }}",
-							confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-							timer: 1500
-						})
-					}
-				}
-			});
-		}else{
-			Swal.fire({
-				icon: 'warning',
-				title: "{{ __('alert.swal.title.empty_field') }}",
-				confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-			})
-		}
-	});
-
-	function reloadSelectService(id) {
-		
-		$.ajax({
-			url: "{{ route('service.reloadSelectService') }}",
-			method: 'post',
-			data: {
-			},
-			success: function(data){
-				$('#item_service_id').html(data);
-				// $('#item_service_id').val(id).trigger('change');
-
-			}
-		});
 	}
 
 	$(".select2_pagination").change(function () {
@@ -318,49 +150,14 @@
 			},
 			cache: true
 		}
-	});
+	});	
 
-	$('#input-service_id-first-item').change(function () {
-		console.log($(this).val());
-		if ($(this).val()!='') {
-			var service_id = $(this).val();
-			var id = $(this).data('id');
-			$.ajax({
-				url: "{{ route('service.getDetail') }}",
-				method: 'post',
-				data: {
-						id: service_id,
-				},
-				success: function(data){
-					// var id = $(this).val();
-					// console.log(id);
-					$('#input-price-'+ id).val( data.service.price );
-					$('#input-description-'+ id).val( data.service.name );
-				}
-			});
-			
-		}
-	});
-
-	$('[name="item_service_id"]').change(function () {
-		console.log($(this).val());
-		if ($(this).val()!='') {
-			var service_id = $(this).val();
-			var id = $(this).data('id');
-			$.ajax({
-				url: "{{ route('service.getDetail') }}",
-				method: 'post',
-				data: {
-						id: service_id,
-				},
-				success: function(data){
-					$('[name="item_price"]').val( data.service.price );
-					$('[name="item_description"]').val( data.service.name );
-				}
-			});
-			
-		}
-	});
+	function load_service_info(id, _this){
+		_this = $(_this);
+		let value = _this.val();
+		if($('option[value="'+value+'"]').data('price')) $('#input-price-'+id).val($('option[value="'+value+'"]').data('price'));
+		if($('option[value="'+value+'"]').data('description')) $('#input-description-'+id).val($('option[value="'+value+'"]').data('description'));
+	}
 
 	$('#patient_id').change(function () {
 		if ($(this).val()!='') {

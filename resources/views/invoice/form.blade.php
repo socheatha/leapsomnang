@@ -143,6 +143,11 @@
       </div>
     </div>
   </div>
+  <datalist id="service_list">
+    @foreach ($services as $m)
+      <option data-price="{!! $m->price !!}" data-description="{!! $m->description !!}" value="{!! $m->name !!}">
+    @endforeach
+  </datalist>
 
 
 

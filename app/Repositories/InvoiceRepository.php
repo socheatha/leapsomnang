@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Invoice;
 use App\Models\InvoiceDetail;
 use App\Models\Patient;
+use App\Models\Service;
 use App\Repositories\PatientRepository;
 use Yajra\DataTables\Facades\DataTables;
 use Hash;
@@ -271,7 +272,7 @@ class InvoiceRepository
 						// 'discount' => $request->discount[$i],
 						'description' => $request->description[$i],
 						'index' => $i + 1,
-						'service_id' => $request->service_id[$i],
+						'service_id' => $this->get_service_id_or_create($request->service_id[$i], $request->price[$i], $request->description[$i]),
 						'invoice_id' => $invoice->id,
 						'created_by' => Auth::user()->id,
 						'updated_by' => Auth::user()->id,
@@ -414,5 +415,21 @@ class InvoiceRepository
 			'success'=>'success',
 			'invoice_preview' => $json->invoice_detail,
 		]);
+	}
+
+	public function get_service_id_or_create($name = '', $price = 0, $description = '')
+	{
+		$name = trim($name);
+		$service = Service::where('name', $name)->first();
+
+		if ($service != null) return $service->id;
+		$created_service = Service::create([
+			'name' => $name,
+			'price' => $price,
+			'description' => $description,
+			'created_by' => Auth::user()->id,
+			'updated_by' => Auth::user()->id,
+		]);
+		return $created_service->id;
 	}
 }
