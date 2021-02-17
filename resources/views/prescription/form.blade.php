@@ -89,6 +89,11 @@
       </div>
     </div>
   </div>
+  <datalist id="medicine_list">
+    @foreach ($medicines as $m)
+      <option value="{!! $m !!}">
+    @endforeach
+  </datalist>
 
 
 

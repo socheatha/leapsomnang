@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Patient;
 use App\Models\Prescription;
 use App\Models\PrescriptionDetail;
+use App\Models\Medicine;
 use Yajra\DataTables\Facades\DataTables;
 use Hash;
 use Auth;
@@ -205,23 +206,33 @@ class PrescriptionRepository
 			'created_by' => Auth::user()->id,
 			'updated_by' => Auth::user()->id,
 		]);
-		
+
 		if (isset($request->medicine_name) && isset($request->medicine_usage)) {
 			for ($i = 0; $i < count($request->medicine_name); $i++) {
-				$prescription_detail = PrescriptionDetail::create([
-						'medicine_name' => $request->medicine_name[$i],
-						'medicine_usage' => $request->medicine_usage[$i],
-						'morning' => $request->morning[$i],
-						'afternoon' => $request->afternoon[$i],
-						'evening' => $request->evening[$i],
-						'night' => $request->night[$i],
-						'description' => $request->description[$i],
-						'index' => $i + 1,
-						// 'medicine_id' => $request->medicine_id[$i],
-						'prescription_id' => $prescription->id,
-						'created_by' => Auth::user()->id,
-						'updated_by' => Auth::user()->id,
-					]);
+
+				// Get medicine or create if not exitst
+				$medicine = Medicine::select(['id'])->where('name', trim($request->medicine_name[$i]))->first();
+				if ($medicine != null) {
+					$medicine_id = $medicine->id;
+				} else {
+					$created_medicine = Medicine::create(['name' => $request->medicine_name[$i], 'created_by' => Auth::user()->id, 'updated_by' => Auth::user()->id]);
+					$medicine_id = $created_medicine->id;
+				}
+
+				PrescriptionDetail::create([
+					'medicine_name' => $request->medicine_name[$i],
+					'medicine_usage' => $request->medicine_usage[$i],
+					'morning' => $request->morning[$i],
+					'afternoon' => $request->afternoon[$i],
+					'evening' => $request->evening[$i],
+					'night' => $request->night[$i],
+					'description' => $request->description[$i],
+					'index' => $i + 1,
+					'medicine_id' => $medicine_id,
+					'prescription_id' => $prescription->id,
+					'created_by' => Auth::user()->id,
+					'updated_by' => Auth::user()->id,
+				]);
 			}
 		}
 
