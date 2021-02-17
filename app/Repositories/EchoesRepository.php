@@ -102,7 +102,7 @@ class EchoesRepository
 															</td>
 														</tr>
 													</table>
-													<table class="table-information" width="100%" style="border-top: 4px solid red; margin: 10px 0 15px 0;">
+													<table class="table-information" width="100%" style="border-top: 4px solid red; margin: 10px 0 6px 0;">
 														<tr>
 															<td colspan="3">
 																<h5 class="text-center KHOSMoulLight" style="padding: 20px 0 10px; color: blue;">'. $echoes->echo_default_description->name .'</h5>
@@ -119,9 +119,16 @@ class EchoesRepository
 																អាយុ: <span class="pt_age">'. $echoes->pt_age .'</span>
 															</td>
 														</tr>
+														<tr>
+															<td colspan="3">
+																អាសយដ្ឋាន: <span class="pt_name">'. (($echoes->pt_village!='')? 'ភូមិ'.$echoes->pt_village : '') . (($echoes->pt_commune!='')? (($echoes->province->name=='ភ្នំពេញ')? ' សង្កាត់'.$echoes->pt_commune : ' ឃុំ'.$echoes->pt_commune) : '') . (($echoes->district->name!='')? (($echoes->province->name=='ភ្នំពេញ')? ' ខណ្ឌ'.$echoes->district->name : ' ស្រុក'.$echoes->district->name) : ''). (($echoes->province->name!='')? (($echoes->province->name=='ភ្នំពេញ')? ' រាជធានីភ្នំពេញ'.$echoes->province->name : ' ខេត្ត'.$echoes->province->name) : '') .'</span>
+															</td>
+														</tr>
 													</table>
 													<div class="echo_description">
-														'. $echoes->pt_diagnosis .'
+														<div style="margin-bottom: 10px;">
+															'. $echoes->pt_diagnosis .'
+														</div>
 														'. $echoes->description .'
 													</div>
 													<table class="table-detail" width="100%">
@@ -142,7 +149,7 @@ class EchoesRepository
 															</td>
 														</tr>
 													</table>
-													<div style="color: red; margin-top: 15px;" class="text-center color_red">សូមកាន់លទ្ធផលនេះមកជាមួយផង ពេលពិនិត្យលើកក្រោយ អរគុណ។</div>
+													<div style="color: red; margin-top: 15px;" class="text-center color_red"><u>សូមកាន់លទ្ធផលនេះមកជាមួយផង ពេលពិនិត្យលើកក្រោយ អរគុណ។</u></div>
 													<br/>
 												</section>';
 		}
@@ -170,7 +177,10 @@ class EchoesRepository
 					'age' => $request->pt_age,
 					'gender' => (($request->pt_gender=='ប្រុស' || $request->pt_gender == 'male' || $request->pt_gender == 'Male')? '1' : '2'),
 					'phone' => $request->pt_phone,
-					'address' => $request->pt_address,
+					'address_village' => $request->pt_village,
+					'address_commune' => $request->pt_commune,
+					'address_district_id' => $request->pt_district_id,
+					'address_province_id' => $request->pt_province_id,
 					'created_by' => Auth::user()->id,
 					'updated_by' => Auth::user()->id,
 				]);

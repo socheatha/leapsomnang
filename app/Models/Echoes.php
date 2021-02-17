@@ -38,4 +38,14 @@ class Echoes extends Model
   	return $this->belongsTo(Patient::class, 'patient_id');
 	}
 
+  public function province()
+  {
+  	return $this->belongsTo(Province::class, 'pt_province_id');
+  }
+
+  public function district()
+  {
+  	return $this->belongsTo(District::class, 'pt_district_id');
+  }
+	
 }
