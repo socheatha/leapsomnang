@@ -209,16 +209,6 @@ class PrescriptionRepository
 
 		if (isset($request->medicine_name) && isset($request->medicine_usage)) {
 			for ($i = 0; $i < count($request->medicine_name); $i++) {
-
-				// Get medicine or create if not exitst
-				$medicine = Medicine::select(['id'])->where('name', trim($request->medicine_name[$i]))->first();
-				if ($medicine != null) {
-					$medicine_id = $medicine->id;
-				} else {
-					$created_medicine = Medicine::create(['name' => $request->medicine_name[$i], 'created_by' => Auth::user()->id, 'updated_by' => Auth::user()->id]);
-					$medicine_id = $created_medicine->id;
-				}
-
 				PrescriptionDetail::create([
 					'medicine_name' => $request->medicine_name[$i],
 					'medicine_usage' => $request->medicine_usage[$i],
@@ -228,7 +218,7 @@ class PrescriptionRepository
 					'night' => $request->night[$i],
 					'description' => $request->description[$i],
 					'index' => $i + 1,
-					'medicine_id' => $medicine_id,
+					'medicine_id' => $this->get_medicine_id_or_create($request->medicine_name[$i]),
 					'prescription_id' => $prescription->id,
 					'created_by' => Auth::user()->id,
 					'updated_by' => Auth::user()->id,
@@ -280,7 +270,7 @@ class PrescriptionRepository
 			'evening' => $request->evening,
 			'night' => $request->night,
 			'description' => $request->description,
-			'medicine_id' => $request->medicine_id,
+			'medicine_id' => $this->get_medicine_id_or_create($request->medicine_name),
 			'updated_by' => Auth::user()->id,
 		]);
 
@@ -290,6 +280,14 @@ class PrescriptionRepository
 			'prescription_detail' => $prescription_detail,
 			'prescription_preview' => $json->prescription_detail,
 		]);
+	}
+
+	public function get_medicine_id_or_create($medicine_name = ''){
+		$medicine_name = trim($medicine_name);
+		$medicine = Medicine::select(['id'])->where('name', $medicine_name)->first();
+		if ($medicine != null) return $medicine->id;
+		$created_medicine = Medicine::create(['name' => $medicine_name, 'created_by' => Auth::user()->id, 'updated_by' => Auth::user()->id]);
+		return $created_medicine->id;
 	}
 
 	public function save_order($request)
