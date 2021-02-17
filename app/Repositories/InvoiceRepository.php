@@ -75,7 +75,7 @@ class InvoiceRepository
 			$total += $amount;
 			$tbody .= '<tr>
 									<td class="text-center">' . $no++ . '</td>
-									<td colspan="3">' . $invoice_detail->description . '</td>
+									<td colspan="3">' . $invoice_detail->name . '</td>
 									<td class="text-right"><span class="pull-left float-left">$</span> ' . number_format($amount, 2) . '</td>
 								</tr>';
 		}
@@ -265,14 +265,15 @@ class InvoiceRepository
 			'updated_by' => Auth::user()->id,
 		]);
 		
-		if (isset($request->service_id) && isset($request->price) && isset($request->description)) {
-			for ($i = 0; $i < count($request->service_id); $i++) {
-				$invoice_detail = InvoiceDetail::create([
+		if (isset($request->service_name) && isset($request->price) && isset($request->description)) {
+			for ($i = 0; $i < count($request->service_name); $i++) {
+				InvoiceDetail::create([
+						'name' => $request->service_name[$i],
 						'amount' => $request->price[$i],
 						// 'discount' => $request->discount[$i],
 						'description' => $request->description[$i],
 						'index' => $i + 1,
-						'service_id' => $this->get_service_id_or_create($request->service_id[$i], $request->price[$i], $request->description[$i]),
+						'service_id' => $this->get_service_id_or_create($request->service_name[$i], $request->price[$i], $request->description[$i]),
 						'invoice_id' => $invoice->id,
 						'created_by' => Auth::user()->id,
 						'updated_by' => Auth::user()->id,
@@ -290,11 +291,12 @@ class InvoiceRepository
 		$index = (($last_item !== null) ? $last_item->index + 1 : 1);
 
 		$invoice_detail = InvoiceDetail::create([
+												'name' => $request->service_name,
 												// 'discount' => $request->discount,
 												'amount' => $request->price,
 												'description' => $request->description,
 												'index' => $index,
-												'service_id' => $request->service_id,
+												'service_id' => $this->get_service_id_or_create($request->service_name, $request->price, $request->description),
 												'invoice_id' => $request->invoice_id,
 												'created_by' => Auth::user()->id,
 												'updated_by' => Auth::user()->id,
@@ -313,10 +315,11 @@ class InvoiceRepository
 	{
 		$invoice_detail = InvoiceDetail::find($request->id);
 		$invoice_detail->update([
+			'name' => $request->service_name,
 			'amount' => $request->price,
 			// 'discount' => $request->discount,
 			'description' => $request->description,
-			'service_id' => $request->service_id,
+			'service_id' => $this->get_service_id_or_create($request->service_name, $request->price, $request->description),
 			'updated_by' => Auth::user()->id,
 		]);
 

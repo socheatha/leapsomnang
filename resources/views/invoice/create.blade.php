@@ -92,7 +92,7 @@
 				<div class="col-sm-4">
 					<div class="form-group">
 						{!! Html::decode(Form::label('service_id', __('label.form.invoice.service')." <small>*</small>")) !!}
-						{!! Form::text('service_id[]', '', ['class' => 'form-control service_add', 'data-id'=>'${ id }', 'id'=>'input-service_id-${ id }','placeholder' => 'name','required', 'list' => 'service_list', 'onchange' => 'load_service_info(\'${id}\', this)']) !!}
+						{!! Form::text('service_name[]', '', ['class' => 'form-control service_add', 'data-id'=>'${ id }', 'id'=>'input-service_id-${ id }','placeholder' => 'name','required', 'list' => 'service_list', 'onchange' => 'load_service_info(\'${id}\', this)']) !!}
 					</div>
 				</div>
 				<div class="col-sm-2">
@@ -103,8 +103,8 @@
 				</div>
 				<div class="col-sm-5">
 					<div class="form-group">
-						{!! Html::decode(Form::label('description', __('label.form.description')." <small>*</small>")) !!}
-						{!! Form::textarea('description[]', '', ['class' => 'form-control', 'id'=>'input-description-${ id }','placeholder' => 'description','style' => 'height: 38px','required']) !!}
+						{!! Html::decode(Form::label('description', __('label.form.description'))) !!}
+						{!! Form::textarea('description[]', '', ['class' => 'form-control', 'id'=>'input-description-${ id }','placeholder' => 'description','style' => 'height: 38px']) !!}
 					</div>
 				</div>
 				<div class="col-sm-1">

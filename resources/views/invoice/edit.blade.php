@@ -47,9 +47,21 @@
 				@foreach ($invoice->invoice_details as $order => $invoice_detail)
 					<div class="prescription_item" id="{{ $invoice_detail->id }}">
 						<div class="row">
-							<div class="col-sm-7">
+							<div class="col-sm-4">
 								<div class="form-group">
-									{!! Html::decode(Form::label('show_description', __('label.form.description')." <small>*</small>")) !!}
+									{!! Html::decode(Form::label('show_description', __('label.form.invoice.service')." <small>*</small>")) !!}
+									{!! Form::text('show_name', $invoice_detail->name, ['class' => 'form-control','form' => 'description','placeholder' => 'name','style' => 'height: 38px','id' => 'input-name-'. $invoice_detail->id ,'readonly']) !!}
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<div class="form-group">
+									{!! Html::decode(Form::label('show_price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
+									{!! Form::text('show_price', $invoice_detail->amount, ['class' => 'form-control','placeholder' => 'price','id' => 'input-amount-'. $invoice_detail->id ,'readonly']) !!}
+								</div>
+							</div>
+							<div class="col-sm-5">
+								<div class="form-group">
+									{!! Html::decode(Form::label('show_description', __('label.form.description'))) !!}
 									{!! Form::text('show_description', $invoice_detail->description, ['class' => 'form-control','form' => 'description','placeholder' => 'description','style' => 'height: 38px','id' => 'input-description-'. $invoice_detail->id ,'readonly']) !!}
 								</div>
 							</div>
@@ -59,12 +71,6 @@
 									{!! Form::text('show_discount', ($invoice_detail->discount*100).'%', ['class' => 'form-control','placeholder' => 'discount','id' => 'input-discount-'. $invoice_detail->id ,'readonly']) !!}
 								</div>
 							</div> --}}
-							<div class="col-sm-4">
-								<div class="form-group">
-									{!! Html::decode(Form::label('show_price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
-									{!! Form::text('show_price', $invoice_detail->amount, ['class' => 'form-control','placeholder' => 'price','id' => 'input-amount-'. $invoice_detail->id ,'readonly']) !!}
-								</div>
-							</div>
 							<div class="col-sm-1">
 								<div class="form-group">
 									{!! Html::decode(Form::label('', __('label.buttons.action'))) !!}
@@ -117,12 +123,9 @@
 					<div class="col-sm-5">
 						<div class="form-group">
 							{!! Form::hidden('edit_item_id', '') !!}
-							{!! Html::decode(Form::label('edit_item_service_id', __('label.form.invoice.service')." <small>*</small>")) !!}
+							{!! Html::decode(Form::label('edit_item_service_name', __('label.form.invoice.service')." <small>*</small>")) !!}
 							<div class="input-group">
-								{!! Form::select('edit_item_service_id', $services, '', ['class' => 'form-control select2 service','placeholder' => __('label.form.choose'),'required']) !!}
-								<div class="input-group-append">
-									<button type="button" class="btn btn-flat btn-info add_service"><i class="fa fa-plus-circle"></i></button>
-								</div>
+								{!! Form::text('edit_item_service_name', '', ['class' => 'form-control','placeholder' => 'name','required', 'list' => 'service_list']) !!}
 							</div>
 						</div>
 					</div>
@@ -140,7 +143,7 @@
 					</div>
 					<div class="col-sm-5">
 						<div class="form-group invoice_item_description">
-							{!! Html::decode(Form::label('edit_item_description', __('label.form.description')." <small>*</small>")) !!}
+							{!! Html::decode(Form::label('edit_item_description', __('label.form.description'))) !!}
 							{!! Form::textarea('edit_item_description', '', ['class' => 'form-control','placeholder' => 'description','style' => 'height: 38px','required']) !!}
 						</div>
 					</div>
@@ -335,50 +338,20 @@
 		});
 	});
 
-	$('[name="item_service_id"]').change(function () {
+	$('[name="item_service_name"]').on('change', function () {
 		if ($(this).val()!='') {
-			var service_id = $(this).val();
-			$.ajaxSetup({
-				headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				}
-			});
-			$.ajax({
-				url: "{{ route('service.getDetail') }}",
-				method: 'post',
-				data: {
-						id: service_id,
-				},
-				success: function(data){
-					$('[name="item_price"]').val( data.service.price );
-					$('[name="item_description"]').val( data.service.name );
-				}
-			});
-			
+			var value = $(this).val();
+			if ($('option[value="'+value+'"]').data('price')) $('[name="item_price"]').val($('option[value="'+value+'"]').data('price'));
+			if ($('option[value="'+value+'"]').data('description')) $('[name="item_description"]').val($('option[value="'+value+'"]').data('description'));			
 		}
 	});
 	
 
-	$('[name="edit_item_service_id"]').change(function () {
+	$('[name="edit_item_service_name"]').on('change', function () {
 		if ($(this).val()!='') {
-			var service_id = $(this).val();
-			$.ajaxSetup({
-				headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				}
-			});
-			$.ajax({
-				url: "{{ route('service.getDetail') }}",
-				method: 'post',
-				data: {
-						id: service_id,
-				},
-				success: function(data){
-					$('[name="edit_item_price"]').val( data.service.price );
-					$('[name="edit_item_description"]').val( data.service.name );
-				}
-			});
-			
+			var value = $(this).val();
+			if ($('option[value="'+value+'"]').data('price')) $('[name="edit_item_price"]').val($('option[value="'+value+'"]').data('price'));
+			if ($('option[value="'+value+'"]').data('description')) $('[name="edit_item_description"]').val($('option[value="'+value+'"]').data('description'));			
 		}
 	});
 	
@@ -391,9 +364,9 @@
 			},
 		})
 		.done(function( result ) {
-			$('[name="edit_item_service_id"]').val(result.invoice_detail.service_id).trigger('change');
+			$('[name="edit_item_service_name"]').val(result.invoice_detail.name).trigger('change');
 			$('[name="edit_item_price"]').val(result.invoice_detail.amount);
-			$('[name="edit_item_discount"]').val(result.invoice_detail.discount).trigger('change');
+			// $('[name="edit_item_discount"]').val(result.invoice_detail.discount).trigger('change');
 			$('[name="edit_item_description"]').val(result.invoice_detail.description);
 			$('[name="edit_item_id"]').val(result.invoice_detail.id);
 			$('#edit_invoice_item_modal').modal('show');
@@ -448,8 +421,8 @@
 			data: {
 				id: $('[name="edit_item_id"]').val(),
 				price: $('[name="edit_item_price"]').val(),
-				discount: $('[name="edit_item_discount"]').val(),
-				service_id: $('[name="edit_item_service_id"]').val(),
+				// discount: $('[name="edit_item_discount"]').val(),
+				service_name: $('[name="edit_item_service_name"]').val(),
 				description: $('[name="edit_item_description"]').val()
 			},
 		})
@@ -470,41 +443,47 @@
 				})
 			}
 			if (data.success) {
-				$('[name="edit_item_service_id"]').val('').trigger('change');
+				$('[name="edit_item_service_name"]').val('').trigger('change');
 				$('[name="edit_item_price"]').val('');
 				$('[name="edit_item_discount"]').val('').trigger('change');
 				$('[name="edit_item_description"]').val('');
 				$('[name="edit_item_id"]').val('');
 				$('.print-preview').html(data.invoice_preview);
 				$("#"+ data.invoice_detail.id ).html(`<div class="row">
-																									<div class="col-sm-7">
-																										<div class="form-group">
-																											{!! Html::decode(Form::label('show_description', __('label.form.description')." <small>*</small>")) !!}
-																											<input name="show_description" class="form-control" style="height: 38px;" id="input-description-${ data.invoice_detail.id }" value="${ data.invoice_detail.description }" placeholder="description" readonly="" />
-																										</div>
-																									</div>
-																									<div class="col-sm-2">
-																										<div class="form-group">
-																											{!! Html::decode(Form::label('show_discount', __('label.form.invoice.discount')." <small>*</small>")) !!}
-																											<input name="show_discount" class="form-control" id="input-discount-${ data.invoice_detail.id }" value="${ data.invoice_detail.discount * 100 }%" placeholder="discount" readonly="" />
-																										</div>
-																									</div>
-																									<div class="col-sm-2">
-																										<div class="form-group">
-																											{!! Html::decode(Form::label('show_price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
-																											<input name="show_price" class="form-control" id="input-price-${ data.invoice_detail.id }" value="${ data.invoice_detail.amount }" placeholder="price" readonly="" />
-																										</div>
-																									</div>
-																									<div class="col-sm-1">
-																										<div class="form-group">
-																											{!! Html::decode(Form::label('', __('label.buttons.action'))) !!}
-																											<div>
-																												<button class="btn btn-info btn-flat" onclick="editInvoiceDetail('${ data.invoice_detail.id }')"><i class="fa fa-pencil-alt"></i></button>
-																												<button class="btn btn-danger btn-flat" onclick="deleteInvoiceDetail(${ data.invoice_detail.id })"><i class="fa fa-trash-alt"></i></button>
-																											</div>
-																										</div>
-																									</div>
-																								</div>`);
+						<div class="col-sm-4">
+							<div class="form-group">
+								{!! Html::decode(Form::label('show_description', __('label.form.description')." <small>*</small>")) !!}
+								<input name="show_service_name" class="form-control" style="height: 38px;" id="input-name-${ data.invoice_detail.id }" value="${ data.invoice_detail.name }" placeholder="description" readonly="" />
+							</div>
+						</div>
+						{{-- <div class="col-sm-2">
+							<div class="form-group">
+								{!! Html::decode(Form::label('show_discount', __('label.form.invoice.discount')." <small>*</small>")) !!}
+								<input name="show_discount" class="form-control" id="input-discount-${ data.invoice_detail.id }" value="${ data.invoice_detail.discount * 100 }%" placeholder="discount" readonly="" />
+							</div>
+						</div> --}}
+						<div class="col-sm-2">
+							<div class="form-group">
+								{!! Html::decode(Form::label('show_price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
+								<input name="show_price" class="form-control" id="input-price-${ data.invoice_detail.id }" value="${ data.invoice_detail.amount }" placeholder="price" readonly="" />
+							</div>
+						</div>
+						<div class="col-sm-5">
+							<div class="form-group">
+								{!! Html::decode(Form::label('show_description', __('label.form.description'))) !!}
+								<input name="show_description" class="form-control" style="height: 38px;" id="input-description-${ data.invoice_detail.id }" value="${ data.invoice_detail.description ? data.invoice_detail.description : '' }" placeholder="description" readonly="" />
+							</div>
+						</div>
+						<div class="col-sm-1">
+							<div class="form-group">
+								{!! Html::decode(Form::label('', __('label.buttons.action'))) !!}
+								<div>
+									<button type="button" class="btn btn-info btn-flat btn-prevent-submit" onclick="editInvoiceDetail('${ data.invoice_detail.id }')"><i class="fa fa-pencil-alt"></i></button>
+									<button type="button" class="btn btn-danger btn-flat btn-prevent-submit" onclick="deleteInvoiceDetail(${ data.invoice_detail.id })"><i class="fa fa-trash-alt"></i></button>
+								</div>
+							</div>
+						</div>
+					</div>`);
 				Swal.fire({
 					icon: 'success',
 					title: "{{ __('alert.swal.result.title.success') }}",
@@ -517,7 +496,7 @@
 	});
 
 	$('#btn_add_item').click(function () {
-		if ($('[name="item_service_id"]').val() !='' && $('[name="item_price"]').val() !='' && $('[name="item_description"]').val() !='') {
+		if ($('[name="item_service_name"]').val() !='' && $('[name="item_price"]').val() !='') {
 		
 			$.ajax({
 				url: "{{ route('invoice.invoice_detail.store') }}",
@@ -525,7 +504,7 @@
 				data: {
 						invoice_id: '{{ $invoice->id }}',
 						medicine_id: (($('[name="item_medicine_id"]'))? $('[name="item_medicine_id"]').val() : ''),
-						service_id: (($('[name="item_service_id"]'))? $('[name="item_service_id"]').val() : ''),
+						service_name: (($('[name="item_service_name"]'))? $('[name="item_service_name"]').val() : ''),
 						discount: $('[name="item_discount"]').val(),
 						price: $('[name="item_price"]').val(),
 						description: $('[name="item_description"]').val(),
@@ -533,43 +512,49 @@
 				success: function(data){
 					$('.print-preview').html(data.invoice_preview);
 					$('[name="item_medicine_id"]').val('').trigger('change');
-					$('[name="item_service_id"]').val('').trigger('change');
+					$('[name="item_service_name"]').val('').trigger('change');
 					$('[name="item_discount"]').val('0').trigger('change');
 					$('[name="item_price"]').val( '' );
 					$('[name="item_description"]').val( '' );
 					$('#create_invoice_item_modal').modal('hide');
 					
 					$(".item_list").append(`<div class="prescription_item" id="${ data.invoice_detail.id }">
-																		<div class="row">
-																			<div class="col-sm-7">
-																				<div class="form-group">
-																					{!! Html::decode(Form::label('show_description', __('label.form.description')." <small>*</small>")) !!}
-																					<input name="show_description" class="form-control" style="height: 38px;" id="input-description-${ data.invoice_detail.id }" value="${ data.invoice_detail.description }" placeholder="description" readonly="" />
-																				</div>
-																			</div>
-																			<div class="col-sm-2">
-																				<div class="form-group">
-																					{!! Html::decode(Form::label('show_discount', __('label.form.invoice.discount')." <small>*</small>")) !!}
-																					<input name="show_discount" class="form-control" id="input-discount-${ data.invoice_detail.id }" value="${ parseFloat(data.invoice_detail.discount) * 100 }%" placeholder="discount" readonly="" />
-																				</div>
-																			</div>
-																			<div class="col-sm-2">
-																				<div class="form-group">
-																					{!! Html::decode(Form::label('show_price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
-																					<input name="show_price" class="form-control" id="input-price-${ data.invoice_detail.id }" value="${ data.invoice_detail.amount }" placeholder="price" readonly="" />
-																				</div>
-																			</div>
-																			<div class="col-sm-1">
-																				<div class="form-group">
-																					{!! Html::decode(Form::label('', __('label.buttons.action'))) !!}
-																					<div>
-																						<button class="btn btn-info btn-flat btn-prevent-submit" onclick="editInvoiceDetail('${ data.invoice_detail.id }')"><i class="fa fa-pencil-alt"></i></button>
-																						<button class="btn btn-danger btn-flat btn-prevent-submit" onclick="deleteInvoiceDetail(${ data.invoice_detail.id })"><i class="fa fa-trash-alt"></i></button>
-																					</div>
-																				</div>
-																			</div>
-																		</div>
-																	</div>`);
+								<div class="row">
+									<div class="col-sm-4">
+										<div class="form-group">
+											{!! Html::decode(Form::label('show_description', __('label.form.description')." <small>*</small>")) !!}
+											<input name="show_service_name" class="form-control" style="height: 38px;" id="input-name-${ data.invoice_detail.id }" value="${ data.invoice_detail.name }" placeholder="description" readonly="" />
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											{!! Html::decode(Form::label('show_price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
+											<input name="show_price" class="form-control" id="input-price-${ data.invoice_detail.id }" value="${ data.invoice_detail.amount }" placeholder="price" readonly="" />
+										</div>
+									</div>
+									{{-- <div class="col-sm-2">
+										<div class="form-group">
+											{!! Html::decode(Form::label('show_discount', __('label.form.invoice.discount')." <small>*</small>")) !!}
+											<input name="show_discount" class="form-control" id="input-discount-${ data.invoice_detail.id }" value="${ parseFloat(data.invoice_detail.discount) * 100 }%" placeholder="discount" readonly="" />
+										</div>
+									</div> --}}
+									<div class="col-sm-5">
+										<div class="form-group">
+											{!! Html::decode(Form::label('show_description', __('label.form.description')." <small>*</small>")) !!}
+											<input name="show_description" class="form-control" style="height: 38px;" id="input-description-${ data.invoice_detail.id }" value="${ data.invoice_detail.description ? data.invoice_detail.description : '' }" placeholder="description" readonly="" />
+										</div>
+									</div>
+									<div class="col-sm-1">
+										<div class="form-group">
+											{!! Html::decode(Form::label('', __('label.buttons.action'))) !!}
+											<div>
+												<button type="button" class="btn btn-info btn-flat btn-prevent-submit" onclick="editInvoiceDetail('${ data.invoice_detail.id }')"><i class="fa fa-pencil-alt"></i></button>
+												<button type="button" class="btn btn-danger btn-flat btn-prevent-submit" onclick="deleteInvoiceDetail(${ data.invoice_detail.id })"><i class="fa fa-trash-alt"></i></button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>`);
 					
 					$('.btn-prevent-submit').click(function (event) {
 						event.preventDefault();

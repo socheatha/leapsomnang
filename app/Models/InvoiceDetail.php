@@ -9,7 +9,7 @@ use App\Models\Service;
 class InvoiceDetail extends Model
 {
 	protected $fillable = [
-		'amount', 'qty', 'discount', 'description', 'index', 'invoice_id', 'service_id', 'created_by', 'updated_by',
+		'name', 'amount', 'qty', 'discount', 'description', 'index', 'invoice_id', 'service_id', 'created_by', 'updated_by',
 	];
 
 	protected $table = 'invoice_details';

@@ -98,7 +98,7 @@ class InvoiceController extends Controller
 		$validator = \Validator::make($request->all(), [
 			'price' => 'required|numeric',
 			// 'discount' => 'required',
-			'description' => 'required',
+			// 'description' => 'required',
 		]);
 		
 		if ($validator->fails())
@@ -112,8 +112,8 @@ class InvoiceController extends Controller
 	{
 		$validator = \Validator::make($request->all(), [
 			'price' => 'required|numeric',
-			'discount' => 'required',
-			'description' => 'required',
+			// 'discount' => 'required',
+			// 'description' => 'required',
 		]);
 		
 		if ($validator->fails())

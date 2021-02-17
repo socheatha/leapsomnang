@@ -12,12 +12,9 @@
 				<div class="row">
 					<div class="col-sm-5">
 						<div class="form-group">
-							{!! Html::decode(Form::label('item_service_id', __('label.form.invoice.service')." <small>*</small>")) !!}
+							{!! Html::decode(Form::label('item_service_name', __('label.form.invoice.service')." <small>*</small>")) !!}
 							<div class="input-group mb-3">
-								{!! Form::select('item_service_id', $services, '', ['class' => 'form-control select2 service','placeholder' => __('label.form.choose'),'required']) !!}
-								<div class="input-group-append">
-									<span class="input-group-text bg-success" style="cursor: pointer;" data-toggle="modal" data-target="#create_service_modal"><i class="fas fa-plus"></i></span>
-								</div>
+								{!! Form::text('item_service_name', '', ['class' => 'form-control','placeholder' => __('label.form.invoice.service'),'required', 'list' => 'service_list']) !!}
 							</div>
 						</div>
 					</div>
@@ -35,7 +32,7 @@
 					</div>
 					<div class="col-sm-5">
 						<div class="form-group">
-							{!! Html::decode(Form::label('item_description', __('label.form.description')." <small>*</small>")) !!}
+							{!! Html::decode(Form::label('item_description', __('label.form.description'))) !!}
 							{!! Form::textarea('item_description', '', ['class' => 'form-control','placeholder' => 'description','style' => 'height: 38px','required']) !!}
 						</div>
 					</div>
