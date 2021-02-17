@@ -21,19 +21,19 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-2">
+					{{-- <div class="col-sm-2">
 						<div class="form-group">
 							{!! Html::decode(Form::label('item_discount', __('label.form.invoice.discount')." <small>*</small>")) !!}
 							{!! Form::select('item_discount', ['0'=>'0%', '0.05'=>'5%', '0.1'=>'10%', '0.15'=>'15%', '0.2'=>'20%', '0.25'=>'25%', '0.3'=>'30%', '0.35'=>'35%', '0.4'=>'40%', '0.45'=>'45%', '0.5'=>'50%', '0.55'=>'55%', '0.6'=>'60%', '0.65'=>'65%', '0.7'=>'70%', '0.75'=>'75%', '0.8'=>'80%', '0.85'=>'85%', '0.9'=>'90%', '0.95'=>'95%', '1'=>'100%'], '0', ['class' => 'form-control select2','required']) !!}
 						</div>
-					</div>
+					</div> --}}
 					<div class="col-sm-2">
 						<div class="form-group">
 							{!! Html::decode(Form::label('item_price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
 							{!! Form::text('item_price', '', ['class' => 'form-control','placeholder' => 'price','required']) !!}
 						</div>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-5">
 						<div class="form-group">
 							{!! Html::decode(Form::label('item_description', __('label.form.description')." <small>*</small>")) !!}
 							{!! Form::textarea('item_description', '', ['class' => 'form-control','placeholder' => 'description','style' => 'height: 38px','required']) !!}

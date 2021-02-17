@@ -13,6 +13,8 @@ use App\Http\Requests\InvoiceDetailUpdateRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\InvoiceRepository;
+use App\Models\Province;
+use App\Models\District;
 use Auth;
 
 class InvoiceController extends Controller
@@ -39,6 +41,8 @@ class InvoiceController extends Controller
 	public function create()
 	{
 		$this->data = [
+			'provinces' => Province::getSelectData(),
+			'districts' => [],
 			'inv_number' => $this->invoice->inv_number(),
 			'medicines' => Medicine::getSelectData('id', 'name', '', 'name' ,'asc'),
 			'services' => Service::getSelectData('id', 'name', '', 'name' ,'asc'),
@@ -93,7 +97,7 @@ class InvoiceController extends Controller
 	{
 		$validator = \Validator::make($request->all(), [
 			'price' => 'required|numeric',
-			'discount' => 'required',
+			// 'discount' => 'required',
 			'description' => 'required',
 		]);
 		
@@ -141,6 +145,8 @@ class InvoiceController extends Controller
 
 		$this->data = [
 			'invoice' => $invoice,
+			'provinces' => Province::getSelectData(),
+			'districts' => (($invoice->pt_district_id=='')? [] : $invoice->province->getSelectDistrict()),
 			'medicines' => Medicine::getSelectData('id', 'name', '', 'name' ,'asc'),
 			'services' => Service::getSelectData('id', 'name', '', 'name' ,'asc'),
 			'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),
