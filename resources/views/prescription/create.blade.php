@@ -20,7 +20,7 @@
 
 	</div>
 
-	{!! Form::open(['url' => route('prescription.store'),'method' => 'post','class' => 'mt-3']) !!}
+	{!! Form::open(['url' => route('prescription.store'),'method' => 'post','class' => 'mt-3', 'autocomplete' => 'off']) !!}
 	<div class="card-body">
 		@include('prescription.form')
 
@@ -41,7 +41,7 @@
 						<div class="col-sm-3">
 							<div class="form-group">
 								{!! Html::decode(Form::label('medicine_name', __('label.form.prescription.medicine_name')."<small>*</small>")) !!}
-								{!! Form::text('medicine_name[]', '', ['class' => 'form-control','placeholder' => 'name','required']) !!}
+								{!! Form::text('medicine_name[]', '', ['class' => 'form-control','placeholder' => 'name','required', 'list' => 'medicine_list']) !!}
 							</div>
 						</div>
 						<div class="col-sm-1">
@@ -104,7 +104,6 @@
 	{{ Form::close() }}
 
 </div>
-
 @include('prescription.modal')
 
 @endsection
@@ -125,7 +124,7 @@
 																<div class="col-sm-3">
 																	<div class="form-group">
 																		{!! Html::decode(Form::label('medicine_name', __('label.form.prescription.medicine_name')."<small>*</small>")) !!}
-																		{!! Form::text('medicine_name[]', '', ['class' => 'form-control','placeholder' => 'name','required']) !!}
+																		{!! Form::text('medicine_name[]', '', ['class' => 'form-control','placeholder' => 'name','required', 'list' => 'medicine_list']) !!}
 																	</div>
 																</div>
 																<div class="col-sm-1">
