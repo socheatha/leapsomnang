@@ -109,7 +109,7 @@ class PrescriptionRepository
 															កាលបរិច្ឆេទ:<span class="date">'. date('d/m/Y', strtotime($prescription->date)) .'</span>
 														</td>
 														<td width="29%">
-															លេខអ្នកជំងឺ:<span class="pt_no">'. str_pad($prescription->code, 6, "0", STR_PAD_LEFT) .'</span>
+															លេខអ្នកជំងឺ:<span class="pt_no">'. str_pad($prescription->pt_no, 6, "0", STR_PAD_LEFT) .'</span>
 														</td>
 														<td width="29%">
 															វិក្កយបត្រ:<span class="code">PRE'. str_pad($prescription->code, 6, "0", STR_PAD_LEFT) .'</span>
