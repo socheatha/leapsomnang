@@ -111,6 +111,26 @@
 @section('js')
 <script type="text/javascript">
 
+	$('[name="pt_province_id"]').change( function(e){
+		if ($(this).val() != '') {
+			$.ajax({
+				url: "{{ route('province.getSelectDistrict') }}",
+				method: 'post',
+				data: {
+					id: $(this).val(),
+				},
+				success: function (data) {
+					$('[name="pt_district_id"]').attr({"disabled":false});
+					$('[name="pt_district_id"]').html(data);
+				}
+			});
+		}else{
+			$('[name="pt_district_id"]').attr({"disabled":true});
+			$('[name="pt_district_id"]').html('<option value="">{{ __("label.form.choose") }}</option>');
+			
+		}
+	});
+
 
 	$('.btn-prevent-submit').click(function (event) {
 		event.preventDefault();
@@ -223,6 +243,12 @@
 				$('[name="pt_phone"]').val(result.patient.phone);
 				$('[name="pt_age"]').val(result.patient.age);
 				$('[name="pt_gender"]').val(result.patient.pt_gender);
+				$('[name="pt_village"]').val(result.patient.address_village);
+				$('[name="pt_commune"]').val(result.patient.address_commune);
+				$('[name="pt_province_id"]').val(result.patient.address_province_id).trigger('change');
+				setTimeout(() => {
+					$('[name="pt_district_id"]').val(result.patient.address_district_id).trigger('change');
+				}, 300);
 			});
 		}
 		

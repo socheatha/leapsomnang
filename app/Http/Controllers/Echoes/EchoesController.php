@@ -10,6 +10,8 @@ use App\Models\Role;
 use App\Models\Patient;
 use App\Models\Echoes;
 use App\Models\EchoDefaultDescription;
+use App\Models\Province;
+use App\Models\District;
 use Auth;
 use Hash;
 use Validator;
@@ -61,8 +63,9 @@ class EchoesController extends Controller
 		$echo_default_description = EchoDefaultDescription::where('slug', $type)->first();
 		if ($echo_default_description != null) {
 			$this->data = [
+				'provinces' => Province::getSelectData(),
+				'districts' => [],
 				'echo_default_description' => $echo_default_description,
-				// 'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),
 				'type' => $type,
 			];
 			return view('echoes.create', $this->data);
@@ -98,8 +101,9 @@ class EchoesController extends Controller
 		$echo_default_description = EchoDefaultDescription::where('slug', $type)->first();
 		if ($echo_default_description != null) {
 			$this->data = [
+				'provinces' => Province::getSelectData(),
+				'districts' => (($echoes->pt_district_id=='')? [] : $echoes->province->getSelectDistrict()),
 				'echo_default_description' => $echo_default_description,
-				// 'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),
 				'echoes_preview' => $this->echoes->getEchoesPreview($echoes->id)->getData()->echoes_detail,
 				'echoes' => $echoes,
 				'type' => $type,

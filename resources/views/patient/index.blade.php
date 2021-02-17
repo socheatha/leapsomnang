@@ -25,7 +25,7 @@
         <table id="datatables-2" class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th width="30px">{!! __('module.table.no') !!}</th>
+                    <th width="10%">{!! __('module.table.no') !!}</th>
                     <th>{!! __('module.table.name') !!}</th>
                     <th width="80px">{!! __('module.table.gender') !!}</th>
                     <th width="80px">{!! __('module.table.patient.age') !!}</th>
@@ -37,7 +37,7 @@
             <tbody>
                 @foreach($patients as $i => $patient)
                 <tr>
-                    <td class="text-center">{{ ++$i }}</td>
+                    <td class="text-center">{{ str_pad($patient->id, 6, "0", STR_PAD_LEFT) }}</td>
                     <td>{{ $patient->name }}</td>
                     <td class="text-center">{{ (($patient->gender==1)? __('label.form.male') : __('label.form.female')) }}</td>
                     <td class="text-center">{{ $patient->age }}</td>
