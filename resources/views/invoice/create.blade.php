@@ -55,6 +55,7 @@
 
 @section('js')
 <script type="text/javascript">
+	var endLoadScript = function () {} // declear global variable as function
 	$(document).ready(function(){
 		$('#btn_add_item').click();
 	});
@@ -70,6 +71,7 @@
 				success: function (data) {
 					$('[name="pt_district_id"]').attr({"disabled":false});
 					$('[name="pt_district_id"]').html(data);
+					endLoadScript(); endLoadScript = function () {}; // execute this function then remove it
 				}
 			});
 		}else{
@@ -169,6 +171,7 @@
 				},
 			})
 			.done(function( result ) {
+				endLoadScript = function () { $('[name="pt_district_id"]').val(result.patient.address_district_id).trigger('change'); } // set task for function waiting for execute
 				$('[name="pt_no"]').val(result.patient.no);
 				$('[name="pt_name"]').val(result.patient.name);
 				$('[name="pt_phone"]').val(result.patient.phone);
@@ -177,9 +180,6 @@
 				$('[name="pt_village"]').val(result.patient.address_village);
 				$('[name="pt_commune"]').val(result.patient.address_commune);
 				$('[name="pt_province_id"]').val(result.patient.address_province_id).trigger('change');
-				setTimeout(() => {
-					$('[name="pt_district_id"]').val(result.patient.address_district_id).trigger('change');
-				}, 300);
 			});
 		}
 		
