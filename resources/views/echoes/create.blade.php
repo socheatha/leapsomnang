@@ -46,7 +46,7 @@
 @section('js')
 <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 <script type="text/javascript">
-
+		var endLoadScript = function () {}
 		$('[name="pt_province_id"]').change( function(e){
 			if ($(this).val() != '') {
 				$.ajax({
@@ -58,6 +58,7 @@
 					success: function (data) {
 						$('[name="pt_district_id"]').attr({"disabled":false});
 						$('[name="pt_district_id"]').html(data);
+						endLoadScript(); endLoadScript = function () {}; 
 					}
 				});
 			}else{
@@ -130,10 +131,11 @@
 					$('[name="pt_gender"]').val(result.patient.pt_gender);
 					$('[name="pt_village"]').val(result.patient.address_village);
 					$('[name="pt_commune"]').val(result.patient.address_commune);
-					$('[name="pt_province_id"]').val(result.patient.address_province_id).trigger('change');
-					setTimeout(() => {
+
+					endLoadScript = function () {
 						$('[name="pt_district_id"]').val(result.patient.address_district_id).trigger('change');
-					}, 300);
+					}
+					$('[name="pt_province_id"]').val(result.patient.address_province_id).trigger('change');
 				});
 			}
 			
