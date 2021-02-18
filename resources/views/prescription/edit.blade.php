@@ -1,13 +1,14 @@
 @extends('layouts.app')
 
 @section('css')
-	{{ Html::style('/css/invoice-print-style.css') }}
-	<style type="text/css">
-		.btn-print-prescription{
-			top: -30px;
-			right: 55px;
-		}
-		/* .item_list{
+{{ Html::style('/css/invoice-print-style.css') }}
+<style type="text/css">
+	.btn-print-prescription {
+		top: -30px;
+		right: 55px;
+	}
+
+	/* .item_list{
 			padding: 20px;
 			margin-top: 10px;
 			background: #fff;
@@ -15,8 +16,7 @@
 		.prescription_item{
 			margin-top: 10px;
 		} */
-
-	</style>
+</style>
 @endsection
 
 @section('content')
@@ -24,12 +24,12 @@
 <div class="card">
 	<div class="card-header">
 		<b>{!! Auth::user()->subModule() !!}</b>
-		
+
 		<div class="card-tools">
 			<a href="{{route('prescription.index')}}" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-table"></i> &nbsp;{{ __('label.buttons.back_to_list', [ 'name' => Auth::user()->module() ]) }}</a>
 		</div>
 
-{{-- 
+		{{--
 		<!-- Error Message -->
 		@component('components.crud_alert')
 		@endcomponent --}}
@@ -55,69 +55,69 @@
 			<!-- /.card-header -->
 			<div class="card-body item_list">
 				@foreach ($prescription->prescription_details as $order => $prescription_detail)
-					<div class="mb-2" id="{{ $prescription_detail->id }}">
-						<div class="row">
-							<div class="col-sm-3">
-								<div class="form-group">
-									{!! Html::decode(Form::label('medicine_name', __('label.form.prescription.medicine_name')."<small>*</small>")) !!}
-									{!! Form::text('show_medicine_name', $prescription_detail->medicine_name, ['class' => 'form-control', 'id' => 'input-medicine_name-'. $prescription_detail->id,'placeholder' => 'name','readonly']) !!}
-								</div>
+				<div class="mb-2" id="{{ $prescription_detail->id }}">
+					<div class="row">
+						<div class="col-sm-3">
+							<div class="form-group">
+								{!! Html::decode(Form::label('medicine_name', __('label.form.prescription.medicine_name')."<small>*</small>")) !!}
+								{!! Form::text('show_medicine_name', $prescription_detail->medicine_name, ['class' => 'form-control', 'id' => 'input-medicine_name-'. $prescription_detail->id,'placeholder' => 'name','readonly']) !!}
 							</div>
-							<div class="col-sm-1">
-								<div class="form-group">
-									{!! Html::decode(Form::label('morning', __('label.form.prescription.morning'))) !!}
-									{!! Form::text('show_morning', $prescription_detail->morning, ['class' => 'form-control is_number', 'id' => 'input-morning-'. $prescription_detail->id,'min' => '0','placeholder' => 'morning','readonly']) !!}
-								</div>
+						</div>
+						<div class="col-sm-1">
+							<div class="form-group">
+								{!! Html::decode(Form::label('morning', __('label.form.prescription.morning'))) !!}
+								{!! Form::text('show_morning', $prescription_detail->morning, ['class' => 'form-control is_number', 'id' => 'input-morning-'. $prescription_detail->id,'min' => '0','placeholder' => 'morning','readonly']) !!}
 							</div>
-							<div class="col-sm-1">
-								<div class="form-group">
-									{!! Html::decode(Form::label('afternoon', __('label.form.prescription.afternoon'))) !!}
-									{!! Form::text('show_afternoon', $prescription_detail->afternoon, ['class' => 'form-control is_number', 'id' => 'input-afternoon-'. $prescription_detail->id,'min' => '0','placeholder' => 'afternoon','readonly']) !!}
-								</div>
+						</div>
+						<div class="col-sm-1">
+							<div class="form-group">
+								{!! Html::decode(Form::label('afternoon', __('label.form.prescription.afternoon'))) !!}
+								{!! Form::text('show_afternoon', $prescription_detail->afternoon, ['class' => 'form-control is_number', 'id' => 'input-afternoon-'. $prescription_detail->id,'min' => '0','placeholder' => 'afternoon','readonly']) !!}
 							</div>
-							<div class="col-sm-1">
-								<div class="form-group">
-									{!! Html::decode(Form::label('evening', __('label.form.prescription.evening'))) !!}
-									{!! Form::text('show_evening', $prescription_detail->evening, ['class' => 'form-control is_number', 'id' => 'input-evening-'. $prescription_detail->id,'min' => '0','placeholder' => 'evening','readonly']) !!}
-								</div>
+						</div>
+						<div class="col-sm-1">
+							<div class="form-group">
+								{!! Html::decode(Form::label('evening', __('label.form.prescription.evening'))) !!}
+								{!! Form::text('show_evening', $prescription_detail->evening, ['class' => 'form-control is_number', 'id' => 'input-evening-'. $prescription_detail->id,'min' => '0','placeholder' => 'evening','readonly']) !!}
 							</div>
-							<div class="col-sm-1">
-								<div class="form-group">
-									{!! Html::decode(Form::label('night', __('label.form.prescription.night'))) !!}
-									{!! Form::text('show_night', $prescription_detail->night, ['class' => 'form-control is_number', 'id' => 'input-night-'. $prescription_detail->id,'min' => '0','placeholder' => 'night','readonly']) !!}
-								</div>
+						</div>
+						<div class="col-sm-1">
+							<div class="form-group">
+								{!! Html::decode(Form::label('night', __('label.form.prescription.night'))) !!}
+								{!! Form::text('show_night', $prescription_detail->night, ['class' => 'form-control is_number', 'id' => 'input-night-'. $prescription_detail->id,'min' => '0','placeholder' => 'night','readonly']) !!}
 							</div>
-							<div class="col-sm-2">
-								<div class="form-group">
-									{!! Html::decode(Form::label('medicine_usage', __('label.form.prescription.medicine_usage')."<small>*</small>")) !!}
-									{!! Form::text('show_medicine_usage', $prescription_detail->medicine_usage, ['class' => 'form-control', 'id' => 'input-medicine_usage-'. $prescription_detail->id,'placeholder' => 'usage','readonly']) !!}
-								</div>
+						</div>
+						<div class="col-sm-2">
+							<div class="form-group">
+								{!! Html::decode(Form::label('medicine_usage', __('label.form.prescription.medicine_usage')."<small>*</small>")) !!}
+								{!! Form::text('show_medicine_usage', $prescription_detail->medicine_usage, ['class' => 'form-control', 'id' => 'input-medicine_usage-'. $prescription_detail->id,'placeholder' => 'usage','readonly']) !!}
 							</div>
-							<div class="col-sm-2">
-								<div class="form-group">
-									{!! Html::decode(Form::label('description', __('label.form.description'))) !!}
-									{!! Form::textarea('show_description', $prescription_detail->description, ['class' => 'form-control', 'id' => 'input-description-'. $prescription_detail->id,'placeholder' => 'description','style' => 'height: 38px','readonly']) !!}
-								</div>
+						</div>
+						<div class="col-sm-2">
+							<div class="form-group">
+								{!! Html::decode(Form::label('description', __('label.form.description'))) !!}
+								{!! Form::textarea('show_description', $prescription_detail->description, ['class' => 'form-control', 'id' => 'input-description-'. $prescription_detail->id,'placeholder' => 'description','style' => 'height: 38px','readonly']) !!}
 							</div>
-							<div class="col-sm-1">
-								<div class="form-group">
-									{!! Html::decode(Form::label('', __('label.buttons.action'))) !!}
-									<div>
-										<button class="btn btn-info btn-flat btn-prevent-submit" onclick="editPrescriptionDetail('{{ $prescription_detail->id }}')"><i class="fa fa-pencil-alt"></i></button>
-										<button class="btn btn-danger btn-flat btn-prevent-submit" onclick="deletePrescriptionDetail({{ $prescription_detail->id }})"><i class="fa fa-trash-alt"></i></button>
-									</div>
+						</div>
+						<div class="col-sm-1">
+							<div class="form-group">
+								{!! Html::decode(Form::label('', __('label.buttons.action'))) !!}
+								<div>
+									<button class="btn btn-info btn-flat btn-prevent-submit" onclick="editPrescriptionDetail('{{ $prescription_detail->id }}')"><i class="fa fa-pencil-alt"></i></button>
+									<button class="btn btn-danger btn-flat btn-prevent-submit" onclick="deletePrescriptionDetail({{ $prescription_detail->id }})"><i class="fa fa-trash-alt"></i></button>
 								</div>
 							</div>
 						</div>
 					</div>
+				</div>
 				@endforeach
 			</div>
 			<!-- /.card-body -->
 		</div>
-			
+
 	</div>
 	<!-- ./card-body -->
-	
+
 	<div class="card-footer text-muted text-center">
 		@include('components.submit')
 	</div>
@@ -128,7 +128,7 @@
 
 <div class="position-relative">
 	@can("Prescription Print")
-		<button type="button" class="btn btn-flat btn-success position-absolute mr-9 mt-5 btn-print-prescription" data-url="{{ route('prescription.print', $prescription->id) }}"><i class="fa fa-print"></i> {{ __("label.buttons.print") }}</button>
+	<button type="button" class="btn btn-flat btn-success position-absolute mr-9 mt-5 btn-print-prescription" data-url="{{ route('prescription.print', $prescription->id) }}"><i class="fa fa-print"></i> {{ __("label.buttons.print") }}</button>
 	@endCan
 </div>
 
@@ -148,7 +148,7 @@
 			</div>
 			<div class="modal-body">
 				{!! Form::hidden('edit_item_id', '') !!}
-				
+
 				<div class="row">
 					<div class="col-sm-3">
 						<div class="form-group">
@@ -214,8 +214,11 @@
 
 @section('js')
 <script type="text/javascript">
+	var firstLoadPatient = true;
+	var endLoadPatientChnaged = function() {}
+	var endLoadProvinceChanged = function() {}
 
-	$('[name="pt_province_id"]').change( function(e){
+	$('[name="pt_province_id"]').change(function(e) {
 		if ($(this).val() != '') {
 			$.ajax({
 				url: "{{ route('province.getSelectDistrict') }}",
@@ -223,45 +226,47 @@
 				data: {
 					id: $(this).val(),
 				},
-				success: function (data) {
-					$('[name="pt_district_id"]').attr({"disabled":false});
+				success: function(data) {
+					$('[name="pt_district_id"]').attr({
+						"disabled": false
+					});
 					$('[name="pt_district_id"]').html(data);
+					endLoadProvinceChanged();
+					endLoadProvinceChanged = function() {};
 				}
 			});
-		}else{
-			$('[name="pt_district_id"]').attr({"disabled":true});
+		} else {
+			$('[name="pt_district_id"]').attr({
+				"disabled": true
+			});
 			$('[name="pt_district_id"]').html('<option value="">{{ __("label.form.choose") }}</option>');
-			
+
 		}
 	});
 
 
-	$('.btn-prevent-submit').click(function (event) {
+	$('.btn-prevent-submit').click(function(event) {
 		event.preventDefault();
 	});
-	
-	$( document ).ready(function() {
+
+	$(document).ready(function() {
 
 		setTimeout(() => {
-			$(".select2_pagination").val("{{ $prescription->patient_id }}").trigger("change");
-			setTimeout(() => {
-				$("[name='pt_no']").val("{{ $prescription->pt_no }}");
-				$("[name='pt_name']").val("{{ $prescription->pt_name }}");
-				$("[name='pt_age']").val("{{ $prescription->pt_age }}");
-				$("[name='pt_gender']").val("{{ $prescription->pt_gender }}");
-				$("[name='pt_phone']").val("{{ $prescription->pt_phone }}");
-				$("[name='pt_village']").val("{{ $prescription->pt_village }}");
-				$("[name='pt_commune']").val("{{ $prescription->pt_commune }}");
+			endLoadPatientChnaged = function () {
+				
 				$("[name='pt_province_id']").val("{{ $prescription->pt_province_id }}").trigger('change');
-				setTimeout(() => {
-					$("[name='pt_district_id']").val("{{ $prescription->pt_district_id }}").trigger('change');
-				}, 300);
-			}, 500);
+			}
+			$(".select2_pagination").val("{{ $prescription->patient_id }}").trigger("change");
 		}, 100);
 
 		var data = [];
-		$(".select2_pagination").each(function () {
-			data.push({id:'{{ $prescription->patient_id }}', text:'{{ str_pad($prescription->patient_id, 6, "0", STR_PAD_LEFT) }} :: {{ (($prescription->patient_id != '')? $prescription->patient->name : '' )}}'});
+		$(".select2_pagination").each(function() {
+			data.push({
+				id: '{{ $prescription->patient_id }}',
+				text: '{{ str_pad($prescription->patient_id, 6, "0", STR_PAD_LEFT) }} :: {{ (($prescription->patient_id != '
+				')? $prescription->patient->name : '
+				' )}}'
+			});
 		});
 		$(".select2_pagination").select2({
 			theme: 'bootstrap4',
@@ -274,8 +279,8 @@
 				dataType: 'json',
 				data: function(params) {
 					return {
-							term: params.term || '{{ $prescription->patient_id }}',
-							page: params.page || 1
+						term: params.term || '{{ $prescription->patient_id }}',
+						page: params.page || 1
 					}
 				},
 				cache: true
@@ -285,21 +290,21 @@
 
 	$('.select2_pagination').val('{{ $prescription->id }}').trigger('change')
 
-	$(function(){
+	$(function() {
 		function openPrintWindow(url, name) {
-			var printWindow = window.open(url, name, "width="+ screen.availWidth +",height="+ screen.availHeight +",_blank");
-			var printAndClose = function () {
+			var printWindow = window.open(url, name, "width=" + screen.availWidth + ",height=" + screen.availHeight + ",_blank");
+			var printAndClose = function() {
 				if (printWindow.document.readyState == 'complete') {
 					clearInterval(sched);
 					printWindow.print();
 					printWindow.close();
 				}
-			}  
-				var sched = setInterval(printAndClose, 2000);
+			}
+			var sched = setInterval(printAndClose, 2000);
 		};
 
-		jQuery(document).ready(function ($) {
-			$(".btn-print-prescription").on("click", function (e) {
+		jQuery(document).ready(function($) {
+			$(".btn-print-prescription").on("click", function(e) {
 				var myUrl = $(this).attr('data-url');
 				// alert(myUrl);
 				e.preventDefault();
@@ -307,31 +312,31 @@
 			});
 		});
 	});
-	
+
 	function editPrescriptionDetail(id) {
 		$.ajax({
-			url: "{{ route('prescription.prescription_detail.getDetail') }}",
-			type: 'post',
-			data: {
-				id: id
-			},
-		})
-		.done(function( result ) {
-			$('[name="edit_item_medicine_name"]').val(result.prescription_detail.medicine_name);
-			$('[name="edit_item_medicine_usage"]').val(result.prescription_detail.medicine_usage);
-			$('[name="edit_item_morning"]').val(result.prescription_detail.morning);
-			$('[name="edit_item_afternoon"]').val(result.prescription_detail.afternoon);
-			$('[name="edit_item_evening"]').val(result.prescription_detail.evening);
-			$('[name="edit_item_night"]').val(result.prescription_detail.night);
-			$('[name="edit_item_description"]').val(result.prescription_detail.description);
-			$('[name="edit_item_id"]').val(result.prescription_detail.id);
-			$('#edit_prescription_item_modal').modal('show');
-		});
+				url: "{{ route('prescription.prescription_detail.getDetail') }}",
+				type: 'post',
+				data: {
+					id: id
+				},
+			})
+			.done(function(result) {
+				$('[name="edit_item_medicine_name"]').val(result.prescription_detail.medicine_name);
+				$('[name="edit_item_medicine_usage"]').val(result.prescription_detail.medicine_usage);
+				$('[name="edit_item_morning"]').val(result.prescription_detail.morning);
+				$('[name="edit_item_afternoon"]').val(result.prescription_detail.afternoon);
+				$('[name="edit_item_evening"]').val(result.prescription_detail.evening);
+				$('[name="edit_item_night"]').val(result.prescription_detail.night);
+				$('[name="edit_item_description"]').val(result.prescription_detail.description);
+				$('[name="edit_item_id"]').val(result.prescription_detail.id);
+				$('#edit_prescription_item_modal').modal('show');
+			});
 	};
-	
+
 
 	function deletePrescriptionDetail(id) {
-		
+
 		const swalWithBootstrapButtons = Swal.mixin({
 			customClass: {
 				confirmButton: 'btn btn-success btn-flat ml-2 py-2 px-3',
@@ -355,7 +360,7 @@
 					data: {
 						id: id
 					},
-					success: function(data){
+					success: function(data) {
 						$('.print-preview').html(data.prescription_preview);
 						Swal.fire({
 							icon: 'success',
@@ -363,97 +368,97 @@
 							confirmButtonText: "{{ __('alert.swal.button.yes') }}",
 							timer: 2500
 						})
-						$('#'+ id).remove();
+						$('#' + id).remove();
 					}
 				})
 			}
 		})
 	};
-	
-	$('#btn_update_item').click(function () {
+
+	$('#btn_update_item').click(function() {
 		$.ajax({
-			url: "{{ route('prescription.prescription_detail.update') }}",
-			type: 'post',
-			data: {
-				id: $('[name="edit_item_id"]').val(),
-				medicine_name: $('[name="edit_item_medicine_name"]').val(),
-				medicine_usage: $('[name="edit_item_medicine_usage"]').val(),
-				morning: $('[name="edit_item_morning"]').val(),
-				afternoon: $('[name="edit_item_afternoon"]').val(),
-				evening: $('[name="edit_item_evening"]').val(),
-				night: $('[name="edit_item_night"]').val(),
-				description: $('[name="edit_item_description"]').val()
-			},
-		})
-		.done(function( data ) {
-			
-			$('#edit_prescription_item_modal .invalid-feedback').remove();
-			$('#edit_prescription_item_modal .form-control').removeClass('is-invalid');
-			if (data.errors) {
-				$.each(data.errors, function(key, value){
-					$('#edit_prescription_item_modal .prescription_item_'+key+' input').addClass('is-invalid');
-					$('#edit_prescription_item_modal .prescription_item_'+key).append('<span class="invalid-feedback">'+value+'</span>');
-				});
-				Swal.fire({
-					icon: 'error',
-					title: "{{ __('alert.swal.result.title.error') }}",
-					confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-					timer: 1500
-				})
-				.then((result) => {
-					if (result.value) {
-						$('#edit_prescription_item_modal').modal('show');
-					}
-				})
-			}
-			if (data.success) {
-				$('[name="edit_item_medicine_name"]').val('');
-				$('[name="edit_item_medicine_usage"]').val('');
-				$('[name="edit_item_morning"]').val('');
-				$('[name="edit_item_afternoon"]').val('');
-				$('[name="edit_item_evening"]').val('');
-				$('[name="edit_item_night"]').val('');
-				$('[name="edit_item_description"]').val('');
-				$('.print-preview').html(data.prescription_preview);
-				$("#input-medicine_name-"+ data.prescription_detail.id).val(data.prescription_detail.medicine_name);
-				$("#input-medicine_usage-"+ data.prescription_detail.id).val(data.prescription_detail.medicine_usage);
-				$("#input-morning-"+ data.prescription_detail.id).val(data.prescription_detail.morning);
-				$("#input-afternoon-"+ data.prescription_detail.id).val(data.prescription_detail.afternoon);
-				$("#input-evening-"+ data.prescription_detail.id).val(data.prescription_detail.evening);
-				$("#input-night-"+ data.prescription_detail.id).val(data.prescription_detail.night);
-				$("#input-description-"+ data.prescription_detail.id).val(data.prescription_detail.description);
-				Swal.fire({
-					icon: 'success',
-					title: "{{ __('alert.swal.result.title.success') }}",
-					confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-					timer: 1500
-				})
-				$('#modal_add_medicine').modal('hide');
-			}
-		});
+				url: "{{ route('prescription.prescription_detail.update') }}",
+				type: 'post',
+				data: {
+					id: $('[name="edit_item_id"]').val(),
+					medicine_name: $('[name="edit_item_medicine_name"]').val(),
+					medicine_usage: $('[name="edit_item_medicine_usage"]').val(),
+					morning: $('[name="edit_item_morning"]').val(),
+					afternoon: $('[name="edit_item_afternoon"]').val(),
+					evening: $('[name="edit_item_evening"]').val(),
+					night: $('[name="edit_item_night"]').val(),
+					description: $('[name="edit_item_description"]').val()
+				},
+			})
+			.done(function(data) {
+
+				$('#edit_prescription_item_modal .invalid-feedback').remove();
+				$('#edit_prescription_item_modal .form-control').removeClass('is-invalid');
+				if (data.errors) {
+					$.each(data.errors, function(key, value) {
+						$('#edit_prescription_item_modal .prescription_item_' + key + ' input').addClass('is-invalid');
+						$('#edit_prescription_item_modal .prescription_item_' + key).append('<span class="invalid-feedback">' + value + '</span>');
+					});
+					Swal.fire({
+							icon: 'error',
+							title: "{{ __('alert.swal.result.title.error') }}",
+							confirmButtonText: "{{ __('alert.swal.button.yes') }}",
+							timer: 1500
+						})
+						.then((result) => {
+							if (result.value) {
+								$('#edit_prescription_item_modal').modal('show');
+							}
+						})
+				}
+				if (data.success) {
+					$('[name="edit_item_medicine_name"]').val('');
+					$('[name="edit_item_medicine_usage"]').val('');
+					$('[name="edit_item_morning"]').val('');
+					$('[name="edit_item_afternoon"]').val('');
+					$('[name="edit_item_evening"]').val('');
+					$('[name="edit_item_night"]').val('');
+					$('[name="edit_item_description"]').val('');
+					$('.print-preview').html(data.prescription_preview);
+					$("#input-medicine_name-" + data.prescription_detail.id).val(data.prescription_detail.medicine_name);
+					$("#input-medicine_usage-" + data.prescription_detail.id).val(data.prescription_detail.medicine_usage);
+					$("#input-morning-" + data.prescription_detail.id).val(data.prescription_detail.morning);
+					$("#input-afternoon-" + data.prescription_detail.id).val(data.prescription_detail.afternoon);
+					$("#input-evening-" + data.prescription_detail.id).val(data.prescription_detail.evening);
+					$("#input-night-" + data.prescription_detail.id).val(data.prescription_detail.night);
+					$("#input-description-" + data.prescription_detail.id).val(data.prescription_detail.description);
+					Swal.fire({
+						icon: 'success',
+						title: "{{ __('alert.swal.result.title.success') }}",
+						confirmButtonText: "{{ __('alert.swal.button.yes') }}",
+						timer: 1500
+					})
+					$('#modal_add_medicine').modal('hide');
+				}
+			});
 	});
 
-	$('#btn_add_item').click(function () {
-		if ($('[name="item_medicine_name"]').val() !='' && $('[name="item_medicine_usage"]').val() !='') {
-		
+	$('#btn_add_item').click(function() {
+		if ($('[name="item_medicine_name"]').val() != '' && $('[name="item_medicine_usage"]').val() != '') {
+
 			$.ajax({
 				url: "{{ route('prescription.prescription_detail.store') }}",
 				method: 'post',
 				data: {
-						prescription_id: '{{ $prescription->id }}',
-						medicine_name: $('[name="item_medicine_name"]').val(),
-						medicine_usage: $('[name="item_medicine_usage"]').val(),
-						morning: $('[name="item_morning"]').val(),
-						afternoon: $('[name="item_afternoon"]').val(),
-						evening: $('[name="item_evening"]').val(),
-						night: $('[name="item_night"]').val(),
-						description: $('[name="item_description"]').val(),
+					prescription_id: '{{ $prescription->id }}',
+					medicine_name: $('[name="item_medicine_name"]').val(),
+					medicine_usage: $('[name="item_medicine_usage"]').val(),
+					morning: $('[name="item_morning"]').val(),
+					afternoon: $('[name="item_afternoon"]').val(),
+					evening: $('[name="item_evening"]').val(),
+					night: $('[name="item_night"]').val(),
+					description: $('[name="item_description"]').val(),
 				},
-				success: function(data){
+				success: function(data) {
 					$('.print-preview').html(data.prescription_preview);
 					console.log(data.prescription_detail.description);
 
-					$('.item_list').append(	`<div class="prescription_item" id="${ data.prescription_detail.id }">
+					$('.item_list').append(`<div class="prescription_item" id="${ data.prescription_detail.id }">
 																			<div class="row">
 																				<div class="col-sm-3">
 																					<div class="form-group">
@@ -508,37 +513,37 @@
 																				</div>
 																			</div>
 																		</div>`);
-					
-					$('.btn-prevent-submit').click(function (event) {
+
+					$('.btn-prevent-submit').click(function(event) {
 						event.preventDefault();
 					});
 
-					$('[name="item_medicine_name"]').val( '' );
-					$('[name="item_medicine_usage"]').val( '' );
-					$('[name="item_morning"]').val( '0' );
-					$('[name="item_afternoon"]').val( '0' );
-					$('[name="item_evening"]').val( '0' );
-					$('[name="item_night"]').val( '0' );
-					$('[name="item_description"]').val( '' );
+					$('[name="item_medicine_name"]').val('');
+					$('[name="item_medicine_usage"]').val('');
+					$('[name="item_morning"]').val('0');
+					$('[name="item_afternoon"]').val('0');
+					$('[name="item_evening"]').val('0');
+					$('[name="item_night"]').val('0');
+					$('[name="item_description"]').val('');
 					$('#create_prescription_item_modal').modal('hide');
-					
+
 					Swal.fire({
 						icon: 'success',
 						title: "{{ __('alert.swal.result.title.save') }}",
 						confirmButtonText: "{{ __('alert.swal.button.yes') }}",
 						timer: 1500
 					})
-					
+
 					$('.empty_data_list').remove();
 
-					$('.btn_remove_item').click( function () {
-						$('.'+ $(this).data('id')).remove();
+					$('.btn_remove_item').click(function() {
+						$('.' + $(this).data('id')).remove();
 					});
-					
+
 				}
 			});
 
-		}else{
+		} else {
 			Swal.fire({
 				icon: 'warning',
 				title: "{{ __('alert.swal.title.empty_field') }}",
@@ -549,30 +554,45 @@
 	});
 
 
-	$('#patient_id').change(function () {
-		if ($(this).val()!='') {
+	$('#patient_id').change(function() {
+		if ($(this).val() != '') {
 			$.ajax({
 				url: "{{ route('patient.getSelectDetail') }}",
 				type: 'post',
 				data: {
-					id : $(this).val()
+					id: $(this).val()
 				},
 			})
-			.done(function( result ) {
-				$('[name="pt_no"]').val(result.patient.no);
-				$('[name="pt_name"]').val(result.patient.name);
-				$('[name="pt_phone"]').val(result.patient.phone);
-				$('[name="pt_age"]').val(result.patient.age);
-				$('[name="pt_gender"]').val(result.patient.pt_gender);
-				$('[name="pt_village"]').val(result.patient.address_village);
-				$('[name="pt_commune"]').val(result.patient.address_commune);
-				$('[name="pt_province_id"]').val(result.patient.address_province_id).trigger('change');
-				setTimeout(() => {
-					$('[name="pt_district_id"]').val(result.patient.address_district_id).trigger('change');
-				}, 300);
+			.done(function(result) {
+				if (firstLoadPatient){
+					firstLoadPatient = false;
+					$("[name='pt_no']").val("{{ $prescription->pt_no }}");
+					$("[name='pt_name']").val("{{ $prescription->pt_name }}");
+					$("[name='pt_age']").val("{{ $prescription->pt_age }}");
+					$("[name='pt_gender']").val("{{ $prescription->pt_gender }}");
+					$("[name='pt_phone']").val("{{ $prescription->pt_phone }}");
+					$("[name='pt_village']").val("{{ $prescription->pt_village }}");
+					$("[name='pt_commune']").val("{{ $prescription->pt_commune }}");
+
+					endLoadProvinceChanged = function () {
+						$("[name='pt_district_id']").val("{{ $prescription->pt_district_id }}").trigger('change');
+					}
+				}else{
+					$('[name="pt_no"]').val(result.patient.no);
+					$('[name="pt_name"]').val(result.patient.name);
+					$('[name="pt_phone"]').val(result.patient.phone);
+					$('[name="pt_age"]').val(result.patient.age);
+					$('[name="pt_gender"]').val(result.patient.pt_gender);
+					$('[name="pt_village"]').val(result.patient.address_village);
+					$('[name="pt_commune"]').val(result.patient.address_commune);
+
+					endLoadProvinceChanged = function() {
+						$('[name="pt_district_id"]').val(result.patient.address_district_id).trigger('change');
+					};
+					$('[name="pt_province_id"]').val(result.patient.address_province_id).trigger('change');
+				}
 			});
 		}
-		
 	});
 </script>
 @endsection

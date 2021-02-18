@@ -110,7 +110,7 @@
 
 @section('js')
 <script type="text/javascript">
-
+	var endLoad = function () { }
 	$('[name="pt_province_id"]').change( function(e){
 		if ($(this).val() != '') {
 			$.ajax({
@@ -122,6 +122,7 @@
 				success: function (data) {
 					$('[name="pt_district_id"]').attr({"disabled":false});
 					$('[name="pt_district_id"]').html(data);
+					endLoad(); endLoad = function () { };
 				}
 			});
 		}else{
@@ -245,10 +246,9 @@
 				$('[name="pt_gender"]').val(result.patient.pt_gender);
 				$('[name="pt_village"]').val(result.patient.address_village);
 				$('[name="pt_commune"]').val(result.patient.address_commune);
+				
+				endLoad = function () { $('[name="pt_district_id"]').val(result.patient.address_district_id).trigger('change'); }
 				$('[name="pt_province_id"]').val(result.patient.address_province_id).trigger('change');
-				setTimeout(() => {
-					$('[name="pt_district_id"]').val(result.patient.address_district_id).trigger('change');
-				}, 300);
 			});
 		}
 		

@@ -170,6 +170,9 @@
 
 @section('js')
 <script type="text/javascript">
+	var firstLoadPatient = true;
+	var endLoadPatientChnaged = function() {}
+	var endLoadProvinceChanged = function() {}
 
 	$('[name="pt_province_id"]').change( function(e){
 		if ($(this).val() != '') {
@@ -182,6 +185,7 @@
 				success: function (data) {
 					$('[name="pt_district_id"]').attr({"disabled":false});
 					$('[name="pt_district_id"]').html(data);
+					endLoadProvinceChanged(); endLoadProvinceChanged = function () {};
 				}
 			});
 		}else{
@@ -274,20 +278,6 @@
 
 		setTimeout(() => {
 			$(".select2_pagination").val("{{ $invoice->patient_id }}").trigger("change");
-				
-			setTimeout(() => {
-				$("[name='pt_no']").val("{{ $invoice->pt_no }}");
-				$("[name='pt_name']").val("{{ $invoice->pt_name }}");
-				$("[name='pt_age']").val("{{ $invoice->pt_age }}");
-				$("[name='pt_gender']").val("{{ $invoice->pt_gender }}");
-				$("[name='pt_phone']").val("{{ $invoice->pt_phone }}");
-				$("[name='pt_village']").val("{{ $invoice->pt_village }}");
-				$("[name='pt_commune']").val("{{ $invoice->pt_commune }}");
-				$("[name='pt_province_id']").val("{{ $invoice->pt_province_id }}").trigger('change');
-				setTimeout(() => {
-					$("[name='pt_district_id']").val("{{ $invoice->pt_district_id }}").trigger('change');
-				}, 300);
-			}, 500);
 		}, 100);
 
 		var data = [];
@@ -596,17 +586,30 @@
 				},
 			})
 			.done(function( result ) {
-				$('[name="pt_no"]').val(result.patient.no);
-				$('[name="pt_name"]').val(result.patient.name);
-				$('[name="pt_phone"]').val(result.patient.phone);
-				$('[name="pt_age"]').val(result.patient.age);
-				$('[name="pt_gender"]').val(result.patient.pt_gender);
-				$('[name="pt_village"]').val(result.patient.address_village);
-				$('[name="pt_commune"]').val(result.patient.address_commune);
-				$('[name="pt_province_id"]').val(result.patient.address_province_id).trigger('change');
-				setTimeout(() => {
-					$('[name="pt_district_id"]').val(result.patient.address_district_id).trigger('change');
-				}, 300);
+				if(firstLoadPatient){
+					firstLoadPatient = false;
+					$("[name='pt_no']").val("{{ $invoice->pt_no }}");
+					$("[name='pt_name']").val("{{ $invoice->pt_name }}");
+					$("[name='pt_age']").val("{{ $invoice->pt_age }}");
+					$("[name='pt_gender']").val("{{ $invoice->pt_gender }}");
+					$("[name='pt_phone']").val("{{ $invoice->pt_phone }}");
+					$("[name='pt_village']").val("{{ $invoice->pt_village }}");
+					$("[name='pt_commune']").val("{{ $invoice->pt_commune }}");
+
+					endLoadProvinceChanged = function () { $("[name='pt_district_id']").val("{{ $invoice->pt_district_id }}").trigger('change'); }
+					$("[name='pt_province_id']").val("{{ $invoice->pt_province_id }}").trigger('change');
+				}else{
+					$('[name="pt_no"]').val(result.patient.no);
+					$('[name="pt_name"]').val(result.patient.name);
+					$('[name="pt_phone"]').val(result.patient.phone);
+					$('[name="pt_age"]').val(result.patient.age);
+					$('[name="pt_gender"]').val(result.patient.pt_gender);
+					$('[name="pt_village"]').val(result.patient.address_village);
+					$('[name="pt_commune"]').val(result.patient.address_commune);
+
+					endLoadProvinceChanged = function () { $('[name="pt_district_id"]').val(result.patient.address_district_id).trigger('change'); }
+					$('[name="pt_province_id"]').val(result.patient.address_province_id).trigger('change');
+				}
 			});
 		}
 		

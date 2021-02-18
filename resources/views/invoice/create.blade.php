@@ -171,7 +171,6 @@
 				},
 			})
 			.done(function( result ) {
-				endLoadScript = function () { $('[name="pt_district_id"]').val(result.patient.address_district_id).trigger('change'); } // set task for function waiting for execute
 				$('[name="pt_no"]').val(result.patient.no);
 				$('[name="pt_name"]').val(result.patient.name);
 				$('[name="pt_phone"]').val(result.patient.phone);
@@ -179,6 +178,8 @@
 				$('[name="pt_gender"]').val(result.patient.pt_gender);
 				$('[name="pt_village"]').val(result.patient.address_village);
 				$('[name="pt_commune"]').val(result.patient.address_commune);
+				
+				endLoadScript = function () { $('[name="pt_district_id"]').val(result.patient.address_district_id).trigger('change'); } // set task for function waiting for execute
 				$('[name="pt_province_id"]').val(result.patient.address_province_id).trigger('change');
 			});
 		}
