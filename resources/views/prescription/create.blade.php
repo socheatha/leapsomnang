@@ -239,7 +239,7 @@
 				},
 			})
 			.done(function( result ) {
-				$('[name="pt_no"]').val(result.patient.no);
+				// $('[name="pt_no"]').val(result.patient.no);
 				$('[name="pt_name"]').val(result.patient.name);
 				$('[name="pt_phone"]').val(result.patient.phone);
 				$('[name="pt_age"]').val(result.patient.age);

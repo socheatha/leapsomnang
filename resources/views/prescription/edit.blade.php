@@ -566,7 +566,7 @@
 			.done(function(result) {
 				if (firstLoadPatient){
 					firstLoadPatient = false;
-					$("[name='pt_no']").val("{{ $prescription->pt_no }}");
+					// $("[name='pt_no']").val("{{ $prescription->pt_no }}");
 					$("[name='pt_name']").val("{{ $prescription->pt_name }}");
 					$("[name='pt_age']").val("{{ $prescription->pt_age }}");
 					$("[name='pt_gender']").val("{{ $prescription->pt_gender }}");
@@ -578,7 +578,7 @@
 						$("[name='pt_district_id']").val("{{ $prescription->pt_district_id }}").trigger('change');
 					}
 				}else{
-					$('[name="pt_no"]').val(result.patient.no);
+					// $('[name="pt_no"]').val(result.patient.no);
 					$('[name="pt_name"]').val(result.patient.name);
 					$('[name="pt_phone"]').val(result.patient.phone);
 					$('[name="pt_age"]').val(result.patient.age);

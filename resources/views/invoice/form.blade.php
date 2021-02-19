@@ -63,15 +63,15 @@
           </div>
         </div>
         
-        <div class="col-sm-4">
+        <!-- <div class="col-sm-4">
           <div class="form-group">
             {!! Html::decode(Form::label('pt_no', __('label.form.invoice.pt_no')." <small>*</small>")) !!}
             {!! Form::text('pt_no', ((isset($invoice->pt_no))? $invoice->pt_no : '' ), ['class' => 'form-control '. (($errors->has("pt_no"))? "is-invalid" : ""),'placeholder' => 'ptient number','required']) !!}
             {!! $errors->first('pt_no', '<div class="invalid-feedback">:message</div>') !!}
           </div>
-        </div>
+        </div> -->
         
-        <div class="col-sm-8">
+        <div class="col-sm-12">
           <div class="form-group">
             {!! Html::decode(Form::label('pt_name', __('label.form.invoice.pt_name')." <small>*</small>")) !!}
             {!! Form::text('pt_name', ((isset($invoice->pt_name))? $invoice->pt_name : '' ), ['class' => 'form-control '. (($errors->has("pt_name"))? "is-invalid" : ""),'placeholder' => 'patient full name','required']) !!}

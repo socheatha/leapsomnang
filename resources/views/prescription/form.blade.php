@@ -43,16 +43,16 @@
             {!! Form::select('patient_id', [], ((isset($prescription->patient_id))? $prescription->patient_id : '' ), ['class' => 'form-control select2_pagination patient_id','placeholder' => __('label.form.choose')]) !!}
           </div>
         </div>
-        
+<!--         
         <div class="col-sm-4">
           <div class="form-group">
             {!! Html::decode(Form::label('pt_no', __('label.form.prescription.pt_no')." <small>*</small>")) !!}
             {!! Form::text('pt_no', ((isset($prescription->pt_no))? $prescription->pt_no : '' ), ['class' => 'form-control '. (($errors->has("pt_no"))? "is-invalid" : ""),'placeholder' => 'ptient number','required']) !!}
             {!! $errors->first('pt_no', '<div class="invalid-feedback">:message</div>') !!}
           </div>
-        </div>
+        </div> -->
         
-        <div class="col-sm-8">
+        <div class="col-sm-12">
           <div class="form-group">
             {!! Html::decode(Form::label('pt_name', __('label.form.prescription.pt_name')." <small>*</small>")) !!}
             {!! Form::text('pt_name', ((isset($prescription->pt_name))? $prescription->pt_name : '' ), ['class' => 'form-control '. (($errors->has("pt_name"))? "is-invalid" : ""),'placeholder' => 'patient full name','required']) !!}

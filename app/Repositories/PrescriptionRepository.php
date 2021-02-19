@@ -209,7 +209,7 @@ class PrescriptionRepository
 		$prescription = Prescription::create([
 			'date' => $request->date,
 			'code' => $request->code,
-			'pt_no' => $request->pt_no,
+			'pt_no' => str_pad($patient_id, 6, "0", STR_PAD_LEFT),
 			'pt_age' => $request->pt_age,
 			'pt_name' => $request->pt_name,
 			'pt_gender' => $request->pt_gender,
@@ -328,7 +328,7 @@ class PrescriptionRepository
 		$prescription->update([
 			'date' => $request->date,
 			'code' => $request->code,
-			'pt_no' => $request->pt_no,
+			'pt_no' => str_pad($request->patient_id, 6, "0", STR_PAD_LEFT),
 			'pt_age' => $request->pt_age,
 			'pt_name' => $request->pt_name,
 			'pt_gender' => $request->pt_gender,
