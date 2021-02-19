@@ -89,6 +89,9 @@ class InvoiceRepository
 		$grand_total_in_word = Auth::user()->num2khtext($gtt_dollars, false) . 'ដុល្លារ' . (($gtt_cents>0)? ' និង'. Auth::user()->num2khtext($gtt_cents, false) .'សេន' : '');
 		$grand_total_riel_in_word = Auth::user()->num2khtext(round($total*$invoice->rate, 0), false);
 
+		if(empty($invoice->province)){ $invoice->province = new \stdClass(); $invoice->province->name = ''; }
+		if(empty($invoice->district)){ $invoice->district = new \stdClass(); $invoice->district->name = ''; }
+
 		$invoice_detail = '<section class="invoice-print">
 												<table class="table-header" width="100%">
 													<tr>

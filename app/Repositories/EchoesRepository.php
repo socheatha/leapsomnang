@@ -58,6 +58,9 @@ class EchoesRepository
 		$grand_total_in_word = Auth::user()->num2khtext($gtt_dollars, false) . 'ដុល្លារ' . (($gtt_cents>0)? ' និង'. Auth::user()->num2khtext($gtt_cents, false) .'សេន' : '');
 		$grand_total_riel_in_word = Auth::user()->num2khtext(round($grand_total*$echoes->rate, 0), false);
 
+		if(empty($echoes->province)){ $echoes->province = new \stdClass(); $echoes->province->name = ''; }
+		if(empty($echoes->district)){ $echoes->district = new \stdClass(); $echoes->district->name = ''; }
+		
 		if ($echoes->echo_default_description->slug == 'letter-form-the-hospital') {
 			$echoes_detail = '<section class="echoes-print">
 													<div class="KHOSMoulLight text-center" style=="font-size: 16px;">ព្រះរាជាណាចក្រកម្ពុជា</div>

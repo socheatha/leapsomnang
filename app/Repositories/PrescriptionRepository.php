@@ -67,6 +67,9 @@ class PrescriptionRepository
 								</tr>';
 		}
 
+		if(empty($prescription->province)){ $prescription->province = new \stdClass(); $prescription->province->name = ''; }
+		if(empty($prescription->district)){ $prescription->district = new \stdClass(); $prescription->district->name = ''; }
+		
 		$prescription_detail = '<section class="prescription-print">
 												<table class="table-header" width="100%">
 													<tr>
