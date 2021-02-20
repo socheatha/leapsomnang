@@ -137,7 +137,7 @@ class InvoiceRepository
 															លេខអ្នកជំងឺ:<span class="pt_no">'. str_pad($invoice->pt_no, 6, "0", STR_PAD_LEFT) .'</span>
 														</td>
 														<td width="29%">
-															វិក្កយបត្រ:<span class="inv_number">INV'. date('Y', strtotime($invoice->date)) .'-'.str_pad($invoice->inv_number, 6, "0", STR_PAD_LEFT) .'</span>
+															រោគវិនិច្ឆ័យ:<span class="inv_number">'. $invoice->pt_diagnosis .'</span>
 														</td>
 													</tr>
 													<tr>
@@ -154,13 +154,6 @@ class InvoiceRepository
 													<tr>
 														<td colspan="3">
 															អាសយដ្ឋាន: <span class="pt_name">'. (($invoice->pt_village!='')? 'ភូមិ'.$invoice->pt_village : '') . (($invoice->pt_commune!='')? (($invoice->province->name=='ភ្នំពេញ')? ' សង្កាត់'.$invoice->pt_commune : ' ឃុំ'.$invoice->pt_commune) : '') . (($invoice->district->name!='')? (($invoice->province->name=='ភ្នំពេញ')? ' ខណ្ឌ'.$invoice->district->name : ' ស្រុក'.$invoice->district->name) : ''). (($invoice->province->name!='')? (($invoice->province->name=='ភ្នំពេញ')? ' រាជធានីភ្នំពេញ'.$invoice->province->name : ' ខេត្ត'.$invoice->province->name) : '') .'</span>
-														</td>
-													</tr>
-												</table>
-												<table width="100%" style="margin: 10px 0;">
-													<tr>
-														<td>
-															<div class="text-justify"><strong>រោគវិនិច្ឆ័យ៖ </strong>'. $invoice->pt_diagnosis .'</div>
 														</td>
 													</tr>
 												</table>

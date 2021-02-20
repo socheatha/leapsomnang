@@ -115,7 +115,7 @@ class PrescriptionRepository
 															លេខអ្នកជំងឺ:<span class="pt_no">'. str_pad($prescription->pt_no, 6, "0", STR_PAD_LEFT) .'</span>
 														</td>
 														<td width="29%">
-															វិក្កយបត្រ:<span class="code">PRE'. str_pad($prescription->code, 6, "0", STR_PAD_LEFT) .'</span>
+															រោគវិនិច្ឆ័យ:<span class="code">'. $prescription->pt_diagnosis .'</span>
 														</td>
 													</tr>
 													<tr>
@@ -132,13 +132,6 @@ class PrescriptionRepository
 													<tr>
 														<td colspan="3">
 															អាសយដ្ឋាន: <span class="pt_name">'. (($prescription->pt_village!='')? 'ភូមិ'.$prescription->pt_village : '') . (($prescription->pt_commune!='')? (($prescription->province->name=='ភ្នំពេញ')? ' សង្កាត់'.$prescription->pt_commune : ' ឃុំ'.$prescription->pt_commune) : '') . (($prescription->district->name!='')? (($prescription->province->name=='ភ្នំពេញ')? ' ខណ្ឌ'.$prescription->district->name : ' ស្រុក'.$prescription->district->name) : ''). (($prescription->province->name!='')? (($prescription->province->name=='ភ្នំពេញ')? ' រាជធានីភ្នំពេញ'.$prescription->province->name : ' ខេត្ត'.$prescription->province->name) : '') .'</span>
-														</td>
-													</tr>
-												</table>
-												<table width="100%" style="margin: 10px 0;">
-													<tr>
-														<td>
-															<div class="text-justify"><strong>រោគវិនិច្ឆ័យ៖ </strong>'. $prescription->pt_diagnosis .'</div>
 														</td>
 													</tr>
 												</table>

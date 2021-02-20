@@ -130,7 +130,7 @@ class EchoesRepository
 													</table>
 													<div class="echo_description">
 														<div style="margin-bottom: 10px;">
-															រោគវិនិច្ឆ័យ:'. $echoes->pt_diagnosis .'
+															រោគវិនិច្ឆ័យ: '. $echoes->pt_diagnosis .'
 														</div>
 														'. $echoes->description .'
 													</div>
