@@ -62,7 +62,7 @@ class EchoesRepository
 		if(empty($echoes->district)){ $echoes->district = new \stdClass(); $echoes->district->name = ''; }
 		
 		if ($echoes->echo_default_description->slug == 'letter-form-the-hospital') {
-			$echoes_detail = '<section class="echoes-print">
+			$echoes_detail = '<section class="echoes-print" style="position: relative;">
 													<div class="KHOSMoulLight text-center" style=="font-size: 16px;">ព្រះរាជាណាចក្រកម្ពុជា</div>
 													<div class="KHOSMoulLight text-center" style=="font-size: 16px;">ជាតិ   សាសនា    ព្រះមហាក្សត្រ</div>
 													<table class="table-header" width="100%">
@@ -130,7 +130,7 @@ class EchoesRepository
 													</table>
 													<div class="echo_description">
 														<div style="margin-bottom: 10px;">
-															'. $echoes->pt_diagnosis .'
+															រោគវិនិច្ឆ័យ:'. $echoes->pt_diagnosis .'
 														</div>
 														'. $echoes->description .'
 													</div>
@@ -152,7 +152,7 @@ class EchoesRepository
 															</td>
 														</tr>
 													</table>
-													<div style="color: red; margin-top: 15px;" class="text-center color_red"><u>សូមកាន់លទ្ធផលនេះមកជាមួយផង ពេលពិនិត្យលើកក្រោយ អរគុណ។</u></div>
+													<div style="color: red; margin-top: 15px; position: absolute; bottom: 30px;" class="text-center color_red"><u>សូមកាន់លទ្ធផលនេះមកជាមួយផង ពេលពិនិត្យលើកក្រោយ អរគុណ។</u></div>
 													<br/>
 												</section>';
 		}

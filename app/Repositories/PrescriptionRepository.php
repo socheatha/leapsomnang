@@ -70,7 +70,7 @@ class PrescriptionRepository
 		if(empty($prescription->province)){ $prescription->province = new \stdClass(); $prescription->province->name = ''; }
 		if(empty($prescription->district)){ $prescription->district = new \stdClass(); $prescription->district->name = ''; }
 		
-		$prescription_detail = '<section class="prescription-print">
+		$prescription_detail = '<section class="prescription-print" style="position: relative;">
 												<table class="table-header" width="100%">
 													<tr>
 														<td rowspan="5" width="20%" style="padding: 10px;">
@@ -135,6 +135,13 @@ class PrescriptionRepository
 														</td>
 													</tr>
 												</table>
+												<table width="100%" style="margin: 10px 0;">
+													<tr>
+														<td>
+															<div class="text-justify"><strong>រោគវិនិច្ឆ័យ៖ </strong>'. $prescription->pt_diagnosis .'</div>
+														</td>
+													</tr>
+												</table>
 												<table class="table-detail" width="100%">
 													<thead>
 														<th class="text-center" width="5%">ល.រ</th>
@@ -153,7 +160,7 @@ class PrescriptionRepository
 												</table>
 												<small class="remark">'. $prescription->remark .'</small>
 												<br/>
-												<div style="color: red; text-align: center;"><u>សូមយកវិក្កយបត្រមកវិញពេលមកពិនិត្យលើក្រោយ</u></div>
+												<div style="color: red; text-align: center; position: absolute; bottom: 30px;"><u>សូមយកវិក្កយបត្រមកវិញពេលមកពិនិត្យលើក្រោយ</u></div>
 												<table class="table-footer" style="margin-top: 15px;" width="100%">
 													<tr>
 														<td></td>
