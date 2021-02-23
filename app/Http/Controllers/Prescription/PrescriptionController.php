@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\PrescriptionRepository;
 use App\Models\Province;
 use App\Models\District;
+use App\Models\Usage;
 use Auth;
 
 class PrescriptionController extends Controller
@@ -71,6 +72,7 @@ class PrescriptionController extends Controller
 			'code' => $this->prescription->code(),
 			'medicines' => Medicine::getSelectData('id', 'name', '', 'name' ,'asc'),
 			'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),
+			'usage' => Usage::getSelectData('id', 'name', '', 'name' ,'asc'),
 		];
 		return view('prescription.create', $this->data);
 	}
@@ -161,6 +163,7 @@ class PrescriptionController extends Controller
 			'medicines' => Medicine::getSelectData('id', 'name', '', 'name' ,'asc'),
 			'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),
 			'prescription_preview' => $this->prescription->getPrescriptionPreview($prescription->id)->getData()->prescription_detail,
+			'usage' => Usage::getSelectData('id', 'name', '', 'name' ,'asc'),
 		];
 
 		return view('prescription.edit', $this->data);

@@ -123,6 +123,11 @@
       <option value="{!! $m !!}">
     @endforeach
   </datalist>
+  <datalist id="usage_list">
+    @foreach ($usage as $u)
+      <option value="{!! $u !!}">
+    @endforeach
+  </datalist>
 
 
 

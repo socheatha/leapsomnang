@@ -183,7 +183,7 @@
 					<div class="col-sm-2">
 						<div class="form-group">
 							{!! Html::decode(Form::label('edit_item_medicine_usage', __('label.form.prescription.medicine_usage')."<small>*</small>")) !!}
-							{!! Form::text('edit_item_medicine_usage', '', ['class' => 'form-control','placeholder' => 'usage','required']) !!}
+							{!! Form::text('edit_item_medicine_usage', '', ['class' => 'form-control','placeholder' => 'usage','required', 'list' => 'usage_list']) !!}
 						</div>
 					</div>
 					<div class="col-sm-3">
