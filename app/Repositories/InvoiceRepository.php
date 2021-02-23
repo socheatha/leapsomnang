@@ -92,7 +92,7 @@ class InvoiceRepository
 		if(empty($invoice->province)){ $invoice->province = new \stdClass(); $invoice->province->name = ''; }
 		if(empty($invoice->district)){ $invoice->district = new \stdClass(); $invoice->district->name = ''; }
 
-		$invoice_detail = '<section class="invoice-print" stlyle="position: relative;">
+		$invoice_detail = '<section class="invoice-print" style="position: relative;">
 												<table class="table-header" width="100%">
 													<tr>
 														<td rowspan="5" width="20%" style="padding: 10px;">
@@ -187,7 +187,7 @@ class InvoiceRepository
 												</table>
 												<small class="remark">'. $invoice->remark .'</small>
 												<br/>
-												<div style="color: red; text-align: center; position: absolute; bottom: 30px;"><u>សូមយកវិក្កយបត្រមកវិញពេលមកពិនិត្យលើក្រោយ</u></div>
+												<div style="color: red; text-align: center; position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);"><u>សូមយកវិក្កយបត្រមកវិញពេលមកពិនិត្យលើក្រោយ</u></div>
 												<table class="table-footer" width="100%">
 													<tr>
 														<td></td>

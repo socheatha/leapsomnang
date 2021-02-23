@@ -88,7 +88,7 @@ class EchoesRepository
 													</div>
 												</section>';
 		}else{
-			$echoes_detail = '<section class="echoes-print">
+			$echoes_detail = '<section class="echoes-print" style="position: relative;">
 													<table class="table-header" width="100%">
 														<tr>
 															<td width="40%">
@@ -152,7 +152,7 @@ class EchoesRepository
 															</td>
 														</tr>
 													</table>
-													<div style="color: red; margin-top: 15px; position: absolute; bottom: 30px;" class="text-center color_red"><u>សូមកាន់លទ្ធផលនេះមកជាមួយផង ពេលពិនិត្យលើកក្រោយ អរគុណ។</u></div>
+													<div style="color: red; text-align: center; position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);"><u>សូមកាន់លទ្ធផលនេះមកជាមួយផង ពេលពិនិត្យលើកក្រោយ អរគុណ។</u></div>
 													<br/>
 												</section>';
 		}
