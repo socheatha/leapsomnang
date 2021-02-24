@@ -153,12 +153,12 @@ class PrescriptionRepository
 												</table>
 												<small class="remark">'. $prescription->remark .'</small>
 												<br/>
-												<div style="color: red; text-align: center; position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);"><u>សូមយកវិក្កយបត្រមកវិញពេលមកពិនិត្យលើក្រោយ</u></div>
+												<div style="color: red; text-align: center; position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);"><u>សូមយកវេជ្ជបញ្ជាមកវិញពេលមកពិនិត្យលើក្រោយ</u></div>
 												<table class="table-footer" style="margin-top: 15px;" width="100%">
 													<tr>
 														<td></td>
 														<td width="32%" class="text-center">
-															<div>រៀបចំដោយ</div>
+															<div>គ្រូពេទ្យព្យាបាល</div>
 															<div class="sign_box"></div>
 															<div style="color: blue;"><span class="color_blue KHOSMoulLight">'. Auth::user()->setting()->sign_name_kh .'</span></div>
 														</td>

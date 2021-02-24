@@ -137,7 +137,7 @@ class EchoesRepository
 													<table class="table-detail" width="100%">
 														<tr>
 															<td width="70%" style="padding: 10px;">
-																<img src="/images/echoes/'. $echoes->image .'" alt="IMG">
+																<img src="/images/echoes/'. $echoes->image .'" alt="IMG" height="300px">
 															</td>
 															<td>
 																<div>Le. '. date('d-m-Y', strtotime($echoes->date)) .'</div>

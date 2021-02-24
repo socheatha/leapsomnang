@@ -192,7 +192,7 @@ class InvoiceRepository
 													<tr>
 														<td></td>
 														<td width="32%" class="text-center">
-															<div>រៀបចំដោយ</div>
+															<div>គ្រូពេទ្យព្យាបាល</div>
 															<div class="sign_box"></div>
 															<div style="color: blue;"><span class="color_blue KHOSMoulLight">'. Auth::user()->setting()->sign_name_kh .'</span></div>
 														</td>
