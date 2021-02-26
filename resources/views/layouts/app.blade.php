@@ -17,7 +17,6 @@
 </head>
 <body class="hold-transition sidebar-mini layout-fixed sidebar-collapses text-sm">
 	@yield('print-area')
-	
 
 	<div class="wrapper" id="app">
 

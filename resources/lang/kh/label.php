@@ -41,6 +41,7 @@ return [
 		'prescription' => 'វេជ្ជបញ្ជា',
 		'service' => 'សេវាកម្ម',
 		'invoice' => 'វិក្កយបត្រ',
+		'labor' => 'ការពិនិត្យឈាម',
 		'province' => 'ខេត្ត/ក្រុង',
 		'district' => 'ស្រុក/ខណ្ឌ',
 		'echo_default_description' => 'លំនាំការពិនិត្យអេកូ',
@@ -83,6 +84,7 @@ return [
 			'prescription' => 'វេជ្ជបញ្ជា',
 			'service' => 'សេវាកម្ម',
 			'invoice' => 'វិក្កយបត្រ',
+			'labor' => 'ការពិនិត្យឈាម',
 			'setting' => 'ការកណត់',
 	  	'province' => 'ខេត្ត/ក្រុង',
       'district' => 'ស្រុក/ខណ្ឌ',
@@ -103,6 +105,7 @@ return [
 		'export_all' => 'នាំចេញទាំងអស់',
 		'edit_order' => 'ផ្លាសប្ដូរលំដាប់',
 		'invoice_detail' => 'វិក្កយបត្រលម្អិត',
+		'labor_detail' => 'ការពិនិត្យឈាម',
 		'prescription_detail' => 'វេជ្ជបញ្ជាលម្អិត',
 		'list' => 'បញ្ជីឈ្មោះ',
 		'back_to_list' => 'បញ្ជី:name',
@@ -165,7 +168,7 @@ return [
 
 		'invoice' => [
 			'choose_date' => 'ជ្រើសរើសកាលកំណត់',
-			'inv_number' => 'លេខរៀវិក្កយបត្រ',
+			'inv_number' => 'លេខរៀងវិក្កយបត្រ',
 			'exchange_rate' => 'អត្រាប្ដូរប្រាក់',
 			'patient' => 'អ្នកជំងឺ',
 			'pt_name' => 'ឈ្មោះអ្នកជំងឺ',
@@ -181,6 +184,20 @@ return [
 			'medicine' => 'ថ្នាំ',
 			'price' => 'តម្លៃ',
 			'qty' => 'បរិមាណ',
+		],
+
+		'labor' => [
+			'choose_date' => 'ជ្រើសរើសកាលកំណត់',
+			'labor_number' => 'លេខរៀង',
+			'patient' => 'អ្នកជំងឺ',
+			'pt_name' => 'ឈ្មោះអ្នកជំងឺ',
+			'pt_phone' => 'ទូរស័ព្ទអ្នកជំងឺ',
+			'pt_no' => 'លេខរៀងអ្នកជំងឺ',
+			'pt_age' => 'អាយុអ្នកជំងឺ',
+			'pt_gender' => 'ភេទអ្នកជំងឺ',
+			'pt_address' => 'អាសយដ្ឋានអ្នកជំងឺ',
+	    'discount' => 'បញ្ចុះតម្លៃ',
+			'service' => 'សេវាកម្ម',
 		],
 
 		'prescription' => [
