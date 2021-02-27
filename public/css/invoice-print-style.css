@@ -33,6 +33,40 @@
 	height: 60px;
 }
 
+
+.labor-print *{
+  font-family: 'Courier New','Khmer OS Battambang';
+}
+
+.labor-print{
+	width: 21cm;
+	height: 29.7cm;
+	margin: 0 auto;
+	background: #fff;
+	border: 1px solid #ededed;
+	padding: 1cm;
+}
+.labor-print .table-information td{
+	padding-bottom: 8px;
+}
+.labor-print .table-detail thead th,
+.labor-print .table-detail tfoot th:nth-child(3),
+.labor-print .table-detail tfoot th:nth-child(4),
+.labor-print .table-detail td{
+	padding: 6px;
+	border: 1px solid #ededed;
+}
+
+.labor-print .table-detail tfoot th{
+	padding: 6px;
+}
+
+.labor-print small{
+	font-size: 10px !important;
+}
+
+
+
 .prescription-print *{
   font-family: 'Courier New','Khmer OS Battambang';
 }
