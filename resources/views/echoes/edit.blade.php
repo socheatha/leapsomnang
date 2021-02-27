@@ -43,7 +43,7 @@
 </div>
 
 <div class="position-relative">
-	@can("Echoes Print")
+	@can("Echo Print")
 		<button type="button" class="btn btn-flat btn-success position-absolute mr-9 mt-5 btn-print-echoes" data-url="{{ route('echoes.print', [$type, $echoes->id]) }}"><i class="fa fa-print"></i> {{ __("label.buttons.print") }}</button>
 	@endCan
 </div>
