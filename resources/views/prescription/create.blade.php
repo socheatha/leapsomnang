@@ -157,10 +157,6 @@
 				</div>
 			</div>
 		</div>`);
-		// $('[name="morning[]"]').on('blur', function() {
-		// 	alert('Hello');
-		// 	$(this).parent('.prescription_item').css('border', '1px solid red');
-		// });
 	});
 
 	function removeItem(id) {
@@ -225,10 +221,12 @@
 
 	$(document).ready(function() {
 		$('#btn_add_item').click();
-	});
-	$('[name="morning[]"]').on('blur', function() {
-		alert('Hello');
-		$(this).parent('.prescription_item').css('border', '1px solid red');
+		
+		$(document).on('mouseout change', '[name="morning[]"], [name="afternoon[]"], [name="evening[]"], [name="night[]"], [name="qty_days[]"]', function() {
+			let _parent = $(this).parents('.prescription_item');
+			let _total = (parseInt(_parent.find('[name="morning[]').val()) + parseInt(_parent.find('[name="afternoon[]').val()) + parseInt(_parent.find('[name="evening[]').val()) + parseInt(_parent.find('[name="night[]').val())) * parseInt(_parent.find('[name="qty_days[]').val());
+			_parent.find('[name="total[]').val(_total);
+		});
 	});
 </script>
 @endsection

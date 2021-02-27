@@ -438,6 +438,8 @@
 						})
 				}
 				if (data.success) {
+					data.prescription_detail['total'] = $('[name="edit_item_total"]').val();
+
 					$('[name="edit_item_medicine_name"]').val('');
 					$('[name="edit_item_medicine_usage"]').val('');
 					$('[name="edit_item_morning"]').val('');
@@ -454,6 +456,7 @@
 					$("#input-evening-" + data.prescription_detail.id).val(data.prescription_detail.evening);
 					$("#input-night-" + data.prescription_detail.id).val(data.prescription_detail.night);
 					$("#input-qty_days-" + data.prescription_detail.id).val(data.prescription_detail.qty_days);
+					$("#input-total-" + data.prescription_detail.id).val(data.prescription_detail.total);
 					$("#input-description-" + data.prescription_detail.id).val(data.prescription_detail.description);
 					Swal.fire({
 						icon: 'success',
@@ -634,6 +637,18 @@
 				}
 			});
 		}
+	});
+
+	$(document).ready(function() {		
+		$(document).on('mouseout change', '#item_morning, #item_afternoon, #item_evening, #item_night, #item_qty_days', function() {
+			let _total = (parseInt($('#item_morning').val()) + parseInt($('#item_afternoon').val()) + parseInt($('#item_evening').val()) + parseInt($('#item_night').val())) * parseInt($('#item_qty_days').val());
+			$('#item_total').val(_total);
+		});
+
+		$(document).on('mouseout change', '#edit_item_morning, #edit_item_afternoon, #edit_item_evening, #edit_item_night, #edit_item_qty_days', function() {
+			let _total = (parseInt($('#edit_item_morning').val()) + parseInt($('#edit_item_afternoon').val()) + parseInt($('#edit_item_evening').val()) + parseInt($('#edit_item_night').val())) * parseInt($('#edit_item_qty_days').val());
+			$('#edit_item_total').val(_total);
+		});
 	});
 </script>
 @endsection
