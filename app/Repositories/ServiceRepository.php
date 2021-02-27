@@ -13,7 +13,7 @@ class ServiceRepository
 
 	public function getData()
 	{
-		return Service::all();
+		return Service::where('is_labor', '0')->get();
 	}
 
 	public function reloadSelectService()

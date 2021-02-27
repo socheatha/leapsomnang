@@ -10,7 +10,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-sm-3">
+					<div class="col-sm-2">
 						<div class="form-group">
 							{!! Html::decode(Form::label('item_medicine_name', __('label.form.prescription.medicine_name')."<small>*</small>")) !!}
 							{!! Form::text('item_medicine_name', '', ['class' => 'form-control','placeholder' => 'name','required', 'list' => 'medicine_list']) !!}
@@ -19,25 +19,37 @@
 					<div class="col-sm-1">
 						<div class="form-group">
 							{!! Html::decode(Form::label('item_morning', __('label.form.prescription.morning'))) !!}
-							{!! Form::text('item_morning', '', ['class' => 'form-control is_number','placeholder' => 'morning']) !!}
+							{!! Form::number('item_morning', '0', ['class' => 'form-control is_number','placeholder' => 'morning']) !!}
 						</div>
 					</div>
 					<div class="col-sm-1">
 						<div class="form-group">
 							{!! Html::decode(Form::label('item_afternoon', __('label.form.prescription.afternoon'))) !!}
-							{!! Form::text('item_afternoon', '', ['class' => 'form-control is_number','placeholder' => 'afternoon']) !!}
+							{!! Form::number('item_afternoon', '0', ['class' => 'form-control is_number','placeholder' => 'afternoon']) !!}
 						</div>
 					</div>
 					<div class="col-sm-1">
 						<div class="form-group">
 							{!! Html::decode(Form::label('item_evening', __('label.form.prescription.evening'))) !!}
-							{!! Form::text('item_evening', '', ['class' => 'form-control is_number','placeholder' => 'evening']) !!}
+							{!! Form::number('item_evening', '0', ['class' => 'form-control is_number','placeholder' => 'evening']) !!}
 						</div>
 					</div>
 					<div class="col-sm-1">
 						<div class="form-group">
 							{!! Html::decode(Form::label('item_night', __('label.form.prescription.night'))) !!}
-							{!! Form::text('item_night', '', ['class' => 'form-control is_number','placeholder' => 'night']) !!}
+							{!! Form::number('item_night', '0', ['class' => 'form-control is_number','placeholder' => 'night']) !!}
+						</div>
+					</div>
+					<div class="col-sm-1">
+						<div class="form-group">
+							{!! Html::decode(Form::label('item_qty_days', __('label.form.prescription.qty_days'))) !!}
+							{!! Form::number('item_qty_days', '0', ['class' => 'form-control is_number','placeholder' => 'qty_days']) !!}
+						</div>
+					</div>
+					<div class="col-sm-1">
+						<div class="form-group">
+							{!! Html::decode(Form::label('item_total', __('label.form.prescription.total'))) !!}
+							{!! Form::number('item_total', '0', ['class' => 'form-control is_number','placeholder' => 'total', 'readonly' => 'readonly']) !!}
 						</div>
 					</div>
 					<div class="col-sm-2">
@@ -46,7 +58,7 @@
 							{!! Form::text('item_medicine_usage', '', ['class' => 'form-control','placeholder' => 'usage','required', 'list' => 'usage_list']) !!}
 						</div>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-2">
 						<div class="form-group">
 							{!! Html::decode(Form::label('item_description', __('label.form.description'))) !!}
 							{!! Form::textarea('item_description', '', ['class' => 'form-control','placeholder' => 'description','style' => 'height: 38px']) !!}

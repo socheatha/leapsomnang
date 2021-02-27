@@ -57,7 +57,7 @@
 				@foreach ($prescription->prescription_details as $order => $prescription_detail)
 				<div class="mb-2" id="{{ $prescription_detail->id }}">
 					<div class="row">
-						<div class="col-sm-3">
+						<div class="col-sm-2">
 							<div class="form-group">
 								{!! Html::decode(Form::label('medicine_name', __('label.form.prescription.medicine_name')."<small>*</small>")) !!}
 								{!! Form::text('show_medicine_name', $prescription_detail->medicine_name, ['class' => 'form-control', 'id' => 'input-medicine_name-'. $prescription_detail->id,'placeholder' => 'name','readonly']) !!}
@@ -87,7 +87,19 @@
 								{!! Form::text('show_night', $prescription_detail->night, ['class' => 'form-control is_number', 'id' => 'input-night-'. $prescription_detail->id,'min' => '0','placeholder' => 'night','readonly']) !!}
 							</div>
 						</div>
-						<div class="col-sm-2">
+						<div class="col-sm-1">
+							<div class="form-group">
+								{!! Html::decode(Form::label('qty_days', __('label.form.prescription.qty_days'))) !!}
+								{!! Form::text('show_qty_days', $prescription_detail->qty_days, ['class' => 'form-control is_number', 'id' => 'input-qty_days-'. $prescription_detail->id,'min' => '0','placeholder' => 'qty_days','readonly']) !!}
+							</div>
+						</div>
+						<div class="col-sm-1">
+							<div class="form-group">
+								{!! Html::decode(Form::label('total', __('label.form.prescription.total'))) !!}
+								{!! Form::text('show_total', (($prescription_detail->morning + $prescription_detail->afternoon + $prescription_detail->evening + $prescription_detail->night) * $prescription_detail->qty_days), ['class' => 'form-control is_number', 'id' => 'input-total-'. $prescription_detail->id,'min' => '0','placeholder' => 'total','readonly']) !!}
+							</div>
+						</div>
+						<div class="col-sm-1">
 							<div class="form-group">
 								{!! Html::decode(Form::label('medicine_usage', __('label.form.prescription.medicine_usage')."<small>*</small>")) !!}
 								{!! Form::text('show_medicine_usage', $prescription_detail->medicine_usage, ['class' => 'form-control', 'id' => 'input-medicine_usage-'. $prescription_detail->id,'placeholder' => 'usage','readonly']) !!}
@@ -150,7 +162,7 @@
 				{!! Form::hidden('edit_item_id', '') !!}
 
 				<div class="row">
-					<div class="col-sm-3">
+					<div class="col-sm-2">
 						<div class="form-group">
 							{!! Html::decode(Form::label('edit_item_medicine_name', __('label.form.prescription.medicine_name')."<small>*</small>")) !!}
 							{!! Form::text('edit_item_medicine_name', '', ['class' => 'form-control','placeholder' => 'name','required', 'list' => 'medicine_list']) !!}
@@ -159,28 +171,40 @@
 					<div class="col-sm-1">
 						<div class="form-group">
 							{!! Html::decode(Form::label('edit_item_morning', __('label.form.prescription.morning'))) !!}
-							{!! Form::text('edit_item_morning', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'morning']) !!}
+							{!! Form::number('edit_item_morning', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'morning']) !!}
 						</div>
 					</div>
 					<div class="col-sm-1">
 						<div class="form-group">
 							{!! Html::decode(Form::label('edit_item_afternoon', __('label.form.prescription.afternoon'))) !!}
-							{!! Form::text('edit_item_afternoon', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'afternoon']) !!}
+							{!! Form::number('edit_item_afternoon', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'afternoon']) !!}
 						</div>
 					</div>
 					<div class="col-sm-1">
 						<div class="form-group">
 							{!! Html::decode(Form::label('edit_item_evening', __('label.form.prescription.evening'))) !!}
-							{!! Form::text('edit_item_evening', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'evening']) !!}
+							{!! Form::number('edit_item_evening', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'evening']) !!}
 						</div>
 					</div>
 					<div class="col-sm-1">
 						<div class="form-group">
 							{!! Html::decode(Form::label('edit_item_night', __('label.form.prescription.night'))) !!}
-							{!! Form::text('edit_item_night', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'night']) !!}
+							{!! Form::number('edit_item_night', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'night']) !!}
 						</div>
 					</div>
-					<div class="col-sm-2">
+					<div class="col-sm-1">
+						<div class="form-group">
+							{!! Html::decode(Form::label('edit_item_qty_days', __('label.form.prescription.qty_days'))) !!}
+							{!! Form::number('edit_item_qty_days', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'qty_days']) !!}
+						</div>
+					</div>
+					<div class="col-sm-1">
+						<div class="form-group">
+							{!! Html::decode(Form::label('edit_item_total', __('label.form.prescription.total'))) !!}
+							{!! Form::number('edit_item_total', '0', ['class' => 'form-control is_number','min' => '0','placeholder' => 'total', 'readonly' => 'readonly']) !!}
+						</div>
+					</div>
+					<div class="col-sm-1">
 						<div class="form-group">
 							{!! Html::decode(Form::label('edit_item_medicine_usage', __('label.form.prescription.medicine_usage')."<small>*</small>")) !!}
 							{!! Form::text('edit_item_medicine_usage', '', ['class' => 'form-control','placeholder' => 'usage','required', 'list' => 'usage_list']) !!}
@@ -328,6 +352,7 @@
 				$('[name="edit_item_afternoon"]').val(result.prescription_detail.afternoon);
 				$('[name="edit_item_evening"]').val(result.prescription_detail.evening);
 				$('[name="edit_item_night"]').val(result.prescription_detail.night);
+				$('[name="edit_item_qty_days"]').val(result.prescription_detail.qty_days);
 				$('[name="edit_item_description"]').val(result.prescription_detail.description);
 				$('[name="edit_item_id"]').val(result.prescription_detail.id);
 				$('#edit_prescription_item_modal').modal('show');
@@ -387,6 +412,7 @@
 					afternoon: $('[name="edit_item_afternoon"]').val(),
 					evening: $('[name="edit_item_evening"]').val(),
 					night: $('[name="edit_item_night"]').val(),
+					qty_days: $('[name="edit_item_qty_days"]').val(),
 					description: $('[name="edit_item_description"]').val()
 				},
 			})
@@ -412,12 +438,15 @@
 						})
 				}
 				if (data.success) {
+					data.prescription_detail['total'] = $('[name="edit_item_total"]').val();
+
 					$('[name="edit_item_medicine_name"]').val('');
 					$('[name="edit_item_medicine_usage"]').val('');
 					$('[name="edit_item_morning"]').val('');
 					$('[name="edit_item_afternoon"]').val('');
 					$('[name="edit_item_evening"]').val('');
 					$('[name="edit_item_night"]').val('');
+					$('[name="edit_item_qty_days"]').val('');
 					$('[name="edit_item_description"]').val('');
 					$('.print-preview').html(data.prescription_preview);
 					$("#input-medicine_name-" + data.prescription_detail.id).val(data.prescription_detail.medicine_name);
@@ -426,6 +455,8 @@
 					$("#input-afternoon-" + data.prescription_detail.id).val(data.prescription_detail.afternoon);
 					$("#input-evening-" + data.prescription_detail.id).val(data.prescription_detail.evening);
 					$("#input-night-" + data.prescription_detail.id).val(data.prescription_detail.night);
+					$("#input-qty_days-" + data.prescription_detail.id).val(data.prescription_detail.qty_days);
+					$("#input-total-" + data.prescription_detail.id).val(data.prescription_detail.total);
 					$("#input-description-" + data.prescription_detail.id).val(data.prescription_detail.description);
 					Swal.fire({
 						icon: 'success',
@@ -452,15 +483,16 @@
 					afternoon: $('[name="item_afternoon"]').val(),
 					evening: $('[name="item_evening"]').val(),
 					night: $('[name="item_night"]').val(),
+					qty_days: $('[name="item_qty_days"]').val(),
 					description: $('[name="item_description"]').val(),
 				},
 				success: function(data) {
 					$('.print-preview').html(data.prescription_preview);
 					console.log(data.prescription_detail.description);
-
+					data.prescription_detail['total'] = $('[name="item_total"]').val();
 					$('.item_list').append(`<div class="prescription_item" id="${ data.prescription_detail.id }">
 																			<div class="row">
-																				<div class="col-sm-3">
+																				<div class="col-sm-2">
 																					<div class="form-group">
 																						{!! Html::decode(Form::label('medicine_name', __('label.form.prescription.medicine_name')."<small>*</small>")) !!}
 																						<input name="show_medicine_name" class="form-control" id="input-medicine_name-${ data.prescription_detail.id }" value="${ data.prescription_detail.medicine_name }" placeholder="name" readonly="" />
@@ -490,7 +522,19 @@
 																						<input name="show_night" class="form-control is_number" min="0" id="input-night-${ data.prescription_detail.id }" value="${ ((data.prescription_detail.night=='null' || data.prescription_detail.night==null || data.prescription_detail.night=='' )? '': data.prescription_detail.night) }" placeholder="night" readonly="" />
 																					</div>
 																				</div>
-																				<div class="col-sm-2">
+																				<div class="col-sm-1">
+																					<div class="form-group">
+																						{!! Html::decode(Form::label('qty_days', __('label.form.prescription.qty_days'))) !!}
+																						<input name="show_qty_days" class="form-control is_number" min="0" id="input-qty_days-${ data.prescription_detail.id }" value="${ ((data.prescription_detail.qty_days=='null' || data.prescription_detail.qty_days==null || data.prescription_detail.qty_days=='' )? '': data.prescription_detail.qty_days) }" placeholder="qty_days" readonly="" />
+																					</div>
+																				</div>
+																				<div class="col-sm-1">
+																					<div class="form-group">
+																						{!! Html::decode(Form::label('total', __('label.form.prescription.total'))) !!}
+																						<input name="show_total" class="form-control is_number" min="0" id="input-total-${ data.prescription_detail.id }" value="${ ((data.prescription_detail.total=='null' || data.prescription_detail.total==null || data.prescription_detail.total=='' )? '': data.prescription_detail.total) }" placeholder="total" readonly="" />
+																					</div>
+																				</div>
+																				<div class="col-sm-1">
 																					<div class="form-group">
 																						{!! Html::decode(Form::label('medicine_usage', __('label.form.prescription.medicine_usage')."<small>*</small>")) !!}
 																						<input name="show_medicine_usage" class="form-control" id="input-medicine_usage-${ data.prescription_detail.id }" value="${ data.prescription_detail.medicine_usage }" placeholder="usage" readonly="" />
@@ -593,6 +637,18 @@
 				}
 			});
 		}
+	});
+
+	$(document).ready(function() {		
+		$(document).on('mouseout change', '#item_morning, #item_afternoon, #item_evening, #item_night, #item_qty_days', function() {
+			let _total = (parseInt($('#item_morning').val()) + parseInt($('#item_afternoon').val()) + parseInt($('#item_evening').val()) + parseInt($('#item_night').val())) * parseInt($('#item_qty_days').val());
+			$('#item_total').val(_total);
+		});
+
+		$(document).on('mouseout change', '#edit_item_morning, #edit_item_afternoon, #edit_item_evening, #edit_item_night, #edit_item_qty_days', function() {
+			let _total = (parseInt($('#edit_item_morning').val()) + parseInt($('#edit_item_afternoon').val()) + parseInt($('#edit_item_evening').val()) + parseInt($('#edit_item_night').val())) * parseInt($('#edit_item_qty_days').val());
+			$('#edit_item_total').val(_total);
+		});
 	});
 </script>
 @endsection

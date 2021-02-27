@@ -1,0 +1,3 @@
+ALTER TABLE `services`  ADD `is_labor` ENUM('0','1') NOT NULL DEFAULT '0'  AFTER `description`;
+ALTER TABLE `services` CHANGE `price` `price` DOUBLE NOT NULL DEFAULT '0';
+ALTER TABLE `prescription_details`  ADD `qty_days` VARCHAR(191) NOT NULL DEFAULT '0'  AFTER `night`;

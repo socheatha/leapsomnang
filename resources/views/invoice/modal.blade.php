@@ -14,7 +14,7 @@
 						<div class="form-group">
 							{!! Html::decode(Form::label('item_service_name', __('label.form.invoice.service')." <small>*</small>")) !!}
 							<div class="input-group mb-3">
-								{!! Form::text('item_service_name', '', ['class' => 'form-control','placeholder' => __('label.form.invoice.service'),'required', 'list' => 'service_list']) !!}
+								{!! Form::text('item_service_name', '', ['class' => 'form-control','placeholder' => __('label.form.invoice.service'),'required', 'list' => 'service_list', 'autocomplete' => 'off']) !!}
 							</div>
 						</div>
 					</div>
