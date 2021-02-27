@@ -9,7 +9,7 @@ use App\Models\Service;
 class PrescriptionDetail extends Model
 {
 	protected $fillable = [
-		'medicine_name', 'medicine_usage', 'morning', 'afternoon', 'evening', 'night', 'description', 'index', 'prescription_id', 'medicine_id', 'created_by', 'updated_by',
+		'medicine_name', 'medicine_usage', 'morning', 'afternoon', 'evening', 'night', 'qty_days', 'description', 'index', 'prescription_id', 'medicine_id', 'created_by', 'updated_by',
 	];
 
 	protected $table = 'prescription_details';

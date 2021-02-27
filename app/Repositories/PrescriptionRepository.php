@@ -53,7 +53,7 @@ class PrescriptionRepository
 		$title = 'Prescription (PRE-' . str_pad($prescription->code, 6, "0", STR_PAD_LEFT) . ')';
 
 		foreach ($prescription->prescription_details as $prescription_detail) {
-			$total = $prescription_detail->morning + $prescription_detail->afternoon + $prescription_detail->evening + $prescription_detail->night;
+			$total = ($prescription_detail->morning + $prescription_detail->afternoon + $prescription_detail->evening + $prescription_detail->night) * $prescription_detail->qty_days;
 			$tbody .= '<tr>
 									<td class="text-center">' . $no++ . '</td>
 									<td>' . $prescription_detail->medicine_name . '</td>
@@ -61,6 +61,7 @@ class PrescriptionRepository
 									<td class="text-center">' . $prescription_detail->afternoon . '</td>
 									<td class="text-center">' . $prescription_detail->evening . '</td>
 									<td class="text-center">' . $prescription_detail->night . '</td>
+									<td class="text-center">' . $prescription_detail->qty_days . '</td>
 									<td class="text-center">' . $total . '</td>
 									<td class="text-center">' . $prescription_detail->medicine_usage . '</td>
 									<td><small>' . $prescription_detail->description . '</small></td>
@@ -143,6 +144,7 @@ class PrescriptionRepository
 														<th class="text-center" width="6%">ថ្ងៃ</th>
 														<th class="text-center" width="6%">ល្ងាច</th>
 														<th class="text-center" width="6%">យប់</th>
+														<th class="text-center" width="8%">ចំនួនថ្ងៃ</th>
 														<th class="text-center" width="6%">សរុប</th>
 														<th class="text-center" width="13%">ការប្រើប្រាស់</th>
 														<th class="text-center" width="19%">កំណត់ចំណាំ</th>
@@ -230,10 +232,11 @@ class PrescriptionRepository
 				PrescriptionDetail::create([
 					'medicine_name' => $request->medicine_name[$i],
 					'medicine_usage' => $request->medicine_usage[$i],
-					'morning' => $request->morning[$i],
-					'afternoon' => $request->afternoon[$i],
-					'evening' => $request->evening[$i],
-					'night' => $request->night[$i],
+					'morning' => $request->morning[$i] ?: 0,
+					'afternoon' => $request->afternoon[$i] ?: 0,
+					'evening' => $request->evening[$i] ?: 0,
+					'night' => $request->night[$i] ?: 0,
+					'qty_days' => $request->qty_days[$i] ?: 0,
 					'description' => $request->description[$i],
 					'index' => $i + 1,
 					'medicine_id' => $this->get_medicine_id_or_create($request->medicine_name[$i]),
@@ -256,10 +259,11 @@ class PrescriptionRepository
 		$prescription_detail = PrescriptionDetail::create([
 												'medicine_name' => $request->medicine_name,
 												'medicine_usage' => $request->medicine_usage,
-												'morning' => $request->morning,
-												'afternoon' => $request->afternoon,
-												'evening' => $request->evening,
-												'night' => $request->night,
+												'morning' => $request->morning ?: 0,
+												'afternoon' => $request->afternoon ?: 0,
+												'evening' => $request->evening ?: 0,
+												'night' => $request->night ?: 0,
+												'qty_days' => $request->qty_days ?: 0,
 												'description' => $request->description,
 												'index' => $index,
 												'medicine_id' => $request->medicine_id,
@@ -283,10 +287,11 @@ class PrescriptionRepository
 		$prescription_detail->update([
 			'medicine_name' => $request->medicine_name,
 			'medicine_usage' => $request->medicine_usage,
-			'morning' => $request->morning,
-			'afternoon' => $request->afternoon,
-			'evening' => $request->evening,
-			'night' => $request->night,
+			'morning' => $request->morning ?: 0,
+			'afternoon' => $request->afternoon ?: 0,
+			'evening' => $request->evening ?: 0,
+			'night' => $request->night ?: 0,
+			'qty_days' => $request->qty_days ?: 0,
 			'description' => $request->description,
 			'medicine_id' => $this->get_medicine_id_or_create($request->medicine_name),
 			'updated_by' => Auth::user()->id,
@@ -361,7 +366,7 @@ class PrescriptionRepository
 		if (Hash::check($request->passwordDelete, Auth::user()->password)) {
 			$code = $prescription->code;
 			if ($prescription->delete()) {
-
+				PrescriptionDetail::where('prescription_id', $prescription->id)->delete();
 				return $code;
 			}
 		} else {

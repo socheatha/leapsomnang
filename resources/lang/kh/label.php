@@ -216,6 +216,8 @@ return [
 			'afternoon' => 'ថ្ងៃ',
 			'evening' => 'ល្ងាច',
 			'night' => 'យប់',
+			'qty_days' => 'ចំនួ​នថ្ងៃ',
+			'total' => 'សរុប',
 			'medicine_name' => 'ឈ្មោះថ្នាំ',
 			'medicine_usage' => 'របៀបប្រើប្រាស់',
 		],
