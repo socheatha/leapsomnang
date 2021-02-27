@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use Carbon\Carbon;
 use App\Models\Labor;
+use App\Models\LaborCategory;
+use App\Models\LaborService;
 use App\Models\LaborDetail;
 use App\Models\Patient;
 use App\Models\Service;
@@ -37,6 +39,48 @@ class LaborRepository
 				return $button;
 			})
 			->make(true);
+	}
+
+	public function getLaborServiceCheckList($request)
+	{
+		$service_check_list = '';
+		$labor_category = LaborCategory::find($request->id);
+		if ($labor_category != null) {
+			foreach ($labor_category->services as $key => $service) {
+				$service_check_list .= '<div class="col-sm-3">
+																<div class="form-check">
+																	<input class="minimal chb_service" type="checkbox" id="'. $service->id .'" value="'. $service->id .'">
+																	<label class="form-check-label" for="'. $service->id .'">'. $service->name .'</label>
+																</div>
+															</div>';
+			}
+		}
+		return response()->json([
+			'service_check_list' => $service_check_list,
+		]);
+	}
+
+	public function getCheckedServicesList($request)
+	{
+		$checked_services_list = '';
+		$labor_services = LaborService::whereIn('id', $request->ids)->get();
+		$no = $request->no;
+
+		foreach ($labor_services as $key => $service) {
+			$no++;
+			$checked_services_list .= '<tr class="labor_item" id="'. $no.'-'.$service->id .'">
+																	<td class="text-center">'. $no .'</td>
+																	<td>'. $service->name .'</td>
+																	<td>'. $service->category->name .'</td>
+																	<td class="text-center"><input type="text" class="form-controls"></td>
+																	<td>'. $service->unit .'</td>
+																	<td>'. $service->reference .'</td>
+																	<td class="text-center"><button type="button" onclick="removeCheckedService(\''. $no.'-'.$service->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button></td>
+																</tr>';
+		}
+		return response()->json([
+			'checked_services_list' => $checked_services_list,
+		]);
 	}
 
 	public function get_edit_detail($id)

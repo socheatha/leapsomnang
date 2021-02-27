@@ -33,6 +33,16 @@ class LaborController extends Controller
 		return $this->labor->getDatatable($request);
 	}
 
+	public function getLaborServiceCheckList(Request $request)
+	{
+		return $this->labor->getLaborServiceCheckList($request);
+	}
+
+	public function getCheckedServicesList(Request $request)
+	{
+		return $this->labor->getCheckedServicesList($request);
+	}
+
 	public function index()
 	{
 		return view('labor.index');
@@ -45,6 +55,7 @@ class LaborController extends Controller
 			'provinces' => Province::getSelectData(),
 			'districts' => [],
 			'labor_number' => $this->labor->labor_number(),
+			'services' => Service::select('id', 'name', 'price', 'description')->orderBy('name' ,'asc')->get(),
 			'categories' => LaborCategory::getSelectData('id', 'name', '', 'id' ,'asc'),
 			'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),
 		];

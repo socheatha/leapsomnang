@@ -108,6 +108,7 @@ return [
 			'empty_data' => 'មិនទាន់មានទិន្នន័យ',
 			'add_item' => 'បង្កើតវិក្កយបត្រលម្អិត',
 			'edit_item' => 'កែប្រែវិក្កយបត្រលម្អិត',
+			'add_labor_item' => 'បន្ថែមធាតុនៃការពិនិត្យឈាម',
 			'add_prescription_item' => 'បន្ថែមថ្នាំ',
 			'edit_prescription_item' => 'កែប្រែថ្នាំ',
     ],

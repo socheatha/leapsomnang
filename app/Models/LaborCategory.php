@@ -15,7 +15,10 @@ class LaborCategory extends BaseModel
 		'name', 'description', 'created_by', 'updated_by',
 	];
 
+  public function services()
+  {
+  	return $this->hasMany(LaborService::class, 'category_id');
 
-
+  }
 
 }

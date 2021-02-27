@@ -77,8 +77,73 @@
 @section('js')
 <script type="text/javascript">
 	var endLoadScript = function () {} // declear global variable as function
-	$(document).ready(function(){
-		$('#btn_add_item').click();
+
+	$('#add_category_id').change(function () {
+		if ($(this).val() != '') {
+			$('#check_all_service').iCheck('uncheck');
+			$.ajax({
+				url: "{{ route('labor.getLaborServiceCheckList') }}",
+				method: 'post',
+				data: {
+					id: $(this).val(),
+				},
+				success: function (data) {
+					$('.service_check_list').html(data.service_check_list);
+					
+					$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+						checkboxClass: 'icheckbox_minimal-blue',
+						radioClass   : 'iradio_minimal-blue'
+					})
+					$('#check_all_service').on('ifChecked', function (event) {
+						$('.chb_service').iCheck('check');
+						triggeredByChild = false;
+					});
+					$('#check_all_service').on('ifUnchecked', function (event) {
+						if (!triggeredByChild) {
+							$('.chb_service').iCheck('uncheck');
+						}
+						triggeredByChild = false;
+					});
+					// Removed the checked state from "All" if any checkbox is unchecked
+					$('.chb_service').on('ifUnchecked', function (event) {
+						triggeredByChild = true;
+						$('#check_all_service').iCheck('uncheck');
+					});
+					$('.chb_service').on('ifChecked', function (event) {
+						if ($('.chb_service').filter(':checked').length == $('.chb_service').length) {
+							$('#check_all_service').iCheck('check');
+						}
+					});
+				}
+			});
+		}else{
+			$('.service_check_list').html('');
+		}
+	});
+	
+	$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+		checkboxClass: 'icheckbox_minimal-blue',
+		radioClass   : 'iradio_minimal-blue'
+	})
+	$('#check_all_service').on('ifChecked', function (event) {
+		$('.chb_service').iCheck('check');
+		triggeredByChild = false;
+	});
+	$('#check_all_service').on('ifUnchecked', function (event) {
+		if (!triggeredByChild) {
+			$('.chb_service').iCheck('uncheck');
+		}
+		triggeredByChild = false;
+	});
+	// Removed the checked state from "All" if any checkbox is unchecked
+	$('.chb_service').on('ifUnchecked', function (event) {
+		triggeredByChild = true;
+		$('#check_all_service').iCheck('uncheck');
+	});
+	$('.chb_service').on('ifChecked', function (event) {
+		if ($('.chb_service').filter(':checked').length == $('.chb_service').length) {
+			$('#check_all_service').iCheck('check');
+		}
 	});
 
 	$('[name="pt_province_id"]').change( function(e){
@@ -102,27 +167,42 @@
 		}
 	});
 
-
 	$('.btn-prevent-submit').click(function (event) {
 		event.preventDefault();
 	});
 
 	$('#btn_add_item').click(function (event) {
 		event.preventDefault();
-		var id = Math.floor(Math.random() * 1000);
+
+		var service_ids = [];
 		var n = $( ".labor_item" ).length;
-		$('.item_list').append(`<tr class="labor_item" id="${ id }">
-															<td class="text-center">${ n++ }</td>
-															<td>${ n++ }</td>
-															<td></td>
-															<td class="text-center"><input type="text" class="form-controls"></td>
-															<td></td>
-															<td></td>
-															<td class="text-center"><button type="button" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button></td>
-														</tr>`);
+		$( ".chb_service" ).each(function( index ) {
+			if ($(this).is(':checked')) {
+				service_ids.push($(this).val());
+			}
+		});
+
+		if (service_ids.length != 0) {
+			$.ajax({
+				url: "{{ route('labor.getCheckedServicesList') }}",
+				method: 'post',
+				data: {
+					ids: service_ids,
+					no: n,
+				},
+				success: function (data) {
+					$('.item_list').append(data.checked_services_list);
+					$('#check_all_service').iCheck('uncheck');
+					$('#add_category_id').val('').trigger('change');
+					$('#service_check_list').html('');
+					$('#create_labor_item_modal').modal('hide');
+				}
+			});
+		}
+
 	});
 
-	function removeItem(id) {
+	function removeCheckedService(id) {
 		$('#'+id).remove();
 	}
 

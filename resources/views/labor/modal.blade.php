@@ -3,7 +3,7 @@
 	<div class="modal-dialog mw-100" style="width: 70%;">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title" id="myModalLabel">{{ __('alert.modal.title.add_item') }}</h4>
+				<h4 class="modal-title" id="myModalLabel">{{ __('alert.modal.title.add_labor_item') }}</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -12,32 +12,24 @@
 				<div class="row justify-content-center">
 					<div class="col-sm-5">
 						<div class="form-group">
-							{!! Html::decode(Form::label('category_id', __('label.form.labor_service.category') .' <small>*</small>')) !!}
-							{!! Form::select('category_id', $categories, '', ['class' => 'form-control select2 category_id', 'required']) !!}
+							{!! Html::decode(Form::label('add_category_id', __('label.form.labor_service.category') .' <small>*</small>')) !!}
+							{!! Form::select('add_category_id', $categories, '', ['class' => 'form-control select2 category_id','placeholder' => __('label.form.choose'), 'required']) !!}
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-sm-5">
-						<div class="form-group">
-							{!! Html::decode(Form::label('item_service_name', __('label.form.labor.service')." <small>*</small>")) !!}
-							<div class="input-group mb-3">
-								{!! Form::text('item_service_name', '', ['class' => 'form-control','placeholder' => __('label.form.labor.service'),'required', 'list' => 'service_list']) !!}
-							</div>
+				
+				<div class="card card-outline card-primary mt-4">
+					<div class="card-header">
+						<input class="minimal service_item" id="check_all_service" type="checkbox">
+						<label for="check_all_service" class="form-check-label">Select All</label>
+					</div>
+					<!-- /.card-header -->
+					<div class="card-body">
+						<div class="row service_check_list my-3">
+							
 						</div>
 					</div>
-					<div class="col-sm-2">
-						<div class="form-group">
-							{!! Html::decode(Form::label('item_price', __('label.form.labor.price')."($) <small>*</small>")) !!}
-							{!! Form::text('item_price', '', ['class' => 'form-control','placeholder' => 'price','required']) !!}
-						</div>
-					</div>
-					<div class="col-sm-5">
-						<div class="form-group">
-							{!! Html::decode(Form::label('item_description', __('label.form.description'))) !!}
-							{!! Form::textarea('item_description', '', ['class' => 'form-control','placeholder' => 'description','style' => 'height: 38px','required']) !!}
-						</div>
-					</div>
+					<!-- /.card-body -->
 				</div>
 			</div>
 			<div class="modal-footer justify-content-between">

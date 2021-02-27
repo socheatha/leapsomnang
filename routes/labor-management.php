@@ -46,11 +46,12 @@ Route::group(['prefix' => 'labor', 'as' => 'labor.', 'namespace' => 'Labor'], fu
 	Route::post('/status', 'LaborController@status')->name('status');
 	
 	
-	Route::put('/{labor}/save_order', 'LaborController@save_order')->name('save_order');
 	Route::post('/getDatatable', 'LaborController@getDatatable')->name('getDatatable');
 	Route::post('/getLaborPreview', 'LaborController@getLaborPreview')->name('getLaborPreview');
 	Route::post('/getDetail', 'LaborController@getDetail')->name('getDetail');
 	Route::post('/getLaborSelect', 'LaborController@getLaborSelect')->name('getLaborSelect');
+	Route::post('/getLaborServiceCheckList', 'LaborController@getLaborServiceCheckList')->name('getLaborServiceCheckList');
+	Route::post('/getCheckedServicesList', 'LaborController@getCheckedServicesList')->name('getCheckedServicesList');
 	
 	Route::group(['prefix' => 'labor_detail', 'as' => 'labor_detail.'], function () {
 		Route::post('/store', 'LaborController@laborDetailStore')->name('store');
