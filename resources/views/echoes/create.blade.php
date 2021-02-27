@@ -12,7 +12,9 @@
 	<div class="card-header">
 		<b>{!! Auth::user()->subModule() !!}</b>
 		<div class="card-tools">
+			@can('Echo Index')
 			<a href="{{route('echoes.index', $type)}}" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-table"></i> &nbsp;{{ __('label.buttons.back_to_list', [ 'name' => Auth::user()->module() ]) }}</a>
+			@endcan
 		</div>
 
 		<!-- Error Message -->

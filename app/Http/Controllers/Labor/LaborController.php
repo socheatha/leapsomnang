@@ -7,6 +7,7 @@ use App\Models\Service;
 use App\Models\Patient;
 use App\Models\Labor;
 use App\Models\LaborDetail;
+use App\Models\LaborCategory;
 use App\Http\Requests\LaborRequest;
 use App\Http\Requests\LaborDetailRequest;
 use App\Http\Requests\LaborDetailUpdateRequest;
@@ -44,8 +45,7 @@ class LaborController extends Controller
 			'provinces' => Province::getSelectData(),
 			'districts' => [],
 			'labor_number' => $this->labor->labor_number(),
-			'medicines' => Medicine::getSelectData('id', 'name', '', 'name' ,'asc'),
-			'services' => Service::select('id', 'name', 'price', 'description')->orderBy('name' ,'asc')->get(),
+			'categories' => LaborCategory::getSelectData('id', 'name', '', 'id' ,'asc'),
 			'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),
 		];
 		return view('labor.create', $this->data);

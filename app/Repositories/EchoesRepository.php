@@ -152,7 +152,7 @@ class EchoesRepository
 															</td>
 														</tr>
 													</table>
-													<div style="color: red; text-align: center; position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);"><u>សូមកាន់លទ្ធផលនេះមកជាមួយផង ពេលពិនិត្យលើកក្រោយ អរគុណ។</u></div>
+													<div class="color_red" style="color: red; text-decoration: underline; text-align: center; position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);">សូមយកវេជ្ជបញ្ជាមកវិញពេលមកពិនិត្យលើក្រោយ</div>
 													<br/>
 												</section>';
 		}

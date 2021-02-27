@@ -37,6 +37,12 @@ return [
 	    'price' => 'តម្លៃ',
     ],
     
+    'labor_service' => [
+	    'category' => 'ប្រភេទ',
+	    'unit' => 'ឯកតា',
+	    'reference' => 'យោង',
+    ],
+    
 		'echo_default_description' => [
 			'slug' => 'Slug',
 		],
@@ -55,6 +61,14 @@ return [
 	    'discount' => 'បញ្ចុះតម្លៃ',
 	    'status' => 'ការបង់ប្រាក់',
 	    'exchange_rate' => 'អត្រាប្ដូរប្រាក់',
+    ],
+
+    'labor' => [
+	    'labor_number' => 'លេខរៀង',
+	    'pt_name' => 'ឈ្មោះអ្នកជំងឺ',
+	    'pt_phone' => 'លេខទូរស័ព្ទ',
+	    'pt_diagnosis' => 'រោគវិនិច្ឆ័យ',
+	    'result' => 'លទ្ធផល',
     ],
 
     'prescription' => [

@@ -1,6 +1,6 @@
 <!-- New Labor Item Modal -->
 <div class="modal add fade" id="create_labor_item_modal">
-	<div class="modal-dialog modal-xl">
+	<div class="modal-dialog mw-100" style="width: 70%;">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="myModalLabel">{{ __('alert.modal.title.add_item') }}</h4>
@@ -9,6 +9,14 @@
 				</button>
 			</div>
 			<div class="modal-body">
+				<div class="row justify-content-center">
+					<div class="col-sm-5">
+						<div class="form-group">
+							{!! Html::decode(Form::label('category_id', __('label.form.labor_service.category') .' <small>*</small>')) !!}
+							{!! Form::select('category_id', $categories, '', ['class' => 'form-control select2 category_id', 'required']) !!}
+						</div>
+					</div>
+				</div>
 				<div class="row">
 					<div class="col-sm-5">
 						<div class="form-group">
@@ -18,12 +26,6 @@
 							</div>
 						</div>
 					</div>
-					{{-- <div class="col-sm-2">
-						<div class="form-group">
-							{!! Html::decode(Form::label('item_discount', __('label.form.labor.discount')." <small>*</small>")) !!}
-							{!! Form::select('item_discount', ['0'=>'0%', '0.05'=>'5%', '0.1'=>'10%', '0.15'=>'15%', '0.2'=>'20%', '0.25'=>'25%', '0.3'=>'30%', '0.35'=>'35%', '0.4'=>'40%', '0.45'=>'45%', '0.5'=>'50%', '0.55'=>'55%', '0.6'=>'60%', '0.65'=>'65%', '0.7'=>'70%', '0.75'=>'75%', '0.8'=>'80%', '0.85'=>'85%', '0.9'=>'90%', '0.95'=>'95%', '1'=>'100%'], '0', ['class' => 'form-control select2','required']) !!}
-						</div>
-					</div> --}}
 					<div class="col-sm-2">
 						<div class="form-group">
 							{!! Html::decode(Form::label('item_price', __('label.form.labor.price')."($) <small>*</small>")) !!}

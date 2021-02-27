@@ -24,7 +24,9 @@
 			<b>{!! Auth::user()->subModule() !!}</b>
 			
 			<div class="card-tools">
+				@can('Labor Create')
 				<a href="{{route('labor.create')}}" class="btn btn-sm btn-success btn-flat"><i class="fa fa-plus"></i> &nbsp;{{ __('label.buttons.create') }}</a>
+				@endcan
 			</div>
 
 			<!-- Error Message -->
@@ -54,14 +56,11 @@
       <table class="table table-bordered dt-server expandable-table" width="100%" id="labor_table">
 				<thead>
 					<tr>
-						<th class="text-center" width="8%">{!! __('module.table.labor.labor_number') !!}</th>
-						<th class="text-center" width="8%">{!! __('module.table.date') !!}</th>
+						<th class="text-center" width="10%">{!! __('module.table.labor.labor_number') !!}</th>
+						<th class="text-center" width="10%">{!! __('module.table.date') !!}</th>
 						<th class="text-center">{!! __('module.table.labor.pt_name') !!}</th>
 						<th class="text-center" width="10%">{!! __('module.table.labor.pt_phone') !!}</th>
-						<th class="text-center" width="10%">{!! __('module.table.labor.sub_total') !!}</th>
-						<th class="text-center" width="10%">{!! __('module.table.labor.discount') !!}</th>
-						<th class="text-center" width="10%">{!! __('module.table.labor.grand_total') !!}</th>
-						<th class="text-center" width="7%">{!! __('module.table.labor.status') !!}</th>
+						<th class="text-center">{!! __('module.table.labor.pt_diagnosis') !!}</th>
 						<th width="12%" class="text-center">{!! __('module.table.action') !!}</th>
 					</tr>
 				</thead>
@@ -189,19 +188,13 @@
 					{data: 'date', name: 'date', className: 'text-center'},
 					{data: 'pt_name', name: 'pt_name'},
 					{data: 'pt_phone', name: 'pt_phone'},
-					{data: 'sub_total', name: 'sub_total', className: 'text-right'},
-					{data: 'discount', name: 'discount', className: 'text-right'},
-					{data: 'grand_total', name: 'grand_total', className: 'text-right'},
-					{data: 'status', name: 'status', className: 'text-center'},
+					{data: 'pt_diagnosis', name: 'pt_diagnosis'},
 					{data: 'actions', name: 'actions', className: 'text-right', searchable: false, sortable: false}
 				],
 				order: [[1, "desc"]],
 				rowCallback: function( row, data ) {
 
-					$('td:eq(8)', row).html( `@Can("Labor Edit")
-																			<button type="button" class="btn btn-sm btn-flat btn-primary" onclick="updateStatus(${ data.id })"><i class="fa fa-dollar-sign"></i></button>
-																		@endCan
-																		@Can("Labor Print")
+					$('td:eq(5)', row).html( `@Can("Labor Print")
 																			<button type="button" data-url="/labor/${ data.id }/print" class="btn btn-sm btn-flat btn-success btn-print-labor"><i class="fa fa-print"></i></button>
 																		@endCan 
 																		@Can("Labor Edit")
@@ -215,11 +208,6 @@
 																				<input type="hidden" name="passwordDelete" value="" />
 																			</form>
 																		@endCan` );
-
-					$('td:eq(4)', row).append('<span class="float-left">$</span>');
-					$('td:eq(5)', row).append('<span class="float-left">$</span>');
-					$('td:eq(6)', row).append('<span class="float-left">$</span>');
-					$('td:eq(7)', row).html( `<span class="badge bg-${ ((data.status==1)? 'success' : 'secondary') }">${ ((data.status==1)? 'paid' : 'upaid') }</span>` );
 
 				},
 				"initComplete": function( settings, json ) {

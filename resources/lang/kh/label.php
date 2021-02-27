@@ -42,6 +42,8 @@ return [
 		'service' => 'សេវាកម្ម',
 		'invoice' => 'វិក្កយបត្រ',
 		'labor' => 'ការពិនិត្យឈាម',
+		'labor_category' => 'ប្រភេទការពិនិត្យឈាម',
+		'labor_service' => 'សេវាកម្មការពិនិត្យឈាម',
 		'province' => 'ខេត្ត/ក្រុង',
 		'district' => 'ស្រុក/ខណ្ឌ',
 		'echo_default_description' => 'លំនាំការពិនិត្យអេកូ',
@@ -85,6 +87,8 @@ return [
 			'service' => 'សេវាកម្ម',
 			'invoice' => 'វិក្កយបត្រ',
 			'labor' => 'ការពិនិត្យឈាម',
+			'labor_category' => 'ប្រភេទការពិនិត្យឈាម',
+			'labor_service' => 'សេវាកម្មការពិនិត្យឈាម',
 			'setting' => 'ការកណត់',
 	  	'province' => 'ខេត្ត/ក្រុង',
       'district' => 'ស្រុក/ខណ្ឌ',
@@ -224,6 +228,12 @@ return [
 
 		'service' => [
 			'price' => 'តម្លៃ',
+		],
+
+		'labor_service' => [
+			'unit' => 'ឯកតា',
+			'reference' => 'យោង',
+			'category' => 'ប្រភេទ',
 		],
 
 		'echo_default_description' => [

@@ -12,7 +12,9 @@
 			<b>{!! Auth::user()->subModule() !!}</b>
 			
 			<div class="card-tools">
+				@can('Usage Create')
 				<a href="{{route('usage.create')}}" class="btn btn-success btn-flat btn-sm"><i class="fa fa-plus"></i> &nbsp;{{ __('label.buttons.create') }}</a>
+				@endcan
 			</div>
 
 			<!-- Error Message -->
@@ -40,12 +42,12 @@
 							<td>{{ $usage->description }}</td>
 							<td class="text-right">
 
-								@can('Role Edit')
+								@can('Usage Edit')
 								{{-- Edit Button --}}
 								<a href="{{ route('usage.edit',$usage->id) }}" class="btn btn-info btn-sm btn-flat" data-toggle="tooltip" data-placement="left" title="{{ __('label.buttons.edit') }}"><i class="fa fa-pencil-alt"></i></a>
 								@endcan
 
-								@can('Role Delete')
+								@can('Usage Delete')
 								{{-- Delete Button --}}
 									<button class="btn btn-danger btn-sm btn-flat BtnDelete" value="{{ $usage->id }}" data-toggle="tooltip" data-placement="left" title="{{ __('label.buttons.delete') }}"><i class="fa fa-trash-alt"></i></button>
 									{{ Form::open(['url'=>route('usage.destroy', $usage->id), 'id' => 'form-item-'.$usage->id, 'class' => 'sr-only']) }}

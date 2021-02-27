@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-12">
           <div class="form-group">
             {!! Form::hidden('date_hidden', '',) !!}
             {!! Html::decode(Form::label('date', __('label.form.date')."(YYYY-MM-DD) <small>*</small>")) !!}
@@ -10,7 +10,7 @@
             {!! $errors->first('date', '<div class="invalid-feedback">:message</div>') !!}
           </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-12">
           <div class="form-group">
             {!! Html::decode(Form::label('labor_number', __('label.form.labor.labor_number')." <small>*</small>")) !!}
             {!! Form::text('labor_number', ((isset($labor->labor_number))? str_pad($labor->labor_number, 6, "0", STR_PAD_LEFT) : str_pad($labor_number, 6, "0", STR_PAD_LEFT) ), ['class' => 'form-control is_integer '. (($errors->has("labor_number"))? "is-invalid" : ""), 'placeholder' => 'labor number', 'autocomplete' => 'off', 'readonly'=>'readonly', 'required']) !!}

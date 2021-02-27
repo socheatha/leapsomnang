@@ -2,6 +2,9 @@
 
 @section('css')
 	<style type="text/css">
+		.table td{
+			vertical-align: middle;
+		}
 	</style>
 @endsection
 
@@ -10,7 +13,9 @@
 	<div class="card-header">
 		<b>{!! Auth::user()->subModule() !!}</b>
 		<div class="card-tools">
+			@can('Labor Index')
 			<a href="{{route('labor.index')}}" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-table"></i> &nbsp;{{ __('label.buttons.back_to_list', [ 'name' => Auth::user()->module() ]) }}</a>
+			@endcan
 		</div>
 
 		<!-- Error Message -->
@@ -30,11 +35,27 @@
 					{{ __('alert.modal.title.labor_detail') }}
 				</h3>
 				<div class="card-tools">
-					<button type="button" class="btn btn-flat btn-sm btn-success btn-prevent-submit" id="btn_add_item"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button>
+					<button type="button" class="btn btn-flat btn-sm btn-success btn-prevent-submit" data-toggle="modal" data-target="#create_labor_item_modal"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button>
 				</div>
 			</div>
 			<!-- /.card-header -->
-			<div class="card-body item_list"></div>
+			<div class="card-body">
+				<table class="table table-bordered" width="100%">
+					<thead>
+						<tr>
+							<th width="50px">{!! __('module.table.no') !!}</th>
+							<th>{!! __('module.table.name') !!}</th>
+							<th>{!! __('module.table.labor_service.category') !!}</th>
+							<th width="200px">{!! __('module.table.labor.result') !!}</th>
+							<th>{!! __('module.table.labor_service.unit') !!}</th>
+							<th>{!! __('module.table.labor_service.reference') !!}</th>
+							<th width="90px">{!! __('module.table.action') !!}</th>
+						</tr>
+					</thead>
+					<tbody class="item_list">
+					</tbody>
+				</table>
+			</div>
 			<!-- /.card-body -->
 		</div>
 
@@ -89,36 +110,16 @@
 	$('#btn_add_item').click(function (event) {
 		event.preventDefault();
 		var id = Math.floor(Math.random() * 1000);
-		$('.item_list').append(`<div class="prescription_item" id="${ id }">
-		<div class="row">
-				<div class="col-sm-4">
-					<div class="form-group">
-						{!! Html::decode(Form::label('service_id', __('label.form.labor.service')." <small>*</small>")) !!}
-						{!! Form::text('service_name[]', '', ['class' => 'form-control service_add', 'data-id'=>'${ id }', 'id'=>'input-service_id-${ id }','placeholder' => 'name','required', 'list' => 'service_list', 'onchange' => 'load_service_info(\'${id}\', this)']) !!}
-					</div>
-				</div>
-				<div class="col-sm-2">
-					<div class="form-group">
-						{!! Html::decode(Form::label('price', __('label.form.labor.price')."($) <small>*</small>")) !!}
-						{!! Form::text('price[]', '', ['class' => 'form-control', 'id'=>'input-price-${ id }','placeholder' => 'price','required']) !!}
-					</div>
-				</div>
-				<div class="col-sm-5">
-					<div class="form-group">
-						{!! Html::decode(Form::label('description', __('label.form.description'))) !!}
-						{!! Form::textarea('description[]', '', ['class' => 'form-control', 'id'=>'input-description-${ id }','placeholder' => 'description','style' => 'height: 38px']) !!}
-					</div>
-				</div>
-				<div class="col-sm-1">
-					<div class="form-group">
-						{!! Html::decode(Form::label('', __('label.buttons.remove'))) !!}
-						<div>
-							<button class="btn btn-danger btn-flat btn-block btn-prevent-submit" onclick="removeItem(${ id })"><i class="fa fa-trash-alt"></i></button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>`);
+		var n = $( ".labor_item" ).length;
+		$('.item_list').append(`<tr class="labor_item" id="${ id }">
+															<td class="text-center">${ n++ }</td>
+															<td>${ n++ }</td>
+															<td></td>
+															<td class="text-center"><input type="text" class="form-controls"></td>
+															<td></td>
+															<td></td>
+															<td class="text-center"><button type="button" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button></td>
+														</tr>`);
 	});
 
 	function removeItem(id) {

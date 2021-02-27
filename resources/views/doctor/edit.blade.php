@@ -13,10 +13,9 @@
 			<b>{!! Auth::user()->subModule() !!}</b>
 			
 			<div class="card-tools">
-
-        {{-- Action Dropdown --}}
-        @component('components.action')
+				@can('Doctor Index')
 				<a href="{{route('doctor.index')}}" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-table"></i> &nbsp;{{ __('label.buttons.back_to_list', [ 'name' => Auth::user()->module() ]) }}</a>
+				@endcan
 			</div>
 
 			<!-- Error Message -->

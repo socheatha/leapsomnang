@@ -27,20 +27,10 @@ class LaborRepository
 			$conditions = ' AND labor_number LIKE "%'. intval($labor_number) .'%"';
 		}
 		$labors = Labor::whereBetween('date', [$from, $to])->orderBy('labor_number', 'asc')->get();
-		// $labors = Labor::whereRaw('date BETWEEN "'. $from .'" AND "'. $to .'"'. $conditions)->orderBy('labor_number', 'asc')->get();
 
 		return Datatables::of($labors)
 			->editColumn('labor_number', function ($labor) {
 				return str_pad($labor->labor_number, 6, "0", STR_PAD_LEFT);
-			})
-			->addColumn('sub_total', function ($labor) {
-				return number_format($labor->labor_detail_sub_total(), 2);
-			})
-			->addColumn('discount', function ($labor) {
-				return number_format($labor->labor_discount_total(), 2);
-			})
-			->addColumn('grand_total', function ($labor) {
-				return number_format($labor->labor_detail_grand_total(), 2);
 			})
 			->addColumn('actions', function () {
 				$button = '';

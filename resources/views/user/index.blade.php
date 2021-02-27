@@ -12,7 +12,9 @@
 		<b>{!! Auth::user()->subModule() !!}</b>
 		
 		<div class="card-tools">
+			@can('User Create')
 			<a href="{{route('user.create')}}" class="btn btn-success btn-flat btn-sm"><i class="fa fa-plus"></i> &nbsp;{{ __('label.buttons.create') }}</a>
+			@endcan
 		</div>
 
 		<!-- Error Message -->

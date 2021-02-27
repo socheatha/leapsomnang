@@ -3,20 +3,36 @@
 use Illuminate\Support\Facades\Route;
 
 
-// Route::group(['prefix' => 'service', 'as' => 'service.'], function () {
+Route::group(['prefix' => 'labor_category', 'as' => 'labor_category.', 'namespace' => 'Labor'], function () {
 
-// 	Route::get('/', 'ServiceController@index')->name('index')->middleware('can:Service Index');
-// 	Route::get('/create', 'ServiceController@create')->name('create')->middleware('can:Service Create');
-// 	Route::post('/store', 'ServiceController@store')->name('store')->middleware('can:Service Create');
-// 	Route::get('/{service}/edit', 'ServiceController@edit')->name('edit')->middleware('can:Service Edit');
-// 	Route::put('/{service}/update', 'ServiceController@update')->name('update')->middleware('can:Service Edit');
-// 	Route::delete('/{service}/delete', 'ServiceController@destroy')->name('destroy')->middleware('can:Service Delete');
+	Route::get('/', 'LaborCategoryController@index')->name('index')->middleware('can:Labor Category Index');
+	Route::get('/create', 'LaborCategoryController@create')->name('create')->middleware('can:Labor Category Create');
+	Route::post('/store', 'LaborCategoryController@store')->name('store')->middleware('can:Labor Category Create');
+	Route::get('/{labor_category}/edit', 'LaborCategoryController@edit')->name('edit')->middleware('can:Labor Category Edit');
+	Route::put('/{labor_category}/update', 'LaborCategoryController@update')->name('update')->middleware('can:Labor Category Edit');
+	Route::delete('/{labor_category}/delete', 'LaborCategoryController@destroy')->name('destroy')->middleware('can:Labor Category Delete');
 
-// 	Route::post('/getDetail', 'ServiceController@getDetail')->name('getDetail');
-// 	Route::post('/createService', 'ServiceController@createService')->name('createService');
-// 	Route::post('/reloadSelectService', 'ServiceController@reloadSelectService')->name('reloadSelectService');
+	Route::post('/getDetail', 'LaborCategoryController@getDetail')->name('getDetail');
+	Route::post('/createLaborCategory', 'LaborCategoryController@createLaborCategory')->name('createLaborCategory');
+	Route::post('/reloadSelectLaborCategory', 'LaborCategoryController@reloadSelectLaborCategory')->name('reloadSelectLaborCategory');
 
-// });
+});
+
+
+Route::group(['prefix' => 'labor_service', 'as' => 'labor_service.', 'namespace' => 'Labor'], function () {
+
+	Route::get('/', 'LaborServiceController@index')->name('index')->middleware('can:Labor Service Index');
+	Route::get('/create', 'LaborServiceController@create')->name('create')->middleware('can:Labor Service Create');
+	Route::post('/store', 'LaborServiceController@store')->name('store')->middleware('can:Labor Service Create');
+	Route::get('/{labor_service}/edit', 'LaborServiceController@edit')->name('edit')->middleware('can:Labor Service Edit');
+	Route::put('/{labor_service}/update', 'LaborServiceController@update')->name('update')->middleware('can:Labor Service Edit');
+	Route::delete('/{labor_service}/delete', 'LaborServiceController@destroy')->name('destroy')->middleware('can:Labor Service Delete');
+
+	Route::post('/getDetail', 'LaborServiceController@getDetail')->name('getDetail');
+	Route::post('/createLaborService', 'LaborServiceController@createLaborService')->name('createLaborService');
+	Route::post('/reloadSelectLaborService', 'LaborServiceController@reloadSelectLaborService')->name('reloadSelectLaborService');
+
+});
 
 Route::group(['prefix' => 'labor', 'as' => 'labor.', 'namespace' => 'Labor'], function () {
 

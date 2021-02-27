@@ -55,6 +55,39 @@
 					</li>
 					@endcan
 
+					@canany(['Labor Service Index','Labor Service Create', 'Labor Service Edit', 'Labor Service Delete', 'Labor Category Index','Labor Category Create', 'Labor Category Edit', 'Labor Category Delete'])
+				
+					<li class="nav-item has-treeview {{ ((in_array(Auth::user()->sidebarActive(), [ 'labor_service', 'labor_category' ]))? 'menu-open':'') }}">
+						<a href="#" class="nav-link {{ ((in_array(Auth::user()->sidebarActive(), [ 'labor_service', 'labor_category' ]))? 'active':'') }}">
+							<i class="nav-icon fas fa-vial"></i>
+							<p>
+								{{ __('sidebar.labor_service.main') }}
+								<i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
+							@can('Labor Service Index', 'Labor Service Create', 'Labor Service Edit', 'Labor Service Delete')
+							<li class="nav-item">
+								<a href="{{ route('labor_service.index') }}" class="nav-link {{ ((Auth::user()->sidebarActive() == 'labor_service' )? 'active':'') }}">
+									<i class="far fa-circle nav-icon"></i>
+									<p>{{ __('sidebar.labor_service.sub.labor_service') }}</p>
+								</a>
+							</li>
+							@endcan
+							@can('Labor Category Index', 'Labor Category Create', 'Labor Category Edit', 'Labor Category Delete')
+							<li class="nav-item">
+								<a href="{{ route('labor_category.index') }}" class="nav-link {{ ((Auth::user()->sidebarActive() == 'labor_category' )? 'active':'') }}">
+									<i class="far fa-circle nav-icon"></i>
+									<p>{{ __('sidebar.labor_service.sub.labor_category') }}</p>
+								</a>
+							</li>
+							@endcan
+	
+						</ul>
+					</li>
+					
+					@endcan
+
 					@if (count(Auth::user()->echoDefaultDescriptions()->get()))
 						@canany(['Echo Index','Echo Create', 'Echo Edit', 'Echo Delete','Echo Print'])
 					

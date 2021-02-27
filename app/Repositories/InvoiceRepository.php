@@ -187,12 +187,12 @@ class InvoiceRepository
 												</table>
 												<small class="remark">'. $invoice->remark .'</small>
 												<br/>
-												<div style="color: red; text-align: center; position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);"><u>សូមយកវិក្កយបត្រមកវិញពេលមកពិនិត្យលើក្រោយ</u></div>
+												<div class="color_red" style="color: red; text-decoration: underline; text-align: center; position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);">សូមយកវេជ្ជបញ្ជាមកវិញពេលមកពិនិត្យលើក្រោយ</div>
 												<table class="table-footer" width="100%">
 													<tr>
 														<td></td>
 														<td width="32%" class="text-center">
-															<div>គ្រូពេទ្យព្យាបាល</div>
+															<div><b>គ្រូពេទ្យព្យាបាល</b></div>
 															<div class="sign_box"></div>
 															<div style="color: blue;"><span class="color_blue KHOSMoulLight">'. Auth::user()->setting()->sign_name_kh .'</span></div>
 														</td>
