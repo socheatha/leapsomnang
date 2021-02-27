@@ -125,7 +125,7 @@
 							{!! Form::hidden('edit_item_id', '') !!}
 							{!! Html::decode(Form::label('edit_item_service_name', __('label.form.invoice.service')." <small>*</small>")) !!}
 							<div class="input-group">
-								{!! Form::text('edit_item_service_name', '', ['class' => 'form-control','placeholder' => 'name','required', 'list' => 'service_list']) !!}
+								{!! Form::text('edit_item_service_name', '', ['class' => 'form-control','placeholder' => 'name','required', 'list' => 'service_list', 'autocomplete' => 'off']) !!}
 							</div>
 						</div>
 					</div>
