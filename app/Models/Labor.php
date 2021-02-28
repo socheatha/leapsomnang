@@ -21,7 +21,6 @@ class Labor extends Model
 		'pt_commune',
 		'pt_district_id',
 		'pt_province_id',
-		'pt_diagnosis',
 		'status',
 		'remark',
 		'patient_id',
@@ -32,7 +31,7 @@ class Labor extends Model
 	protected $table = 'labors';
 	
 	public function labor_details(){
-		return $this->hasMany(LaborDetail::class,'labor_id')->orderBy('index',
+		return $this->hasMany(LaborDetail::class,'labor_id')->orderBy('id',
 		'asc');
 	}
 

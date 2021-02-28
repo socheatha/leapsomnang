@@ -13,6 +13,7 @@ use App\Repositories\PatientRepository;
 use Yajra\DataTables\Facades\DataTables;
 use Hash;
 use Auth;
+use DB;
 
 
 class LaborRepository
@@ -48,11 +49,11 @@ class LaborRepository
 		if ($labor_category != null) {
 			foreach ($labor_category->services as $key => $service) {
 				$service_check_list .= '<div class="col-sm-3">
-																<div class="form-check">
-																	<input class="minimal chb_service" type="checkbox" id="'. $service->id .'" value="'. $service->id .'">
-																	<label class="form-check-label" for="'. $service->id .'">'. $service->name .'</label>
-																</div>
-															</div>';
+																	<div class="form-check mb-3">
+																		<input class="minimal chb_service" type="checkbox" id="'. $service->id .'" value="'. $service->id .'">
+																		<label class="form-check-label" for="'. $service->id .'">'. $service->name .'</label>
+																	</div>
+																</div>';
 			}
 		}
 		return response()->json([
@@ -63,23 +64,79 @@ class LaborRepository
 	public function getCheckedServicesList($request)
 	{
 		$checked_services_list = '';
-		$labor_services = LaborService::whereIn('id', $request->ids)->get();
+		$labor_services = LaborService::select(DB::raw("id, name, category_id, unit, description, CONCAT(`ref_from`,' - ',`ref_to`) AS reference"))->whereIn('id', $request->ids)->get();
 		$no = $request->no;
 
 		foreach ($labor_services as $key => $service) {
 			$no++;
 			$checked_services_list .= '<tr class="labor_item" id="'. $no.'-'.$service->id .'">
 																	<td class="text-center">'. $no .'</td>
-																	<td>'. $service->name .'</td>
-																	<td>'. $service->category->name .'</td>
-																	<td class="text-center"><input type="text" class="form-controls"></td>
-																	<td>'. $service->unit .'</td>
-																	<td>'. $service->reference .'</td>
-																	<td class="text-center"><button type="button" onclick="removeCheckedService(\''. $no.'-'.$service->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button></td>
+																	<td>
+																		<input type="hidden" name="service_id[]" value="'. $service->id .'">
+																		<input type="hidden" name="service_name[]" value="'. $service->name .'">
+																		'. $service->name .'
+																	</td>
+																	<td class="text-center">
+																		<input type="text" name="result[]" class="form-controls is_number">
+																	</td>
+																	<td class="text-center">
+																		<input type="hidden" name="unit[]" value="'. $service->unit .'">
+																		'. $service->unit .'
+																	</td>
+																	<td class="text-center">
+																		<input type="hidden" name="reference[]" value="'. $service->reference .'">
+																		'. $service->reference .'
+																	</td>
+																	<td class="text-center">
+																		<button type="button" onclick="removeCheckedService(\''. $no.'-'.$service->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
+																	</td>
 																</tr>';
 		}
 		return response()->json([
 			'checked_services_list' => $checked_services_list,
+		]);
+	}
+
+	public function storeAndGetLaborDetail($request)
+	{
+
+		$labor_detail_list = '';
+		$labor = Labor::find($request->labor_id);
+		$labor_services = LaborService::select(DB::raw("id, name, category_id, unit, description, CONCAT(`ref_from`,' - ',`ref_to`) AS reference"))->whereIn('id', $request->service_ids)->get();
+		foreach ($labor_services as $key => $service) {
+			LaborDetail::create([
+				'name' => $service->name,
+				'service_id' => $service->id,
+				'labor_id' => $labor->id,
+				'created_by' => Auth::user()->id,
+				'updated_by' => Auth::user()->id,
+			]);
+		}
+
+		foreach ($labor->labor_details as $order => $labor_detail) {
+			$labor_detail_list .= '<tr class="labor_item" id="'. $labor_detail->result .'">
+																<td class="text-center">'. ++$order .'</td>
+																<td>
+																	<input type="hidden" name="labor_detail_ids[]" value="'. $labor_detail->id .'">
+																	'. $labor_detail->name .'
+																</td>
+																<td class="text-center">
+																	<input type="text" name="result[]" value="'. $labor_detail->result .'" class="form-controls is_number"/>
+																</td>
+																<td class="text-center">
+																	'. $labor_detail->service->unit .'
+																</td>
+																<td class="text-center">
+																	'. $labor_detail->service->ref_from .' - '. $labor_detail->service->ref_to .'
+																</td>
+																<td class="text-center">
+																	<button type="button" onclick="deleteLaborDetail(\''. $labor_detail->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
+																</td>
+															</tr>';
+		}
+
+		return response()->json([
+			'labor_detail_list' => $labor_detail_list,
 		]);
 	}
 
@@ -98,31 +155,46 @@ class LaborRepository
 		$total_discount = 0;
 		$grand_total = 0;
 		$labor_detail = '';
-		$tbody = '';
+		$labor_detail_item_list = '';
 
 		$labor = Labor::find($id);
 
-		$title = 'Labor (INV'. date('Y', strtotime($labor->date)) .'-'.str_pad($labor->labor_number, 6, "0", STR_PAD_LEFT) .')';
+		$title = 'Labor ('. str_pad($labor->labor_number, 6, "0", STR_PAD_LEFT) .')';
 
 		foreach ($labor->labor_details as $labor_detail) {
-			$amount = ($labor_detail->amount);
-			$total += $amount;
-			$tbody .= '<tr>
-									<td class="text-center">' . $no++ . '</td>
-									<td colspan="3">' . $labor_detail->name . '</td>
-									<td class="text-right"><span class="pull-left float-left">$</span> ' . number_format($amount, 2) . '</td>
-								</tr>';
+			$class = '';
+			if ($labor_detail->result < $labor_detail->service->ref_from) {
+				$class = 'color_red';
+			}else if ($labor_detail->result > $labor_detail->service->ref_to) {
+				$class = 'color_yellow';
+			}else{
+				$class = '';
+			}
+			$labor_detail_item_list .= '<tr>
+																		<td width="2%"></td>
+																		<td width="30%">-'. $labor_detail->name .'</td>
+																		<td width="20%">: <b><span class="'. $class .'">'. $labor_detail->result .'</span></b></td>
+																		<td width="12%">&nbsp;'. $labor_detail->service->unit .'</td>
+																		<td width="20%">('. $labor_detail->service->ref_from .'-'. $labor_detail->service->ref_to .')</td>
+																	</tr>';
 		}
-		$total_riel = number_format($total*$labor->rate, 0);
-
 		
-		$gtt = explode(".", number_format($total,2));
-		$gtt_dollars = $gtt[0];
-		$gtt_cents = $gtt[1];
-
-		$grand_total_in_word = Auth::user()->num2khtext($gtt_dollars, false) . 'ដុល្លារ' . (($gtt_cents>0)? ' និង'. Auth::user()->num2khtext($gtt_cents, false) .'សេន' : '');
-		$grand_total_riel_in_word = Auth::user()->num2khtext(round($total*$labor->rate, 0), false);
-
+		// 	<table width="100%">
+		// 	<tr>
+		// 		<td width="2%"></td>
+		// 		<td width="28%">TO</td>
+		// 		<td width="38%"><div style="border-bottom: 1px dotted red;">​ ​</div></td>
+		// 		<td width="12%">Négatif</td>
+		// 		<td width="20%"></td>
+		// 	</tr>
+		// 	<tr>
+		// 		<td width="2%"></td>
+		// 		<td width="28%">TH</td>
+		// 		<td width="38%"><div style="border-bottom: 1px dotted red;">​ ​</div></td>
+		// 		<td width="12%">Négatif</td>
+		// 		<td width="20%"></td>
+		// 	</tr>
+		// </table>
 		if(empty($labor->province)){ $labor->province = new \stdClass(); $labor->province->name = ''; }
 		if(empty($labor->district)){ $labor->district = new \stdClass(); $labor->district->name = ''; }
 
@@ -133,12 +205,12 @@ class LaborRepository
 															<img src="/images/setting/logo.png" alt="IMG">
 														</td>
 														<td class="text-center" style="padding: 5px 0;">
-															<h6 class="color_blue KHOSMoulLight" style="color: blue;">'. Auth::user()->setting()->clinic_name_kh .'</h6>
+															<h6 class="color_blue KHOSMoulLight" style="color: blue; font-size: 19px;">'. Auth::user()->setting()->clinic_name_kh .'</h6>
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding: 2px 0;">
-															<h6 class="color_red roboto_b" style="color: red;">'. Auth::user()->setting()->clinic_name_en .'</h6>
+															<h6 class="color_red roboto_b" style="color: red; font-size: 19px;">'. Auth::user()->setting()->clinic_name_en .'</h6>
 														</td>
 													</tr>
 													<tr>
@@ -157,29 +229,29 @@ class LaborRepository
 														</td>
 													</tr>
 												</table>
-												<table class="table-information" width="100%" style="margin: 15px 0 15px 0;">
+												<table class="table-information" width="100%" style="margin: 5px 0 15px 0;">
 													<tr>
 														<td colspan="3">
-															<h6 class="text-center KHOSMoulLight" style="padding-top: 8px;">លទ្ធផលពិនិត្យឈាម</h6>
+															<h6 class="text-center KHOSMoulLight" style="padding: 10px 0 10px 0; font-size: 16px;">លទ្ធផលពិនិត្យឈាម</h6>
 														</td>
 													</tr>
 													<tr>
 														<td>
 															កាលបរិច្ឆេទ:<span class="date">'. date('d/m/Y', strtotime($labor->date)) .'</span>
 														</td>
-														<td width="29%">
-															លេខអ្នកជំងឺ:<span class="pt_no">'. str_pad($labor->pt_no, 6, "0", STR_PAD_LEFT) .'</span>
+														<td>
+															ឈ្មោះ:<span class="pt_name">'. $labor->pt_name .'</span>
 														</td>
 														<td width="29%">
-															រោគវិនិច្ឆ័យ:<span class="labor_number">'. $labor->pt_diagnosis .'</span>
+															លេខរៀង:<span class="pt_no">'. str_pad($labor->pt_no, 6, "0", STR_PAD_LEFT) .'</span>
 														</td>
 													</tr>
 													<tr>
 														<td>
-															ឈ្មោះ:<span class="pt_name">'. $labor->pt_name .'</span>
+															ភេទ:<span class="pt_gender">'. $labor->pt_gender .'</span>
 														</td>
 														<td>
-															ភេទ:<span class="pt_gender">'. $labor->pt_gender .'</span>
+															អាយុ:<span class="pt_age">'. $labor->pt_age .' ឆ្នាំ</span>
 														</td>
 														<td>
 															ទូរស័ព្ទ:<span class="pt_phone">'. $labor->pt_phone .'</span>
@@ -191,35 +263,23 @@ class LaborRepository
 														</td>
 													</tr>
 												</table>
-												<table class="table-detail" width="100%">
-													<thead>
-														<th class="text-center" width="8%">
-															<div>ល.រ</div>
-														</th>
-														<th colspan="3" class="text-center">
-															<div>បរិយាយ</div>
-														</th>
-														<th class="text-center" width="16%">
-															<div>តម្លៃ</div>
-														</th>
-													</thead>
-													<tbody>
-														'. $tbody .'
-													</tbody>
-												</table>
+												<div style="height: 14cm"></div>
 												<small class="remark">'. $labor->remark .'</small>
 												<br/>
-												<div style="color: red; text-align: center; position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);"><u>សូមយកវិក្កយបត្រមកវិញពេលមកពិនិត្យលើក្រោយ</u></div>
-												<table class="table-footer" width="100%">
+												<div class="color_red" style="color: red; text-align: center; text-decoration: underline; position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);">សូមយកវិក្កយបត្រមកវិញពេលមកពិនិត្យលើក្រោយ</div>
+												<table class="table-footer mt---5" width="100%">
 													<tr>
 														<td>
 															<div>Séro Ag Widel</div>
-															<ul class="">
-																<li>TO:……………………………………………Négatif</li>
-																<li>TH:……………………………………………Négatif</li>
+															<ul style="list-style-type: none; margin: 0; padding-left: 14px;">
+																<li style="margin-left: 0;">-TO:............................................Négatif</li>
+																<li style="margin-left: 0;">-TH:............................................Négatif</li>
 															</ul>
+															<table width="100%">
+																'. $labor_detail_item_list .'
+															</table>
 														</td>
-														<td width="32%" class="text-center">
+														<td width="28%" class="text-center">
 															<div>គ្រូពេទ្យព្យាបាល</div>
 															<div class="sign_box"></div>
 															<div style="color: blue;"><span class="color_blue KHOSMoulLight">'. Auth::user()->setting()->sign_name_kh .'</span></div>
@@ -243,6 +303,7 @@ class LaborRepository
 	{
 
 		$patient_id = $request->patient_id;
+
 
 		if (isset($request->patient_id) && $request->patient_id!='') {
 			# code...
@@ -268,6 +329,7 @@ class LaborRepository
 			}
 		}
 
+
 		$labor = Labor::create([
 			'date' => $request->date,
 			'labor_number' => $request->labor_number,
@@ -280,21 +342,18 @@ class LaborRepository
 			'pt_commune' => $request->pt_commune,
 			'pt_district_id' => $request->pt_district_id,
 			'pt_province_id' => $request->pt_province_id,
-			'pt_diagnosis' => $request->pt_diagnosis,
 			'remark' => $request->remark,
 			'patient_id' => $patient_id,
 			'created_by' => Auth::user()->id,
 			'updated_by' => Auth::user()->id,
 		]);
 		
-		if (isset($request->service_name) && isset($request->price) && isset($request->description)) {
+		if (isset($request->service_name) && isset($request->service_id)) {
 			for ($i = 0; $i < count($request->service_name); $i++) {
 				LaborDetail::create([
 						'name' => $request->service_name[$i],
-						'amount' => $request->price[$i],
-						'description' => $request->description[$i],
-						'index' => $i + 1,
-						'service_id' => $this->get_service_id_or_create($request->service_name[$i], $request->price[$i], $request->description[$i]),
+						'result' => $request->result[$i],
+						'service_id' => $request->service_id[$i],
 						'labor_id' => $labor->id,
 						'created_by' => Auth::user()->id,
 						'updated_by' => Auth::user()->id,
@@ -305,75 +364,10 @@ class LaborRepository
 		return $labor;
 	}
 
-	public function laborDetailStore($request)
-	{
-		$labor = Labor::find($request->labor_id);
-		$last_item = $labor->labor_details()->first();
-		$index = (($last_item !== null) ? $last_item->index + 1 : 1);
-
-		$labor_detail = LaborDetail::create([
-												'name' => $request->service_name,
-												// 'discount' => $request->discount,
-												'amount' => $request->price,
-												'description' => $request->description,
-												'index' => $index,
-												'service_id' => $this->get_service_id_or_create($request->service_name, $request->price, $request->description),
-												'labor_id' => $request->labor_id,
-												'created_by' => Auth::user()->id,
-												'updated_by' => Auth::user()->id,
-											]);
-
-		$json = $this->getLaborPreview($labor_detail->labor_id)->getData();
-
-		return response()->json([
-			'success'=>'success',
-			'labor_detail' => $labor_detail,
-			'labor_preview' => $json->labor_detail,
-		]);
-
-	}
-	public function laborDetailUpdate($request)
-	{
-		$labor_detail = LaborDetail::find($request->id);
-		$labor_detail->update([
-			'name' => $request->service_name,
-			'amount' => $request->price,
-			// 'discount' => $request->discount,
-			'description' => $request->description,
-			'service_id' => $this->get_service_id_or_create($request->service_name, $request->price, $request->description),
-			'updated_by' => Auth::user()->id,
-		]);
-
-		$json = $this->getLaborPreview($labor_detail->labor_id)->getData();
-		return response()->json([
-			'success'=>'success',
-			'labor_detail' => $labor_detail,
-			'labor_preview' => $json->labor_detail,
-		]);
-	}
-
-	public function save_order($request)
-	{
-		$order = explode(',', $request->order_ids);
-		$ids = explode(',', $request->item_ids);
-
-		for ($i = 0; $i < count($ids); $i++) {
-			$labor_detail = LaborDetail::find($ids[$i])
-				->update([
-					'index' => $order[$i],
-					'updated_by' => Auth::user()->id,
-				]);
-		}
-		return 'success';
-	}
-
 	public function update($request, $labor)
 	{
 		$labor->update([
 			'date' => $request->date,
-			'labor_number' => $request->labor_number,
-			'rate' => $request->exchange_rate,
-			'pt_no' => str_pad($request->patient_id, 6, "0", STR_PAD_LEFT),
 			'pt_age' => $request->pt_age,
 			'pt_name' => $request->pt_name,
 			'pt_gender' => $request->pt_gender,
@@ -382,26 +376,20 @@ class LaborRepository
 			'pt_commune' => $request->pt_commune,
 			'pt_district_id' => $request->pt_district_id,
 			'pt_province_id' => $request->pt_province_id,
-			'pt_diagnosis' => $request->pt_diagnosis,
-			'status' => (($request->status==null)? 0 : 1),
 			'remark' => $request->remark,
-			'patient_id' => $request->patient_id,
 			'updated_by' => Auth::user()->id,
 		]);
+		if (isset($request->labor_detail_ids)) {
+			for ($i = 0; $i < count($request->labor_detail_ids); $i++) {
+				LaborDetail::find($request->labor_detail_ids[$i])->update([
+																														'result' => $request->result[$i],
+																														'updated_by' => Auth::user()->id,
+																													]);
+			}
+		}
 		
 		return $labor;
 
-	}
-
-	public function status($request)
-	{
-		$labor = Labor::find($request->id);
-		$status = $labor->status;
-		$labor->update([
-			'status' => (($status==0)? '1' : '0'),
-		]);
-
-		return $labor;
 	}
 
 	public function destroy($request, $labor)
@@ -409,7 +397,6 @@ class LaborRepository
 		if (Hash::check($request->passwordDelete, Auth::user()->password)) {
 			$labor_number = $labor->labor_number;
 			if ($labor->delete()) {
-
 				return $labor_number;
 			}
 		} else {
@@ -417,27 +404,42 @@ class LaborRepository
 		}
 	}
 
-	public function destroy_labor_detail($labor_detail)
-	{
-		$labor_number = $labor_detail->labor->labor_number;
-		if ($labor_detail->delete()) {
-				
-			return $labor_number;
-		}
-		
-
-	}
-
 	public function deleteLaborDetail($request)
 	{
 		$labor_detail = LaborDetail::find($request->id);
 		$labor_id = $labor_detail->labor_id;
 		$labor_detail->delete();
+
 		$json = $this->getLaborPreview($labor_id)->getData();
+
+		$labor = Labor::find($labor_id);
+		$labor_detail_list = '';
+		foreach ($labor->labor_details as $order => $labor_detail) {
+			$labor_detail_list .= '<tr class="labor_item" id="'. $labor_detail->result .'">
+																<td class="text-center">'. ++$order .'</td>
+																<td>
+																	<input type="hidden" name="labor_detail_ids[]" value="'. $labor_detail->id .'">
+																	'. $labor_detail->name .'
+																</td>
+																<td class="text-center">
+																	<input type="text" name="result[]" value="'. $labor_detail->result .'" class="form-controls is_number"/>
+																</td>
+																<td class="text-center">
+																	'. $labor_detail->service->unit .'
+																</td>
+																<td class="text-center">
+																	'. $labor_detail->service->ref_from .' - '. $labor_detail->service->ref_from .'
+																</td>
+																<td class="text-center">
+																	<button type="button" onclick="deleteLaborDetail(\''. $labor_detail->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
+																</td>
+															</tr>';
+			}
 
 		return response()->json([
 			'success'=>'success',
 			'labor_preview' => $json->labor_detail,
+			'labor_detail_list' => $labor_detail_list,
 		]);
 	}
 

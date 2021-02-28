@@ -104,31 +104,11 @@ class LaborController extends Controller
 		return $this->labor->deleteLaborDetail($request);
 	}
 	
-	public function laborDetailStore(Request $request)
+	public function storeAndGetLaborDetail (Request $request)
 	{
-		$validator = \Validator::make($request->all(), [
-			'price' => 'required|numeric',
-		]);
-		
-		if ($validator->fails())
-		{
-				return response()->json(['errors'=>$validator->errors()]);
-		}
-		return $this->labor->laborDetailStore($request);
+		return $this->labor->storeAndGetLaborDetail($request);
 	}
 
-	public function laborDetailUpdate(Request $request)
-	{
-		$validator = \Validator::make($request->all(), [
-			'price' => 'required|numeric',
-		]);
-		
-		if ($validator->fails())
-		{
-				return response()->json(['errors'=>$validator->errors()]);
-		}
-		return $this->labor->laborDetailUpdate($request);
-	}
 
 	public function getLaborPreview(Request $request)
 	{
@@ -153,6 +133,7 @@ class LaborController extends Controller
 		$this->data = [
 			'labor' => $labor,
 			'provinces' => Province::getSelectData(),
+			'categories' => LaborCategory::getSelectData('id', 'name', '', 'id' ,'asc'),
 			'districts' => (($labor->pt_district_id=='')? [] : $labor->province->getSelectDistrict()),
 			'medicines' => Medicine::getSelectData('id', 'name', '', 'name' ,'asc'),
 			'services' => Service::select('id', 'name', 'price', 'description')->orderBy('name' ,'asc')->get(),
@@ -194,7 +175,7 @@ class LaborController extends Controller
 	{
 		// Redirect
 		return redirect()->route('labor.index')
-			->with('success', __('alert.crud.success.delete', ['name' => Auth::user()->module()]));
+			->with('success', __('alert.crud.success.delete', ['name' => Auth::user()->module()]) . str_pad(($this->labor->destroy($request, $labor)), 6, "0", STR_PAD_LEFT));
 	}
 
 	public function labor_detail_destroy(LaborDetail $labor_detail)

@@ -7,6 +7,9 @@
 			top: -30px;
 			right: 55px;
 		}
+		.mt---5{
+			margin-top: -45px;
+		}
 	</style>
 @endsection
 
@@ -37,44 +40,48 @@
 					{{ __('alert.modal.title.labor_detail') }}
 				</h3>
 				<div class="card-tools">
-					<button type="button" class="btn btn-flat btn-sm btn-success btn-prevent-submit" data-toggle="modal" data-target="#create_labor_item_modal"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button>
+					<button type="button" class="btn btn-flat btn-sm btn-success btn-prevent-submit" id="btn_add_service"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button>
 				</div>
 			</div>
 			<!-- /.card-header -->
-			<div class="card-body item_list">
-				@foreach ($labor->labor_details as $order => $labor_detail)
-					<div class="prescription_item" id="{{ $labor_detail->id }}">
-						<div class="row">
-							<div class="col-sm-4">
-								<div class="form-group">
-									{!! Html::decode(Form::label('show_description', __('label.form.labor.service')." <small>*</small>")) !!}
-									{!! Form::text('show_name', $labor_detail->name, ['class' => 'form-control','form' => 'description','placeholder' => 'name','style' => 'height: 38px','id' => 'input-name-'. $labor_detail->id ,'readonly']) !!}
-								</div>
-							</div>
-							<div class="col-sm-2">
-								<div class="form-group">
-									{!! Html::decode(Form::label('show_price', __('label.form.labor.price')."($) <small>*</small>")) !!}
-									{!! Form::text('show_price', $labor_detail->amount, ['class' => 'form-control','placeholder' => 'price','id' => 'input-amount-'. $labor_detail->id ,'readonly']) !!}
-								</div>
-							</div>
-							<div class="col-sm-5">
-								<div class="form-group">
-									{!! Html::decode(Form::label('show_description', __('label.form.description'))) !!}
-									{!! Form::text('show_description', $labor_detail->description, ['class' => 'form-control','form' => 'description','placeholder' => 'description','style' => 'height: 38px','id' => 'input-description-'. $labor_detail->id ,'readonly']) !!}
-								</div>
-							</div>
-							<div class="col-sm-1">
-								<div class="form-group">
-									{!! Html::decode(Form::label('', __('label.buttons.action'))) !!}
-									<div>
-										<button class="btn btn-info btn-flat btn-prevent-submit" onclick="editLaborDetail('{{ $labor_detail->id }}')"><i class="fa fa-pencil-alt"></i></button>
-										<button class="btn btn-danger btn-flat btn-prevent-submit" onclick="deleteLaborDetail({{ $labor_detail->id }})"><i class="fa fa-trash-alt"></i></button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				@endforeach
+			<div class="card-body">
+				
+				<table class="table table-bordered" width="100%">
+					<thead>
+						<tr>
+							<th width="60px">{!! __('module.table.no') !!}</th>
+							<th>{!! __('module.table.name') !!}</th>
+							<th width="200px">{!! __('module.table.labor.result') !!}</th>
+							<th width="200px">{!! __('module.table.labor_service.unit') !!}</th>
+							<th width="200px">{!! __('module.table.labor_service.reference') !!}</th>
+							<th width="90px">{!! __('module.table.action') !!}</th>
+						</tr>
+					</thead>
+					<tbody class="item_list">
+						@foreach ($labor->labor_details as $order => $labor_detail)
+							<tr class="labor_item" id="{{ $labor_detail->result }}">
+								<td class="text-center">{{ ++$order }}</td>
+								<td>
+									<input type="hidden" name="labor_detail_ids[]" value="{{ $labor_detail->id }}">
+									{{ $labor_detail->name }}
+								</td>
+								<td class="text-center">
+									<input type="text" name="result[]" value="{{ $labor_detail->result }}" class="form-controls is_number"/>
+								</td>
+								<td class="text-center">
+									{{ $labor_detail->service->unit }}
+								</td>
+								<td class="text-center">
+									{{ $labor_detail->service->ref_from .' - '. $labor_detail->service->ref_to }}
+								</td>
+								<td class="text-center">
+									<button type="button" onclick="deleteLaborDetail('{{ $labor_detail->id }}')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
+								</td>
+							</tr>
+						@endforeach
+					</tbody>
+				</table>
+				
 			</div>
 			<!-- /.card-body -->
 		</div>
@@ -100,57 +107,6 @@
 	{!! $labor_preview !!}
 </div>
 
-<!-- Edit Labor Item Modal -->
-<div class="modal add fade" id="edit_labor_item_modal">
-	<div class="modal-dialog modal-xl">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title" id="myModalLabel">{{ __('alert.modal.title.edit_item') }}</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<div class="row">
-					<div class="col-sm-5">
-						<div class="form-group">
-							{!! Form::hidden('edit_item_id', '') !!}
-							{!! Html::decode(Form::label('edit_item_service_name', __('label.form.labor.service')." <small>*</small>")) !!}
-							<div class="input-group">
-								{!! Form::text('edit_item_service_name', '', ['class' => 'form-control','placeholder' => 'name','required', 'list' => 'service_list']) !!}
-							</div>
-						</div>
-					</div>
-					{{-- <div class="col-sm-2">
-						<div class="form-group">
-							{!! Html::decode(Form::label('edit_item_discount', __('label.form.labor.discount')." <small>*</small>")) !!}
-							{!! Form::select('edit_item_discount', ['0'=>'0%', '0.05'=>'5%', '0.1'=>'10%', '0.15'=>'15%', '0.2'=>'20%', '0.25'=>'25%', '0.3'=>'30%', '0.35'=>'35%', '0.4'=>'40%', '0.45'=>'45%', '0.5'=>'50%', '0.55'=>'55%', '0.6'=>'60%', '0.65'=>'65%', '0.7'=>'70%', '0.75'=>'75%', '0.8'=>'80%', '0.85'=>'85%', '0.9'=>'90%', '0.95'=>'95%', '1'=>'100%'], '0', ['class' => 'form-control select2','required']) !!}
-						</div>
-					</div> --}}
-					<div class="col-sm-2">
-						<div class="form-group labor_item_price">
-							{!! Html::decode(Form::label('edit_item_price', __('label.form.labor.price')." <small>*</small>")) !!}
-							{!! Form::text('edit_item_price', '', ['class' => 'form-control','placeholder' => 'price','required']) !!}
-						</div>
-					</div>
-					<div class="col-sm-5">
-						<div class="form-group labor_item_description">
-							{!! Html::decode(Form::label('edit_item_description', __('label.form.description'))) !!}
-							{!! Form::textarea('edit_item_description', '', ['class' => 'form-control','placeholder' => 'description','style' => 'height: 38px','required']) !!}
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer justify-content-between">
-				<button type="button" class="btn btn-flat btn-danger" data-dismiss="modal">{{ __('alert.swal.button.no') }}</button>
-				<button type="button" class="btn btn-flat btn btn-success" id="btn_update_item" data-dismiss="modal">{{ __('alert.swal.button.yes') }}</button>
-			</div>
-		</div>
-		<!-- /.modal-content -->
-	</div>
-	<!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
 
 @include('components.confirm_password')
 
@@ -165,6 +121,79 @@
 	var firstLoadPatient = true;
 	var endLoadPatientChnaged = function() {}
 	var endLoadProvinceChanged = function() {}
+
+	$('#btn_add_service').click(function () {
+		$('#create_labor_item_modal').modal();
+		$('#category_id').val('1').trigger('change');
+	});
+
+	$('#category_id').change(function () {
+		if ($(this).val() != '') {
+			$('#check_all_service').iCheck('uncheck');
+			$.ajax({
+				url: "{{ route('labor.getLaborServiceCheckList') }}",
+				method: 'post',
+				data: {
+					id: $(this).val(),
+				},
+				success: function (data) {
+					$('.service_check_list').html(data.service_check_list);
+					
+					$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+						checkboxClass: 'icheckbox_minimal-blue',
+						radioClass   : 'iradio_minimal-blue'
+					})
+					$('#check_all_service').on('ifChecked', function (event) {
+						$('.chb_service').iCheck('check');
+						triggeredByChild = false;
+					});
+					$('#check_all_service').on('ifUnchecked', function (event) {
+						if (!triggeredByChild) {
+							$('.chb_service').iCheck('uncheck');
+						}
+						triggeredByChild = false;
+					});
+					// Removed the checked state from "All" if any checkbox is unchecked
+					$('.chb_service').on('ifUnchecked', function (event) {
+						triggeredByChild = true;
+						$('#check_all_service').iCheck('uncheck');
+					});
+					$('.chb_service').on('ifChecked', function (event) {
+						if ($('.chb_service').filter(':checked').length == $('.chb_service').length) {
+							$('#check_all_service').iCheck('check');
+						}
+					});
+				}
+			});
+		}else{
+			$('.service_check_list').html('');
+		}
+	});
+	
+	$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+		checkboxClass: 'icheckbox_minimal-blue',
+		radioClass   : 'iradio_minimal-blue'
+	})
+	$('#check_all_service').on('ifChecked', function (event) {
+		$('.chb_service').iCheck('check');
+		triggeredByChild = false;
+	});
+	$('#check_all_service').on('ifUnchecked', function (event) {
+		if (!triggeredByChild) {
+			$('.chb_service').iCheck('uncheck');
+		}
+		triggeredByChild = false;
+	});
+	// Removed the checked state from "All" if any checkbox is unchecked
+	$('.chb_service').on('ifUnchecked', function (event) {
+		triggeredByChild = true;
+		$('#check_all_service').iCheck('uncheck');
+	});
+	$('.chb_service').on('ifChecked', function (event) {
+		if ($('.chb_service').filter(':checked').length == $('.chb_service').length) {
+			$('#check_all_service').iCheck('check');
+		}
+	});
 
 	$('[name="pt_province_id"]').change( function(e){
 		if ($(this).val() != '') {
@@ -187,77 +216,58 @@
 		}
 	});
 
-
 	$('.btn-prevent-submit').click(function (event) {
 		event.preventDefault();
 	});
 
+	$('#btn_add_item').click(function (event) {
+		event.preventDefault();
 
-		$('#btn_save_service').click(function () {
-			if ($('[name="service_name"]').val()!='' && $('[name="service_price"]').val()!='') {
-				$.ajax({
-					url: "{{ route('service.createService') }}",
-					method: 'post',
-					data: {
-						name: $('[name="service_name"]').val(),
-						price: $('[name="service_price"]').val(),
-						description: $('[name="service_description"]').val(),
-					},
-					success: function(data){
-						$('#create_service_modal .invalid-feedback').remove();
-						$('#create_service_modal .form-control').removeClass('is-invalid');
-						if (data.errors) {
-							$.each(data.errors, function(key, value){
-								console.log(key);
-								$('#create_service_modal .service'+key+' input').addClass('is-invalid');
-								$('#create_service_modal .service'+key).append('<span class="invalid-feedback">'+value+'</span>');
-							});
-							Swal.fire({
-								icon: 'error',
-								title: "{{ __('alert.swal.result.title.error') }}",
-								confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-								timer: 1500
-							})
-						}
-						if (data.success) {
-							$('[name="service_name"]').val('');
-							$('[name="service_price"]').val('');
-							$('[name="service_description"]').val('');
-							
-							$('#create_service_modal').modal('hide');
-							reloadSelectService(data.service.id)
-							Swal.fire({
-								icon: 'success',
-								title: "{{ __('alert.swal.result.title.success') }}",
-								confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-								timer: 1500
-							})
-						}
-					}
-				});
-			}else{
-				Swal.fire({
-					icon: 'warning',
-					title: "{{ __('alert.swal.title.empty_field') }}",
-					confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-				})
+		var service_ids = [];
+		var n = $( ".labor_item" ).length;
+		$( ".chb_service" ).each(function( index ) {
+			if ($(this).is(':checked')) {
+				service_ids.push($(this).val());
 			}
 		});
 
-		function reloadSelectService(id) {
-			
+		if (service_ids.length != 0) {
 			$.ajax({
-				url: "{{ route('service.reloadSelectService') }}",
+				url: "{{ route('labor.labor_detail.storeAndGetLaborDetail') }}",
 				method: 'post',
 				data: {
+					labor_id: '{{ $labor->id }}',
+					service_ids: service_ids,
 				},
-				success: function(data){
-					$('#item_service_id').html(data);
-					$('#item_service_id').val(id).trigger('change');
-
+				success: function (data) {
+					$('.item_list').html(data.labor_detail_list);
+					$('#check_all_service').iCheck('uncheck');
+					$('#category_id').val('').trigger('change');
+					$('#service_check_list').html('');
+					$('#create_labor_item_modal').modal('hide');
+					$(".is_number").keyup(function () {
+						isNumber($(this))
+					});
 				}
 			});
 		}
+
+	});
+
+	function reloadSelectService(id) {
+		
+		$.ajax({
+			url: "{{ route('service.reloadSelectService') }}",
+			method: 'post',
+			data: {
+			},
+			success: function(data){
+				$('#item_service_id').html(data);
+				$('#item_service_id').val(id).trigger('change');
+
+			}
+		});
+	}
 
 	function select2_search (term) {
 		$(".select2_pagination").select2('open');
@@ -319,43 +329,7 @@
 			});
 		});
 	});
-
-	$('[name="item_service_name"]').on('change', function () {
-		if ($(this).val()!='') {
-			var value = $(this).val();
-			if ($('option[value="'+value+'"]').data('price')) $('[name="item_price"]').val($('option[value="'+value+'"]').data('price'));
-			if ($('option[value="'+value+'"]').data('description')) $('[name="item_description"]').val($('option[value="'+value+'"]').data('description'));			
-		}
-	});
 	
-
-	$('[name="edit_item_service_name"]').on('change', function () {
-		if ($(this).val()!='') {
-			var value = $(this).val();
-			if ($('option[value="'+value+'"]').data('price')) $('[name="edit_item_price"]').val($('option[value="'+value+'"]').data('price'));
-			if ($('option[value="'+value+'"]').data('description')) $('[name="edit_item_description"]').val($('option[value="'+value+'"]').data('description'));			
-		}
-	});
-	
-	function editLaborDetail(id) {
-		$.ajax({
-			url: "{{ route('labor.labor_detail.getDetail') }}",
-			type: 'post',
-			data: {
-				id: id
-			},
-		})
-		.done(function( result ) {
-			$('[name="edit_item_service_name"]').val(result.labor_detail.name).trigger('change');
-			$('[name="edit_item_price"]').val(result.labor_detail.amount);
-			// $('[name="edit_item_discount"]').val(result.labor_detail.discount).trigger('change');
-			$('[name="edit_item_description"]').val(result.labor_detail.description);
-			$('[name="edit_item_id"]').val(result.labor_detail.id);
-			$('#edit_labor_item_modal').modal('show');
-		});
-	};
-	
-
 	function deleteLaborDetail(id) {
 		
 		const swalWithBootstrapButtons = Swal.mixin({
@@ -383,6 +357,7 @@
 					},
 					success: function(data){
 						$('.print-preview').html(data.labor_preview);
+						$('.item_list').html(data.labor_detail_list);
 						Swal.fire({
 							icon: 'success',
 							title: "{{ __('alert.swal.result.title.save') }}",
@@ -395,178 +370,6 @@
 			}
 		})
 	};
-
-	$('#btn_update_item').click(function () {
-		$.ajax({
-			url: "{{ route('labor.labor_detail.update') }}",
-			type: 'post',
-			data: {
-				id: $('[name="edit_item_id"]').val(),
-				price: $('[name="edit_item_price"]').val(),
-				// discount: $('[name="edit_item_discount"]').val(),
-				service_name: $('[name="edit_item_service_name"]').val(),
-				description: $('[name="edit_item_description"]').val()
-			},
-		})
-		.done(function( data ) {
-			
-			$('#edit_labor_item_modal .invalid-feedback').remove();
-			$('#edit_labor_item_modal .form-control').removeClass('is-invalid');
-			if (data.errors) {
-				$.each(data.errors, function(key, value){
-					$('#edit_labor_item_modal .labor_item_'+key+' input').addClass('is-invalid');
-					$('#edit_labor_item_modal .labor_item_'+key).append('<span class="invalid-feedback">'+value+'</span>');
-				});
-				Swal.fire({
-					icon: 'error',
-					title: "{{ __('alert.swal.result.title.error') }}",
-					confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-					timer: 1500
-				})
-			}
-			if (data.success) {
-				$('[name="edit_item_service_name"]').val('').trigger('change');
-				$('[name="edit_item_price"]').val('');
-				$('[name="edit_item_discount"]').val('').trigger('change');
-				$('[name="edit_item_description"]').val('');
-				$('[name="edit_item_id"]').val('');
-				$('.print-preview').html(data.labor_preview);
-				$("#"+ data.labor_detail.id ).html(`<div class="row">
-						<div class="col-sm-4">
-							<div class="form-group">
-								{!! Html::decode(Form::label('show_description', __('label.form.description')." <small>*</small>")) !!}
-								<input name="show_service_name" class="form-control" style="height: 38px;" id="input-name-${ data.labor_detail.id }" value="${ data.labor_detail.name }" placeholder="description" readonly="" />
-							</div>
-						</div>
-						{{-- <div class="col-sm-2">
-							<div class="form-group">
-								{!! Html::decode(Form::label('show_discount', __('label.form.labor.discount')." <small>*</small>")) !!}
-								<input name="show_discount" class="form-control" id="input-discount-${ data.labor_detail.id }" value="${ data.labor_detail.discount * 100 }%" placeholder="discount" readonly="" />
-							</div>
-						</div> --}}
-						<div class="col-sm-2">
-							<div class="form-group">
-								{!! Html::decode(Form::label('show_price', __('label.form.labor.price')."($) <small>*</small>")) !!}
-								<input name="show_price" class="form-control" id="input-price-${ data.labor_detail.id }" value="${ data.labor_detail.amount }" placeholder="price" readonly="" />
-							</div>
-						</div>
-						<div class="col-sm-5">
-							<div class="form-group">
-								{!! Html::decode(Form::label('show_description', __('label.form.description'))) !!}
-								<input name="show_description" class="form-control" style="height: 38px;" id="input-description-${ data.labor_detail.id }" value="${ data.labor_detail.description ? data.labor_detail.description : '' }" placeholder="description" readonly="" />
-							</div>
-						</div>
-						<div class="col-sm-1">
-							<div class="form-group">
-								{!! Html::decode(Form::label('', __('label.buttons.action'))) !!}
-								<div>
-									<button type="button" class="btn btn-info btn-flat btn-prevent-submit" onclick="editLaborDetail('${ data.labor_detail.id }')"><i class="fa fa-pencil-alt"></i></button>
-									<button type="button" class="btn btn-danger btn-flat btn-prevent-submit" onclick="deleteLaborDetail(${ data.labor_detail.id })"><i class="fa fa-trash-alt"></i></button>
-								</div>
-							</div>
-						</div>
-					</div>`);
-				Swal.fire({
-					icon: 'success',
-					title: "{{ __('alert.swal.result.title.success') }}",
-					confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-					timer: 1500
-				})
-				$('#modal_add_service').modal('hide');
-			}
-		});
-	});
-
-	$('#btn_add_item').click(function () {
-		if ($('[name="item_service_name"]').val() !='' && $('[name="item_price"]').val() !='') {
-		
-			$.ajax({
-				url: "{{ route('labor.labor_detail.store') }}",
-				method: 'post',
-				data: {
-						labor_id: '{{ $labor->id }}',
-						medicine_id: (($('[name="item_medicine_id"]'))? $('[name="item_medicine_id"]').val() : ''),
-						service_name: (($('[name="item_service_name"]'))? $('[name="item_service_name"]').val() : ''),
-						discount: $('[name="item_discount"]').val(),
-						price: $('[name="item_price"]').val(),
-						description: $('[name="item_description"]').val(),
-				},
-				success: function(data){
-					$('.print-preview').html(data.labor_preview);
-					$('[name="item_medicine_id"]').val('').trigger('change');
-					$('[name="item_service_name"]').val('').trigger('change');
-					$('[name="item_discount"]').val('0').trigger('change');
-					$('[name="item_price"]').val( '' );
-					$('[name="item_description"]').val( '' );
-					$('#create_labor_item_modal').modal('hide');
-					
-					$(".item_list").append(`<div class="prescription_item" id="${ data.labor_detail.id }">
-								<div class="row">
-									<div class="col-sm-4">
-										<div class="form-group">
-											{!! Html::decode(Form::label('show_description', __('label.form.description')." <small>*</small>")) !!}
-											<input name="show_service_name" class="form-control" style="height: 38px;" id="input-name-${ data.labor_detail.id }" value="${ data.labor_detail.name }" placeholder="description" readonly="" />
-										</div>
-									</div>
-									<div class="col-sm-2">
-										<div class="form-group">
-											{!! Html::decode(Form::label('show_price', __('label.form.labor.price')."($) <small>*</small>")) !!}
-											<input name="show_price" class="form-control" id="input-price-${ data.labor_detail.id }" value="${ data.labor_detail.amount }" placeholder="price" readonly="" />
-										</div>
-									</div>
-									{{-- <div class="col-sm-2">
-										<div class="form-group">
-											{!! Html::decode(Form::label('show_discount', __('label.form.labor.discount')." <small>*</small>")) !!}
-											<input name="show_discount" class="form-control" id="input-discount-${ data.labor_detail.id }" value="${ parseFloat(data.labor_detail.discount) * 100 }%" placeholder="discount" readonly="" />
-										</div>
-									</div> --}}
-									<div class="col-sm-5">
-										<div class="form-group">
-											{!! Html::decode(Form::label('show_description', __('label.form.description')." <small>*</small>")) !!}
-											<input name="show_description" class="form-control" style="height: 38px;" id="input-description-${ data.labor_detail.id }" value="${ data.labor_detail.description ? data.labor_detail.description : '' }" placeholder="description" readonly="" />
-										</div>
-									</div>
-									<div class="col-sm-1">
-										<div class="form-group">
-											{!! Html::decode(Form::label('', __('label.buttons.action'))) !!}
-											<div>
-												<button type="button" class="btn btn-info btn-flat btn-prevent-submit" onclick="editLaborDetail('${ data.labor_detail.id }')"><i class="fa fa-pencil-alt"></i></button>
-												<button type="button" class="btn btn-danger btn-flat btn-prevent-submit" onclick="deleteLaborDetail(${ data.labor_detail.id })"><i class="fa fa-trash-alt"></i></button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>`);
-					
-					$('.btn-prevent-submit').click(function (event) {
-						event.preventDefault();
-					});
-					
-					Swal.fire({
-						icon: 'success',
-						title: "{{ __('alert.swal.result.title.save') }}",
-						confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-					})
-					
-					$('.empty_data_list').remove();
-
-					$('.btn_remove_item').click( function () {
-						$('.'+ $(this).data('id')).remove();
-					});
-					
-				}
-			});
-
-		}else{
-			Swal.fire({
-				icon: 'warning',
-				title: "{{ __('alert.swal.title.empty_field') }}",
-				text: "{{ __('alert.swal.text.empty_field') }}",
-				confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-			})
-		}
-	});
-
 
 	$('#patient_id').change(function () {
 		if ($(this).val()!='') {

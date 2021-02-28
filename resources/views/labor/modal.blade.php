@@ -9,19 +9,19 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<div class="row justify-content-center">
+				<div class="row justify-content-center sr-only">
 					<div class="col-sm-5">
 						<div class="form-group">
-							{!! Html::decode(Form::label('add_category_id', __('label.form.labor_service.category') .' <small>*</small>')) !!}
-							{!! Form::select('add_category_id', $categories, '', ['class' => 'form-control select2 category_id','placeholder' => __('label.form.choose'), 'required']) !!}
+							{!! Html::decode(Form::label('category_id', __('label.form.labor_service.category') .' <small>*</small>')) !!}
+							{!! Form::select('category_id', $categories, '', ['class' => 'form-control select2 category_id','placeholder' => __('label.form.choose'), 'required']) !!}
 						</div>
 					</div>
 				</div>
 				
-				<div class="card card-outline card-primary mt-4">
+				<div class="card card-outline card-primary mt-3">
 					<div class="card-header">
 						<input class="minimal service_item" id="check_all_service" type="checkbox">
-						<label for="check_all_service" class="form-check-label">Select All</label>
+						<label for="check_all_service" class="form-check-label">{{ __('label.form.select_all') }}</label>
 					</div>
 					<!-- /.card-header -->
 					<div class="card-body">

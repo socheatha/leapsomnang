@@ -60,7 +60,6 @@
 						<th class="text-center" width="10%">{!! __('module.table.date') !!}</th>
 						<th class="text-center">{!! __('module.table.labor.pt_name') !!}</th>
 						<th class="text-center" width="10%">{!! __('module.table.labor.pt_phone') !!}</th>
-						<th class="text-center">{!! __('module.table.labor.pt_diagnosis') !!}</th>
 						<th width="12%" class="text-center">{!! __('module.table.action') !!}</th>
 					</tr>
 				</thead>
@@ -188,13 +187,12 @@
 					{data: 'date', name: 'date', className: 'text-center'},
 					{data: 'pt_name', name: 'pt_name'},
 					{data: 'pt_phone', name: 'pt_phone'},
-					{data: 'pt_diagnosis', name: 'pt_diagnosis'},
 					{data: 'actions', name: 'actions', className: 'text-right', searchable: false, sortable: false}
 				],
 				order: [[1, "desc"]],
 				rowCallback: function( row, data ) {
 
-					$('td:eq(5)', row).html( `@Can("Labor Print")
+					$('td:eq(4)', row).html( `@Can("Labor Print")
 																			<button type="button" data-url="/labor/${ data.id }/print" class="btn btn-sm btn-flat btn-success btn-print-labor"><i class="fa fa-print"></i></button>
 																		@endCan 
 																		@Can("Labor Edit")

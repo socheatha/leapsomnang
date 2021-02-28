@@ -35,7 +35,7 @@
 					{{ __('alert.modal.title.labor_detail') }}
 				</h3>
 				<div class="card-tools">
-					<button type="button" class="btn btn-flat btn-sm btn-success btn-prevent-submit" data-toggle="modal" data-target="#create_labor_item_modal"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button>
+					<button type="button" class="btn btn-flat btn-sm btn-success btn-prevent-submit" id="btn_add_service"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button>
 				</div>
 			</div>
 			<!-- /.card-header -->
@@ -43,12 +43,11 @@
 				<table class="table table-bordered" width="100%">
 					<thead>
 						<tr>
-							<th width="50px">{!! __('module.table.no') !!}</th>
+							<th width="60px">{!! __('module.table.no') !!}</th>
 							<th>{!! __('module.table.name') !!}</th>
-							<th>{!! __('module.table.labor_service.category') !!}</th>
 							<th width="200px">{!! __('module.table.labor.result') !!}</th>
-							<th>{!! __('module.table.labor_service.unit') !!}</th>
-							<th>{!! __('module.table.labor_service.reference') !!}</th>
+							<th width="200px">{!! __('module.table.labor_service.unit') !!}</th>
+							<th width="200px">{!! __('module.table.labor_service.reference') !!}</th>
 							<th width="90px">{!! __('module.table.action') !!}</th>
 						</tr>
 					</thead>
@@ -78,7 +77,12 @@
 <script type="text/javascript">
 	var endLoadScript = function () {} // declear global variable as function
 
-	$('#add_category_id').change(function () {
+	$('#btn_add_service').click(function () {
+		$('#create_labor_item_modal').modal();
+		$('#category_id').val('1').trigger('change');
+	});
+
+	$('#category_id').change(function () {
 		if ($(this).val() != '') {
 			$('#check_all_service').iCheck('uncheck');
 			$.ajax({
@@ -193,9 +197,12 @@
 				success: function (data) {
 					$('.item_list').append(data.checked_services_list);
 					$('#check_all_service').iCheck('uncheck');
-					$('#add_category_id').val('').trigger('change');
+					$('#category_id').val('').trigger('change');
 					$('#service_check_list').html('');
 					$('#create_labor_item_modal').modal('hide');
+					$(".is_number").keyup(function () {
+						isNumber($(this))
+					});
 				}
 			});
 		}

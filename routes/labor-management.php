@@ -54,8 +54,8 @@ Route::group(['prefix' => 'labor', 'as' => 'labor.', 'namespace' => 'Labor'], fu
 	Route::post('/getCheckedServicesList', 'LaborController@getCheckedServicesList')->name('getCheckedServicesList');
 	
 	Route::group(['prefix' => 'labor_detail', 'as' => 'labor_detail.'], function () {
-		Route::post('/store', 'LaborController@laborDetailStore')->name('store');
-		Route::post('/update', 'LaborController@laborDetailUpdate')->name('update');
+		Route::post('/storeAndGetLaborDetail', 'LaborController@storeAndGetLaborDetail')->name('storeAndGetLaborDetail');
+		
 		Route::delete('/{labor_detail}/delete', 'LaborController@labor_detail_destroy')->name('destroy');
 		Route::PUT('/{labor}/save_order', 'LaborController@save_order')->name('save_order');
 		Route::post('/getItemDetail', 'LaborController@getItemDetail')->name('getDetail');

@@ -43,7 +43,7 @@
 						<td>{{ $labor_service->name }}</td>
 						<td>{{ $labor_service->category->name }}</td>
 						<td>{!! $labor_service->unit !!}</td>
-						<td>{{ $labor_service->reference }}</td>
+						<td class="text-center">{{ $labor_service->reference }}</td>
 						<td>{{ $labor_service->description }}</td>
 						<td class="text-right">
 

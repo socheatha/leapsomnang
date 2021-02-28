@@ -26,7 +26,6 @@ class CreateLaborsTable extends Migration
 		  $table->string('pt_commune')->nullable();
 		  $table->unsignedBigInteger('pt_district_id')->nullable();
 		  $table->unsignedBigInteger('pt_province_id')->nullable();
-		  $table->text('pt_diagnosis')->nullable();
 		  $table->text('remark')->nullable();
 		  $table->unsignedBigInteger('patient_id')->nullable();
 		  $table->unsignedBigInteger('created_by');

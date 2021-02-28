@@ -44,7 +44,8 @@
 	margin: 0 auto;
 	background: #fff;
 	border: 1px solid #ededed;
-	padding: 1cm;
+	padding: 1cm 1cm 1cm 1cm;
+	font-size: 12px;
 }
 .labor-print .table-information td{
 	padding-bottom: 8px;
@@ -63,6 +64,12 @@
 
 .labor-print small{
 	font-size: 10px !important;
+}
+.color_red{
+	color: red;
+}
+.color_yellow{
+	color: #FFC000 !important;
 }
 
 
@@ -159,6 +166,12 @@
 	}
 	.color_red{
 		color: red !important;
+		-webkit-print-color-adjust: exact !important;
+		-moz-print-color-adjust: exact !important;
+		-o-print-color-adjust: exact !important;
+	}
+	.color_yellow{
+		color: #FFC000;
 		-webkit-print-color-adjust: exact !important;
 		-moz-print-color-adjust: exact !important;
 		-o-print-color-adjust: exact !important;

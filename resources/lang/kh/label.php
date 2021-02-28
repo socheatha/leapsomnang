@@ -143,6 +143,7 @@ return [
 	],
 
 	'form' => [
+		'select_all' => 'ជ្រើសរើសទាំងអស់',
 		'choose' => '== សូមជ្រើសរើស ==',
 		'none' => '== ពុំមានឡើយ ==',
 		'male' => 'ប្រុស',
@@ -232,8 +233,9 @@ return [
 
 		'labor_service' => [
 			'unit' => 'ឯកតា',
-			'reference' => 'យោង',
 			'category' => 'ប្រភេទ',
+			'ref_from' => 'លេខយោងចាប់ផ្ដើម',
+			'ref_to' => 'លេខយោងយោងបញ្ចប់',
 		],
 
 		'echo_default_description' => [

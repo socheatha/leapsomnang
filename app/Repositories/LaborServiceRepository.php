@@ -5,6 +5,7 @@ namespace App\Repositories;
 use Carbon\Carbon;
 use App\Models\LaborService;
 use Auth;
+use DB;
 
 
 class LaborServiceRepository
@@ -13,7 +14,7 @@ class LaborServiceRepository
 
 	public function getData()
 	{
-		return LaborService::orderBy('name', 'asc')->get();
+		return LaborService::select(DB::raw("id, name, category_id, unit, description, CONCAT(`ref_from`,' - ',`ref_to`) AS reference"))->orderBy('name', 'asc')->get();
 	}
 
 	public function reloadSelectLaborService()
@@ -42,7 +43,8 @@ class LaborServiceRepository
 		$labor_service = LaborService::create([
 			'name' => $request->name,
 			'unit' => $request->unit,
-			'reference' => $request->reference,
+			'ref_from' => $request->ref_from,
+			'ref_to' => $request->ref_to,
 			'description' => $request->description,
 			'category_id' => $request->category_id,
 			'created_by' => Auth::user()->id,
@@ -59,7 +61,8 @@ class LaborServiceRepository
 		return $labor_service->update([
 			'name' => $request->name,
 			'unit' => $request->unit,
-			'reference' => $request->reference,
+			'ref_from' => $request->ref_from,
+			'ref_to' => $request->ref_to,
 			'description' => $request->description,
 			'category_id' => $request->category_id,
 			'updated_by' => Auth::user()->id,

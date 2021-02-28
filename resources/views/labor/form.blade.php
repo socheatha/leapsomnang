@@ -17,13 +17,6 @@
             {!! $errors->first('labor_number', '<div class="invalid-feedback">:message</div>') !!}
           </div>
         </div>
-        <div class="col-sm-12">
-          <div class="form-group">
-            {!! Html::decode(Form::label('pt_diagnosis', __('label.form.echoes.pt_diagnosis'))) !!}
-            {!! Form::text('pt_diagnosis', ((isset($labor->pt_diagnosis))? $labor->pt_diagnosis : '' ), ['class' => 'form-control '. (($errors->has("pt_diagnosis"))? "is-invalid" : ""),'placeholder' => 'diagnosis']) !!}
-            {!! $errors->first('pt_diagnosis', '<div class="invalid-feedback">:message</div>') !!}
-          </div>
-        </div>
 
         <div class="col-sm-12">
           <div class="form-group">

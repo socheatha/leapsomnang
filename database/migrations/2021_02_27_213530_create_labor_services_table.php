@@ -16,8 +16,9 @@ class CreateLaborServicesTable extends Migration
         Schema::create('labor_services', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
-            $table->string('unit')->nullable();
-            $table->string('reference')->nullable();
+            $table->string('unit');
+            $table->double('ref_from');
+            $table->double('ref_to');
             $table->text('description')->nullable();
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('created_by');

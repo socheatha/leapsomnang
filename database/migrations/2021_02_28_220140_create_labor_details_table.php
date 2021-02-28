@@ -15,10 +15,9 @@ class CreateLaborDetailsTable extends Migration
     {
       Schema::create('labor_details', function (Blueprint $table) {
           $table->bigIncrements('id');
-          $table->double('amount');
-          $table->text('description');
-          $table->integer('index');
-          $table->double('discount')->default('0');
+          $table->string('name');
+          $table->double('result')->nullable();
+          $table->text('description')->nullable();
           $table->unsignedBigInteger('labor_id');
           $table->unsignedBigInteger('service_id');
           $table->unsignedBigInteger('created_by');
@@ -31,7 +30,7 @@ class CreateLaborDetailsTable extends Migration
               ->onUpdate('cascade');
 
           $table->foreign('service_id')
-              ->references('id')->on('services')
+              ->references('id')->on('labor_services')
               ->onDelete('cascade')
               ->onUpdate('cascade');
 

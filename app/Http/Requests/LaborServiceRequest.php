@@ -26,6 +26,9 @@ class LaborServiceRequest extends FormRequest
 		return [
 			'name' => 'required|max:250',
 			'category_id' => 'required|max:250',
+			'unit' => 'required',
+			'ref_from' => 'required',
+			'ref_to' => 'required',
 		];
 	}
 }
