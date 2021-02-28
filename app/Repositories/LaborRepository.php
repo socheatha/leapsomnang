@@ -42,6 +42,44 @@ class LaborRepository
 			->make(true);
 	}
 
+	public function getReport($request)
+	{
+		$from = $request->from;
+		$to = $request->to;
+		$tbody = '';
+		$conditions = '';
+		$pt_id = $request->pt_id;
+		if ($pt_id!='') {
+			$conditions = ' AND patient_id = '.$pt_id;
+		}
+		// $labors = Labor::whereBetween('date', [$from, $to])->orderBy('labor_number', 'asc')->get();
+		$labors = Labor::whereRaw('date BETWEEN "'. $from .'" AND "'. $to .'"'. $conditions)->orderBy('labor_number', 'asc')->get();
+		$total_patient = 0;
+		foreach ($labors as $key => $labor) {
+			$total_patient++;
+
+			$description = '';
+
+			foreach ($labor->labor_details as $j => $labor_detail) {
+				$description .= '<div>- '. $labor_detail->name .' : '. $labor_detail->result .' '. $labor_detail->service->unit .' ('. $labor_detail->service->ref_from .' - '. $labor_detail->service->ref_from .')</div>';
+			}
+
+			$tbody .= '<tr>
+									<td class="text-center">'. str_pad($labor->labor_number, 6, "0", STR_PAD_LEFT) .'</td>
+									<td class="text-center">'. date('d/M/Y', strtotime($labor->date)) .'</td>
+									<td>'. $labor->pt_name .'</td>
+									<td class="text-center">'. $labor->pt_age .' ឆ្នាំ</td>
+									<td>'. $description .'</td>
+								</tr>';
+		}
+
+		return response()->json([
+			'tbody' => $tbody,
+			'total_patient' => $total_patient .' នាក់',
+		]);
+
+	}
+
 	public function getLaborServiceCheckList($request)
 	{
 		$service_check_list = '';

@@ -67,8 +67,10 @@ return [
 	    'labor_number' => 'លេខរៀង',
 	    'pt_name' => 'ឈ្មោះអ្នកជំងឺ',
 	    'pt_phone' => 'លេខទូរស័ព្ទ',
-	    'pt_diagnosis' => 'រោគវិនិច្ឆ័យ',
+	    'pt_age' => 'អាយុ',
 	    'result' => 'លទ្ធផល',
+	    'detail' => 'លម្អិត',
+	    'total_patient' => 'អ្នកជំងឺសរុប',
     ],
 
     'prescription' => [

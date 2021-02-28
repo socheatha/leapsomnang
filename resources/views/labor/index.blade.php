@@ -116,54 +116,6 @@
 			}
 		});
 
-		function updateStatus(id) {
-			
-			const swalWithBootstrapButtons = Swal.mixin({
-				customClass: {
-					confirmButton: 'btn btn-success btn-flat ml-2 py-2 px-3',
-					cancelButton: 'btn btn-danger btn-flat mr-2 py-2 px-3'
-				},
-				buttonsStyling: false
-			})
-			swalWithBootstrapButtons.fire({
-			title: '{{ __("alert.swal.title.labor_status") }}',
-			icon: 'question',
-			showCancelButton: true,
-			confirmButtonText: '{{ __("alert.swal.button.yes") }}',
-			cancelButtonText: '{{ __("alert.swal.button.no") }}',
-			reverseButtons: true
-			}).then((result) => {
-				if (result.value) {
-					$.ajax({
-						url: "{{ route('labor.status') }}",
-						method: 'post',
-						data: {
-								id: id,
-						},
-						success: function(data){
-							var from = $('#from').val();
-							var to = $('#to').val();
-
-							getDatatable(from, to);
-							Swal.fire({
-								icon: 'success',
-								title: "{{ __('alert.swal.result.title.success') }}",
-								confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-								timer: 2500
-							})
-						},
-						error: function () {
-							Swal.fire({
-								icon: 'error',
-								title: 'Oops...',
-								text: 'Something went wrong!',
-							})
-						}
-					});
-				}
-			})
-		}
-
 		function getDatatable(from, to, labor_number) {
 			// Load Data to datatable
 			$('#labor_table').DataTable().destroy();
@@ -172,7 +124,7 @@
 				processing: true,
 				serverSide: true,
 				"lengthMenu": [[10, 50, 100, -1], [10, 50, 100, "All"]],
-				"order": [[ 0, "asc" ]],
+				order: [[0, "desc"]],
 				ajax: {
 					headers: {
 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -189,7 +141,6 @@
 					{data: 'pt_phone', name: 'pt_phone'},
 					{data: 'actions', name: 'actions', className: 'text-right', searchable: false, sortable: false}
 				],
-				order: [[1, "desc"]],
 				rowCallback: function( row, data ) {
 
 					$('td:eq(4)', row).html( `@Can("Labor Print")
@@ -230,46 +181,6 @@
 
 				},
 				"drawCallback": function( settings, json ) {
-
-					// Change Status button Click
-					$('.btn_status').click(function () {
-						var btn_status = $(this);
-						const swalWithBootstrapButtons = Swal.mixin({
-							customClass: {
-								confirmButton: 'btn btn-success btn-flat ml-2 py-2 px-3',
-								cancelButton: 'btn btn-danger btn-flat mr-2 py-2 px-3'
-							},
-							buttonsStyling: false
-						})
-						swalWithBootstrapButtons.fire({
-						title: '{{ __("alert.swal.title.status") }}',
-						icon: 'question',
-						showCancelButton: true,
-						confirmButtonText: '{{ __("alert.swal.button.yes") }}',
-						cancelButtonText: '{{ __("alert.swal.button.no") }}',
-						reverseButtons: true
-						}).then((result) => {
-							if (result.value) {
-								$.ajax({
-									url: "/labor/"+ btn_status.data('id') +"/status",
-									type: 'post',
-									data: {  },
-								})
-								.done(function( data ) {
-									Swal.fire({
-										icon: 'success',
-										title: "{{ __('alert.swal.result.title.success') }}",
-										confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-										timer: 1500
-									})
-									.then((result) => {
-										btn_status.removeClass( ((data.status == 1)? 'btn-danger' : 'btn-success')).addClass(((data.status == 1)? 'btn-success' : 'btn-danger'));
-									})
-								});
-							}
-						})
-
-					});
 
 					$('.BtnDeleteConfirm').click(function () {
 						$('#item_id').val($(this).val());

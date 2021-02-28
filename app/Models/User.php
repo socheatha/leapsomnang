@@ -186,7 +186,9 @@ class User extends Authenticatable
 		}else if ($name == 'pick_year') {
 			$name = __('label.content.header.pick_year');
 		}else if ($name == 'year') {
-			$name = __('label.content.header.year');
+			$name = __('label.content.header.pick_year');
+		}else if ($name == 'report') {
+			$name = __('label.content.header.report');
 		}else if ($name == 'month') {
 			$name = __('label.content.header.month');
 

@@ -23,6 +23,7 @@ return [
 			'pick_year' => '<i class="fa fa-calendar-check"></i>&nbsp; ជ្រើសរើសឆ្នាំ',
 			'year' => '<i class="far fa-calendar-alt"></i>&nbsp; ប្រចាំឆ្នាំ',
 			'month' => '<i class="far fa-calendar-alt"></i>&nbsp; ប្រចាំខែ',
+			'report' => 'របាយការណ៍',
 		],
 	],
 
@@ -69,6 +70,7 @@ return [
 			'year' => 'ឆ្នាំ',
 			'month' => 'ប្រចាំខែ',
 
+			'report' => 'របាយការណ៍',
 			'show' => 'បង្ហាញ',
 			'home' => 'ផ្ទាំងដើម',
 			'user' => 'អ្នកប្រើប្រាស់',
@@ -98,6 +100,7 @@ return [
 	],
 
 	'buttons' => [
+		'report' => 'របាយការណ៍',
 		'export' => 'នាំចេញ',
 		'copy' => 'ចម្លង', 
 		'csv' => 'CSV', 
@@ -124,8 +127,6 @@ return [
 		'add' => 'បន្ថែម',
 		'add_item' => 'បន្ថែមធាតុ',
 		'add_medicine' => 'បន្ថែមថ្នាំ',
-		'reset_all_to' => 'ធ្វើឡើងរិញទាំងអស់',
-		'reset_to' => 'ធ្វើឡើងរិញ',
 		'create' => 'បង្កើត',
 		'create_service' => 'បង្កើតសេវាកម្មថ្មី',
 		'edit' => 'កែប្រែ',

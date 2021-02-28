@@ -117,7 +117,7 @@
 				processing: true,
 				serverSide: true,
 				"lengthMenu": [[10, 50, 100, -1], [10, 50, 100, "All"]],
-				"order": [[ 0, "asc" ]],
+				order: [[0, "desc"]],
 				ajax: {
 					headers: {
 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -135,7 +135,6 @@
 					{data: 'pt_phone', name: 'pt_phone'},
 					{data: 'actions', name: 'actions', className: 'text-right', searchable: false, sortable: false}
 				],
-				order: [[1, "desc"]],
 				rowCallback: function( row, data ) {
 
 					$('td:eq(4)', row).html( `@Can("Prescription Edit")

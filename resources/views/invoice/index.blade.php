@@ -191,7 +191,10 @@
 				processing: true,
 				serverSide: true,
 				"lengthMenu": [[10, 50, 100, -1], [10, 50, 100, "All"]],
-				"order": [[ 0, "asc" ]],
+				order: [[0, "desc"]],
+				buttons: [
+        	'copy', 'excel', 'pdf'
+    		],
 				ajax: {
 					headers: {
 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -212,7 +215,6 @@
 					{data: 'status', name: 'status', className: 'text-center'},
 					{data: 'actions', name: 'actions', className: 'text-right', searchable: false, sortable: false}
 				],
-				order: [[1, "desc"]],
 				rowCallback: function( row, data ) {
 
 					$('td:eq(8)', row).html( `@Can("Invoice Edit")

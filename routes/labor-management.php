@@ -32,6 +32,7 @@ Route::group(['prefix' => 'labor_service', 'as' => 'labor_service.', 'namespace'
 	Route::post('/createLaborService', 'LaborServiceController@createLaborService')->name('createLaborService');
 	Route::post('/reloadSelectLaborService', 'LaborServiceController@reloadSelectLaborService')->name('reloadSelectLaborService');
 
+
 });
 
 Route::group(['prefix' => 'labor', 'as' => 'labor.', 'namespace' => 'Labor'], function () {
@@ -42,9 +43,10 @@ Route::group(['prefix' => 'labor', 'as' => 'labor.', 'namespace' => 'Labor'], fu
 	Route::get('/{labor}/edit', 'LaborController@edit')->name('edit')->middleware('can:Labor Edit');
 	Route::put('/{labor}/update', 'LaborController@update')->name('update')->middleware('can:Labor Edit');
 	Route::delete('/{labor}/delete', 'LaborController@destroy')->name('destroy')->middleware('can:Labor Delete');
-	Route::get('/{labor}/print', 'LaborController@print')->name('print');
-	Route::post('/status', 'LaborController@status')->name('status');
+	Route::get('/{labor}/print', 'LaborController@print')->name('print')->middleware('can:Labor Print');
 	
+	Route::get('/report', 'LaborController@report')->name('report')->middleware('can:Labor Report');
+	Route::post('/getReport', 'LaborController@getReport')->name('getReport')->middleware('can:Labor Report');
 	
 	Route::post('/getDatatable', 'LaborController@getDatatable')->name('getDatatable');
 	Route::post('/getLaborPreview', 'LaborController@getLaborPreview')->name('getLaborPreview');

@@ -109,7 +109,6 @@ class LaborController extends Controller
 		return $this->labor->storeAndGetLaborDetail($request);
 	}
 
-
 	public function getLaborPreview(Request $request)
 	{
 		return $this->labor->getLaborPreview($request->id);
@@ -126,6 +125,17 @@ class LaborController extends Controller
 		return view('labor.labor_detail', $this->data);
 	}
 
+	public function getReport(Request $request)
+	{
+		return $this->labor->getReport($request);
+	}
+	public function report ()
+	{
+		$this->data = [
+
+		];
+		return view('labor.report', $this->data);
+	}
 
 	public function edit(Labor $labor)
 	{
