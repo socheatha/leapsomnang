@@ -202,9 +202,9 @@ class LaborRepository
 		foreach ($labor->labor_details as $labor_detail) {
 			$class = '';
 			if ($labor_detail->result < $labor_detail->service->ref_from) {
-				$class = 'color_red';
+				$class = 'color_green';
 			}else if ($labor_detail->result > $labor_detail->service->ref_to) {
-				$class = 'color_yellow';
+				$class = 'color_red';
 			}else{
 				$class = '';
 			}
@@ -243,12 +243,12 @@ class LaborRepository
 															<img src="/images/setting/logo.png" alt="IMG">
 														</td>
 														<td class="text-center" style="padding: 5px 0;">
-															<h6 class="color_blue KHOSMoulLight" style="color: blue; font-size: 19px;">'. Auth::user()->setting()->clinic_name_kh .'</h6>
+															<h6 class="KHOSMoulLight" style="font-size: 19px;">'. Auth::user()->setting()->clinic_name_kh .'</h6>
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding: 2px 0;">
-															<h6 class="color_red roboto_b" style="color: red; font-size: 19px;">'. Auth::user()->setting()->clinic_name_en .'</h6>
+															<h6 class="roboto_b" style="font-size: 19px;">'. Auth::user()->setting()->clinic_name_en .'</h6>
 														</td>
 													</tr>
 													<tr>
@@ -269,33 +269,36 @@ class LaborRepository
 												</table>
 												<table class="table-information" width="100%" style="margin: 5px 0 15px 0;">
 													<tr>
-														<td colspan="3">
+														<td colspan="4">
 															<h6 class="text-center KHOSMoulLight" style="padding: 10px 0 10px 0; font-size: 16px;">លទ្ធផលពិនិត្យឈាម</h6>
 														</td>
 													</tr>
 													<tr>
+														<td width="35%" style="padding-left: 55px;">
+															ឈ្មោះ:<span class="pt_name">'. $labor->pt_name .'</span>
+														</td>
+														<td width="18%">
+															អាយុ:<span class="pt_age">'. $labor->pt_age .' ឆ្នាំ</span>
+														</td>
+														<td width="18%">
+															ភេទ:<span class="pt_gender">'. $labor->pt_gender .' ឆ្នាំ</span>
+														</td>
+														<td width="25%" style="padding-left: 25px;">
+															លេខរៀង:<span class="labor_number">'. str_pad($labor->labor_number, 6, "0", STR_PAD_LEFT) .'</span>
+														</td>
+													</tr>
+													<tr class="sr-only">
 														<td>
 															កាលបរិច្ឆេទ:<span class="date">'. date('d/m/Y', strtotime($labor->date)) .'</span>
 														</td>
 														<td>
-															ឈ្មោះ:<span class="pt_name">'. $labor->pt_name .'</span>
-														</td>
-														<td width="29%">
-															លេខរៀង:<span class="pt_no">'. str_pad($labor->pt_no, 6, "0", STR_PAD_LEFT) .'</span>
-														</td>
-													</tr>
-													<tr>
-														<td>
 															ភេទ:<span class="pt_gender">'. $labor->pt_gender .'</span>
-														</td>
-														<td>
-															អាយុ:<span class="pt_age">'. $labor->pt_age .' ឆ្នាំ</span>
 														</td>
 														<td>
 															ទូរស័ព្ទ:<span class="pt_phone">'. $labor->pt_phone .'</span>
 														</td>
 													</tr>
-													<tr>
+													<tr class="sr-only">
 														<td colspan="3">
 															អាសយដ្ឋាន: <span class="pt_name">'. (($labor->pt_village!='')? 'ភូមិ'.$labor->pt_village : '') . (($labor->pt_commune!='')? (($labor->province->name=='ភ្នំពេញ')? ' សង្កាត់'.$labor->pt_commune : ' ឃុំ'.$labor->pt_commune) : '') . (($labor->district->name!='')? (($labor->province->name=='ភ្នំពេញ')? ' ខណ្ឌ'.$labor->district->name : ' ស្រុក'.$labor->district->name) : ''). (($labor->province->name!='')? (($labor->province->name=='ភ្នំពេញ')? ' រាជធានីភ្នំពេញ'.$labor->province->name : ' ខេត្ត'.$labor->province->name) : '') .'</span>
 														</td>
@@ -304,7 +307,7 @@ class LaborRepository
 												<div style="height: 14cm"></div>
 												<small class="remark">'. $labor->remark .'</small>
 												<br/>
-												<div class="color_red" style="color: red; text-align: center; text-decoration: underline; position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);">សូមយកវិក្កយបត្រមកវិញពេលមកពិនិត្យលើក្រោយ</div>
+												<div class="color_red" style="color: red; text-align: center; text-decoration: underline; position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);">សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើក្រោយ</div>
 												<table class="table-footer mt---5" width="100%">
 													<tr>
 														<td>
@@ -320,7 +323,7 @@ class LaborRepository
 														<td width="28%" class="text-center">
 															<div>គ្រូពេទ្យព្យាបាល</div>
 															<div class="sign_box"></div>
-															<div style="color: blue;"><span class="color_blue KHOSMoulLight">'. Auth::user()->setting()->sign_name_kh .'</span></div>
+															<div><span class="KHOSMoulLight">'. Auth::user()->setting()->sign_name_kh .'</span></div>
 														</td>
 													</tr>
 												</table>

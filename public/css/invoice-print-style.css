@@ -46,6 +46,7 @@
 	border: 1px solid #ededed;
 	padding: 1cm 1cm 1cm 1cm;
 	font-size: 12px;
+	color: #4472C4;
 }
 .labor-print .table-information td{
 	padding-bottom: 8px;
@@ -68,7 +69,7 @@
 .color_red{
 	color: red;
 }
-.color_yellow{
+.color_green{
 	color: #FFC000 !important;
 }
 
@@ -135,8 +136,15 @@
 
 @media print {
 	@page {
-		size: A4;
+		size: 21cm 29.7cm;
 		margin: 0;
+	}
+
+	.labor-print *{
+		color: #4472C4 !important;
+		-webkit-print-color-adjust: exact !important;
+		-moz-print-color-adjust: exact !important;
+		-o-print-color-adjust: exact !important;
 	}
 
 	.invoice-print{
@@ -170,8 +178,8 @@
 		-moz-print-color-adjust: exact !important;
 		-o-print-color-adjust: exact !important;
 	}
-	.color_yellow{
-		color: #FFC000;
+	.color_green{
+		color: green !important;
 		-webkit-print-color-adjust: exact !important;
 		-moz-print-color-adjust: exact !important;
 		-o-print-color-adjust: exact !important;

@@ -416,10 +416,10 @@ class InvoiceRepository
 		]);
 	}
 
-	public function get_service_id_or_create($name = '', $price = 0, $description = '', $is_labor = '0')
+	public function get_service_id_or_create($name = '', $price = 0, $description = '')
 	{
 		$name = trim($name);
-		$service = Service::where('name', $name)->where('is_labor', $is_labor)->first();
+		$service = Service::where('name', $name)->first();
 
 		if ($service != null) return $service->id;
 		$created_service = Service::create([
