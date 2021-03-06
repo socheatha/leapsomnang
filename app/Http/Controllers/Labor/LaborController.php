@@ -58,6 +58,7 @@ class LaborController extends Controller
 			'services' => Service::select('id', 'name', 'price', 'description')->orderBy('name' ,'asc')->get(),
 			'categories' => LaborCategory::getSelectData('id', 'name', '', 'id' ,'asc'),
 			'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),
+			'labor_type' => $_REQUEST['labor_type'] ?? 1,
 		];
 		return view('labor.create', $this->data);
 	}
@@ -149,6 +150,7 @@ class LaborController extends Controller
 			'services' => Service::select('id', 'name', 'price', 'description')->orderBy('name' ,'asc')->get(),
 			'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),
 			'labor_preview' => $this->labor->getLaborPreview($labor->id)->getData()->labor_detail,
+			'labor_type' => $labor->labor_type,
 		];
 
 		return view('labor.edit', $this->data);

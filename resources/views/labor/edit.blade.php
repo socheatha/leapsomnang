@@ -10,6 +10,9 @@
 		.mt---5{
 			margin-top: -45px;
 		}
+		#ck_result table, #ck_result table tr, #ck_result table th, #ck_result table td{
+			border-width: 0px!important;
+		}
 	</style>
 @endsection
 
@@ -35,60 +38,67 @@
 
 	<div class="card-body">
 		@include('labor.form')
-		
-		<div class="card card-outline card-primary mt-4">
-			<div class="card-header">
-				<h3 class="card-title">
-					<i class="fas fa-list"></i>&nbsp;
-					{{ __('alert.modal.title.labor_detail') }}
-				</h3>
-				<div class="card-tools">
-					<button type="button" class="btn btn-flat btn-sm btn-success btn-prevent-submit" id="btn_add_service"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button>
+		@if(in_array($labor_type, [1, 2]))
+			<div class="card card-outline card-primary mt-4">
+				<div class="card-header">
+					<h3 class="card-title">
+						<i class="fas fa-list"></i>&nbsp;
+						{{ __('alert.modal.title.labor_detail') }}
+					</h3>
+					@if($labor_type == 1)
+					<div class="card-tools">
+						<button type="button" class="btn btn-flat btn-sm btn-success btn-prevent-submit" id="btn_add_service"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button>
+					</div>
+					@endif
 				</div>
+				<!-- /.card-header -->
+				<div class="card-body">
+					@if($labor_type == 1)
+						<table class="table table-bordered" width="100%">
+							<thead>
+								<tr>
+									<th width="60px">{!! __('module.table.no') !!}</th>
+									<th>{!! __('module.table.name') !!}</th>
+									<th width="200px">{!! __('module.table.labor.result') !!}</th>
+									<th width="200px">{!! __('module.table.labor_service.unit') !!}</th>
+									<th width="200px">{!! __('module.table.labor_service.reference') !!}</th>
+									<th width="90px">{!! __('module.table.action') !!}</th>
+								</tr>
+							</thead>
+							<tbody class="item_list">
+								@foreach ($labor->labor_details as $order => $labor_detail)
+									<tr class="labor_item" id="{{ $labor_detail->result }}">
+										<td class="text-center">{{ ++$order }}</td>
+										<td>
+											<input type="hidden" name="labor_detail_ids[]" value="{{ $labor_detail->id }}">
+											{{ $labor_detail->name }}
+										</td>
+										<td class="text-center">
+											<input type="text" name="result[]" value="{{ $labor_detail->result }}" class="form-controls is_number"/>
+										</td>
+										<td class="text-center">
+											{{ $labor_detail->service->unit }}
+										</td>
+										<td class="text-center">
+											{{ $labor_detail->service->ref_from .' - '. $labor_detail->service->ref_to }}
+										</td>
+										<td class="text-center">
+											<button type="button" onclick="deleteLaborDetail('{{ $labor_detail->id }}')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
+										</td>
+									</tr>
+								@endforeach
+							</tbody>
+						</table>
+					@elseif($labor_type == 2)
+						<div class="form-group">
+							{!! Html::decode(Form::label('description', __('label.form.description') .'<small>*</small>')) !!}
+							{!! Form::textarea('simple_labor_detail', $labor->simple_labor_detail ?: '', ['class' => 'form-control ','style' => 'height: 121px;', 'placeholder' => 'description', 'id' => 'my-editor', 'required']) !!}							
+						</div>
+					@endif
+				</div>
+				<!-- /.card-body -->
 			</div>
-			<!-- /.card-header -->
-			<div class="card-body">
-				
-				<table class="table table-bordered" width="100%">
-					<thead>
-						<tr>
-							<th width="60px">{!! __('module.table.no') !!}</th>
-							<th>{!! __('module.table.name') !!}</th>
-							<th width="200px">{!! __('module.table.labor.result') !!}</th>
-							<th width="200px">{!! __('module.table.labor_service.unit') !!}</th>
-							<th width="200px">{!! __('module.table.labor_service.reference') !!}</th>
-							<th width="90px">{!! __('module.table.action') !!}</th>
-						</tr>
-					</thead>
-					<tbody class="item_list">
-						@foreach ($labor->labor_details as $order => $labor_detail)
-							<tr class="labor_item" id="{{ $labor_detail->result }}">
-								<td class="text-center">{{ ++$order }}</td>
-								<td>
-									<input type="hidden" name="labor_detail_ids[]" value="{{ $labor_detail->id }}">
-									{{ $labor_detail->name }}
-								</td>
-								<td class="text-center">
-									<input type="text" name="result[]" value="{{ $labor_detail->result }}" class="form-controls is_number"/>
-								</td>
-								<td class="text-center">
-									{{ $labor_detail->service->unit }}
-								</td>
-								<td class="text-center">
-									{{ $labor_detail->service->ref_from .' - '. $labor_detail->service->ref_to }}
-								</td>
-								<td class="text-center">
-									<button type="button" onclick="deleteLaborDetail('{{ $labor_detail->id }}')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
-								</td>
-							</tr>
-						@endforeach
-					</tbody>
-				</table>
-				
-			</div>
-			<!-- /.card-body -->
-		</div>
-
+		@endif
 	</div>
 	<!-- ./card-body -->
 	
@@ -120,7 +130,22 @@
 @endsection
 
 @section('js')
+<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 <script type="text/javascript">
+	var editor = CKEDITOR.replace('my-editor', {
+		height: '350',
+		font_names: 'Calibrib Bold; Calibri Italic; Calibri; Roboto Regular; Roboto Bold; Khmer OS Battambang; Khmer OS Muol Light; Khmer OS Content; Khmer OS Kuolen;',
+		toolbar: [
+			{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'CopyFormatting', 'RemoveFormat' ] },
+			{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+			{ name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', '-', 'Save', 'NewPage', 'ExportPdf', 'Preview', 'Print', '-', 'Templates' ] },
+			{ name: 'insert', items: ['Table' ] },
+			{ name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
+			{ name: 'colors', items: [ 'TextColor', 'BGColor' ] },
+			{ name: 'clipboard', groups: [ 'clipboard', 'undo' ]},
+		]
+	});
+
 	var firstLoadPatient = true;
 	var endLoadPatientChnaged = function() {}
 	var endLoadProvinceChanged = function() {}

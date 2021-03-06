@@ -12,9 +12,9 @@
 <div class="card">
 	<div class="card-header">
 		<b>{!! Auth::user()->subModule() !!}</b>
-			<a href="{{route('labor.create')}}" class="btn btn-info btn-sm btn-flat"><i class="fa fa-file-alt"></i> &nbsp; ស្តង់ដា </a>
-			<a href="{{route('labor.create')}}" class="btn btn-info btn-sm btn-flat"><i class="fa fa-file-alt"></i> &nbsp; ធម្មតា</a>
-			<a href="{{route('labor.create')}}" class="btn btn-info btn-sm btn-flat"><i class="fa fa-file-alt"></i> &nbsp; ទទេ</a>
+		<a href="{{$labor_type != 1 ? route('labor.create') . '?labor_type=1' : '#' }}" class="btn btn-info btn-sm btn-flat {{ $labor_type == 1 ? 'active' : '' }}"><i class="fa fa-cubes"></i> &nbsp; ស្តង់ដា </a>
+		<a href="{{$labor_type != 2 ? route('labor.create') . '?labor_type=2' : '#' }}" class="btn btn-info btn-sm btn-flat {{ $labor_type == 2 ? 'active' : '' }}"><i class="fa fa-cube"></i> &nbsp; ធម្មតា</a>
+		<a href="{{$labor_type != 3 ? route('labor.create') . '?labor_type=3' : '#' }}" class="btn btn-info btn-sm btn-flat {{ $labor_type == 3 ? 'active' : '' }}"><i class="fa fa-file"></i> &nbsp; ទទេ</a>
 		<div class="card-tools">
 			@can('Labor Report')
 			<a href="{{route('labor.report')}}" class="btn btn-info btn-sm btn-flat"><i class="fa fa-file-alt"></i> &nbsp;{{ __('label.buttons.report', [ 'name' => Auth::user()->module() ]) }}</a>
@@ -33,37 +33,93 @@
 	{!! Form::open(['url' => route('labor.store'),'id' => 'submitForm','method' => 'post','class' => 'mt-3', 'autocomplete' => 'off']) !!}
 	<div class="card-body">
 		@include('labor.form')
-
-		<div class="card card-outline card-primary mt-4">
-			<div class="card-header">
-				<h3 class="card-title">
-					<i class="fas fa-list"></i>&nbsp;
-					{{ __('alert.modal.title.labor_detail') }}
-				</h3>
-				<div class="card-tools">
-					<button type="button" class="btn btn-flat btn-sm btn-success btn-prevent-submit" id="btn_add_service"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button>
+		@if(in_array($labor_type, [1, 2]))
+			<div class="card card-outline card-primary mt-4">
+				<div class="card-header">
+					<h3 class="card-title">
+						<i class="fas fa-list"></i>&nbsp;
+						{{ __('alert.modal.title.labor_detail') }}
+					</h3>
+					@if($labor_type == 1)
+						<div class="card-tools">
+							<button type="button" class="btn btn-flat btn-sm btn-success btn-prevent-submit" id="btn_add_service"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button>
+						</div>
+					@endif
 				</div>
-			</div>
-			<!-- /.card-header -->
-			<div class="card-body">
-				<table class="table table-bordered" width="100%">
-					<thead>
-						<tr>
-							<th width="60px">{!! __('module.table.no') !!}</th>
-							<th>{!! __('module.table.name') !!}</th>
-							<th width="200px">{!! __('module.table.labor.result') !!}</th>
-							<th width="200px">{!! __('module.table.labor_service.unit') !!}</th>
-							<th width="200px">{!! __('module.table.labor_service.reference') !!}</th>
-							<th width="90px">{!! __('module.table.action') !!}</th>
-						</tr>
-					</thead>
-					<tbody class="item_list">
-					</tbody>
-				</table>
-			</div>
-			<!-- /.card-body -->
-		</div>
+				<!-- /.card-header -->
+				<div class="card-body">
+					@if($labor_type == 1)
+						<table class="table table-bordered" width="100%">
+							<thead>
+								<tr>
+									<th width="60px">{!! __('module.table.no') !!}</th>
+									<th>{!! __('module.table.name') !!}</th>
+									<th width="200px">{!! __('module.table.labor.result') !!}</th>
+									<th width="200px">{!! __('module.table.labor_service.unit') !!}</th>
+									<th width="200px">{!! __('module.table.labor_service.reference') !!}</th>
+									<th width="90px">{!! __('module.table.action') !!}</th>
+								</tr>
+							</thead>
+							<tbody class="item_list">
+							</tbody>
+						</table>
+					@elseif($labor_type == 2)
+						<?php 
+							$default_elements = '<h5 style="text-align:center"><u><strong>Main Title</strong></u></h5>
 
+								<p>__checkbox__&nbsp;<u><strong>Sub-Title 1</strong></u></p>
+								
+								<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:100%">
+									<tbody>
+										<tr>
+											<td>__checkbox__ 11</td>
+											<td>22</td>
+											<td>33</td>
+										</tr>
+										<tr>
+											<td>__checkbox__ 111</td>
+											<td>222</td>
+											<td>333</td>
+										</tr>
+									</tbody>
+								</table>
+								
+								<p>&nbsp;</p>
+								
+								<p>__checkbox__&nbsp;<u><strong>Sub-Title 2</strong></u></p>
+								
+								<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:100%">
+									<tbody>
+										<tr>
+											<td>__checkbox__ aa</td>
+											<td>bb</td>
+											<td>cc</td>
+										</tr>
+										<tr>
+											<td>__checkbox__ aaa</td>
+											<td>bbb</td>
+											<td>ccc</td>
+										</tr>
+										<tr>
+											<td>__checkbox__ aaaa</td>
+											<td>bbbb</td>
+											<td>cccc</td>
+										</tr>
+									</tbody>
+								</table>
+								
+								<p>&nbsp;</p>
+							';
+						?>
+						<div class="form-group">
+							{!! Html::decode(Form::label('description', __('label.form.description') .'<small>*</small>')) !!}
+							{!! Form::textarea('simple_labor_detail', $default_elements, ['class' => 'form-control ','style' => 'height: 121px;', 'placeholder' => 'description', 'id' => 'my-editor', 'required']) !!}							
+						</div>
+					@endif
+				</div>			
+				<!-- /.card-body -->
+			</div>
+		@endif
 	</div>
 	<!-- ./card-body -->
 	
@@ -80,7 +136,22 @@
 @endsection
 
 @section('js')
+<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 <script type="text/javascript">
+	var editor = CKEDITOR.replace('my-editor', {
+		height: '350',
+		font_names: 'Calibrib Bold; Calibri Italic; Calibri; Roboto Regular; Roboto Bold; Khmer OS Battambang; Khmer OS Muol Light; Khmer OS Content; Khmer OS Kuolen;',
+		toolbar: [
+			{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'CopyFormatting', 'RemoveFormat' ] },
+			{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+			{ name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', '-', 'Save', 'NewPage', 'ExportPdf', 'Preview', 'Print', '-', 'Templates' ] },
+			{ name: 'insert', items: ['Table' ] },
+			{ name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
+			{ name: 'colors', items: [ 'TextColor', 'BGColor' ] },
+			{ name: 'clipboard', groups: [ 'clipboard', 'undo' ]},
+		]
+	});
+
 	var endLoadScript = function () {} // declear global variable as function
 
 	$('#btn_add_service').click(function () {

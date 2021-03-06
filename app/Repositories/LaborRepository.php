@@ -308,23 +308,23 @@ class LaborRepository
 														</td>
 													</tr>
 												</table>
+												' . ($labor->labor_type == 2 ? ('<div id="ck_result">' . str_replace('__checkbox__', '<input type="checkbox" disabled/>', $labor->simple_labor_detail) . '</div>') : '') . '
 												<div style="height: 14cm"></div>
-												<small class="remark">'. $labor->remark .'</small>
+												' . ($labor->labor_type == 1 ? ('<small class="remark">'. $labor->remark .'</small>') : '') . '
 												<br/>
 												<div class="color_red" style="color: red; text-align: center; text-decoration: underline; position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);">សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើក្រោយ</div>
 												<table class="table-footer mt---5" width="100%">
 													<tr>
-														<td>
-															<div>Séro Ag Widel</div>
-															<ul style="list-style-type: none; margin: 0; padding-left: 14px;">
-																<li style="margin-left: 0;">-TO:............................................Négatif</li>
-																<li style="margin-left: 0;">-TH:............................................Négatif</li>
-															</ul>
-															<table width="100%">
-																'. $labor_detail_item_list .'
-															</table>
-														</td>
-														<td width="28%" class="text-center">
+														<td> ' . ($labor->labor_type == 1 ? '<div>Séro Ag Widel</div>
+																<ul style="list-style-type: none; margin: 0; padding-left: 14px;">
+																	<li style="margin-left: 0;">-TO:............................................Négatif</li>
+																	<li style="margin-left: 0;">-TH:............................................Négatif</li>
+																</ul>
+																<table width="100%">
+																	'. $labor_detail_item_list .'
+																</table>' : '') .  															
+														 ' </td>
+														<td width="28%" class="text-center" style="position: absolute; right: 0px; bottom: 50px;">
 															<div>គ្រូពេទ្យព្យាបាល</div>
 															<div class="sign_box"></div>
 															<div><span class="KHOSMoulLight">'. Auth::user()->setting()->sign_name_kh .'</span></div>
@@ -388,6 +388,8 @@ class LaborRepository
 			'pt_district_id' => $request->pt_district_id,
 			'pt_province_id' => $request->pt_province_id,
 			'price' => $request->price ?: 0,
+			'labor_type' => $request->labor_type ?: 1,
+			'simple_labor_detail' => $request->simple_labor_detail ?: '',
 			'remark' => $request->remark,
 			'patient_id' => $patient_id,
 			'created_by' => Auth::user()->id,
@@ -423,6 +425,7 @@ class LaborRepository
 			'pt_district_id' => $request->pt_district_id,
 			'pt_province_id' => $request->pt_province_id,
 			'price' => $request->price ?: 0,
+			'simple_labor_detail' => $request->simple_labor_detail ?: '',
 			'remark' => $request->remark,
 			'updated_by' => Auth::user()->id,
 		]);

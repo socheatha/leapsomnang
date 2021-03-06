@@ -5,6 +5,7 @@
         <div class="col-sm-12">
           <div class="form-group">
             {!! Form::hidden('date_hidden', '',) !!}
+            {!! Form::hidden('labor_type', $labor_type) !!}
             {!! Html::decode(Form::label('date', __('label.form.date')."(YYYY-MM-DD) <small>*</small>")) !!}
             {!! Form::text('date', ((isset($labor->date))? $labor->date :  date('Y-m-d') ), ['class' => 'form-control datetimepicker-input '. (($errors->has("date"))? "is-invalid" : ""), 'id' => 'date_picker', 'data-toggle' => 'datetimepicker', 'data-target' => '#date_picker', 'placeholder' => 'date', 'autocomplete' => 'off', 'required']) !!}
             {!! $errors->first('date', '<div class="invalid-feedback">:message</div>') !!}
