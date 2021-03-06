@@ -61,8 +61,11 @@
 					<tr>
 						<th class="text-center" width="10%">{!! __('module.table.labor.labor_number') !!}</th>
 						<th class="text-center" width="10%">{!! __('module.table.date') !!}</th>
+						<th class="text-center" width="10%">{!! __('label.form.labor.price') !!}</th>
 						<th class="text-center">{!! __('module.table.labor.pt_name') !!}</th>
 						<th class="text-center" width="10%">{!! __('module.table.labor.pt_phone') !!}</th>
+						<th class="text-center" width="10%">{!! __('module.table.labor.pt_age') !!}</th>
+						<th class="text-center" width="10%">{!! __('label.form.labor.pt_gender') !!}</th>
 						<th width="12%" class="text-center">{!! __('module.table.action') !!}</th>
 					</tr>
 				</thead>
@@ -140,26 +143,30 @@
 				columns: [
 					{data: 'labor_number', name: 'labor_number', className: 'text-center'},
 					{data: 'date', name: 'date', className: 'text-center'},
+					{data: 'formated_price', name: 'formated_price', className: 'text-center font-weight-bold'},
 					{data: 'pt_name', name: 'pt_name'},
 					{data: 'pt_phone', name: 'pt_phone'},
-					{data: 'actions', name: 'actions', className: 'text-right', searchable: false, sortable: false}
+					{data: 'pt_age', name: 'pt_age', className: 'text-center'},
+					{data: 'pt_gender', name: 'pt_gender', className: 'text-center'},
+					{data: 'actions', name: 'actions', className: 'text-center', searchable: false, sortable: false}
 				],
 				rowCallback: function( row, data ) {
+					$('td:eq(5)', row).html(data.pt_age + ' ឆ្នាំ');
 
-					$('td:eq(4)', row).html( `@Can("Labor Print")
-																			<button type="button" data-url="/labor/${ data.id }/print" class="btn btn-sm btn-flat btn-success btn-print-labor"><i class="fa fa-print"></i></button>
-																		@endCan 
-																		@Can("Labor Edit")
-																			<a href="/labor/${ data.id }/edit" class="btn btn-sm btn-flat btn-info"><i class="fa fa-pencil-alt"></i></a>
-																		@endCan 
-																		@Can("Labor Delete")
-																			<button type="button" class="btn btn-sm btn-flat btn-danger BtnDeleteConfirm" value="${ data.id }"><i class="fa fa-trash-alt"></i></button>
-																			<form action="/labor/${ data.id }/delete" id="form-item-${ data.id }" class="sr-only" method="POST" accept-charset="UTF-8">
-																				{{ csrf_field() }}
-																				<input type="hidden" name="_method" value="DELETE" />
-																				<input type="hidden" name="passwordDelete" value="" />
-																			</form>
-																		@endCan` );
+					$('td:eq(7)', row).html( `@Can("Labor Print")
+						<button type="button" data-url="/labor/${ data.id }/print" class="btn btn-sm btn-flat btn-success btn-print-labor"><i class="fa fa-print"></i></button>
+					@endCan 
+					@Can("Labor Edit")
+						<a href="/labor/${ data.id }/edit" class="btn btn-sm btn-flat btn-info"><i class="fa fa-pencil-alt"></i></a>
+					@endCan 
+					@Can("Labor Delete")
+						<button type="button" class="btn btn-sm btn-flat btn-danger BtnDeleteConfirm" value="${ data.id }"><i class="fa fa-trash-alt"></i></button>
+						<form action="/labor/${ data.id }/delete" id="form-item-${ data.id }" class="sr-only" method="POST" accept-charset="UTF-8">
+							{{ csrf_field() }}
+							<input type="hidden" name="_method" value="DELETE" />
+							<input type="hidden" name="passwordDelete" value="" />
+						</form>
+					@endCan` );
 
 				},
 				"initComplete": function( settings, json ) {

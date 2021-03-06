@@ -22,6 +22,7 @@ class Labor extends Model
 		'pt_district_id',
 		'pt_province_id',
 		'status',
+		'price',
 		'remark',
 		'patient_id',
 		'created_by',

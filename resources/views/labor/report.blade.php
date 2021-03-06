@@ -60,8 +60,10 @@
 					<tr>
 						<th class="text-center" width="10%">{!! __('module.table.labor.labor_number') !!}</th>
 						<th class="text-center" width="10%">{!! __('module.table.date') !!}</th>
+						<th class="text-center" width="15%">{!! __('label.form.labor.price') !!}</th>
 						<th class="text-center" width="15%">{!! __('module.table.labor.pt_name') !!}</th>
 						<th class="text-center" width="10%">{!! __('module.table.labor.pt_age') !!}</th>
+						<th class="text-center" width="10%">{!! __('label.form.labor.pt_gender') !!}</th>
 						<th class="text-center">{!! __('module.table.labor.detail') !!}</th>
 					</tr>
 				</thead>
@@ -72,7 +74,9 @@
 					<tr>
 						<th></th>
 						<th class="text-right">{!! __('module.table.labor.total_patient') !!}</th>
+						<th class="total_amount text-center">></th>
 						<th class="total_patient"></th>
+						<th></th>
 						<th></th>
 						<th></th>
 					</tr>
@@ -181,6 +185,7 @@
 
 					$('#labor_table tbody').html(data.tbody);
 					$('#labor_table .total_patient').html(data.total_patient);
+					$('#labor_table .total_amount').html(data.total_amount);
 					
 					setTimeout(() => {
 						$('#labor_table').DataTable({

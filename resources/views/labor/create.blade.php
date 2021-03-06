@@ -12,6 +12,9 @@
 <div class="card">
 	<div class="card-header">
 		<b>{!! Auth::user()->subModule() !!}</b>
+			<a href="{{route('labor.create')}}" class="btn btn-info btn-sm btn-flat"><i class="fa fa-file-alt"></i> &nbsp; ស្តង់ដា </a>
+			<a href="{{route('labor.create')}}" class="btn btn-info btn-sm btn-flat"><i class="fa fa-file-alt"></i> &nbsp; ធម្មតា</a>
+			<a href="{{route('labor.create')}}" class="btn btn-info btn-sm btn-flat"><i class="fa fa-file-alt"></i> &nbsp; ទទេ</a>
 		<div class="card-tools">
 			@can('Labor Report')
 			<a href="{{route('labor.report')}}" class="btn btn-info btn-sm btn-flat"><i class="fa fa-file-alt"></i> &nbsp;{{ __('label.buttons.report', [ 'name' => Auth::user()->module() ]) }}</a>

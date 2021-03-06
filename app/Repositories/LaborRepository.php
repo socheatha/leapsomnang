@@ -29,7 +29,7 @@ class LaborRepository
 		if ($labor_number!='') {
 			$conditions = ' AND labor_number LIKE "%'. intval($labor_number) .'%"';
 		}
-		$labors = Labor::whereBetween('date', [$from, $to])->orderBy('labor_number', 'asc')->get();
+		$labors = Labor::select('*', DB::raw("CONCAT(FORMAT(price, 2), ' $') as formated_price"))->whereBetween('date', [$from, $to])->orderBy('labor_number', 'asc')->get();
 
 		return Datatables::of($labors)
 			->editColumn('labor_number', function ($labor) {
@@ -55,11 +55,12 @@ class LaborRepository
 		// $labors = Labor::whereBetween('date', [$from, $to])->orderBy('labor_number', 'asc')->get();
 		$labors = Labor::whereRaw('date BETWEEN "'. $from .'" AND "'. $to .'"'. $conditions)->orderBy('labor_number', 'asc')->get();
 		$total_patient = 0;
+		$total_amount = 0;
 		foreach ($labors as $key => $labor) {
 			$total_patient++;
+			$total_amount += $labor->price;
 
 			$description = '';
-
 			foreach ($labor->labor_details as $j => $labor_detail) {
 				$description .= '<div>- '. $labor_detail->name .' : '. $labor_detail->result .' '. $labor_detail->service->unit .' ('. $labor_detail->service->ref_from .' - '. $labor_detail->service->ref_from .')</div>';
 			}
@@ -67,8 +68,10 @@ class LaborRepository
 			$tbody .= '<tr>
 									<td class="text-center">'. str_pad($labor->labor_number, 6, "0", STR_PAD_LEFT) .'</td>
 									<td class="text-center">'. date('d/M/Y', strtotime($labor->date)) .'</td>
+									<td class="text-center font-weight-bold">'. number_format($labor->price,2) .' $</td>
 									<td>'. $labor->pt_name .'</td>
 									<td class="text-center">'. $labor->pt_age .' ឆ្នាំ</td>
+									<td class="text-center">'. $labor->pt_gender .'</td>
 									<td>'. $description .'</td>
 								</tr>';
 		}
@@ -76,6 +79,7 @@ class LaborRepository
 		return response()->json([
 			'tbody' => $tbody,
 			'total_patient' => $total_patient .' នាក់',
+			'total_amount' => number_format($total_amount, 2) .' $',
 		]);
 
 	}
@@ -383,6 +387,7 @@ class LaborRepository
 			'pt_commune' => $request->pt_commune,
 			'pt_district_id' => $request->pt_district_id,
 			'pt_province_id' => $request->pt_province_id,
+			'price' => $request->price ?: 0,
 			'remark' => $request->remark,
 			'patient_id' => $patient_id,
 			'created_by' => Auth::user()->id,
@@ -417,6 +422,7 @@ class LaborRepository
 			'pt_commune' => $request->pt_commune,
 			'pt_district_id' => $request->pt_district_id,
 			'pt_province_id' => $request->pt_province_id,
+			'price' => $request->price ?: 0,
 			'remark' => $request->remark,
 			'updated_by' => Auth::user()->id,
 		]);
