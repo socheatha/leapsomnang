@@ -65,50 +65,107 @@
 						</table>
 					@elseif($labor_type == 2)
 						<?php 
-							$default_elements = '<h5 style="text-align:center"><u><strong>Main Title</strong></u></h5>
+							$default_elements = '
+							<h5 style="text-align:center"><span style="font-size:18.0pt"><span style="color:#66ffff">lT&sect;plBinit&uuml;</span></span></h5>
 
-								<p>__checkbox__&nbsp;<u><strong>Sub-Title 1</strong></u></p>
-								
-								<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:100%">
-									<tbody>
-										<tr>
-											<td>__checkbox__ 11</td>
-											<td>22</td>
-											<td>33</td>
-										</tr>
-										<tr>
-											<td>__checkbox__ 111</td>
-											<td>222</td>
-											<td>333</td>
-										</tr>
-									</tbody>
-								</table>
-								
-								<p>&nbsp;</p>
-								
-								<p>__checkbox__&nbsp;<u><strong>Sub-Title 2</strong></u></p>
-								
-								<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:100%">
-									<tbody>
-										<tr>
-											<td>__checkbox__ aa</td>
-											<td>bb</td>
-											<td>cc</td>
-										</tr>
-										<tr>
-											<td>__checkbox__ aaa</td>
-											<td>bbb</td>
-											<td>ccc</td>
-										</tr>
-										<tr>
-											<td>__checkbox__ aaaa</td>
-											<td>bbbb</td>
-											<td>cccc</td>
-										</tr>
-									</tbody>
-								</table>
-								
-								<p>&nbsp;</p>
+							<p>__checkbox__&nbsp;<strong><span style="font-size:14.0pt"><span style="color:black">BIO.CHEMIE</span></span></strong></p>
+
+							<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:100%">
+								<tbody>
+									<tr>
+										<td><span style="font-size:12.0pt"><span style="color:black">Glycemie</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">88 mg/dl</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">( N: 100 &ndash; 134 mg/dl )</span></span></td>
+									</tr>
+									<tr>
+										<td><span style="font-size:12.0pt"><span style="color:black">Calcemie</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">8,2 mg/dl</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">( N: 8,2 &ndash;10,4 mg/dl )</span></span></td>
+									</tr>
+									<tr>
+										<td><span style="font-size:12.0pt"><span style="color:black">Cholesterole</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">169 mg/dl</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">( N: 50 &ndash;200 mg/dl )</span></span></td>
+									</tr>
+									<tr>
+										<td><span style="font-size:12.0pt"><span style="color:black">Triglyceride</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">137 mg/dl</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">( N: 50 &ndash;200 mg/dl )</span></span></td>
+									</tr>
+									<tr>
+										<td><span style="font-size:12.0pt"><span style="color:black">HDL</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">24 mg/dl</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">( N: &lt;100 mg/dl )</span></span></td>
+									</tr>
+									<tr>
+										<td><span style="font-size:12.0pt"><span style="color:black">LDL</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">89 mg/d</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">( N: &lt; 100mg/dl )</span></span></td>
+									</tr>
+									<tr>
+										<td><span style="font-size:12.0pt"><span style="color:black">Acide&nbsp; Urigue</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">4,5 mg/dl</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">( N: 4,2 &ndash;5,9 mg/dl )</span></span></td>
+									</tr>
+									<tr>
+										<td><span style="font-size:12.0pt"><span style="color:black">A1c</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:red">7,5 </span></span><span style="font-size:12.0pt"><span style="color:black">g /dl </span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">( N: &lt; 6,9 g /dl )</span></span></td>
+									</tr>
+									<tr>
+										<td><span style="font-size:12.0pt"><span style="color:black">Transaminase&nbsp; SGOP</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">25 ui/l</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">( N: &lt;37ui/l )</span></span></td>
+									</tr>
+									<tr>
+										<td><span style="font-size:12.0pt"><span style="color:black">Tansaminase&nbsp; &nbsp; SGPT</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">39 ui/l</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">( N:&lt; 42 ui/l )</span></span></td>
+									</tr>
+								</tbody>
+							</table>
+
+							<p>&nbsp;</p>
+
+							<p>__checkbox__&nbsp;<strong><span style="font-size:14.0pt"><span style="color:black">SEROLOGIE</span></span></strong></p>
+
+							<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:100%">
+								<tbody>
+									<tr>
+										<td><span style="font-size:12.0pt"><span style="color:black">Antigen.HBs</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">R&eacute;action</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">N&eacute;gatif</span></span></td>
+									</tr>
+									<tr>
+										<td><span style="font-size:12.0pt"><span style="color:black">Anticops.anti .HBs</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">R&eacute;action</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">N&eacute;gatif</span></span></td>
+									</tr>
+									<tr>
+										<td><span style="font-size:12.0pt"><span style="color:black">Anticops.anti .HCV</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">R&eacute;action</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">N&eacute;gatif</span></span></td>
+									</tr>
+									<tr>
+										<td><span style="font-size:12.0pt"><span style="color:black">Test HIV1/HIV2</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">R&eacute;action</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">N&eacute;gatif</span></span></td>
+									</tr>
+									<tr>
+										<td><span style="font-size:12.0pt"><span style="color:black">Test Syphilis </span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">R&eacute;action</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">N&eacute;gatif</span></span></td>
+									</tr>
+									<tr>
+										<td><span style="font-size:12.0pt"><span style="color:black">Test H&eacute;licobactaire Pylorie</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">R&eacute;action</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">N&eacute;gatif</span></span></td>
+									</tr>
+								</tbody>
+							</table>
+
+							<p>&nbsp;</p>
+
 							';
 						?>
 						<div class="form-group">
