@@ -325,7 +325,7 @@ class LaborRepository
 																</table>' : '') .  															
 														 ' </td>
 														<td width="28%" class="text-center" style="position: absolute; right: 0px; bottom: 50px;">
-															<div>គ្រូពេទ្យព្យាបាល</div>
+															<div><strong>គ្រូពេទ្យព្យាបាល</strong></div>
 															<div class="sign_box"></div>
 															<div><span class="KHOSMoulLight">'. Auth::user()->setting()->sign_name_kh .'</span></div>
 														</td>
