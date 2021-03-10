@@ -46,11 +46,15 @@ class User extends Authenticatable
 	}
 
 
-	public function setting(){
-		$setting = Setting::find(1);
-		return $setting;
-	}
+	// public function setting(){
+	// 	$setting = Setting::find(1);
+	// 	return $setting;
+	// }
 
+  public function setting()
+  {
+  	return $this->hasMany(Setting::class, 'user_id')->first();
+  }
 
 	
 	public function sidebarActive(){

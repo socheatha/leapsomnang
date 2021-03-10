@@ -23,7 +23,9 @@ class Setting extends BaseModel
 		'echo_address',
 		'echo_description',
 		'navbar_color',
-		'sidebar_color'
+		'sidebar_color',
+		'legacy',
+		'user_id'
 	];
 
 

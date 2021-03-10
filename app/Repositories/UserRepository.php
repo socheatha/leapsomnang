@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Setting;
 use Hash;
 use Auth;
 use Image;
@@ -34,6 +35,24 @@ class UserRepository
 													'password' => Hash::make($request->password),
 												]);
 		$user->assignRole('User');
+
+		
+		$setting = Setting::create([
+			'logo' => 'logo.png',
+			'clinic_name_kh' => 'ឈ្មោះគ្លីនិច',
+			'clinic_name_en' => 'Clinic Name',
+			'sign_name_kh' => $request->first_name .' '. $request->last_name,
+			'sign_name_en' => $request->first_name .' '. $request->last_name,
+			'phone' => $request->phone,
+			'address' => 'blank',
+			'description' => 'blank',
+			'echo_address' => 'blank',
+			'echo_description' => 'blank',
+			'navbar_color' => 'navbar-white navbar-light',
+			'sidebar_color' => 0,
+			'user_id' => $user->id,
+		]);
+
 		return $user;
 	}
 

@@ -68,18 +68,29 @@
 										{!! $errors->first('phone', '<div class="invalid-feedback">:message</div>') !!}
 									</div>
 								</div>
-								<div class="col-sm-6">
+								<div class="col-sm-4">
 									<div class="form-group">
 										{!! Html::decode(Form::label('navbar_color', __('label.form.setting.navbar_color'))) !!}
 										{!! Form::select('navbar_color', ['navbar-white navbar-light'=>'White', 'navbar-dark navbar-primary'=>'Primary', 'navbar-dark navbar-secondary'=>'Secondary', 'navbar-dark navbar-info'=>'Info', 'navbar-dark navbar-purple'=>'Purple', 'navbar-dark navbar-success'=>'Success', 'navbar-light navbar-dark'=>'Dark'], Auth::user()->setting()->navbar_color, ['class' => 'form-control select2','data-width'=>'100%', 'placeholder' => __('label.form.choose')]) !!}
 									</div>
 								</div>
-								<div class="col-sm-6">
+								<div class="col-sm-4">
 									<div class="form-group text-center">
 										{!! Html::decode(Form::label('sidebar_color', __('label.form.setting.sidebar_color'))) !!}
 										<div class="togglebutton mt-1">
 											<label>
 												{!! Form::checkbox('sidebar_color', 0, Auth::user()->setting()->sidebar_color) !!}
+												<span class="toggle toggle-success"></span>
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="form-group text-center">
+										{!! Html::decode(Form::label('legacy', __('label.form.setting.legacy'))) !!}
+										<div class="togglebutton mt-1">
+											<label>
+												{!! Form::checkbox('legacy', 0, Auth::user()->setting()->legacy) !!}
 												<span class="toggle toggle-success"></span>
 											</label>
 										</div>

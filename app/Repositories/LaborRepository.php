@@ -244,7 +244,7 @@ class LaborRepository
 												<table class="table-header" width="100%">
 													<tr>
 														<td rowspan="5" width="20%" style="padding: 10px;">
-															<img src="/images/setting/logo.png" alt="IMG">
+															<img src="/images/setting/'. Auth::user()->setting()->logo .'" alt="IMG">
 														</td>
 														<td class="text-center" style="padding: 5px 0;">
 															<h6 class="KHOSMoulLight" style="font-size: 19px;">'. Auth::user()->setting()->clinic_name_kh .'</h6>

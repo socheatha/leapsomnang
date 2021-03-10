@@ -309,6 +309,7 @@ return [
 			'navbar_color' => 'ពណ៌របាលើ',
 			'echo_description' => 'បរិយាយសម្រាប់ការពីនិត្យអេកូ',
 			'echo_address' => 'អាសយដ្ឋានការពីនិត្យអេកូ',
+			'legacy' => 'Legacy',
 		],
 
 		'district' => [
