@@ -96,6 +96,7 @@
 	padding: 6px;
 	border: 1px solid #ededed;
 }
+.prescription-print .table-detail td{ font-size: 16px; }
 
 .prescription-print .table-detail tfoot th{
 	padding: 6px;

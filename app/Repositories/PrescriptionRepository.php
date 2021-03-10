@@ -93,7 +93,7 @@ class PrescriptionRepository
 													</tr>
 													<tr>
 														<td class="text-center" style="padding: 1px 0;">
-															<div>អាសយដ្ឋាន: '. Auth::user()->setting()->address .'</div>
+															<div>'. Auth::user()->setting()->address .'</div>
 														</td>
 													</tr>
 													<tr>

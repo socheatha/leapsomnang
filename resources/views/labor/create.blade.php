@@ -13,7 +13,7 @@
 	<div class="card-header">
 		<b>{!! Auth::user()->subModule() !!}</b>
 		<a href="{{$labor_type != 1 ? route('labor.create') . '?labor_type=1' : '#' }}" class="btn btn-info btn-sm btn-flat {{ $labor_type == 1 ? 'active' : '' }}"><i class="fa fa-cubes"></i> &nbsp; ស្តង់ដា </a>
-		<a href="{{$labor_type != 2 ? route('labor.create') . '?labor_type=2' : '#' }}" class="btn btn-info btn-sm btn-flat {{ $labor_type == 2 ? 'active' : '' }}"><i class="fa fa-cube"></i> &nbsp; ធម្មតា</a>
+		<a href="{{$labor_type != 2 ? route('labor.create') . '?labor_type=2' : '#' }}" class="btn btn-info btn-sm btn-flat {{ $labor_type == 2 ? 'active' : '' }}"><i class="fa fa-cube"></i> &nbsp; BIO CHEMIE</a>
 		<a href="{{$labor_type != 3 ? route('labor.create') . '?labor_type=3' : '#' }}" class="btn btn-info btn-sm btn-flat {{ $labor_type == 3 ? 'active' : '' }}"><i class="fa fa-file"></i> &nbsp; ទទេ</a>
 		<div class="card-tools">
 			@can('Labor Report')
@@ -158,6 +158,11 @@
 									</tr>
 									<tr>
 										<td><span style="font-size:12.0pt"><span style="color:black">Test H&eacute;licobactaire Pylorie</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">R&eacute;action</span></span></td>
+										<td><span style="font-size:12.0pt"><span style="color:black">N&eacute;gatif</span></span></td>
+									</tr>
+									<tr>
+										<td><span style="font-size:12.0pt"><span style="color:black">Test + Macaria</span></span></td>
 										<td><span style="font-size:12.0pt"><span style="color:black">R&eacute;action</span></span></td>
 										<td><span style="font-size:12.0pt"><span style="color:black">N&eacute;gatif</span></span></td>
 									</tr>

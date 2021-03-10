@@ -140,7 +140,7 @@
 				<div class="col-sm-1">
 					<div class="form-group">
 						{!! Html::decode(Form::label('medicine_usage', __('label.form.prescription.medicine_usage')."<small>*</small>")) !!}
-						{!! Form::text('medicine_usage[]', '', ['class' => 'form-control','placeholder' => 'usage','required', 'list' => 'usage_list']) !!}
+						{!! Form::text('medicine_usage[]', 'លេប', ['class' => 'form-control','placeholder' => 'usage','required', 'list' => 'usage_list']) !!}
 					</div>
 				</div>
 				<div class="col-sm-2">

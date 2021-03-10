@@ -29,7 +29,7 @@ class LaborRepository
 		if ($labor_number!='') {
 			$conditions = ' AND labor_number LIKE "%'. intval($labor_number) .'%"';
 		}
-		$labors = Labor::select('*', DB::raw("CONCAT(FORMAT(price, 0), ' ៛') as formated_price"))->whereBetween('date', [$from, $to])->orderBy('labor_number', 'asc')->get();
+		$labors = Labor::select('*', DB::raw("CONCAT('៛ ', FORMAT(price, 0)) as formated_price"))->whereBetween('date', [$from, $to])->orderBy('labor_number', 'asc')->get();
 
 		return Datatables::of($labors)
 			->editColumn('labor_number', function ($labor) {
@@ -68,7 +68,7 @@ class LaborRepository
 			$tbody .= '<tr>
 									<td class="text-center">'. str_pad($labor->labor_number, 6, "0", STR_PAD_LEFT) .'</td>
 									<td class="text-center">'. date('d/M/Y', strtotime($labor->date)) .'</td>
-									<td class="text-center font-weight-bold">'. number_format($labor->price, 0) .' ៛</td>
+									<td class="text-center font-weight-bold">៛ '. number_format($labor->price, 0) .'</td>
 									<td>'. $labor->pt_name .'</td>
 									<td class="text-center">'. $labor->pt_age .' ឆ្នាំ</td>
 									<td class="text-center">'. $labor->pt_gender .'</td>
@@ -79,7 +79,7 @@ class LaborRepository
 		return response()->json([
 			'tbody' => $tbody,
 			'total_patient' => $total_patient .' នាក់',
-			'total_amount' => number_format($total_amount, 0) .' ៛',
+			'total_amount' => '៛ ' . number_format($total_amount, 0),
 		]);
 
 	}
@@ -262,7 +262,7 @@ class LaborRepository
 													</tr>
 													<tr>
 														<td class="text-center" style="padding: 1px 0;">
-															<div>អាសយដ្ឋាន: '. Auth::user()->setting()->address .'</div>
+															<div>'. Auth::user()->setting()->address .'</div>
 														</td>
 													</tr>
 													<tr>
