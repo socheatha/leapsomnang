@@ -12,9 +12,9 @@
 <div class="card">
 	<div class="card-header">
 		<b>{!! Auth::user()->subModule() !!}</b>
-		<a href="{{$labor_type != 1 ? route('labor.create') . '?labor_type=1' : '#' }}" class="btn btn-info btn-sm btn-flat {{ $labor_type == 1 ? 'active' : '' }}"><i class="fa fa-cubes"></i> &nbsp; ស្តង់ដា </a>
-		<a href="{{$labor_type != 2 ? route('labor.create') . '?labor_type=2' : '#' }}" class="btn btn-info btn-sm btn-flat {{ $labor_type == 2 ? 'active' : '' }}"><i class="fa fa-cube"></i> &nbsp; ធម្មតា</a>
-		<a href="{{$labor_type != 3 ? route('labor.create') . '?labor_type=3' : '#' }}" class="btn btn-info btn-sm btn-flat {{ $labor_type == 3 ? 'active' : '' }}"><i class="fa fa-file"></i> &nbsp; ទទេ</a>
+		<a href="{{$labor_type != 1 ? route('labor.create') . '?labor_type=1' : '#' }}" class="btn btn-info btn-sm btn-flat {{ $labor_type == 1 ? 'active' : '' }}"><i class="fa fa-cubes"></i> &nbsp; {{ __('module.table.labor.create_label_1') }}</a>
+		<a href="{{$labor_type != 2 ? route('labor.create') . '?labor_type=2' : '#' }}" class="btn btn-info btn-sm btn-flat {{ $labor_type == 2 ? 'active' : '' }}"><i class="fa fa-cube"></i> &nbsp; {{ __('module.table.labor.create_label_2') }}</a>
+		<a href="{{$labor_type != 3 ? route('labor.create') . '?labor_type=3' : '#' }}" class="btn btn-info btn-sm btn-flat {{ $labor_type == 3 ? 'active' : '' }}"><i class="fa fa-file"></i> &nbsp; {{ __('module.table.labor.create_label_3') }}</a>
 		<div class="card-tools">
 			@can('Labor Report')
 			<a href="{{route('labor.report')}}" class="btn btn-info btn-sm btn-flat"><i class="fa fa-file-alt"></i> &nbsp;{{ __('label.buttons.report', [ 'name' => Auth::user()->module() ]) }}</a>
@@ -66,7 +66,7 @@
 					@elseif($labor_type == 2)
 						<?php 
 							$default_elements = '
-							<h5 style="text-align:center"><span style="font-size:18.0pt"><span style="color:#66ffff">lT&sect;plBinit&uuml;</span></span></h5>
+							<h5 style="text-align:center"><span style="font-size:18.0pt"><span style="color:#66ffff">លទ្ធផលពិនិត្យឈាម</span></span></h5>
 
 							<p>__checkbox__&nbsp;<strong><span style="font-size:14.0pt"><span style="color:black">BIO.CHEMIE</span></span></strong></p>
 

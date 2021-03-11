@@ -71,6 +71,9 @@ return [
 	    'result' => 'លទ្ធផល',
 	    'detail' => 'លម្អិត',
 	    'total_patient' => 'អ្នកជំងឺសរុប',
+	    'create_label_1' => 'ស្តង់ដា',
+	    'create_label_2' => 'BIO CHEMIE',
+	    'create_label_3' => 'ទទេ',
     ],
 
     'prescription' => [
