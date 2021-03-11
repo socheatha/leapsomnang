@@ -161,11 +161,6 @@
 										<td><span style="font-size:12.0pt"><span style="color:black">R&eacute;action</span></span></td>
 										<td><span style="font-size:12.0pt"><span style="color:black">N&eacute;gatif</span></span></td>
 									</tr>
-									<tr>
-										<td><span style="font-size:12.0pt"><span style="color:black">Test + Macaria</span></span></td>
-										<td><span style="font-size:12.0pt"><span style="color:black">R&eacute;action</span></span></td>
-										<td><span style="font-size:12.0pt"><span style="color:black">N&eacute;gatif</span></span></td>
-									</tr>
 								</tbody>
 							</table>
 
