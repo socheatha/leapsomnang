@@ -63,14 +63,16 @@ class PatientRepository
 
 	public function getDetail($request)
 	{
-		// find Precription + Invoice + Echo of this patient, then sort by date and return
+		// find Precription + Invoice + Echo of this patient, ..., then sort by date and return
 		$P_precription = \DB::table('prescriptions')->select(['id', 'pt_name', 'date', 'pt_age'])->where('patient_id', $request->id)->orderBy('id', 'DESC')->get()->toarray();
 		$P_invoice = \DB::table('invoices')->select(['id', 'pt_name', 'date', 'pt_age'])->where('patient_id', $request->id)->orderBy('id', 'DESC')->get()->toarray();
-		$P_echo = \DB::table('echoes')->select(['.echoes.id', 'echoes.pt_name', 'echoes.date', 'echoes.pt_age', 'echo_default_descriptions.slug'])->leftJoin('echo_default_descriptions', 'echoes.echo_default_description_id', '=', 'echo_default_descriptions.id')->where('echoes.patient_id', $request->id)->orderBy('echoes.id', 'DESC')->get()->toarray();
+		$P_echo = \DB::table('echoes')->select(['echoes.id', 'echoes.pt_name', 'echoes.date', 'echoes.pt_age', 'echo_default_descriptions.slug'])->leftJoin('echo_default_descriptions', 'echoes.echo_default_description_id', '=', 'echo_default_descriptions.id')->where('echoes.patient_id', $request->id)->orderBy('echoes.id', 'DESC')->get()->toarray();
+		$P_labor = \DB::table('labors')->select(['id', 'pt_name', 'date', 'pt_age'])->where('patient_id', $request->id)->orderBy('id', 'DESC')->get()->toarray();
 		$P_result = array_merge(
 			array_map(function ($P) { $P->segment = 'prescription'; $P->link = "prescription/{$P->id}/print"; $P->label_info = __("sidebar.prescription.main"); return $P; }, $P_precription), 
 			array_map(function ($P) { $P->segment = 'invoice'; $P->link = "invoice/{$P->id}/print"; $P->label_info = __("sidebar.invoice.main"); return $P; }, $P_invoice),
-			array_map(function ($P) { $P->segment = 'echo'; $P->link = "echoes/{$P->slug}/{$P->id}/print"; $P->label_info = __("sidebar.echo.main"); return $P; }, $P_echo)
+			array_map(function ($P) { $P->segment = 'echo'; $P->link = "echoes/{$P->slug}/{$P->id}/print"; $P->label_info = __("sidebar.echo.main"); return $P; }, $P_echo),
+			array_map(function ($P) { $P->segment = 'labor'; $P->link = "labor/{$P->id}/print"; $P->label_info = __("sidebar.labor.main"); return $P; }, $P_labor)
 		);
 		array_multisort(array_column($P_result, 'date'), SORT_DESC, $P_result);
 
