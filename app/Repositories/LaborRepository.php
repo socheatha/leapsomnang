@@ -244,6 +244,102 @@ class LaborRepository
 		if(empty($labor->province)){ $labor->province = new \stdClass(); $labor->province->name = ''; }
 		if(empty($labor->district)){ $labor->district = new \stdClass(); $labor->district->name = ''; }
 
+	if (Auth::user()->roles->first()->name == 'THAI SOKLEN CLINIC') {
+		$labor_detail = '<section class="labor-print" style="position: relative;">
+												<table class="table-header" width="100%">
+													<tr>
+														<td rowspan="5" width="20%" style="padding: 10px;">
+															<img src="/images/setting/'. Auth::user()->setting()->logo .'" alt="IMG">
+														</td>
+														<td class="text-center" width="68%" style="padding: 5px 0;">
+															<h6 class="KHOSMoulLight" style="font-size: 19px;">'. Auth::user()->setting()->clinic_name_kh .'</h6>
+														</td>
+														<td width="12%" rowspan="5">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center" style="padding: 2px 0;">
+															<h6 class="roboto_b" style="font-size: 19px;">'. Auth::user()->setting()->clinic_name_en .'</h6>
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center" style="padding: 1px 0;">
+															<div>'. Auth::user()->setting()->description .'</div>
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center" style="padding: 1px 0;">
+															<div>'. Auth::user()->setting()->address .'</div>
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center" style="padding-bottom: 5px;">
+															<div>លេខទូរស័ព្ទ: '. Auth::user()->setting()->phone .'</div>
+														</td>
+													</tr>
+												</table>
+												<table class="table-information" width="100%" style="margin: 5px 0 15px 0;">
+													<tr>
+														<td colspan="4">
+															<h6 class="text-center KHOSMoulLight" style="padding: 10px 0 10px 0; font-size: 16px;">លទ្ធផលពិនិត្យឈាម</h6>
+														</td>
+													</tr>
+													<tr>
+														<td width="35%" style="padding-left: 55px;">
+															ឈ្មោះ:<span class="pt_name">'. $labor->pt_name .'</span>
+														</td>
+														<td width="18%">
+															អាយុ:<span class="pt_age">'. $labor->pt_age .' ឆ្នាំ</span>
+														</td>
+														<td width="18%">
+															ភេទ:<span class="pt_gender">'. $labor->pt_gender .' ឆ្នាំ</span>
+														</td>
+														<td width="25%" style="padding-left: 25px;">
+															លេខរៀង:<span class="labor_number">'. str_pad($labor->labor_number, 6, "0", STR_PAD_LEFT) .'</span>
+														</td>
+													</tr>
+													<tr class="sr-only">
+														<td>
+															កាលបរិច្ឆេទ:<span class="date">'. date('d/m/Y', strtotime($labor->date)) .'</span>
+														</td>
+														<td>
+															ភេទ:<span class="pt_gender">'. $labor->pt_gender .'</span>
+														</td>
+														<td>
+															ទូរស័ព្ទ:<b class="pt_phone">'. $labor->pt_phone .'</b>
+														</td>
+													</tr>
+													<tr class="sr-only">
+														<td colspan="3">
+															អាសយដ្ឋាន: <span class="pt_name">'. (($labor->pt_village!='')? 'ភូមិ'.$labor->pt_village : '') . (($labor->pt_commune!='')? (($labor->province->name=='ភ្នំពេញ')? ' សង្កាត់'.$labor->pt_commune : ' ឃុំ'.$labor->pt_commune) : '') . (($labor->district->name!='')? (($labor->province->name=='ភ្នំពេញ')? ' ខណ្ឌ'.$labor->district->name : ' ស្រុក'.$labor->district->name) : ''). (($labor->province->name!='')? (($labor->province->name=='ភ្នំពេញ')? ' រាជធានីភ្នំពេញ'.$labor->province->name : ' ខេត្ត'.$labor->province->name) : '') .'</span>
+														</td>
+													</tr>
+												</table>
+												' . ($labor->labor_type == 2 ? ('<div id="ck_result">' . str_replace('__checkbox__', '<input type="checkbox" disabled/>', $labor->simple_labor_detail) . '</div>') : '') . '
+												<div style="height: 14cm"></div>
+												' . ($labor->labor_type == 1 ? ('<small class="remark">'. $labor->remark .'</small>') : '') . '
+												<br/>
+												<div class="color_red" style="color: red; text-align: center; text-decoration: underline; position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);">សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើក្រោយ</div>
+												<table class="table-footer mt---5" width="100%">
+													<tr>
+														<td> ' . ($labor->labor_type == 1 ? '<div>Séro Ag Widel</div>
+																<ul style="list-style-type: none; margin: 0; padding-left: 14px;">
+																	<li style="margin-left: 0;">-TO:............................................Négatif</li>
+																	<li style="margin-left: 0;">-TH:............................................Négatif</li>
+																</ul>
+																<table width="100%">
+																	'. $labor_detail_item_list .'
+																</table>' : '') .  															
+														 ' </td>
+														<td width="28%" class="text-center" style="position: absolute; right: 0px; bottom: 50px;">
+															<div><strong class="color_light_blue" style="font-size: 16px;">គ្រូពេទ្យព្យាបាល</strong></div>
+															<div class="sign_box"></div>
+															<div><span class="KHOSMoulLight">គឹម ស្រ៊ុន</span></div>
+														</td>
+													</tr>
+												</table>
+											</section>';
+	}else{
 		$labor_detail = '<section class="labor-print" style="position: relative;">
 												<table class="table-header" width="100%">
 													<tr>
@@ -336,6 +432,7 @@ class LaborRepository
 													</tr>
 												</table>
 											</section>';
+	}
 
 		return response()->json(['labor_detail' => $labor_detail, 'title' => $title]);
 		// return $labor_detail;

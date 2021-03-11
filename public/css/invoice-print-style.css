@@ -139,6 +139,9 @@
 .echoes-print small{
 	font-size: 10px !important;
 }
+.color_light_blue{
+	color: #4472C4 !important;
+}
 
 @media print {
 	@page {
@@ -162,6 +165,13 @@
 	
 	td .color_blue{
 		color: blue !important;
+		-webkit-print-color-adjust: exact !important;
+		-moz-print-color-adjust: exact !important;
+		-o-print-color-adjust: exact !important;
+	}
+	
+	.color_light_blue{
+		color: #4472C4 !important;
 		-webkit-print-color-adjust: exact !important;
 		-moz-print-color-adjust: exact !important;
 		-o-print-color-adjust: exact !important;
