@@ -72,7 +72,7 @@ class PatientRepository
 			array_map(function ($P) { $P->segment = 'prescription'; $P->link = "prescription/{$P->id}/print"; $P->label_info = __("sidebar.prescription.main"); return $P; }, $P_precription), 
 			array_map(function ($P) { $P->segment = 'invoice'; $P->link = "invoice/{$P->id}/print"; $P->label_info = __("sidebar.invoice.main"); return $P; }, $P_invoice),
 			array_map(function ($P) { $P->segment = 'echo'; $P->link = "echoes/{$P->slug}/{$P->id}/print"; $P->label_info = __("sidebar.echo.main"); return $P; }, $P_echo),
-			array_map(function ($P) { $P->segment = 'labor'; $P->link = "labor/{$P->id}/print"; $P->label_info = __("sidebar.labor.main") . ($P->labor_type == 1 ? __("module.labor.create_label_1") : ($P->labor_type == 2 ? __("module.labor.create_label_2") : '')); return $P; }, $P_labor)
+			array_map(function ($P) { $P->segment = 'labor'; $P->link = "labor/{$P->id}/print"; $P->label_info = __("sidebar.labor.main") . ($P->labor_type == 1 ? ' - ' . __("module.labor.create_label_1") : ($P->labor_type == 2 ? ' - ' . __("module.labor.create_label_2") : '')); return $P; }, $P_labor)
 		);
 		array_multisort(array_column($P_result, 'date'), SORT_DESC, $P_result);
 
