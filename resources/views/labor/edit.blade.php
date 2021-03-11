@@ -74,7 +74,7 @@
 											{{ $labor_detail->name }}
 										</td>
 										<td class="text-center">
-											<input type="text" name="result[]" value="{{ $labor_detail->result }}" class="form-controls is_number"/>
+											<input type="text" name="result[]" value="{{ $labor_detail->result }}" class="form-controls"/>
 										</td>
 										<td class="text-center">
 											{{ $labor_detail->service->unit }}

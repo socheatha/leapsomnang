@@ -102,8 +102,13 @@
 }
 
 .prescription-print small{
-	font-size: 10px !important;
+	font-size: 13px;
 }
+
+.prescription-print .table-detail td{
+	font-size: 16px;
+	font-weight: bold;
+}	
 
 .echoes-print .echo_description{
   /* font-family: 'Courier New','Khmer OS Battambang'; */
@@ -123,7 +128,7 @@
 .echoes-print .table-detail thead th,
 .echoes-print .table-detail td{
 	font-size: 13px;
-	padding: 6px;
+	padding: 8px 6px;
 }
 
 .echoes-print .table-detail tfoot th{

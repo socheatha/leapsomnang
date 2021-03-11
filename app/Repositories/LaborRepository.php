@@ -119,7 +119,7 @@ class LaborRepository
 																		'. $service->name .'
 																	</td>
 																	<td class="text-center">
-																		<input type="text" name="result[]" class="form-controls is_number">
+																		<input type="text" name="result[]" class="form-controls">
 																	</td>
 																	<td class="text-center">
 																		<input type="hidden" name="unit[]" value="'. $service->unit .'">
@@ -163,7 +163,7 @@ class LaborRepository
 																	'. $labor_detail->name .'
 																</td>
 																<td class="text-center">
-																	<input type="text" name="result[]" value="'. $labor_detail->result .'" class="form-controls is_number"/>
+																	<input type="text" name="result[]" value="'. $labor_detail->result .'" class="form-controls"/>
 																</td>
 																<td class="text-center">
 																	'. $labor_detail->service->unit .'
@@ -205,19 +205,23 @@ class LaborRepository
 
 		foreach ($labor->labor_details as $labor_detail) {
 			$class = '';
-			if ($labor_detail->result < $labor_detail->service->ref_from) {
-				$class = 'color_green';
-			}else if ($labor_detail->result > $labor_detail->service->ref_to) {
-				$class = 'color_red';
+			if (!is_numeric ($labor_detail->result)) {
+				# code...
 			}else{
-				$class = '';
+				if ($labor_detail->result < $labor_detail->service->ref_from) {
+					$class = 'color_green';
+				}else if ($labor_detail->result > $labor_detail->service->ref_to) {
+					$class = 'color_red';
+				}else{
+					$class = '';
+				}
 			}
 			$labor_detail_item_list .= '<tr>
 																		<td width="2%"></td>
 																		<td width="30%">-'. $labor_detail->name .'</td>
 																		<td width="20%">: <b><span class="'. $class .'">'. $labor_detail->result .'</span></b></td>
 																		<td width="12%">&nbsp;'. $labor_detail->service->unit .'</td>
-																		<td width="20%">('. $labor_detail->service->ref_from .'-'. $labor_detail->service->ref_to .')</td>
+																		<td width="20%">'. (($labor_detail->service->ref_from != '' && $labor_detail->service->ref_from!='')? '('. $labor_detail->service->ref_from .'-'. $labor_detail->service->ref_to .')' : '') .'</td>
 																	</tr>';
 		}
 		
@@ -472,7 +476,7 @@ class LaborRepository
 																	'. $labor_detail->name .'
 																</td>
 																<td class="text-center">
-																	<input type="text" name="result[]" value="'. $labor_detail->result .'" class="form-controls is_number"/>
+																	<input type="text" name="result[]" value="'. $labor_detail->result .'" class="form-controls"/>
 																</td>
 																<td class="text-center">
 																	'. $labor_detail->service->unit .'

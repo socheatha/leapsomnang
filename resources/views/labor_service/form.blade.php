@@ -18,7 +18,7 @@
 	<div class="col-sm-6">
 		<div class="form-group">
 			{!! Html::decode(Form::label('unit', __('label.form.labor_service.unit') .' <small>*</small>')) !!}
-			{!! Form::text('unit', ((isset($labor_service->unit))? $labor_service->unit : '' ), ['class' => 'form-control '. (($errors->has("unit"))? "is-invalid" : ""),'placeholder' => 'unit', 'required']) !!}
+			{!! Form::text('unit', ((isset($labor_service->unit))? $labor_service->unit : '' ), ['class' => 'form-control '. (($errors->has("unit"))? "is-invalid" : ""),'placeholder' => 'unit']) !!}
 			{!! $errors->first('unit', '<div class="invalid-feedback">:message</div>') !!}
 		</div>
 	</div>
@@ -26,7 +26,7 @@
 	<div class="col-sm-3">
 		<div class="form-group">
 			{!! Html::decode(Form::label('ref_from', __('label.form.labor_service.ref_from') .' <small>*</small>')) !!}
-			{!! Form::text('ref_from', ((isset($labor_service->ref_from))? $labor_service->ref_from : '' ), ['class' => 'form-control is_number '. (($errors->has("ref_from"))? "is-invalid" : ""),'placeholder' => 'ref from', 'required']) !!}
+			{!! Form::text('ref_from', ((isset($labor_service->ref_from))? $labor_service->ref_from : '' ), ['class' => 'form-control is_number '. (($errors->has("ref_from"))? "is-invalid" : ""),'placeholder' => 'ref from']) !!}
 			{!! $errors->first('ref_from', '<div class="invalid-feedback">:message</div>') !!}
 		</div>
 	</div>
@@ -34,7 +34,7 @@
 	<div class="col-sm-3">
 		<div class="form-group">
 			{!! Html::decode(Form::label('ref_to', __('label.form.labor_service.ref_to') .' <small>*</small>')) !!}
-			{!! Form::text('ref_to', ((isset($labor_service->ref_to))? $labor_service->ref_to : '' ), ['class' => 'form-control is_number '. (($errors->has("ref_to"))? "is-invalid" : ""),'placeholder' => 'ref to', 'required']) !!}
+			{!! Form::text('ref_to', ((isset($labor_service->ref_to))? $labor_service->ref_to : '' ), ['class' => 'form-control is_number '. (($errors->has("ref_to"))? "is-invalid" : ""),'placeholder' => 'ref to']) !!}
 			{!! $errors->first('ref_to', '<div class="invalid-feedback">:message</div>') !!}
 		</div>
 	</div>
