@@ -258,13 +258,13 @@ class LaborRepository
 		$labor_detail = '<section class="labor-print" style="position: relative;">
 												<table class="table-header" width="100%">
 													<tr>
-														<td rowspan="5" width="20%" style="padding: 10px;">
+														<td rowspan="5" width="15%" style="padding: 10px;">
 															<img src="/images/setting/'. Auth::user()->setting()->logo .'" alt="IMG">
 														</td>
-														<td class="text-center" width="68%" style="padding: 5px 0;">
+														<td class="text-center" width="70%" style="padding: 5px 0;">
 															<h6 class="KHOSMoulLight" style="font-size: 19px;">'. Auth::user()->setting()->clinic_name_kh .'</h6>
 														</td>
-														<td width="12%" rowspan="5">
+														<td width="15%" rowspan="5">
 														</td>
 													</tr>
 													<tr>
