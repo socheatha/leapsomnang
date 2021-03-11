@@ -216,13 +216,23 @@ class LaborRepository
 					$class = '';
 				}
 			}
-			$labor_detail_item_list .= '<tr>
-																		<td width="2%"></td>
-																		<td width="30%">-'. $labor_detail->name .'</td>
-																		<td width="20%">: <b><span class="'. $class .'">'. $labor_detail->result .'</span></b></td>
-																		<td width="12%">&nbsp;'. $labor_detail->service->unit .'</td>
-																		<td width="20%">'. (($labor_detail->service->ref_from != '' && $labor_detail->service->ref_from!='')? '('. $labor_detail->service->ref_from .'-'. $labor_detail->service->ref_to .')' : '') .'</td>
-																	</tr>';
+			if ($labor_detail->service->unit == 'Réaction') {
+				$labor_detail_item_list .= '<tr>
+																			<td width="2%"></td>
+																			<td width="30%">-'. $labor_detail->name .'</td>
+																			<td width="20%">: <b><span class="'. $class .'">'. $labor_detail->service->unit .'</span></b></td>
+																			<td width="12%">&nbsp;'. $labor_detail->result .'</td>
+																			<td width="20%">'. (($labor_detail->service->ref_from != '' && $labor_detail->service->ref_from!='')? '('. $labor_detail->service->ref_from .'-'. $labor_detail->service->ref_to .')' : '') .'</td>
+																		</tr>';
+			}else{
+				$labor_detail_item_list .= '<tr>
+																			<td width="2%"></td>
+																			<td width="30%">-'. $labor_detail->name .'</td>
+																			<td width="20%">: <b><span class="'. $class .'">'. $labor_detail->result .'</span></b></td>
+																			<td width="12%">&nbsp;'. $labor_detail->service->unit .'</td>
+																			<td width="20%">'. (($labor_detail->service->ref_from != '' && $labor_detail->service->ref_from!='')? '('. $labor_detail->service->ref_from .'-'. $labor_detail->service->ref_to .')' : '') .'</td>
+																		</tr>';
+			}
 		}
 		
 		// 	<table width="100%">
