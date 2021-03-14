@@ -97,30 +97,30 @@ class InvoiceRepository
 												<table class="table-header" width="100%">
 													<tr>
 														<td rowspan="5" width="20%" style="padding: 10px;">
-															<img src="/images/setting/'. Auth::user()->setting()->logo .'" alt="IMG">
+															<img src="/images/setting/'. Auth::user()->setting->logo .'" alt="IMG">
 														</td>
 														<td class="text-center" style="padding: 5px 0;">
-															<h3 class="color_blue KHOSMoulLight" style="color: blue;">'. Auth::user()->setting()->clinic_name_kh .'</h3>
+															<h3 class="color_blue KHOSMoulLight" style="color: blue;">'. Auth::user()->setting->clinic_name_kh .'</h3>
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding: 2px 0;">
-															<h3 class="color_red roboto_b" style="color: red;">'. Auth::user()->setting()->clinic_name_en .'</h3>
+															<h3 class="color_red roboto_b" style="color: red;">'. Auth::user()->setting->clinic_name_en .'</h3>
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding: 1px 0;">
-															<div>'. Auth::user()->setting()->description .'</div>
+															<div>'. Auth::user()->setting->description .'</div>
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding: 1px 0;">
-															<div>'. Auth::user()->setting()->address .'</div>
+															<div>'. Auth::user()->setting->address .'</div>
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding-bottom: 5px;">
-															<div>លេខទូរស័ព្ទ: <b>'. Auth::user()->setting()->phone .'</b></div>
+															<div>លេខទូរស័ព្ទ: <b>'. Auth::user()->setting->phone .'</b></div>
 														</td>
 													</tr>
 												</table>
@@ -188,7 +188,7 @@ class InvoiceRepository
 												</table>
 												<small class="remark">'. $invoice->remark .'</small>
 												<br/>
-												<div class="color_red" style="color: red; text-decoration: underline; text-align: center; position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);">សូមយកវេជ្ជបញ្ជាមកវិញពេលមកពិនិត្យលើក្រោយ</div>
+												<div class="color_light_blue" style="text-decoration: underline; text-align: center; position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);">សូមយកវិក្កយបត្រនេះមកវិញពេលមកពិនិត្យលើកក្រោយ</div>
 												<table class="table-footer" width="100%">
 													<tr>
 														<td></td>
@@ -205,30 +205,30 @@ class InvoiceRepository
 												<table class="table-header" width="100%">
 													<tr>
 														<td rowspan="5" width="20%" style="padding: 10px;">
-															<img src="/images/setting/'. Auth::user()->setting()->logo .'" alt="IMG">
+															<img src="/images/setting/'. Auth::user()->setting->logo .'" alt="IMG">
 														</td>
 														<td class="text-center" style="padding: 5px 0;">
-															<h3 class="color_blue KHOSMoulLight" style="color: blue;">'. Auth::user()->setting()->clinic_name_kh .'</h3>
+															<h3 class="color_blue KHOSMoulLight" style="color: blue;">'. Auth::user()->setting->clinic_name_kh .'</h3>
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding: 2px 0;">
-															<h3 class="color_red roboto_b" style="color: red;">'. Auth::user()->setting()->clinic_name_en .'</h3>
+															<h3 class="color_red roboto_b" style="color: red;">'. Auth::user()->setting->clinic_name_en .'</h3>
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding: 1px 0;">
-															<div>'. Auth::user()->setting()->description .'</div>
+															<div>'. Auth::user()->setting->description .'</div>
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding: 1px 0;">
-															<div>'. Auth::user()->setting()->address .'</div>
+															<div>'. Auth::user()->setting->address .'</div>
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding-bottom: 5px;">
-															<div>លេខទូរស័ព្ទ: '. Auth::user()->setting()->phone .'</div>
+															<div>លេខទូរស័ព្ទ: '. Auth::user()->setting->phone .'</div>
 														</td>
 													</tr>
 												</table>
@@ -303,7 +303,7 @@ class InvoiceRepository
 														<td width="32%" class="text-center">
 															<div><b>គ្រូពេទ្យព្យាបាល</b></div>
 															<div class="sign_box"></div>
-															<div style="color: blue;"><span class="color_blue KHOSMoulLight">'. Auth::user()->setting()->sign_name_kh .'</span></div>
+															<div style="color: blue;"><span class="color_blue KHOSMoulLight">'. Auth::user()->setting->sign_name_kh .'</span></div>
 														</td>
 													</tr>
 												</table>

@@ -53,7 +53,7 @@ class User extends Authenticatable
 
   public function setting()
   {
-  	return $this->hasMany(Setting::class, 'user_id')->first();
+  	return $this->belongsTo(Setting::class, 'setting_id');
   }
 
 	

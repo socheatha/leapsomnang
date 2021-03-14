@@ -259,32 +259,32 @@ class LaborRepository
 												<table class="table-header" width="100%">
 													<tr>
 														<td rowspan="5" width="15%" style="padding: 10px;">
-															<img src="/images/setting/'. Auth::user()->setting()->logo .'" alt="IMG">
+															<img src="/images/setting/'. Auth::user()->setting->logo .'" alt="IMG">
 														</td>
 														<td class="text-center" width="70%" style="padding: 5px 0;">
-															<h6 class="KHOSMoulLight" style="font-size: 19px;">'. Auth::user()->setting()->clinic_name_kh .'</h6>
+															<h6 class="KHOSMoulLight" style="font-size: 19px;">'. Auth::user()->setting->clinic_name_kh .'</h6>
 														</td>
 														<td width="15%" rowspan="5">
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding: 2px 0;">
-															<h6 class="roboto_b" style="font-size: 19px;">'. Auth::user()->setting()->clinic_name_en .'</h6>
+															<h6 class="roboto_b" style="font-size: 19px;">'. Auth::user()->setting->clinic_name_en .'</h6>
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding: 1px 0;">
-															<div>'. Auth::user()->setting()->description .'</div>
+															<div>'. Auth::user()->setting->description .'</div>
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding: 1px 0;">
-															<div>'. Auth::user()->setting()->address .'</div>
+															<div>'. Auth::user()->setting->address .'</div>
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding-bottom: 5px;">
-															<div>លេខទូរស័ព្ទ: '. Auth::user()->setting()->phone .'</div>
+															<div>លេខទូរស័ព្ទ: '. Auth::user()->setting->phone .'</div>
 														</td>
 													</tr>
 												</table>
@@ -329,7 +329,7 @@ class LaborRepository
 												<div style="height: 14cm"></div>
 												' . ($labor->labor_type == 1 ? ('<small class="remark">'. $labor->remark .'</small>') : '') . '
 												<br/>
-												<div class="color_red" style="color: red; text-align: center; text-decoration: underline; position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);">សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើក្រោយ</div>
+												<div class="color_light_blue" style="text-align: center; text-decoration: underline; position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);">សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើកក្រោយ</div>
 												<table class="table-footer mt---5" width="100%">
 													<tr>
 														<td> ' . ($labor->labor_type == 1 ? '<div>Séro Ag Widel</div>
@@ -354,30 +354,30 @@ class LaborRepository
 												<table class="table-header" width="100%">
 													<tr>
 														<td rowspan="5" width="20%" style="padding: 10px;">
-															<img src="/images/setting/'. Auth::user()->setting()->logo .'" alt="IMG">
+															<img src="/images/setting/'. Auth::user()->setting->logo .'" alt="IMG">
 														</td>
 														<td class="text-center" style="padding: 5px 0;">
-															<h6 class="KHOSMoulLight" style="font-size: 19px;">'. Auth::user()->setting()->clinic_name_kh .'</h6>
+															<h6 class="KHOSMoulLight" style="font-size: 19px;">'. Auth::user()->setting->clinic_name_kh .'</h6>
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding: 2px 0;">
-															<h6 class="roboto_b" style="font-size: 19px;">'. Auth::user()->setting()->clinic_name_en .'</h6>
+															<h6 class="roboto_b" style="font-size: 19px;">'. Auth::user()->setting->clinic_name_en .'</h6>
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding: 1px 0;">
-															<div>'. Auth::user()->setting()->description .'</div>
+															<div>'. Auth::user()->setting->description .'</div>
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding: 1px 0;">
-															<div>'. Auth::user()->setting()->address .'</div>
+															<div>'. Auth::user()->setting->address .'</div>
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding-bottom: 5px;">
-															<div>លេខទូរស័ព្ទ: '. Auth::user()->setting()->phone .'</div>
+															<div>លេខទូរស័ព្ទ: '. Auth::user()->setting->phone .'</div>
 														</td>
 													</tr>
 												</table>
@@ -437,7 +437,7 @@ class LaborRepository
 														<td width="28%" class="text-center" style="position: absolute; right: 0px; bottom: 50px;">
 															<div><strong>គ្រូពេទ្យព្យាបាល</strong></div>
 															<div class="sign_box"></div>
-															<div><span class="KHOSMoulLight">'. Auth::user()->setting()->sign_name_kh .'</span></div>
+															<div><span class="KHOSMoulLight">'. Auth::user()->setting->sign_name_kh .'</span></div>
 														</td>
 													</tr>
 												</table>
