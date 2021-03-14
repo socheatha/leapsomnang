@@ -359,7 +359,7 @@ class LaborRepository
 												<div class="color_light_blue" style="text-align: center; text-decoration: underline; position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);">សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើកក្រោយ</div>
 												<table class="table-footer mt---5" width="100%">
 													<tr>
-														<td> ' . ($labor->labor_type == 1 ? '<div>Séro Ag Widel</div>
+														<td> ' . ($labor->labor_type == 1 ? '<div>Séro Ag Widal</div>
 																<ul style="list-style-type: none; margin: 0; padding-left: 14px;">
 																	<li style="margin-left: 0;">-TO:............................................Négatif</li>
 																	<li style="margin-left: 0;">-TH:............................................Négatif</li>
@@ -452,7 +452,7 @@ class LaborRepository
 												<div class="color_red" style="color: red; text-align: center; text-decoration: underline; position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);">សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើក្រោយ</div>
 												<table class="table-footer mt---5" width="100%">
 													<tr>
-														<td> ' . ($labor->labor_type == 1 ? '<div>Séro Ag Widel</div>
+														<td> ' . ($labor->labor_type == 1 ? '<div>Séro Ag Widal</div>
 																<ul style="list-style-type: none; margin: 0; padding-left: 14px;">
 																	<li style="margin-left: 0;">-TO:............................................Négatif</li>
 																	<li style="margin-left: 0;">-TH:............................................Négatif</li>
