@@ -289,14 +289,14 @@ class LaborRepository
 															<img src="/images/setting/'. Auth::user()->setting->logo .'" alt="IMG">
 														</td>
 														<td class="text-center" width="70%" style="padding: 5px 0;">
-															<h6 class="KHOSMoulLight" style="font-size: 19px;">'. Auth::user()->setting->clinic_name_kh .'</h6>
+															<h4 class="KHOSMoulLight">'. Auth::user()->setting->clinic_name_kh .'</h4>
 														</td>
 														<td width="15%" rowspan="5">
 														</td>
 													</tr>
 													<tr>
-														<td class="text-center" style="padding: 2px 0;">
-															<h6 class="roboto_b" style="font-size: 19px;">'. Auth::user()->setting->clinic_name_en .'</h6>
+														<td class="text-center" style="padding: 2px 0 8px 0;">
+															<h4 class="roboto_b">'. Auth::user()->setting->clinic_name_en .'</h4>
 														</td>
 													</tr>
 													<tr>
@@ -318,7 +318,7 @@ class LaborRepository
 												<table class="table-information" width="100%" style="margin: 5px 0 15px 0;">
 													<tr>
 														<td colspan="4">
-															<h6 class="text-center KHOSMoulLight" style="padding: 10px 0 10px 0; font-size: 16px;">លទ្ធផលពិនិត្យឈាម</h6>
+															<h5 class="text-center KHOSMoulLight" style="padding: 10px 0 10px 0;">លទ្ធផលពិនិត្យឈាម</h5>
 														</td>
 													</tr>
 													<tr>
@@ -368,7 +368,7 @@ class LaborRepository
 																	'. $labor_detail_item_list .'
 																</table>' : '') .  															
 														 ' </td>
-														<td width="28%" class="text-center" style="position: absolute; right: 0px; bottom: 50px;">
+														<td width="28%" class="text-center" style="position: absolute; right: 0px; bottom: 40px;">
 															<div><strong class="color_light_blue" style="font-size: 16px;">Technicien</strong></div>
 															<div class="sign_box"></div>
 															<div><span class="KHOSMoulLight">គឹម ស្រ៊ុន</span></div>
