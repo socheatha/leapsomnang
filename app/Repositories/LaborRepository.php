@@ -234,7 +234,7 @@ class LaborRepository
 			$class = '';
 			$class_reaction = '';
 			if (!is_numeric ($labor_detail->result)) {
-				if ($labor_detail->result== 'Négatif') {
+				if ($labor_detail->result== 'Négatif' || $labor_detail->result== 'négatif' || $labor_detail->result== 'NÉGATIF') {
 					$class_reaction = 'color_red';
 				}else{
 					$class_reaction = '';
