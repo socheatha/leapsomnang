@@ -90,7 +90,7 @@ class LaborRepository
 		$labor_category = LaborCategory::find($request->id);
 		if ($labor_category != null) {
 			foreach ($labor_category->services as $key => $service) {
-				$service_check_list .= '<div class="col-sm-3">
+				$service_check_list .= '<div class="col-sm-4">
 																	<div class="form-check mb-3">
 																		<input class="minimal chb_service" type="checkbox" id="'. $service->id .'" value="'. $service->id .'">
 																		<label class="form-check-label" for="'. $service->id .'">'. $service->name .'</label>
@@ -106,10 +106,22 @@ class LaborRepository
 	public function getCheckedServicesList($request)
 	{
 		$checked_services_list = '';
-		$labor_services = LaborService::select(DB::raw("id, name, category_id, unit, description, CONCAT(`ref_from`,' - ',`ref_to`) AS reference"))->whereIn('id', $request->ids)->get();
+		$labor_services = LaborService::whereIn('id', $request->ids)->get();
 		$no = $request->no;
 
 		foreach ($labor_services as $key => $service) {
+			
+			$reference = '';
+			if ($service->ref_from == '' && $service->ref_to != '') {
+				$reference = '(<'. $service->ref_to .' '. $service->unit .')';
+			}else if($service->ref_from != '' && $service->ref_to ==''){
+				$reference = '('. $service->ref_from .'> '. $service->unit .')';
+			}else if($service->ref_from != '' && $service->ref_to!=''){
+				$reference = '('. $service->ref_from .'-'. $service->ref_to .' '. $service->unit .')';
+			}else{
+				$reference = '';
+			}
+
 			$no++;
 			$checked_services_list .= '<tr class="labor_item" id="'. $no.'-'.$service->id .'">
 																	<td class="text-center">'. $no .'</td>
@@ -126,8 +138,8 @@ class LaborRepository
 																		'. $service->unit .'
 																	</td>
 																	<td class="text-center">
-																		<input type="hidden" name="reference[]" value="'. $service->reference .'">
-																		'. $service->reference .'
+																		<input type="hidden" name="reference[]" value="'. $reference .'">
+																		'. $reference .'
 																	</td>
 																	<td class="text-center">
 																		<button type="button" onclick="removeCheckedService(\''. $no.'-'.$service->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
@@ -156,6 +168,18 @@ class LaborRepository
 		}
 
 		foreach ($labor->labor_details as $order => $labor_detail) {
+			
+			$reference = '';
+			if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to != '') {
+				$reference = '(<'. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')';
+			}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to ==''){
+				$reference = '('. $labor_detail->service->ref_from .'> '. $labor_detail->service->unit .')';
+			}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to!=''){
+				$reference = '('. $labor_detail->service->ref_from .'-'. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')';
+			}else{
+				$reference = '';
+			}
+
 			$labor_detail_list .= '<tr class="labor_item" id="'. $labor_detail->result .'">
 																<td class="text-center">'. ++$order .'</td>
 																<td>
@@ -169,7 +193,7 @@ class LaborRepository
 																	'. $labor_detail->service->unit .'
 																</td>
 																<td class="text-center">
-																	'. $labor_detail->service->ref_from .' - '. $labor_detail->service->ref_to .'
+																	'. $reference .'
 																</td>
 																<td class="text-center">
 																	<button type="button" onclick="deleteLaborDetail(\''. $labor_detail->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
@@ -177,8 +201,11 @@ class LaborRepository
 															</tr>';
 		}
 
+		$json = $this->getLaborPreview($request->labor_id)->getData();
+
 		return response()->json([
 			'labor_detail_list' => $labor_detail_list,
+			'labor_preview' => $json->labor_detail,
 		]);
 	}
 
@@ -205,8 +232,13 @@ class LaborRepository
 
 		foreach ($labor->labor_details as $labor_detail) {
 			$class = '';
+			$class_reaction = '';
 			if (!is_numeric ($labor_detail->result)) {
-				# code...
+				if ($labor_detail->result== 'Négatif') {
+					$class_reaction = 'color_red';
+				}else{
+					$class_reaction = '';
+				}
 			}else{
 				if ($labor_detail->result < $labor_detail->service->ref_from) {
 					$class = 'color_green';
@@ -216,41 +248,36 @@ class LaborRepository
 					$class = '';
 				}
 			}
+
+			$reference = '';
+			if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to != '') {
+				$reference = '(<'. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')';
+			}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to ==''){
+				$reference = '('. $labor_detail->service->ref_from .'> '. $labor_detail->service->unit .')';
+			}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to!=''){
+				$reference = '('. $labor_detail->service->ref_from .'-'. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')';
+			}else{
+				$reference = '';
+			}
+
 			if ($labor_detail->service->unit == 'Réaction') {
 				$labor_detail_item_list .= '<tr>
 																			<td width="2%"></td>
 																			<td width="30%">-'. $labor_detail->name .'</td>
-																			<td width="20%">: <b><span class="'. $class .'">'. $labor_detail->service->unit .'</span></b></td>
-																			<td width="12%">&nbsp;'. $labor_detail->result .'</td>
-																			<td width="20%">'. (($labor_detail->service->ref_from != '' && $labor_detail->service->ref_from!='')? '('. $labor_detail->service->ref_from .'-'. $labor_detail->service->ref_to .')' : '') .'</td>
+																			<td width="16%">: <b><span class="'. $class .'">'. $labor_detail->service->unit .'</span></b></td>
+																			<td width="12%">&nbsp;<span class="'. $class_reaction .'">'. $labor_detail->result .'</span></td>
+																			<td width="">'. (($labor_detail->service->ref_from != '' && $labor_detail->service->ref_from!='')? '('. $labor_detail->service->ref_from .'-'. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')' : '') .'</td>
 																		</tr>';
 			}else{
 				$labor_detail_item_list .= '<tr>
 																			<td width="2%"></td>
 																			<td width="30%">-'. $labor_detail->name .'</td>
-																			<td width="20%">: <b><span class="'. $class .'">'. $labor_detail->result .'</span></b></td>
+																			<td width="16%">: <b><span class="'. $class .'">'. $labor_detail->result .'</span></b></td>
 																			<td width="12%">&nbsp;'. $labor_detail->service->unit .'</td>
-																			<td width="20%">'. (($labor_detail->service->ref_from != '' && $labor_detail->service->ref_from!='')? '('. $labor_detail->service->ref_from .'-'. $labor_detail->service->ref_to .')' : '') .'</td>
+																			<td width="">'. $reference .'</td>
 																		</tr>';
 			}
 		}
-		
-		// 	<table width="100%">
-		// 	<tr>
-		// 		<td width="2%"></td>
-		// 		<td width="28%">TO</td>
-		// 		<td width="38%"><div style="border-bottom: 1px dotted red;">​ ​</div></td>
-		// 		<td width="12%">Négatif</td>
-		// 		<td width="20%"></td>
-		// 	</tr>
-		// 	<tr>
-		// 		<td width="2%"></td>
-		// 		<td width="28%">TH</td>
-		// 		<td width="38%"><div style="border-bottom: 1px dotted red;">​ ​</div></td>
-		// 		<td width="12%">Négatif</td>
-		// 		<td width="20%"></td>
-		// 	</tr>
-		// </table>
 		if(empty($labor->province)){ $labor->province = new \stdClass(); $labor->province->name = ''; }
 		if(empty($labor->district)){ $labor->district = new \stdClass(); $labor->district->name = ''; }
 
@@ -342,7 +369,7 @@ class LaborRepository
 																</table>' : '') .  															
 														 ' </td>
 														<td width="28%" class="text-center" style="position: absolute; right: 0px; bottom: 50px;">
-															<div><strong class="color_light_blue" style="font-size: 16px;">គ្រូពេទ្យព្យាបាល</strong></div>
+															<div><strong class="color_light_blue" style="font-size: 16px;">Technicien</strong></div>
 															<div class="sign_box"></div>
 															<div><span class="KHOSMoulLight">គឹម ស្រ៊ុន</span></div>
 														</td>
@@ -435,7 +462,7 @@ class LaborRepository
 																</table>' : '') .  															
 														 ' </td>
 														<td width="28%" class="text-center" style="position: absolute; right: 0px; bottom: 50px;">
-															<div><strong>គ្រូពេទ្យព្យាបាល</strong></div>
+															<div><strong>Technicien</strong></div>
 															<div class="sign_box"></div>
 															<div><span class="KHOSMoulLight">'. Auth::user()->setting->sign_name_kh .'</span></div>
 														</td>

@@ -67,6 +67,20 @@
 							</thead>
 							<tbody class="item_list">
 								@foreach ($labor->labor_details as $order => $labor_detail)
+								
+									<?php
+										$reference = '';
+										if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to != '') {
+											$reference = '(<'. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')';
+										}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to ==''){
+											$reference = '('. $labor_detail->service->ref_from .'> '. $labor_detail->service->unit .')';
+										}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to!=''){
+											$reference = '('. $labor_detail->service->ref_from .'-'. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')';
+										}else{
+											$reference = '';
+										}
+									?>
+
 									<tr class="labor_item" id="{{ $labor_detail->result }}">
 										<td class="text-center">{{ ++$order }}</td>
 										<td>
@@ -80,7 +94,7 @@
 											{{ $labor_detail->service->unit }}
 										</td>
 										<td class="text-center">
-											{{ $labor_detail->service->ref_from .' - '. $labor_detail->service->ref_to }}
+											{!! $reference !!}
 										</td>
 										<td class="text-center">
 											<button type="button" onclick="deleteLaborDetail('{{ $labor_detail->id }}')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
@@ -269,6 +283,7 @@
 				},
 				success: function (data) {
 					$('.item_list').html(data.labor_detail_list);
+					$('.print-preview').html(data.labor_preview);
 					$('#check_all_service').iCheck('uncheck');
 					$('#category_id').val('').trigger('change');
 					$('#service_check_list').html('');
