@@ -16,6 +16,43 @@ function bss_sum_number() {
     return bss_number(sum);
 }
 
+function bss_call_function(fc_name, clear_called = false) {
+    if (typeof fc_name == 'function') {
+        fc_name();
+        if (clear_called) fc_name = function () { };
+    }
+}
+
+function bss_swal_Success(title = '', text = '', fcCallBack) {
+    Swal.fire({
+        icon: 'success',
+        title: bss_string(title),
+        confirmButtonText: bss_string(text),
+        timer: 1500
+    }).then(() => {
+        fcCallBack();
+    });
+}
+
+function bss_swal_Error(txt) {
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: bss_string(txt),
+    });
+}
+
+function bss_swal_Warning(title = '', text = '', fcCallBack) {
+    Swal.fire({
+        icon: 'warning',
+        title: bss_string(title),
+        confirmButtonText: bss_string(text),
+        // timer: 1500
+    }).then(() => {
+        fcCallBack();
+    });
+}
+
 // prepare form AJAX submission
 $(document).ready(function () {
     $(document).on('click', '.submitFormAjx', function (e) {
@@ -28,28 +65,21 @@ $(document).ready(function () {
             data: bss_string(_form.serialize()),
             success: function (res) {
                 if (typeof onAjaxSuccess == 'string') {
-                    Swal.fire({
-                        icon: 'success',
-                        title: bss_string(onAjaxSuccess),
-                        confirmButtonText: "{{ __('alert.swal.button.yes') }}",
-                    })
+                    BssSwalSuccess(onAjaxSuccess);
+                    onAjaxSuccess = '';
                 } else if (typeof onAjaxSuccess == 'function') {
-                    onAjaxSuccess(res);
+                    onAjaxSuccess(res); onAjaxSuccess = function () { };
                 }
             },
             error: function (request, status, error) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: bss_string(request.responseText) + ' : ' + bss_string(status) + ' : ' + bss_string(error),
-                })
+                BssSwalError(bss_string(request.responseText) + ' : ' + bss_string(status) + ' : ' + bss_string(error));
             }
         });
     });
 
     // date picker
-    if ($('.bssDatePicker').length >= 1) {
-        $('.bssDatePicker').daterangepicker(
+    if ($('.bssDateRangePicker').length >= 1) {
+        $('.bssDateRangePicker').daterangepicker(
             {
                 ranges: {
                     'Today': [moment(), moment()],
