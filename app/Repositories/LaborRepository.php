@@ -289,36 +289,36 @@ class LaborRepository
 															<img src="/images/setting/'. Auth::user()->setting->logo .'" alt="IMG">
 														</td>
 														<td class="text-center" width="70%" style="padding: 5px 0;">
-															<h6 class="KHOSMoulLight" style="font-size: 19px;">'. Auth::user()->setting->clinic_name_kh .'</h6>
+															<h3 class="KHOSMoulLight color_light_blue">'. Auth::user()->setting->clinic_name_kh .'</h3>
 														</td>
 														<td width="15%" rowspan="5">
 														</td>
 													</tr>
 													<tr>
-														<td class="text-center" style="padding: 2px 0;">
-															<h6 class="roboto_b" style="font-size: 19px;">'. Auth::user()->setting->clinic_name_en .'</h6>
+														<td class="text-center" style="padding: 2px 0 8px 0;">
+															<h3 class="roboto_b color_light_blue">'. Auth::user()->setting->clinic_name_en .'</h3>
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding: 1px 0;">
-															<div>'. Auth::user()->setting->description .'</div>
+															<div class="color_light_blue">'. Auth::user()->setting->description .'</div>
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding: 1px 0;">
-															<div>'. Auth::user()->setting->address .'</div>
+															<div class="color_light_blue" style="font-size: 13px;">'. Auth::user()->setting->address .'</div>
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding-bottom: 5px;">
-															<div>លេខទូរស័ព្ទ: '. Auth::user()->setting->phone .'</div>
+															<div class="color_light_blue">លេខទូរស័ព្ទ: '. Auth::user()->setting->phone .'</div>
 														</td>
 													</tr>
 												</table>
 												<table class="table-information" width="100%" style="margin: 5px 0 15px 0;">
 													<tr>
 														<td colspan="4">
-															<h6 class="text-center KHOSMoulLight" style="padding: 10px 0 10px 0; font-size: 16px;">លទ្ធផលពិនិត្យឈាម</h6>
+															<h5 class="text-center KHOSMoulLight" style="padding: 10px 0 10px 0;">លទ្ធផលពិនិត្យឈាម</h5>
 														</td>
 													</tr>
 													<tr>
@@ -353,13 +353,13 @@ class LaborRepository
 													</tr>
 												</table>
 												' . ($labor->labor_type == 2 ? ('<div id="ck_result">' . str_replace('__checkbox__', '<input type="checkbox" disabled/>', $labor->simple_labor_detail) . '</div>') : '') . '
-												<div style="height: 14cm"></div>
+												<div style="height: 14.3cm"></div>
 												' . ($labor->labor_type == 1 ? ('<small class="remark">'. $labor->remark .'</small>') : '') . '
 												<br/>
 												<div class="color_light_blue" style="text-align: center; text-decoration: underline; position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);">សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើកក្រោយ</div>
 												<table class="table-footer mt---5" width="100%">
 													<tr>
-														<td> ' . ($labor->labor_type == 1 ? '<div>Séro Ag Widel</div>
+														<td> ' . ($labor->labor_type == 1 ? '<div>Séro Ag Widal</div>
 																<ul style="list-style-type: none; margin: 0; padding-left: 14px;">
 																	<li style="margin-left: 0;">-TO:............................................Négatif</li>
 																	<li style="margin-left: 0;">-TH:............................................Négatif</li>
@@ -368,10 +368,10 @@ class LaborRepository
 																	'. $labor_detail_item_list .'
 																</table>' : '') .  															
 														 ' </td>
-														<td width="28%" class="text-center" style="position: absolute; right: 0px; bottom: 50px;">
+														<td width="28%" class="text-center" style="position: absolute; right: 0px; bottom: 40px;">
 															<div><strong class="color_light_blue" style="font-size: 16px;">Technicien</strong></div>
 															<div class="sign_box"></div>
-															<div><span class="KHOSMoulLight">គឹម ស្រ៊ុន</span></div>
+															<div><span class="KHOSMoulLight color_light_blue">គឹម ស្រ៊ុន</span></div>
 														</td>
 													</tr>
 												</table>
@@ -452,7 +452,7 @@ class LaborRepository
 												<div class="color_red" style="color: red; text-align: center; text-decoration: underline; position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);">សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើក្រោយ</div>
 												<table class="table-footer mt---5" width="100%">
 													<tr>
-														<td> ' . ($labor->labor_type == 1 ? '<div>Séro Ag Widel</div>
+														<td> ' . ($labor->labor_type == 1 ? '<div>Séro Ag Widal</div>
 																<ul style="list-style-type: none; margin: 0; padding-left: 14px;">
 																	<li style="margin-left: 0;">-TO:............................................Négatif</li>
 																	<li style="margin-left: 0;">-TH:............................................Négatif</li>
