@@ -289,29 +289,29 @@ class LaborRepository
 															<img src="/images/setting/'. Auth::user()->setting->logo .'" alt="IMG">
 														</td>
 														<td class="text-center" width="70%" style="padding: 5px 0;">
-															<h4 class="KHOSMoulLight">'. Auth::user()->setting->clinic_name_kh .'</h4>
+															<h3 class="KHOSMoulLight color_light_blue">'. Auth::user()->setting->clinic_name_kh .'</h3>
 														</td>
 														<td width="15%" rowspan="5">
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding: 2px 0 8px 0;">
-															<h4 class="roboto_b">'. Auth::user()->setting->clinic_name_en .'</h4>
+															<h3 class="roboto_b color_light_blue">'. Auth::user()->setting->clinic_name_en .'</h3>
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding: 1px 0;">
-															<div>'. Auth::user()->setting->description .'</div>
+															<div class="color_light_blue">'. Auth::user()->setting->description .'</div>
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding: 1px 0;">
-															<div>'. Auth::user()->setting->address .'</div>
+															<div class="color_light_blue" style="font-size: 13px;">'. Auth::user()->setting->address .'</div>
 														</td>
 													</tr>
 													<tr>
 														<td class="text-center" style="padding-bottom: 5px;">
-															<div>លេខទូរស័ព្ទ: '. Auth::user()->setting->phone .'</div>
+															<div class="color_light_blue">លេខទូរស័ព្ទ: '. Auth::user()->setting->phone .'</div>
 														</td>
 													</tr>
 												</table>
@@ -353,7 +353,7 @@ class LaborRepository
 													</tr>
 												</table>
 												' . ($labor->labor_type == 2 ? ('<div id="ck_result">' . str_replace('__checkbox__', '<input type="checkbox" disabled/>', $labor->simple_labor_detail) . '</div>') : '') . '
-												<div style="height: 14cm"></div>
+												<div style="height: 14.3cm"></div>
 												' . ($labor->labor_type == 1 ? ('<small class="remark">'. $labor->remark .'</small>') : '') . '
 												<br/>
 												<div class="color_light_blue" style="text-align: center; text-decoration: underline; position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);">សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើកក្រោយ</div>
@@ -371,7 +371,7 @@ class LaborRepository
 														<td width="28%" class="text-center" style="position: absolute; right: 0px; bottom: 40px;">
 															<div><strong class="color_light_blue" style="font-size: 16px;">Technicien</strong></div>
 															<div class="sign_box"></div>
-															<div><span class="KHOSMoulLight">គឹម ស្រ៊ុន</span></div>
+															<div><span class="KHOSMoulLight color_light_blue">គឹម ស្រ៊ុន</span></div>
 														</td>
 													</tr>
 												</table>

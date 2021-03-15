@@ -35,7 +35,7 @@
 
 
 .labor-print *{
-  font-family: 'Courier New','Khmer OS Battambang';
+  /* font-family: 'Courier New','Khmer OS Battambang'; */
 }
 
 .labor-print{
@@ -45,8 +45,8 @@
 	background: #fff;
 	border: 1px solid #ededed;
 	padding: 1cm 1cm 1cm 1cm;
-	font-size: 12px;
-	color: blue;
+	font-size: 14px;
+	/* color: blue; */
 }
 .labor-print .table-information td{
 	padding-bottom: 8px;
@@ -147,13 +147,6 @@
 	@page {
 		size: 21cm 29.7cm;
 		margin: 0;
-	}
-
-	.labor-print *{
-		color: blue !important;
-		-webkit-print-color-adjust: exact !important;
-		-moz-print-color-adjust: exact !important;
-		-o-print-color-adjust: exact !important;
 	}
 
 	.invoice-print{
