@@ -286,7 +286,9 @@ class LaborRepository
 												<table class="table-header" width="100%">
 													<tr>
 														<td rowspan="5" width="15%" style="padding: 10px;">
-															<img src="/images/setting/'. Auth::user()->setting->logo .'" alt="IMG">
+															<div style="position: absolute; left: 30px; top: 35px; width: 120px;">
+																<img src="/images/setting/'. Auth::user()->setting->logo .'" alt="IMG">
+															</div>
 														</td>
 														<td class="text-center" width="70%" style="padding: 5px 0;">
 															<h3 class="KHOSMoulLight color_light_blue">'. Auth::user()->setting->clinic_name_kh .'</h3>
@@ -352,8 +354,8 @@ class LaborRepository
 														</td>
 													</tr>
 												</table>
-												' . ($labor->labor_type == 2 ? ('<div id="ck_result">' . str_replace('__checkbox__', '<input type="checkbox" disabled/>', $labor->simple_labor_detail) . '</div>') : '') . '
-												<div style="height: 14.3cm"></div>
+												' . ($labor->labor_type == 2 ? ('<div id="ck_result">' . str_replace('__checkbox__', '<input type="checkbox" disabled/>', $labor->simple_labor_detail) . '</div>') : '<div style="height: 14.3cm"></div>') . '
+												
 												' . ($labor->labor_type == 1 ? ('<small class="remark">'. $labor->remark .'</small>') : '') . '
 												<br/>
 												<div class="color_light_blue" style="text-align: center; text-decoration: underline; position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);">សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើកក្រោយ</div>
