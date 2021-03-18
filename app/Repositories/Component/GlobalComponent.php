@@ -9,34 +9,34 @@ class GlobalComponent
 {
 	public static function PrintHeader()
 	{
-		return '
+		return '		
 			<table class="table-header" width="100%">
-				<tr>
-					<td rowspan="5" width="20%" style="padding: 10px;">
-						<img src="/images/setting/' . Auth::user()->setting()->logo . '" alt="IMG">
-					</td>
+				<div style="position: absolute; left: 15px; top: 30px; width: 120px;">
+					<img src="/images/setting/'. Auth::user()->setting->logo .'" alt="IMG">
+				</div>
+				<tr>					
 					<td class="text-center" style="padding: 5px 0;">
-						<h6 class="KHOSMoulLight" style="font-size: 19px;">' . Auth::user()->setting()->clinic_name_kh . '</h6>
+						<h3 class="color_light_blue KHOSMoulLight">'. Auth::user()->setting->clinic_name_kh .'</h3>
 					</td>
 				</tr>
 				<tr>
 					<td class="text-center" style="padding: 2px 0;">
-						<h6 class="roboto_b" style="font-size: 19px;">' . Auth::user()->setting()->clinic_name_en . '</h6>
+						<h3 class="color_light_blue roboto_b">'. Auth::user()->setting->clinic_name_en .'</h3>
 					</td>
 				</tr>
 				<tr>
 					<td class="text-center" style="padding: 1px 0;">
-						<div>' . Auth::user()->setting()->description . '</div>
+						<div class="color_light_blue">'. Auth::user()->setting->description .'</div>
 					</td>
 				</tr>
 				<tr>
 					<td class="text-center" style="padding: 1px 0;">
-						<div>' . Auth::user()->setting()->address . '</div>
+						<div class="color_light_blue">'. Auth::user()->setting->address .'</div>
 					</td>
 				</tr>
 				<tr>
 					<td class="text-center" style="padding-bottom: 5px;">
-						<div>លេខទូរស័ព្ទ: ' . Auth::user()->setting()->phone . '</div>
+						<div class="color_light_blue">លេខទូរស័ព្ទ: <b>'. Auth::user()->setting->phone .'</b></div>
 					</td>
 				</tr>
 			</table>
