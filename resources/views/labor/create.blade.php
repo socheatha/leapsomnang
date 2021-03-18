@@ -66,8 +66,6 @@
 					@elseif($labor_type == 2)
 						<?php 
 							$default_elements = '
-							<h5 style="text-align:center"><span style="font-size:18.0pt"><span style="color:#66ffff">លទ្ធផលពិនិត្យឈាម</span></span></h5>
-
 							<p>__checkbox__&nbsp;<strong><span style="font-size:14.0pt"><span style="color:black">BIO.CHEMIE</span></span></strong></p>
 
 							<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:100%">
