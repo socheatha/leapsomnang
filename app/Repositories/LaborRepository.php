@@ -70,7 +70,7 @@ class LaborRepository
 									<td class="text-center">'. date('d/M/Y', strtotime($labor->date)) .'</td>
 									<td class="text-center font-weight-bold">៛ '. number_format($labor->price, 0) .'</td>
 									<td>'. $labor->pt_name .'</td>
-									<td class="text-center">'. $labor->pt_age .' ឆ្នាំ</td>
+									<td class="text-center">'. $labor->pt_age .'</td>
 									<td class="text-center">'. $labor->pt_gender .'</td>
 									<td>'. $description .'</td>
 								</tr>';
@@ -136,8 +136,8 @@ class LaborRepository
 																		</td>
 																		<td class="text-center">
 																			<select name="unit[]" class="form-control">
+																				<option class="Négatif">Négatif</option>
 																				<option class="Positif">Positif</option>
-																				<option class="Nésitif">Nésitif</option>
 																			</select>
 																		</td>
 																		<td class="text-center">
@@ -162,8 +162,8 @@ class LaborRepository
 																		</td>
 																		<td class="text-center">
 																			<select name="result[]" class="form-control">
+																				<option class="Négatif">Négatif</option>
 																				<option class="Positif">Positif</option>
-																				<option class="Nésitif">Nésitif</option>
 																			</select>
 																		</td>
 																		<td class="text-center">
@@ -235,8 +235,8 @@ class LaborRepository
 																</td>
 																<td class="text-center">
 																	<select name="unit[]" class="form-control">
+																		<option class="Négatif" '. (($labor_detail->unit == 'Négatif')? 'selected' : '') .'>Négatif</option>
 																		<option class="Positif" '. (($labor_detail->unit == 'Positif')? 'selected' : '') .'>Positif</option>
-																		<option class="Nésitif" '. (($labor_detail->unit == 'Nésitif')? 'selected' : '') .'>Nésitif</option>
 																	</select>
 																</td>
 																<td class="text-center">
@@ -259,8 +259,8 @@ class LaborRepository
 																</td>
 																<td class="text-center">
 																	<select name="result[]" class="form-control">
+																		<option class="Négatif" '. (($labor_detail->result == 'Négatif')? 'selected' : '') .'>Négatif</option>
 																		<option class="Positif" '. (($labor_detail->result == 'Positif')? 'selected' : '') .'>Positif</option>
-																		<option class="Nésitif" '. (($labor_detail->result == 'Nésitif')? 'selected' : '') .'>Nésitif</option>
 																	</select>
 																</td>
 																<td class="text-center">
@@ -304,6 +304,7 @@ class LaborRepository
 		foreach ($labor_services as $key => $service) {
 			LaborDetail::create([
 				'name' => $service->name,
+				'unit' => 'Négatif',
 				'service_id' => $service->id,
 				'labor_id' => $labor->id,
 				'created_by' => Auth::user()->id,
@@ -450,32 +451,16 @@ class LaborRepository
 														</tr>
 														<tr>
 															<td width="35%" style="padding-left: 55px;">
-																ឈ្មោះ:<span class="pt_name">'. $labor->pt_name .'</span>
+																ឈ្មោះ: <span class="pt_name">'. $labor->pt_name .'</span>
 															</td>
 															<td width="18%">
-																អាយុ:<span class="pt_age">'. $labor->pt_age .' ឆ្នាំ</span>
+																អាយុ: <span class="pt_age">'. $labor->pt_age .'</span>
 															</td>
 															<td width="18%">
-																ភេទ:<span class="pt_gender">'. $labor->pt_gender .' ឆ្នាំ</span>
+																ភេទ: <span class="pt_gender">'. $labor->pt_gender .'</span>
 															</td>
 															<td width="25%" style="padding-left: 25px;">
-																លេខរៀង:<span class="labor_number">'. str_pad($labor->labor_number, 6, "0", STR_PAD_LEFT) .'</span>
-															</td>
-														</tr>
-														<tr class="sr-only">
-															<td>
-																កាលបរិច្ឆេទ:<span class="date">'. date('d/m/Y', strtotime($labor->date)) .'</span>
-															</td>
-															<td>
-																ភេទ:<span class="pt_gender">'. $labor->pt_gender .'</span>
-															</td>
-															<td>
-																ទូរស័ព្ទ:<b class="pt_phone">'. $labor->pt_phone .'</b>
-															</td>
-														</tr>
-														<tr class="sr-only">
-															<td colspan="3">
-																អាសយដ្ឋាន: <span class="pt_name">'. (($labor->pt_village!='')? 'ភូមិ'.$labor->pt_village : '') . (($labor->pt_commune!='')? (($labor->province->name=='ភ្នំពេញ')? ' សង្កាត់'.$labor->pt_commune : ' ឃុំ'.$labor->pt_commune) : '') . (($labor->district->name!='')? (($labor->province->name=='ភ្នំពេញ')? ' ខណ្ឌ'.$labor->district->name : ' ស្រុក'.$labor->district->name) : ''). (($labor->province->name!='')? (($labor->province->name=='ភ្នំពេញ')? ' រាជធានីភ្នំពេញ'.$labor->province->name : ' ខេត្ត'.$labor->province->name) : '') .'</span>
+																លេខរៀង: <span class="labor_number">'. str_pad($labor->labor_number, 6, "0", STR_PAD_LEFT) .'</span>
 															</td>
 														</tr>
 													</table>
@@ -487,10 +472,6 @@ class LaborRepository
 													<table class="table-footer mt---5" width="100%">
 														<tr>
 															<td> ' . ($labor->labor_type == 1 ? '<div>Séro Ag Widal</div>
-																	<ul style="list-style-type: none; margin: 0; padding-left: 14px;">
-																		<li style="margin-left: 0;">-TO:............................................Négatif</li>
-																		<li style="margin-left: 0;">-TH:............................................Négatif</li>
-																	</ul>
 																	<table width="100%">
 																		'. $labor_detail_item_list .'
 																	</table>' : '') .  															
@@ -546,10 +527,10 @@ class LaborRepository
 																ឈ្មោះ:<span class="pt_name">'. $labor->pt_name .'</span>
 															</td>
 															<td width="18%">
-																អាយុ:<span class="pt_age">'. $labor->pt_age .' ឆ្នាំ</span>
+																អាយុ:<span class="pt_age">'. $labor->pt_age .'</span>
 															</td>
 															<td width="18%">
-																ភេទ:<span class="pt_gender">'. $labor->pt_gender .' ឆ្នាំ</span>
+																ភេទ:<span class="pt_gender">'. $labor->pt_gender .'</span>
 															</td>
 															<td width="25%" style="padding-left: 25px;">
 																លេខរៀង:<span class="labor_number">'. str_pad($labor->labor_number, 6, "0", STR_PAD_LEFT) .'</span>
@@ -580,10 +561,6 @@ class LaborRepository
 													<table class="table-footer mt---5" width="100%">
 														<tr>
 															<td> ' . ($labor->labor_type == 1 ? '<div>Séro Ag Widal</div>
-																	<ul style="list-style-type: none; margin: 0; padding-left: 14px;">
-																		<li style="margin-left: 0;">-TO:............................................Négatif</li>
-																		<li style="margin-left: 0;">-TH:............................................Négatif</li>
-																	</ul>
 																	<table width="100%">
 																		'. $labor_detail_item_list .'
 																	</table>' : '') .  															

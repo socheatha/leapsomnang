@@ -96,8 +96,8 @@
 											</td>
 											<td class="text-center">
 												<select name="unit[]" class="form-control">
+													<option class="Négatif" {{ (($labor_detail->unit == 'Négatif')? 'selected' : '') }}>Négatif</option>
 													<option class="Positif" {{ (($labor_detail->unit == 'Positif')? 'selected' : '') }}>Positif</option>
-													<option class="Nésitif" {{ (($labor_detail->unit == 'Nésitif')? 'selected' : '') }}>Nésitif</option>
 												</select>
 											</td>
 											<td class="text-center">
@@ -120,8 +120,8 @@
 											</td>
 											<td class="text-center">
 												<select name="result[]" class="form-control">
+													<option class="Négatif" {{ (($labor_detail->result == 'Négatif')? 'selected' : '') }}>Négatif</option>
 													<option class="Positif" {{ (($labor_detail->result == 'Positif')? 'selected' : '') }}>Positif</option>
-													<option class="Nésitif" {{ (($labor_detail->result == 'Nésitif')? 'selected' : '') }}>Nésitif</option>
 												</select>
 											</td>
 											<td class="text-center">
