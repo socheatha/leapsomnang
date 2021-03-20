@@ -136,8 +136,9 @@ class LaborRepository
 																		</td>
 																		<td class="text-center">
 																			<select name="unit[]" class="form-control">
-																				<option class="Négatif">Négatif</option>
-																				<option class="Positif">Positif</option>
+																				<option value="">None</option>
+																				<option value="Négatif">Négatif</option>
+																				<option value="Positif">Positif</option>
 																			</select>
 																		</td>
 																		<td class="text-center">
@@ -162,8 +163,8 @@ class LaborRepository
 																		</td>
 																		<td class="text-center">
 																			<select name="result[]" class="form-control">
-																				<option class="Négatif">Négatif</option>
-																				<option class="Positif">Positif</option>
+																				<option value="Négatif">Négatif</option>
+																				<option value="Positif">Positif</option>
 																			</select>
 																		</td>
 																		<td class="text-center">
@@ -235,8 +236,9 @@ class LaborRepository
 																</td>
 																<td class="text-center">
 																	<select name="unit[]" class="form-control">
-																		<option class="Négatif" '. (($labor_detail->unit == 'Négatif')? 'selected' : '') .'>Négatif</option>
-																		<option class="Positif" '. (($labor_detail->unit == 'Positif')? 'selected' : '') .'>Positif</option>
+																		<option value="" '. (($labor_detail->unit == '')? 'selected' : '') .'>None</option>
+																		<option value="Négatif" '. (($labor_detail->unit == 'Négatif')? 'selected' : '') .'>Négatif</option>
+																		<option value="Positif" '. (($labor_detail->unit == 'Positif')? 'selected' : '') .'>Positif</option>
 																	</select>
 																</td>
 																<td class="text-center">
@@ -259,8 +261,8 @@ class LaborRepository
 																</td>
 																<td class="text-center">
 																	<select name="result[]" class="form-control">
-																		<option class="Négatif" '. (($labor_detail->result == 'Négatif')? 'selected' : '') .'>Négatif</option>
-																		<option class="Positif" '. (($labor_detail->result == 'Positif')? 'selected' : '') .'>Positif</option>
+																		<option value="Négatif" '. (($labor_detail->result == 'Négatif')? 'selected' : '') .'>Négatif</option>
+																		<option value="Positif" '. (($labor_detail->result == 'Positif')? 'selected' : '') .'>Positif</option>
 																	</select>
 																</td>
 																<td class="text-center">
@@ -304,7 +306,7 @@ class LaborRepository
 		foreach ($labor_services as $key => $service) {
 			LaborDetail::create([
 				'name' => $service->name,
-				'unit' => 'Négatif',
+				'unit' => '',
 				'service_id' => $service->id,
 				'labor_id' => $labor->id,
 				'created_by' => Auth::user()->id,
