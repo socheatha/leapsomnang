@@ -151,7 +151,6 @@
 					{data: 'actions', name: 'actions', className: 'text-center', searchable: false, sortable: false}
 				],
 				rowCallback: function( row, data ) {
-					$('td:eq(5)', row).html(data.pt_age + ' ឆ្នាំ');
 
 					$('td:eq(7)', row).html( `@Can("Labor Print")
 						<button type="button" data-url="/labor/${ data.id }/print" class="btn btn-sm btn-flat btn-success btn-print-labor"><i class="fa fa-print"></i></button>
