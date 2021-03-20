@@ -337,6 +337,7 @@ class LaborRepository
 		$grand_total = 0;
 		$labor_detail = '';
 		$labor_detail_item_list = '';
+		$labor_detail_item_list_th_to = '';
 		$labor = Labor::find($id);
 		$title = 'Labor ('. str_pad($labor->labor_number, 6, "0", STR_PAD_LEFT) .')';
 
@@ -350,17 +351,17 @@ class LaborRepository
 				}
 
 				$class_result = '';
-				if ($labor_detail->result== '1/120' || $labor_detail->result== '1/320') {
+				if ($labor_detail->result== '1/160' || $labor_detail->result== '1/320') {
 					$class_result = 'color_red';
 				}
 
-				$labor_detail_item_list .= '<tr>
-																			<td width="2%"></td>
-																			<td width="30%">-'. $labor_detail->name .'</td>
-																			<td width="16%">: <b><span class="'. $class_result .'">'. $labor_detail->result .'</span></b></td>
-																			<td width="12%" class="'. $class_unit .'">&nbsp;'. $labor_detail->unit .'</td>
-																			<td width=""></td>
-																		</tr>';
+				$labor_detail_item_list_th_to .= '<tr>
+																						<td width="2%"></td>
+																						<td width="30%">-'. $labor_detail->name .'</td>
+																						<td width="16%">: <b><span class="'. $class_result .'">'. $labor_detail->result .'</span></b></td>
+																						<td width="12%" class="'. $class_unit .'">&nbsp;'. $labor_detail->unit .'</td>
+																						<td width=""></td>
+																					</tr>';
 
 			}else if ($labor_detail->service->name=='Test Hélicobactaire Pylorie' || $labor_detail->service->name=='Test Malaria' || $labor_detail->service->name=='Test Syphilis') {
 				
@@ -378,7 +379,7 @@ class LaborRepository
 																		</tr>';
 			}else{
 				
-				$class = '';
+				$class = 'color_light_blue';
 				if ($labor_detail->result < $labor_detail->service->ref_from) {
 					$class = 'color_green';
 				}else if ($labor_detail->result > $labor_detail->service->ref_to) {
@@ -473,6 +474,7 @@ class LaborRepository
 														<tr>
 															<td> ' . ($labor->labor_type == 1 ? '<div>Séro Ag Widal</div>
 																	<table width="100%">
+																		'. $labor_detail_item_list_th_to .'
 																		'. $labor_detail_item_list .'
 																	</table>' : '') .  															
 															' </td>
