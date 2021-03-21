@@ -11,6 +11,7 @@ use Hash;
 use Auth;
 use Image;
 use File;
+use App\Repositories\Component\GlobalComponent;
 
 
 class EchoesRepository
@@ -35,6 +36,7 @@ class EchoesRepository
 
 	public function getEchoesPreview($id)
 	{
+		$GlobalComponent = new GlobalComponent;
 
 		$no = 1;
 		$total = 0;
@@ -63,98 +65,66 @@ class EchoesRepository
 		
 		if ($echoes->echo_default_description->slug == 'letter-form-the-hospital') {
 			$echoes_detail = '<section class="echoes-print" style="position: relative;">
-													<div class="KHOSMoulLight text-center" style=="font-size: 16px;">ព្រះរាជាណាចក្រកម្ពុជា</div>
-													<div class="KHOSMoulLight text-center" style=="font-size: 16px;">ជាតិ   សាសនា    ព្រះមហាក្សត្រ</div>
-													<table class="table-header" width="100%">
-														<tr>
-															<td  width="30%" class="text-center">
-																<div style="width: 3cm; height: 3cm; margin: 0 auto;"><img src="/images/setting/'. Auth::user()->setting->logo .'" alt="IMG"></div>
-																<div class="KHOSMoulLight" style="padding: 5px 0;">មន្ទីសុខាភិបាលខេត្តកំពង់ចាម</div>
-																<div class="KHOSMoulLight">'. Auth::user()->setting->clinic_name_kh .'</div>
-															</td>
-															<td width="30%" class="text-center">
-															</td>
-															<td width="40%" class="text-center">
-																<br/>
-																<div>'. Auth::user()->setting->echo_address .'</div>
-																<div style="padding: 5px 0;">Tel: '. Auth::user()->setting->phone .'</div>
-															</td>
-														</tr>
-													</table>
-													<br/>
-													<br/>	
-													<div class="echo_description">
-														'. $echoes->description .'
-													</div>
-												</section>';
+				' . $GlobalComponent->PrintHeader('echo', $echoes) . '
+				<br/>
+				<br/>	
+				<div class="echo_description">
+					'. $echoes->description .'
+				</div>
+			</section>';
 		}else{
 			$echoes_detail = '<section class="echoes-print" style="position: relative;">
-													<table class="table-header" width="100%">
-														<tr>
-															<td width="40%">
-																<div class="KHOSMoulLight"style="color: red;">'. Auth::user()->setting->sign_name_kh .'</div>
-																<div style="color: blue; font-weight: bold; text-transform: uppercase; padding: 5px 0;">'. Auth::user()->setting->sign_name_en .'</div>
-																<div>'. Auth::user()->setting->echo_description .'</div>
-															</td>
-															<td  width="20%">
-																<img src="/images/setting/'. Auth::user()->setting->logo .'" alt="IMG">
-															</td>
-															<td width="40%" class="text-center">
-																<div>'. Auth::user()->setting->echo_address .'</div>
-																<div style="padding: 5px 0;">Tel: '. Auth::user()->setting->phone .'</div>
-															</td>
-														</tr>
-													</table>
-													<table class="table-information" width="100%" style="border-top: 4px solid red; margin: 10px 0 6px 0;">
-														<tr>
-															<td colspan="3">
-																<h5 class="text-center KHOSMoulLight" style="padding: 20px 0 10px; color: blue;">'. $echoes->echo_default_description->name .'</h5>
-															</td>
-														</tr>
-														<tr>
-															<td>
-																ឈ្មោះ: <span class="pt_name">'. $echoes->pt_name .'</span>
-															</td>
-															<td>
-																ភេទ: <span class="pt_gender">'. $echoes->pt_gender .'</span>
-															</td>
-															<td>
-																អាយុ: <span class="pt_age">'. $echoes->pt_age .'</span>
-															</td>
-														</tr>
-														<tr>
-															<td colspan="3">
-																អាសយដ្ឋាន: <span class="pt_name">'. (($echoes->pt_village!='')? 'ភូមិ'.$echoes->pt_village : '') . (($echoes->pt_commune!='')? (($echoes->province->name=='ភ្នំពេញ')? ' សង្កាត់'.$echoes->pt_commune : ' ឃុំ'.$echoes->pt_commune) : '') . (($echoes->district->name!='')? (($echoes->province->name=='ភ្នំពេញ')? ' ខណ្ឌ'.$echoes->district->name : ' ស្រុក'.$echoes->district->name) : ''). (($echoes->province->name!='')? (($echoes->province->name=='ភ្នំពេញ')? ' រាជធានីភ្នំពេញ'.$echoes->province->name : ' ខេត្ត'.$echoes->province->name) : '') .'</span>
-															</td>
-														</tr>
-													</table>
-													<div class="echo_description">
-														<div style="margin-bottom: 10px;">
-															រោគវិនិច្ឆ័យ: '. $echoes->pt_diagnosis .'
-														</div>
-														'. $echoes->description .'
-													</div>
-													<table class="table-detail" width="100%">
-														<tr>
-															<td width="70%" style="padding: 10px;">
-																<img src="/images/echoes/'. $echoes->image .'" alt="IMG" height="300px">
-															</td>
-															<td>
-																<div>Le. '. date('d-m-Y', strtotime($echoes->date)) .'</div>
-																<br/>
-																<br/>
-																<br/>
-																<br/>
-																<br/>
-																<br/>
-																<br/>
-																<div>'. Auth::user()->setting->sign_name_en .'</div>
-															</td>
-														</tr>
-													</table>
-													<div class="color_red" style="color: red; text-decoration: underline; text-align: center; position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);">សូមយកវេជ្ជបញ្ជាមកវិញពេលមកពិនិត្យលើក្រោយ</div>
-													<br/>
-												</section>';
+				' . $GlobalComponent->PrintHeader('echo', $echoes) . '
+				<table class="table-information" width="100%" style="border-top: 4px solid red; margin: 10px 0 6px 0;">
+					<tr>
+						<td colspan="3">
+							<h5 class="text-center KHOSMoulLight" style="padding: 20px 0 10px; color: blue;">'. $echoes->echo_default_description->name .'</h5>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							ឈ្មោះ: <span class="pt_name">'. $echoes->pt_name .'</span>
+						</td>
+						<td>
+							ភេទ: <span class="pt_gender">'. $echoes->pt_gender .'</span>
+						</td>
+						<td>
+							អាយុ: <span class="pt_age">'. $echoes->pt_age .'</span>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							អាសយដ្ឋាន: <span class="pt_name">'. (($echoes->pt_village!='')? 'ភូមិ'.$echoes->pt_village : '') . (($echoes->pt_commune!='')? (($echoes->province->name=='ភ្នំពេញ')? ' សង្កាត់'.$echoes->pt_commune : ' ឃុំ'.$echoes->pt_commune) : '') . (($echoes->district->name!='')? (($echoes->province->name=='ភ្នំពេញ')? ' ខណ្ឌ'.$echoes->district->name : ' ស្រុក'.$echoes->district->name) : ''). (($echoes->province->name!='')? (($echoes->province->name=='ភ្នំពេញ')? ' រាជធានីភ្នំពេញ'.$echoes->province->name : ' ខេត្ត'.$echoes->province->name) : '') .'</span>
+						</td>
+					</tr>
+				</table>
+				<div class="echo_description">
+					<div style="margin-bottom: 10px;">
+						រោគវិនិច្ឆ័យ: '. $echoes->pt_diagnosis .'
+					</div>
+					'. $echoes->description .'
+				</div>
+				<table class="table-detail" width="100%">
+					<tr>
+						<td width="70%" style="padding: 10px;">
+							<img src="/images/echoes/'. $echoes->image .'" alt="IMG" height="300px">
+						</td>
+						<td>
+							<div>Le. '. date('d-m-Y', strtotime($echoes->date)) .'</div>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							<div>'. Auth::user()->setting->sign_name_en .'</div>
+						</td>
+					</tr>
+				</table>
+				<div class="color_red" style="color: red; text-decoration: underline; text-align: center; position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);">សូមយកវេជ្ជបញ្ជាមកវិញពេលមកពិនិត្យលើក្រោយ</div>
+				<br/>
+			</section>';
 		}
 
 		return response()->json(['echoes_detail' => $echoes_detail, 'title' => $title]);
