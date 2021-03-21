@@ -90,7 +90,7 @@ class PrescriptionRepository
 			</table>
 			<small class="remark">'. $prescription->remark .'</small>
 			<br/>
-			<div class="color_light_blue" style="text-decoration: underline; text-align: center; position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);">សូមយកវេជ្ជបញ្ជាមកវិញពេលមកពិនិត្យលើកក្រោយ</div>
+			' . $GlobalComponent->FooterComeBackText('សូមយកវេជ្ជបញ្ជាមកវិញពេលមកពិនិត្យលើក្រោយ') . '
 			<table class="table-footer" style="position: absolute; bottom: 80px; " width="90%">
 				<tr>
 					<td></td>

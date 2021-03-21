@@ -414,7 +414,7 @@ class LaborRepository
 			' . ($labor->labor_type == 2 ? ('<div id="ck_result">' . str_replace('__checkbox__', '<input type="checkbox" disabled/>', $labor->simple_labor_detail) . '</div>') : '<div style="height: 14.3cm"></div>') . '		
 			' . ($labor->labor_type == 1 ? ('<small class="remark">'. $labor->remark .'</small>') : '') . '
 			<br/>
-			<div class="color_light_blue" style="text-align: center; text-decoration: underline; position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);">សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើកក្រោយ</div>
+			' . $GlobalComponent->FooterComeBackText('សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើកក្រោយ') . '
 			<table class="table-footer mt---5" width="100%">
 				<tr>
 					<td> ' . ($labor->labor_type == 1 ? '<div>Séro Ag Widal</div>

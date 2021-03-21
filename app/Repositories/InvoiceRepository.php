@@ -122,7 +122,7 @@ class InvoiceRepository
 			</table>
 			<small class="remark">'. $invoice->remark .'</small>
 			<br/>
-			<div class="color_light_blue" style="text-decoration: underline; text-align: center; position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);">សូមយកវិក្កយបត្រនេះមកវិញពេលមកពិនិត្យលើកក្រោយ</div>
+			' . $GlobalComponent->FooterComeBackText('សូមយកវិក្កយបត្រនេះមកវិញពេលមកពិនិត្យលើកក្រោយ') . '
 			<table class="table-footer" width="100%">
 				<tr>
 					<td></td>

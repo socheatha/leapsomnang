@@ -1,6 +1,6 @@
 
 .invoice-print *{
-  font-family: 'Courier New','Khmer OS Battambang';
+  /* font-family: 'Courier New','Khmer OS Battambang'; */
 }
 
 .invoice-print{
@@ -76,7 +76,7 @@
 
 
 .prescription-print *{
-  font-family: 'Courier New','Khmer OS Battambang';
+  /* font-family: 'Courier New','Khmer OS Battambang'; */
 }
 
 .prescription-print{
@@ -96,7 +96,7 @@
 	padding: 6px;
 	border: 1px solid #ededed;
 }
-.prescription-print .table-detail td{ font-size: 16px; }
+/* .prescription-print .table-detail td{ font-size: 16px; } */
 
 .prescription-print .table-detail tfoot th{
 	padding: 6px;
@@ -105,10 +105,9 @@
 .prescription-print small{
 	font-size: 13px;
 }
-
 .prescription-print .table-detail td{
-	font-size: 16px;
-	font-weight: bold;
+	font-size: 15px;
+	/* font-weight: bold; */
 }	
 
 .echoes-print .echo_description{
