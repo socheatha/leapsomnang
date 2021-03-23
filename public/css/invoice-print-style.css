@@ -1,6 +1,6 @@
 
 .invoice-print *{
-  /* font-family: 'Courier New','Khmer OS Battambang'; */
+  font-family: 'Arial Black','Khmer OS Battambang';
 }
 
 .invoice-print{
@@ -33,9 +33,12 @@
 	height: 100px;
 }
 
+/* Aharoni
+Arial Black */
 
 .labor-print *{
-  /* font-family: 'Courier New','Khmer OS Battambang'; */
+  font-family: 'Arial Black','Khmer OS Battambang';
+	color: #0070C0;
 }
 
 .labor-print{
@@ -70,13 +73,19 @@
 	color: red;
 }
 .color_green{
-	color: #FFC000 !important;
+	color: green !important;
+}
+.color_blue{
+	color: blue !important;
+}
+.color_light_blue{
+	color: #0070C0 !important;
 }
 
 
 
 .prescription-print *{
-  /* font-family: 'Courier New','Khmer OS Battambang'; */
+  font-family: 'Arial Black','Khmer OS Battambang';
 }
 
 .prescription-print{
@@ -111,7 +120,7 @@
 }	
 
 .echoes-print .echo_description{
-  /* font-family: 'Courier New','Khmer OS Battambang'; */
+  font-family: 'Arial Black','Khmer OS Battambang';
 }
 
 .echoes-print{
@@ -138,9 +147,6 @@
 .echoes-print small{
 	font-size: 10px !important;
 }
-.color_light_blue{
-	color: blue !important;
-}
 
 @media print {
 	@page {
@@ -155,7 +161,7 @@
 		border: none;
 	}
 	
-	td .color_blue{
+	.color_blue{
 		color: blue !important;
 		-webkit-print-color-adjust: exact !important;
 		-moz-print-color-adjust: exact !important;
@@ -163,19 +169,7 @@
 	}
 	
 	.color_light_blue{
-		color: blue !important;
-		-webkit-print-color-adjust: exact !important;
-		-moz-print-color-adjust: exact !important;
-		-o-print-color-adjust: exact !important;
-	}
-	td .color_red{
-		color: red !important;
-		-webkit-print-color-adjust: exact !important;
-		-moz-print-color-adjust: exact !important;
-		-o-print-color-adjust: exact !important;
-	}
-	.echoes-print .color_red{
-		color: red !important;
+		color: #0070C0 !important;
 		-webkit-print-color-adjust: exact !important;
 		-moz-print-color-adjust: exact !important;
 		-o-print-color-adjust: exact !important;

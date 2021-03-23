@@ -25,7 +25,6 @@ class Setting extends BaseModel
 		'navbar_color',
 		'sidebar_color',
 		'legacy',
-		'user_id'
 	];
 
 

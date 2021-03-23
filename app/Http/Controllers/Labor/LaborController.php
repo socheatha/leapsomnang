@@ -49,9 +49,10 @@ class LaborController extends Controller
 	}
 
 
-	public function create()
+	public function create($type)
 	{
 		$this->data = [
+			'type' => $type,
 			'provinces' => Province::getSelectData(),
 			'districts' => [],
 			'labor_number' => $this->labor->labor_number(),
@@ -64,7 +65,7 @@ class LaborController extends Controller
 	}
 
 
-	public function store(LaborRequest $request)
+	public function store(LaborRequest $request, $type)
 	{
 		
 		$labor = $this->labor->create($request);
@@ -138,7 +139,7 @@ class LaborController extends Controller
 		return view('labor.report', $this->data);
 	}
 
-	public function edit(Labor $labor)
+	public function edit($type, Labor $labor)
 	{
 
 		$this->data = [
@@ -167,7 +168,7 @@ class LaborController extends Controller
 		return view('labor.print', $this->data);
 	}
 
-	public function update(LaborRequest $request, Labor $labor)
+	public function update(LaborRequest $request, $type, Labor $labor)
 	{
 		if ($this->labor->update($request, $labor)) {
 
@@ -183,7 +184,7 @@ class LaborController extends Controller
 	}
 
 
-	public function destroy(Request $request, Labor $labor)
+	public function destroy(Request $request, $type, Labor $labor)
 	{
 		// Redirect
 		return redirect()->route('labor.index')

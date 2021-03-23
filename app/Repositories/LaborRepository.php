@@ -87,10 +87,31 @@ class LaborRepository
 
 	public function getLaborServiceCheckList($request)
 	{
+		$category_check_list = '';
 		$service_check_list = '';
-		$labor_category = LaborCategory::find($request->id);
-		if ($labor_category != null) {
-			foreach ($labor_category->services as $key => $service) {
+
+		$ids = [];
+		if ($request->type == 'labo-standard') {
+			$ids = [1,2,3,4,5];
+		}else if ($request->type == 'hematology') {
+			$ids = [1];
+		}else if ($request->type == 'biologie') {
+			$ids = [2];
+		}else if ($request->type == 'urine') {
+			$ids = [3];
+		}else if ($request->type == 'serologie') {
+			$ids = [4];
+		}else if ($request->type == 'blood-type') {
+			$ids = [5];
+		}
+		// dd($request->type);
+
+		$labor_categories = LaborCategory::whereIn('id', $ids)->get();
+
+		foreach ($labor_categories as $key => $labor_category) {
+
+			$service_check_list = '';
+			foreach ($labor_category->services as $jey => $service) {
 				$service_check_list .= '<div class="col-sm-4">
 																	<div class="form-check mb-3">
 																		<input class="minimal chb_service" type="checkbox" id="'. $service->id .'" value="'. $service->id .'">
@@ -98,9 +119,17 @@ class LaborRepository
 																	</div>
 																</div>';
 			}
+
+			$category_check_list .= '<div class="col-sm-12">
+																<h5 class="text-center pt-3 pb-4">'. $labor_category->name .'</h5>
+															</div>
+															'. $service_check_list .'
+														';
+
 		}
+
 		return response()->json([
-			'service_check_list' => $service_check_list,
+			'category_check_list' => $category_check_list,
 		]);
 	}
 
@@ -183,6 +212,9 @@ class LaborRepository
 																			<input type="hidden" name="service_id[]" value="'. $service->id .'">
 																			<input type="hidden" name="service_name[]" value="'. $service->name .'">
 																			'. $service->name .'
+																		</td>
+																		<td>
+																			'. $service->category->name .'
 																		</td>
 																		<td class="text-center">
 																			<input type="text" name="result[]" class="form-control">
@@ -279,6 +311,9 @@ class LaborRepository
 																	<td>
 																		<input type="hidden" name="labor_detail_ids[]" value="'. $labor_detail->id .'">
 																		'. $labor_detail->name .'
+																	</td>
+																	<td>
+																		'. $service->category->name .'
 																	</td>
 																	<td class="text-center">
 																		<input type="text" name="result[]" value="'. $labor_detail->result .'" class="form-control"/>

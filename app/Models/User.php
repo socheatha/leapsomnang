@@ -36,6 +36,11 @@ class User extends Authenticatable
 		return $collection;
 	}
 
+	public function LaborTypes(){
+		$collection = LaborType::orderBy('id', 'asc');
+		return $collection;
+	}
+
 	public function isApproved($user){
 
 		if ($user->approval == 1) {
@@ -53,7 +58,7 @@ class User extends Authenticatable
 
   public function setting()
   {
-  	return $this->belongsTo(Setting::class, 'setting_id');
+  	return Setting::find(1);
   }
 
 	

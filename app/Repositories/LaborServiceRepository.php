@@ -14,7 +14,7 @@ class LaborServiceRepository
 
 	public function getData()
 	{
-		return LaborService::select(DB::raw("id, name, category_id, unit, description, CONCAT(`ref_from`,' - ',`ref_to`) AS reference"))->orderBy('name', 'asc')->get();
+		return LaborService::select(DB::raw("id, name, category_id, unit, description, CONCAT(`ref_from`,' - ',`ref_to`) AS reference"))->orderBy('id', 'asc')->get();
 	}
 
 	public function reloadSelectLaborService()

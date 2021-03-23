@@ -1,16 +1,16 @@
 
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar elevation-4 {{ ((Auth::user()->setting->legacy == '1')? '' : 'sidebar-light-indigo') }} {{ ((Auth::user()->setting->sidebar_color != '')? Auth::user()->setting->sidebar_color : 'sidebar-dark-primary') }}">
+<aside class="main-sidebar elevation-4 sidebar-light-indigo sidebar-light-primary">
 	<!-- Brand Logo -->
 	<a href="index3.html" class="brand-link">
-		<img src="/images/setting/{{ Auth::user()->setting->logo }}" alt="{{ Auth::user()->setting->clinic_name }}" class="brand-image img-circle elevation-3">
-		<span class="brand-text font-weight-light">{{ Auth::user()->setting->clinic_name_kh }}</span>
+		<img src="/images/setting/logo.png" alt="{{ Auth::user()->setting()->clinic_name }}" class="brand-image img-circle elevation-3">
+		<span class="brand-text font-weight-light">{{ Auth::user()->setting()->clinic_name_kh }}</span>
 	</a>
 
 	<!-- Sidebar -->
 	<div class="sidebar">
 		<nav class="mt-2">
-			<ul class="nav nav-pills nav-sidebar flex-column {{ ((Auth::user()->setting->legacy == '1')? 'nav-legacy nav-flat' : 'sidebar-light-indigo') }} nav-child-indent text-sm" data-widget="treeview" role="menu" data-accordion="false">
+			<ul class="nav nav-pills nav-sidebar flex-column {{ ((Auth::user()->setting()->legacy == '1')? 'nav-legacy nav-flat' : 'sidebar-light-indigo') }} nav-child-indent text-sm" data-widget="treeview" role="menu" data-accordion="false">
 
 				<!-- Add icons to the links using the .nav-icon class
 						with font-awesome or any other icon font library -->
@@ -45,7 +45,7 @@
 						</a>
 					</li>
 					@endcan
-
+{{-- 
 					@can('Labor Index', 'Labor Create', 'Labor Edit', 'Labor Delete')
 					<li class="nav-item">
 						<a href="{{ route('labor.create') }}" class="nav-link {{ ((Auth::user()->sidebarActive() == 'labor' )? 'active':'') }}">
@@ -53,7 +53,38 @@
 							<p>{{ __('sidebar.labor.main') }}</p>
 						</a>
 					</li>
-					@endcan
+					@endcan --}}
+
+					@if (count(Auth::user()->LaborTypes()->get()))
+						@canany(['Labor Index', 'Labor Create', 'Labor Edit', 'Labor Delete'])
+					
+						<li class="nav-item has-treeview {{ ((in_array(Auth::user()->sidebarActive(), [ 'labor' ]))? 'menu-open':'') }}">
+							<a href="#" class="nav-link {{ ((strpos('labor', Auth::user()->sidebarActive()) !== false)? 'active':'') }}">
+								<i class="nav-icon las la-flask"></i>
+								<p>
+									{{ __('sidebar.echo.main') }}
+									<i class="right fas fa-angle-left"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+
+							@foreach (Auth::user()->LaborTypes()->get() as $jjey => $llabor_type )
+								@can('Echo Index', 'Echo Create', 'Echo Edit', 'Echo Delete')
+								<li class="nav-item">
+									<a href="{{ route('labor.create', $llabor_type->slug) }}" class="nav-link {{ (($llabor_type->slug == @$type )? 'active':'') }}">
+										<i class="far fa-circle nav-icon"></i>
+										<p>{{ $llabor_type->name }}</p>
+									</a>
+								</li>
+								@endcan
+									
+							@endforeach
+		
+							</ul>
+						</li>
+						
+						@endcan
+					@endif
 
 					@canany(['Labor Service Index','Labor Service Create', 'Labor Service Edit', 'Labor Service Delete', 'Labor Category Index','Labor Category Create', 'Labor Category Edit', 'Labor Category Delete'])
 				

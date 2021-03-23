@@ -1,4 +1,12 @@
 @font-face{
+  src: url('/fonts/ahronbd.ttf');
+  font-family: 'Aharoni';
+}
+@font-face{
+  src: url('/fonts/calibri/ariblk.ttf');
+  font-family: 'Arial Black';
+}
+@font-face{
   src: url('/fonts/cour.ttf');
   font-family: 'Courier New';
 }
@@ -97,6 +105,14 @@ td.details-control {
 
 .main-header .sidebar-toggle {
   font-family: 'fa_brand','fa_regular','fa_solid' !important;
+}
+.aharoni,
+.aharoni *{
+  font-family: 'Aharoni' !important;
+}
+.arial_black,
+.arial_black *{
+  font-family: 'Arial Black' !important;
 }
 .roboto_b,
 .roboto_b *{

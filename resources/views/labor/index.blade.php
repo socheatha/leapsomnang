@@ -27,9 +27,6 @@
 				@can('Labor Report')
 				<a href="{{route('labor.report')}}" class="btn btn-info btn-sm btn-flat"><i class="fa fa-file-alt"></i> &nbsp;{{ __('label.buttons.report', [ 'name' => Auth::user()->module() ]) }}</a>
 				@endcan
-				@can('Labor Create')
-				<a href="{{route('labor.create')}}" class="btn btn-sm btn-success btn-flat"><i class="fa fa-plus"></i> &nbsp;{{ __('label.buttons.create') }}</a>
-				@endcan
 			</div>
 
 			<!-- Error Message -->

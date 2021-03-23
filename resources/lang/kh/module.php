@@ -68,6 +68,7 @@ return [
 	    'pt_name' => 'ឈ្មោះអ្នកជំងឺ',
 	    'pt_phone' => 'លេខទូរស័ព្ទ',
 	    'pt_age' => 'អាយុ',
+	    'category' => 'ប្រភេទ',
 	    'result' => 'លទ្ធផល',
 	    'detail' => 'លម្អិត',
 	    'total_patient' => 'អ្នកជំងឺសរុប',

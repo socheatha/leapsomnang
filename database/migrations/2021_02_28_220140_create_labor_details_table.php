@@ -18,6 +18,7 @@ class CreateLaborDetailsTable extends Migration
           $table->string('name');
           $table->double('result')->nullable();
           $table->string('unit')->nullable();
+          $table->integer('sort')->nullable();
           $table->text('description')->nullable();
           $table->unsignedBigInteger('labor_id');
           $table->unsignedBigInteger('service_id');
