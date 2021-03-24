@@ -62,7 +62,7 @@
 							<a href="#" class="nav-link {{ ((strpos('labor', Auth::user()->sidebarActive()) !== false)? 'active':'') }}">
 								<i class="nav-icon las la-flask"></i>
 								<p>
-									{{ __('sidebar.echo.main') }}
+									{{ __('sidebar.labor.main') }}
 									<i class="right fas fa-angle-left"></i>
 								</p>
 							</a>
