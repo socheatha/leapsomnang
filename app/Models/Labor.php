@@ -23,6 +23,7 @@ class Labor extends Model
 		'pt_province_id',
 		'status',
 		'price',
+		'type',
 		'labor_type',
 		'simple_labor_detail',
 		'remark',

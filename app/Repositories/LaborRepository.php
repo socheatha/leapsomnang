@@ -104,7 +104,6 @@ class LaborRepository
 		}else if ($request->type == 'blood-type') {
 			$ids = [5];
 		}
-		// dd($request->type);
 
 		$labor_categories = LaborCategory::whereIn('id', $ids)->get();
 
@@ -133,79 +132,42 @@ class LaborRepository
 		]);
 	}
 
-	public function getCheckedServicesList($request)
+	public function getCheckedServicesList($type)
 	{
+		$ids = [];
+		$no = 0;
 		$checked_services_list = '';
-		$labor_services = LaborService::whereIn('id', $request->ids)->get();
-		$no = $request->no;
+		if ($type == 'labo-standard') {
+			$ids = [1,2,3,4,5];
+		}else if ($type == 'hematology') {
+			$ids = [1];
+		}else if ($type == 'biologie') {
+			$ids = [2];
+		}else if ($type == 'urine') {
+			$ids = [3];
+		}else if ($type == 'serologie') {
+			$ids = [4];
+		}else if ($type == 'blood-type') {
+			$ids = [5];
+		}
 
-		foreach ($labor_services as $key => $service) {
+		$labor_categories = LaborCategory::whereIn('id', $ids)->get();
+
+		foreach ($labor_categories as $key => $labor_category) {
+
+			$service_check_list = '';
+			foreach ($labor_category->services as $jey => $service) {
 			
-			$reference = '';
-			if ($service->ref_from == '' && $service->ref_to != '') {
-				$reference = '(<'. $service->ref_to .' '. $service->unit .')';
-			}else if($service->ref_from != '' && $service->ref_to ==''){
-				$reference = '('. $service->ref_from .'> '. $service->unit .')';
-			}else if($service->ref_from != '' && $service->ref_to!=''){
-				$reference = '('. $service->ref_from .'-'. $service->ref_to .' '. $service->unit .')';
-			}else{
 				$reference = '';
-			}
+				if ($service->ref_from == '' && $service->ref_to != '') {
+					$reference = '<'.  number_format($service->ref_to, 2) .' '. $service->unit;
+				}else if($service->ref_from != '' && $service->ref_to ==''){
+					$reference = number_format($service->ref_from, 2) .'> '. $service->unit;
+				}else if($service->ref_from != '' && $service->ref_to!=''){
+					$reference = number_format($service->ref_from, 2) .'-'.  number_format($service->ref_to, 2) .' '. $service->unit;
+				}
 
-			$no++;
-			if ($service->name=='TH' || $service->name=='TO') {
-				$checked_services_list .= '<tr class="labor_item" id="'. $no.'-'.$service->id .'">
-																		<td class="text-center">'. $no .'</td>
-																		<td>
-																			<input type="hidden" name="service_id[]" value="'. $service->id .'">
-																			<input type="hidden" name="service_name[]" value="'. $service->name .'">
-																			'. $service->name .'
-																		</td>
-																		<td class="text-center">
-																			<input type="text" name="result[]" class="form-control">
-																		</td>
-																		<td class="text-center">
-																			<select name="unit[]" class="form-control">
-																				<option value="">None</option>
-																				<option value="Négatif">Négatif</option>
-																				<option value="Positif">Positif</option>
-																			</select>
-																		</td>
-																		<td class="text-center">
-																			<input type="hidden" name="reference[]" value="'. $reference .'">
-																			'. $reference .'
-																		</td>
-																		<td class="text-center">
-																			<button type="button" onclick="removeCheckedService(\''. $no.'-'.$service->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
-																		</td>
-																	</tr>';
-			} else if ($service->name=='Test Hélicobactaire Pylorie' || $service->name=='Test Malaria' || $service->name=='Test Syphilis') {
-				$checked_services_list .= '<tr class="labor_item" id="'. $no.'-'.$service->id .'">
-																		<td class="text-center">'. $no .'</td>
-																		<td>
-																			<input type="hidden" name="service_id[]" value="'. $service->id .'">
-																			<input type="hidden" name="service_name[]" value="'. $service->name .'">
-																			'. $service->name .'
-																		</td>
-																		<td class="text-center">
-																			<input type="hidden" name="unit[]" value="">
-																			'. $service->unit .'
-																		</td>
-																		<td class="text-center">
-																			<select name="result[]" class="form-control">
-																				<option value="Négatif">Négatif</option>
-																				<option value="Positif">Positif</option>
-																			</select>
-																		</td>
-																		<td class="text-center">
-																			<input type="hidden" name="reference[]" value="'. $reference .'">
-																			'. $reference .'
-																		</td>
-																		<td class="text-center">
-																			<button type="button" onclick="removeCheckedService(\''. $no.'-'.$service->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
-																		</td>
-																	</tr>';
-			} else {
+				$no++;
 				$checked_services_list .= '<tr class="labor_item" id="'. $no.'-'.$service->id .'">
 																		<td class="text-center">'. $no .'</td>
 																		<td>
@@ -227,16 +189,19 @@ class LaborRepository
 																			<input type="hidden" name="reference[]" value="'. $reference .'">
 																			'. $reference .'
 																		</td>
-																		<td class="text-center">
+																		<td class="text-center sr-only">
 																			<button type="button" onclick="removeCheckedService(\''. $no.'-'.$service->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
 																		</td>
 																	</tr>';
-			}
 
+			}
 		}
-		return response()->json([
-			'checked_services_list' => $checked_services_list,
-		]);
+		
+		return $checked_services_list;
+
+		// return response()->json([
+		// 	'checked_services_list' => $checked_services_list,
+		// ]);
 	}
 
 	public function getLaborDetail($id)
@@ -257,79 +222,80 @@ class LaborRepository
 				$reference = '';
 			}
 
-			if ($labor_detail->name=='TH' || $labor_detail->name=='TO'){
-				$labor_detail_list .= '<tr class="labor_item" id="'. $labor_detail->result .'">
+			// if ($labor_detail->name=='TH' || $labor_detail->name=='TO'){
+			// 	$labor_detail_list .= '<tr class="labor_item" id="'. $labor_detail->result .'">
+			// 													<td class="text-center">'. ++$order .'</td>
+			// 													<td>
+			// 														<input type="hidden" name="labor_detail_ids[]" value="'. $labor_detail->id .'">
+			// 														'. $labor_detail->name .'
+			// 													</td>
+			// 													<td class="text-center">
+			// 														<input type="text" name="result[]" value="'. $labor_detail->result .'" class="form-control"/>
+			// 													</td>
+			// 													<td class="text-center">
+			// 														<select name="unit[]" class="form-control">
+			// 															<option value="" '. (($labor_detail->unit == '')? 'selected' : '') .'>None</option>
+			// 															<option value="Négatif" '. (($labor_detail->unit == 'Négatif')? 'selected' : '') .'>Négatif</option>
+			// 															<option value="Positif" '. (($labor_detail->unit == 'Positif')? 'selected' : '') .'>Positif</option>
+			// 														</select>
+			// 													</td>
+			// 													<td class="text-center">
+			// 														'. $reference .'
+			// 													</td>
+			// 													<td class="text-center">
+			// 														<button type="button" onclick="deleteLaborDetail(\''. $labor_detail->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
+			// 													</td>
+			// 												</tr>';
+			// }elseif ($labor_detail->name=='Test Hélicobactaire Pylorie' || $labor_detail->name=='Test Malaria' || $labor_detail->name=='Test Syphilis'){
+			// 	$labor_detail_list .= '<tr class="labor_item" id="'. $labor_detail->result .'">
+			// 													<td class="text-center">'. ++$order .'</td>
+			// 													<td>
+			// 														<input type="hidden" name="labor_detail_ids[]" value="'. $labor_detail->id .'">
+			// 														'. $labor_detail->name .'
+			// 													</td>
+			// 													<td class="text-center">
+			// 														<input type="hidden" name="unit[]" value="">
+			// 														'. $labor_detail->service->unit .'
+			// 													</td>
+			// 													<td class="text-center">
+			// 														<select name="result[]" class="form-control">
+			// 															<option value="Négatif" '. (($labor_detail->result == 'Négatif')? 'selected' : '') .'>Négatif</option>
+			// 															<option value="Positif" '. (($labor_detail->result == 'Positif')? 'selected' : '') .'>Positif</option>
+			// 														</select>
+			// 													</td>
+			// 													<td class="text-center">
+			// 														'. $reference .'
+			// 													</td>
+			// 													<td class="text-center">
+			// 														<button type="button" onclick="deleteLaborDetail(\''. $labor_detail->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
+			// 													</td>
+			// 												</tr>';
+			// }else{
+
+			// }
+			$labor_detail_list .= '<tr class="labor_item" id="'. $labor_detail->result .'">
 																<td class="text-center">'. ++$order .'</td>
 																<td>
 																	<input type="hidden" name="labor_detail_ids[]" value="'. $labor_detail->id .'">
 																	'. $labor_detail->name .'
+																</td>
+																<td>
+																	'. $service->category->name .'
 																</td>
 																<td class="text-center">
 																	<input type="text" name="result[]" value="'. $labor_detail->result .'" class="form-control"/>
-																</td>
-																<td class="text-center">
-																	<select name="unit[]" class="form-control">
-																		<option value="" '. (($labor_detail->unit == '')? 'selected' : '') .'>None</option>
-																		<option value="Négatif" '. (($labor_detail->unit == 'Négatif')? 'selected' : '') .'>Négatif</option>
-																		<option value="Positif" '. (($labor_detail->unit == 'Positif')? 'selected' : '') .'>Positif</option>
-																	</select>
-																</td>
-																<td class="text-center">
-																	'. $reference .'
-																</td>
-																<td class="text-center">
-																	<button type="button" onclick="deleteLaborDetail(\''. $labor_detail->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
-																</td>
-															</tr>';
-			}elseif ($labor_detail->name=='Test Hélicobactaire Pylorie' || $labor_detail->name=='Test Malaria' || $labor_detail->name=='Test Syphilis'){
-				$labor_detail_list .= '<tr class="labor_item" id="'. $labor_detail->result .'">
-																<td class="text-center">'. ++$order .'</td>
-																<td>
-																	<input type="hidden" name="labor_detail_ids[]" value="'. $labor_detail->id .'">
-																	'. $labor_detail->name .'
 																</td>
 																<td class="text-center">
 																	<input type="hidden" name="unit[]" value="">
 																	'. $labor_detail->service->unit .'
 																</td>
 																<td class="text-center">
-																	<select name="result[]" class="form-control">
-																		<option value="Négatif" '. (($labor_detail->result == 'Négatif')? 'selected' : '') .'>Négatif</option>
-																		<option value="Positif" '. (($labor_detail->result == 'Positif')? 'selected' : '') .'>Positif</option>
-																	</select>
-																</td>
-																<td class="text-center">
 																	'. $reference .'
 																</td>
 																<td class="text-center">
 																	<button type="button" onclick="deleteLaborDetail(\''. $labor_detail->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
 																</td>
 															</tr>';
-			}else{
-				$labor_detail_list .= '<tr class="labor_item" id="'. $labor_detail->result .'">
-																	<td class="text-center">'. ++$order .'</td>
-																	<td>
-																		<input type="hidden" name="labor_detail_ids[]" value="'. $labor_detail->id .'">
-																		'. $labor_detail->name .'
-																	</td>
-																	<td>
-																		'. $service->category->name .'
-																	</td>
-																	<td class="text-center">
-																		<input type="text" name="result[]" value="'. $labor_detail->result .'" class="form-control"/>
-																	</td>
-																	<td class="text-center">
-																		<input type="hidden" name="unit[]" value="">
-																		'. $labor_detail->service->unit .'
-																	</td>
-																	<td class="text-center">
-																		'. $reference .'
-																	</td>
-																	<td class="text-center">
-																		<button type="button" onclick="deleteLaborDetail(\''. $labor_detail->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
-																	</td>
-																</tr>';
-			}
 		}
 		return $labor_detail_list;
 	}
@@ -376,88 +342,118 @@ class LaborRepository
 		$grand_total = 0;
 		$labor_detail = '';
 		$labor_detail_item_list = '';
-		$labor_detail_item_list_th_to = '';
 		$labor = Labor::find($id);
+
 		$title = 'Labor ('. str_pad($labor->labor_number, 6, "0", STR_PAD_LEFT) .')';
 
-		foreach ($labor->labor_details as $labor_detail) {
+		if ($labor->type=='labo-standard') {
+			$hematology = '';
+			$biologie = '';
+			$urine = '';
+			$serologie = '';
+			$blood_type = '';
+			$labor_categories = LaborCategory::whereIn('id', [1,2,3,4,5])->get();
+			
+			foreach ($labor_categories as $key => $labor_category) {
 
-			if ($labor_detail->service->name=='TH' || $labor_detail->service->name=='TO') {
-				
-				$class_unit = '';
-				if ($labor_detail->unit== 'positif' || $labor_detail->unit== 'Positif' || $labor_detail->unit== 'POSITIF') {
-					$class_unit = 'color_red';
+				$labor_details = $labor->labor_details()->whereIn('service_id', $labor_category->services->pluck('id'))->get();
+				// dd($labor_category->services->pluck('id'));
+
+				foreach ($labor_details as $jey => $labor_detail) {
+					$reference = '';
+					if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to != '') {
+						$reference = '<'.  number_format($labor_detail->service->ref_to, 2) .' '. $labor_detail->service->unit;
+					}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to ==''){
+						$reference = number_format($labor_detail->service->ref_from, 2) .'> '. $labor_detail->service->unit;
+					}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to!=''){
+						$reference = number_format($labor_detail->service->ref_from, 2) .'-'.  number_format($labor_detail->service->ref_to, 2) .' '. $labor_detail->service->unit;
+					}
+
+
+					if ($labor_category->name === 'HEMATOLOGIE') {
+						$hematology .= '<tr>
+															<td>'. $labor_detail->name .'</td>
+															<td>'. $labor_detail->result .'</td>
+															<td>'. $reference .'</td>
+															<td>'. $labor_detail->service->unit .'</td>
+														</tr>';
+					}
+					// }elseif ($labor_category->name === 'BIOLOGIE') {
+					// 	$biologie .= '<tr>
+					// 									<td>'. $labor_detail->name .'</td>
+					// 									<td>'. $labor_detail->result .'</td>
+					// 									<td>'. $reference .'</td>
+					// 									<td>'. $labor_detail->service->unit .'</td>
+					// 								</tr>';
+					// }elseif ($labor_category->name === 'URINE') {
+					// 	$urine .= '<tr>
+					// 							<td>'. $labor_detail->name .'</td>
+					// 							<td>'. $labor_detail->result .'</td>
+					// 							<td>'. $reference .'</td>
+					// 							<td>'. $labor_detail->service->unit .'</td>
+					// 						</tr>';
+					// }elseif ($labor_category->name === 'SEROLOGIE') {
+					// 	$serologie .= '<tr>
+					// 										<td>'. $labor_detail->name .'</td>
+					// 										<td>'. $labor_detail->result .'</td>
+					// 										<td>'. $reference .'</td>
+					// 										<td>'. $labor_detail->service->unit .'</td>
+					// 									</tr>';
+					// }elseif ($labor_category->name === 'Blood Type') {
+					// 	$blood_type .= '<tr>
+					// 										<td>'. $labor_detail->name .'</td>
+					// 										<td>'. $labor_detail->result .'</td>
+					// 										<td>'. $reference .'</td>
+					// 										<td>'. $labor_detail->service->unit .'</td>
+					// 									</tr>';
+					// }
 				}
 
-				$class_result = '';
-				if ($labor_detail->result== '1/160' || $labor_detail->result== '1/320') {
-					$class_result = 'color_red';
-				}
+				// dd($hematology);
 
-				$labor_detail_item_list_th_to .= '<tr>
-					<td width="2%"></td>
-					<td width="30%">-'. $labor_detail->name .'</td>
-					<td width="16%">: <b><span class="'. $class_result .'">'. $labor_detail->result .'</span></b></td>
-					<td width="12%" class="'. $class_unit .'">&nbsp;'. $labor_detail->unit .'</td>
-					<td width=""></td>
-				</tr>';
+				$labor_detail_item_list = '<tr>
+																		<td colspan="4" width="50%" style="border: 1px solid red; text-align: center;"><b>Hematology</b></td>
+																		<td colspan="4" width="50%" style="border: 1px solid red; text-align: center;"><b>Biologie</b></td>
+																	</tr>
+																	<tr>
+																		<td rowspan="6">
+																			'. $hematology .'
+																		</td>
+																	</tr>';
 
-			}else if ($labor_detail->service->name=='Test Hélicobactaire Pylorie' || $labor_detail->service->name=='Test Malaria' || $labor_detail->service->name=='Test Syphilis') {
-				
-				$class = '';
-				if ($labor_detail->result== 'positif' || $labor_detail->result== 'Positif' || $labor_detail->result== 'POSITIF') {
-					$class = 'color_red';
-				}
 
-				$labor_detail_item_list .= '<tr>
-					<td width="2%"></td>
-					<td width="30%">-'. $labor_detail->name .'</td>
-					<td width="16%">: <b>'. $labor_detail->service->unit .'</b></td>
-					<td width="12%">&nbsp;<span class="'. $class .'">'. $labor_detail->result .'</span></td>
-					<td width="">'. (($labor_detail->service->ref_from != '' && $labor_detail->service->ref_from!='')? '('. $labor_detail->service->ref_from .'-'. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')' : '') .'</td>
-				</tr>';
-			}else{
-				
-				$class = 'color_light_blue';
-				if ($labor_detail->result < $labor_detail->service->ref_from) {
-					$class = 'color_green';
-				}else if ($labor_detail->result > $labor_detail->service->ref_to) {
-					$class = 'color_red';
-				}
-
-				$reference = '';
-				if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to != '') {
-					$reference = '(<'. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')';
-				}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to ==''){
-					$reference = '('. $labor_detail->service->ref_from .'> '. $labor_detail->service->unit .')';
-				}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to!=''){
-					$reference = '('. $labor_detail->service->ref_from .'-'. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')';
-				}
-
-				$labor_detail_item_list .= '<tr>
-					<td width="2%"></td>
-					<td width="30%">-'. $labor_detail->name .'</td>
-					<td width="16%">: <b><span class="'. $class .'">'. $labor_detail->result .'</span></b></td>
-					<td width="12%">&nbsp;'. $labor_detail->service->unit .'</td>
-					<td width="">'. $reference .'</td>
-				</tr>';
 			}
+
+
+		}else if ($labor->type == 'hematology') {
+			
+		}else if ($labor->type == 'biologie') {
+			
+		}else if ($labor->type == 'urine') {
+			
+		}else if ($labor->type == 'serologie') {
+			
+		}else if ($labor->type == 'blood-type') {
+			$labor_detail_item_list .= '<tr style="border: 2px solid #000; font-size: 19px;">
+																		<td width="15%"></td>
+																		<td width="20%" class="KHOSMoulLight">ក្រុមឈាម <span class="float-right pull-right">:</span> </td>
+																		<td width="50%" style="text-align:center; padding: 100px 0;"><div style="border-bottom: 1px dashed #0070C0;">'. $labor->labor_details->first()->result .'</div></td>
+																		<td width="15%"></td>
+																	</tr>';
 		}
 
 		$labor_detail = '<section class="labor-print" style="position: relative;">
-			' . $GlobalComponent->PrintHeader('labor', $labor) . '		
-			' . ($labor->labor_type == 2 ? ('<div id="ck_result">' . str_replace('__checkbox__', '<input type="checkbox" disabled/>', $labor->simple_labor_detail) . '</div>') : '<div style="height: 14.3cm"></div>') . '		
+			' . $GlobalComponent->PrintHeader('labor', $labor) . '
+			
+			<table width="100%">
+				'. $labor_detail_item_list .'
+			</table>	
 			' . ($labor->labor_type == 1 ? ('<small class="remark">'. $labor->remark .'</small>') : '') . '
 			<br/>
 			' . $GlobalComponent->FooterComeBackText('សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើកក្រោយ') . '
 			<table class="table-footer mt---5" width="100%">
 				<tr>
-					<td> ' . ($labor->labor_type == 1 ? '<div>Séro Ag Widal</div>
-							<table width="100%">
-								'. $labor_detail_item_list_th_to .'
-								'. $labor_detail_item_list .'
-							</table>' : '') .  															
-					' </td>
+					<td></td>
 					<td width="28%" class="text-center" style="position: absolute; right: 0px; bottom: 40px;">
 						<div><strong class="color_light_blue" style="font-size: 16px;">Technicien</strong></div>
 						<div class="sign_box"></div>
@@ -478,7 +474,7 @@ class LaborRepository
 		return (($labor === null) ? '000001' : $labor->labor_number + 1);
 	}
 
-	public function create($request)
+	public function create($request, $type)
 	{
 
 		$patient_id = $request->patient_id;
@@ -522,6 +518,7 @@ class LaborRepository
 			'pt_district_id' => $request->pt_district_id,
 			'pt_province_id' => $request->pt_province_id,
 			'price' => $request->price ?: 0,
+			'type' => $type,
 			'labor_type' => $request->labor_type ?: 1,
 			'simple_labor_detail' => $request->simple_labor_detail ?: '',
 			'remark' => $request->remark,
@@ -547,7 +544,7 @@ class LaborRepository
 		return $labor;
 	}
 
-	public function update($request, $labor)
+	public function update($request, $type, $labor)
 	{
 		// dd($request->all());
 		$labor->update([
@@ -561,6 +558,7 @@ class LaborRepository
 			'pt_district_id' => $request->pt_district_id,
 			'pt_province_id' => $request->pt_province_id,
 			'price' => $request->price ?: 0,
+			'type' => $type,
 			'simple_labor_detail' => $request->simple_labor_detail ?: '',
 			'remark' => $request->remark,
 			'updated_by' => Auth::user()->id,

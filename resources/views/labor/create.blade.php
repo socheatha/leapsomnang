@@ -53,10 +53,11 @@
 							<th width="200px">{!! __('module.table.labor.result') !!}</th>
 							<th width="200px">{!! __('module.table.labor_service.unit') !!}</th>
 							<th width="200px">{!! __('module.table.labor_service.reference') !!}</th>
-							<th width="90px">{!! __('module.table.action') !!}</th>
+							<th width="90px" class="sr-only">{!! __('module.table.action') !!}</th>
 						</tr>
 					</thead>
 					<tbody class="item_list">
+						{!! $item_list !!}
 					</tbody>
 				</table>
 			</div>			
@@ -82,119 +83,6 @@
 <script type="text/javascript">
 
 	var endLoadScript = function () {} // declear global variable as function
-
-	$('#btn_add_service').click(function () {
-		$('#create_labor_item_modal').modal();
-		// $('#category_id').val('1').trigger('change');
-		getLaborServiceCheckList();
-	});
-
-	function getLaborServiceCheckList() {
-		$('#check_all_service').iCheck('uncheck');
-		$.ajax({
-			url: "{{ route('labor.getLaborServiceCheckList') }}",
-			method: 'post',
-			data: {
-				type: '{{ $type }}',
-			},
-			success: function (data) {
-				$('.service_check_list').html(data.category_check_list);
-				
-				$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-					checkboxClass: 'icheckbox_minimal-blue',
-					radioClass   : 'iradio_minimal-blue'
-				})
-				$('#check_all_service').on('ifChecked', function (event) {
-					$('.chb_service').iCheck('check');
-					triggeredByChild = false;
-				});
-				$('#check_all_service').on('ifUnchecked', function (event) {
-					if (!triggeredByChild) {
-						$('.chb_service').iCheck('uncheck');
-					}
-					triggeredByChild = false;
-				});
-				// Removed the checked state from "All" if any checkbox is unchecked
-				$('.chb_service').on('ifUnchecked', function (event) {
-					triggeredByChild = true;
-					$('#check_all_service').iCheck('uncheck');
-				});
-				$('.chb_service').on('ifChecked', function (event) {
-					if ($('.chb_service').filter(':checked').length == $('.chb_service').length) {
-						$('#check_all_service').iCheck('check');
-					}
-				});
-			}
-		});
-	}
-
-	// $('#category_id').change(function () {
-	// 	if ($(this).val() != '') {
-	// 		$('#check_all_service').iCheck('uncheck');
-	// 		$.ajax({
-	// 			url: "{{ route('labor.getLaborServiceCheckList') }}",
-	// 			method: 'post',
-	// 			data: {
-	// 				id: $(this).val(),
-	// 			},
-	// 			success: function (data) {
-	// 				$('.service_check_list').html(data.service_check_list);
-					
-	// 				$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-	// 					checkboxClass: 'icheckbox_minimal-blue',
-	// 					radioClass   : 'iradio_minimal-blue'
-	// 				})
-	// 				$('#check_all_service').on('ifChecked', function (event) {
-	// 					$('.chb_service').iCheck('check');
-	// 					triggeredByChild = false;
-	// 				});
-	// 				$('#check_all_service').on('ifUnchecked', function (event) {
-	// 					if (!triggeredByChild) {
-	// 						$('.chb_service').iCheck('uncheck');
-	// 					}
-	// 					triggeredByChild = false;
-	// 				});
-	// 				// Removed the checked state from "All" if any checkbox is unchecked
-	// 				$('.chb_service').on('ifUnchecked', function (event) {
-	// 					triggeredByChild = true;
-	// 					$('#check_all_service').iCheck('uncheck');
-	// 				});
-	// 				$('.chb_service').on('ifChecked', function (event) {
-	// 					if ($('.chb_service').filter(':checked').length == $('.chb_service').length) {
-	// 						$('#check_all_service').iCheck('check');
-	// 					}
-	// 				});
-	// 			}
-	// 		});
-	// 	}else{
-	// 		$('.service_check_list').html('');
-	// 	}
-	// });
-	
-	$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-		checkboxClass: 'icheckbox_minimal-blue',
-		radioClass   : 'iradio_minimal-blue'
-	})
-	$('#check_all_service').on('ifChecked', function (event) {
-		$('.chb_service').iCheck('check');
-		triggeredByChild = false;
-	});
-	$('#check_all_service').on('ifUnchecked', function (event) {
-		if (!triggeredByChild) {
-			$('.chb_service').iCheck('uncheck');
-		}
-		triggeredByChild = false;
-	});
-	// Removed the checked state from "All" if any checkbox is unchecked
-	$('.chb_service').on('ifUnchecked', function (event) {
-		triggeredByChild = true;
-		$('#check_all_service').iCheck('uncheck');
-	});
-	$('.chb_service').on('ifChecked', function (event) {
-		if ($('.chb_service').filter(':checked').length == $('.chb_service').length) {
-			$('#check_all_service').iCheck('check');
-		}
-	});
 
 	$('[name="pt_province_id"]').change( function(e){
 		if ($(this).val() != '') {

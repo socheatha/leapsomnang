@@ -43,7 +43,7 @@ Route::group(['prefix' => 'labor', 'as' => 'labor.', 'namespace' => 'Labor'], fu
 	Route::get('/{type}/{labor}/edit', 'LaborController@edit')->name('edit')->middleware('can:Labor Edit');
 	Route::put('/{type}/{labor}/update', 'LaborController@update')->name('update')->middleware('can:Labor Edit');
 	Route::delete('/{type}/{labor}/delete', 'LaborController@destroy')->name('destroy')->middleware('can:Labor Delete');
-	Route::get('/{type}/{labor}/print', 'LaborController@print')->name('print')->middleware('can:Labor Print');
+	Route::get('/{labor}/print', 'LaborController@print')->name('print')->middleware('can:Labor Print');
 	
 	Route::get('/report', 'LaborController@report')->name('report')->middleware('can:Labor Report');
 	Route::post('/getReport', 'LaborController@getReport')->name('getReport')->middleware('can:Labor Report');
