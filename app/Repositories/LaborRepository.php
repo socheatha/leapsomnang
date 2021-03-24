@@ -357,69 +357,112 @@ class LaborRepository
 			foreach ($labor_categories as $key => $labor_category) {
 
 				$labor_details = $labor->labor_details()->whereIn('service_id', $labor_category->services->pluck('id'))->get();
-				// dd($labor_category->services->pluck('id'));
 
 				foreach ($labor_details as $jey => $labor_detail) {
 					$reference = '';
 					if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to != '') {
-						$reference = '<'.  number_format($labor_detail->service->ref_to, 2) .' '. $labor_detail->service->unit;
+						$reference = '<'.  $labor_detail->service->ref_to;
 					}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to ==''){
-						$reference = number_format($labor_detail->service->ref_from, 2) .'> '. $labor_detail->service->unit;
+						$reference = $labor_detail->service->ref_from .'> ';
 					}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to!=''){
-						$reference = number_format($labor_detail->service->ref_from, 2) .'-'.  number_format($labor_detail->service->ref_to, 2) .' '. $labor_detail->service->unit;
+						$reference = $labor_detail->service->ref_from .'-'.  $labor_detail->service->ref_to;
 					}
 
 
 					if ($labor_category->name === 'HEMATOLOGIE') {
 						$hematology .= '<tr>
+															<td width="20%">'. $labor_detail->name .'</td>
+															<td width="18%" style="border-bottom: 1px dashed #0070C0; text-align: center;">'. $labor_detail->result .'</td>
+															<td width="4%"></td>
+															<td width="28%">'. $reference .'</td>
+															<td width="20%">'. $labor_detail->service->unit .'</td>
+														</tr>';
+					}elseif ($labor_category->name === 'BIOLOGIE') {
+						$biologie .= '<tr>
+														<td>'. $labor_detail->name .'</td>
+														<td width="2%"></td>
+														<td>'. $labor_detail->result .'</td>
+														<td>'. $reference .'</td>
+														<td>'. $labor_detail->service->unit .'</td>
+													</tr>';
+					}elseif ($labor_category->name === 'URINE') {
+						$urine .= '<tr>
+												<td>'. $labor_detail->name .'</td>
+												<td>'. $labor_detail->result .'</td>
+												<td>'. $reference .'</td>
+												<td>'. $labor_detail->service->unit .'</td>
+											</tr>';
+					}elseif ($labor_category->name === 'SEROLOGIE') {
+						$serologie .= '<tr>
 															<td>'. $labor_detail->name .'</td>
 															<td>'. $labor_detail->result .'</td>
 															<td>'. $reference .'</td>
 															<td>'. $labor_detail->service->unit .'</td>
 														</tr>';
+					}elseif ($labor_category->name === 'Blood Type') {
+						$blood_type = '<tr>
+														<td width="12%"></td>
+														<td width="21%" class="KHOSMoulLight">ក្រុមឈាម <span class="float-right pull-right">:</span> </td>
+														<td width="40%" style="text-align:center; padding: 10px 0;"><div style="border-bottom: 1px dashed #0070C0;">'. $labor_detail->result .'</div></td>
+														<td width="12%"></td>
+													</tr>';
 					}
-					// }elseif ($labor_category->name === 'BIOLOGIE') {
-					// 	$biologie .= '<tr>
-					// 									<td>'. $labor_detail->name .'</td>
-					// 									<td>'. $labor_detail->result .'</td>
-					// 									<td>'. $reference .'</td>
-					// 									<td>'. $labor_detail->service->unit .'</td>
-					// 								</tr>';
-					// }elseif ($labor_category->name === 'URINE') {
-					// 	$urine .= '<tr>
-					// 							<td>'. $labor_detail->name .'</td>
-					// 							<td>'. $labor_detail->result .'</td>
-					// 							<td>'. $reference .'</td>
-					// 							<td>'. $labor_detail->service->unit .'</td>
-					// 						</tr>';
-					// }elseif ($labor_category->name === 'SEROLOGIE') {
-					// 	$serologie .= '<tr>
-					// 										<td>'. $labor_detail->name .'</td>
-					// 										<td>'. $labor_detail->result .'</td>
-					// 										<td>'. $reference .'</td>
-					// 										<td>'. $labor_detail->service->unit .'</td>
-					// 									</tr>';
-					// }elseif ($labor_category->name === 'Blood Type') {
-					// 	$blood_type .= '<tr>
-					// 										<td>'. $labor_detail->name .'</td>
-					// 										<td>'. $labor_detail->result .'</td>
-					// 										<td>'. $reference .'</td>
-					// 										<td>'. $labor_detail->service->unit .'</td>
-					// 									</tr>';
-					// }
 				}
 
-				// dd($hematology);
-
 				$labor_detail_item_list = '<tr>
-																		<td colspan="4" width="50%" style="border: 1px solid red; text-align: center;"><b>Hematology</b></td>
-																		<td colspan="4" width="50%" style="border: 1px solid red; text-align: center;"><b>Biologie</b></td>
-																	</tr>
-																	<tr>
-																		<td rowspan="6">
-																			'. $hematology .'
-																		</td>
-																	</tr>';
+																			<td colspan="5" width="50%" style="border: 1px solid red; text-align: center;"><b>HEMATOLOGIE</b></td>
+																			<td colspan="5" width="50%" style="border: 1px solid red; text-align: center;"><b>BIOLOGIE</b></td>
+																		</tr>
+																		<tr>
+																			<td rowspan="6" colspan="5" style="border: 1px solid red;">
+																				<div style="padding: 5px 8px;">
+																					<table width="100%">
+																						'. $hematology .'
+																					</table>
+																				</div>
+																			</td>
+																			<td style="border: 1px solid red;">
+																				<div style="padding: 5px 8px;">
+																					<table width="100%">
+																						'. $biologie .'
+																					</table>
+																				</div>
+																			</td>
+																		</tr>
+																		<tr>
+																			<td width="50%" style="border: 1px solid red; text-align: center;"><b>URINE</b></td>
+																		</tr>
+																		<tr>
+																			<td style="border: 1px solid red;">
+																				<div style="padding: 5px 8px;">
+																					<table width="100%">
+																						'. $urine .'
+																					</table>
+																				</div>
+																			</td>
+																		</tr>
+																		<tr>
+																			<td width="50%" style="border: 1px solid red; text-align: center;"><b>SEROLOGIE</b></td>
+																		</tr>
+																		<tr>
+																			<td style="border: 1px solid red;">
+																				<div style="padding: 5px 8px;">
+																					<table width="100%">
+																						'. $serologie .'
+																					</table>
+																				</div>
+																			</td>
+																		</tr>
+																		<tr>
+																			<td style="border: 1px solid red;">
+																				<div style="padding: 5px 8px;">
+																					<table width="100%">
+																						'. $blood_type .'
+																					</table>
+																				</div>
+																			</td>
+																		</tr>
+																	';
 
 
 			}

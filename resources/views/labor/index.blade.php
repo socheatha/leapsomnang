@@ -153,11 +153,11 @@
 						<button type="button" data-url="/labor/${ data.id }/print" class="btn btn-sm btn-flat btn-success btn-print-labor"><i class="fa fa-print"></i></button>
 					@endCan 
 					@Can("Labor Edit")
-						<a href="/labor/${ data.id }/edit" class="btn btn-sm btn-flat btn-info"><i class="fa fa-pencil-alt"></i></a>
+						<a href="/labor/${ data.type }/${ data.id }/edit" class="btn btn-sm btn-flat btn-info"><i class="fa fa-pencil-alt"></i></a>
 					@endCan 
 					@Can("Labor Delete")
 						<button type="button" class="btn btn-sm btn-flat btn-danger BtnDeleteConfirm" value="${ data.id }"><i class="fa fa-trash-alt"></i></button>
-						<form action="/labor/${ data.id }/delete" id="form-item-${ data.id }" class="sr-only" method="POST" accept-charset="UTF-8">
+						<form action="/labor/${ data.type }/${ data.id }/delete" id="form-item-${ data.id }" class="sr-only" method="POST" accept-charset="UTF-8">
 							{{ csrf_field() }}
 							<input type="hidden" name="_method" value="DELETE" />
 							<input type="hidden" name="passwordDelete" value="" />

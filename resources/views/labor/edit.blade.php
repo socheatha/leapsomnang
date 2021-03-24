@@ -148,20 +148,6 @@
 @section('js')
 <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 <script type="text/javascript">
-	var editor = CKEDITOR.replace('my-editor', {
-		height: '350',
-		font_names: 'Calibrib Bold; Calibri Italic; Calibri; Roboto Regular; Roboto Bold; Khmer OS Battambang; Khmer OS Muol Light; Khmer OS Content; Khmer OS Kuolen;',
-		toolbar: [
-			{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'CopyFormatting', 'RemoveFormat' ] },
-			{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
-			{ name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', '-', 'Save', 'NewPage', 'ExportPdf', 'Preview', 'Print', '-', 'Templates' ] },
-			{ name: 'insert', items: ['Table' ] },
-			{ name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
-			{ name: 'colors', items: [ 'TextColor', 'BGColor' ] },
-			{ name: 'clipboard', groups: [ 'clipboard', 'undo' ]},
-		]
-	});
-
 	var firstLoadPatient = true;
 	var endLoadPatientChnaged = function() {}
 	var endLoadProvinceChanged = function() {}

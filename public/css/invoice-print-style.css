@@ -41,6 +41,10 @@ Arial Black */
 	color: #0070C0;
 }
 
+.labor-print .KHOSMoulLight{
+  font-family: 'Arial Black','Khmer OS Muol Light' !important;
+}
+
 .labor-print{
 	width: 21cm;
 	height: 29.7cm;
