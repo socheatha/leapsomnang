@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Location;
 
+use App\Http\Controllers\Controller;
 use App\Models\FourLevelAddress;
 
 class FourLevelAddressController extends Controller
