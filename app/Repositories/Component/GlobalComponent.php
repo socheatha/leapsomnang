@@ -21,19 +21,19 @@ class GlobalComponent extends Controller
 	protected $unique_clinic_name;
 
 	public function __construct() {
-		// $setting_obj =  Auth::user()->setting;
+		$setting_obj =  Auth::user()->setting();
 		
-		// $this->unique_clinic_name = trim(strtoupper(Auth::user()->roles->first()->name));
-		// foreach (['logo', 'clinic_name_kh', 'clinic_name_en', 'description', 'address', 'phone', 'sign_name_kh', 'sign_name_en', 'echo_description', 'echo_address'] as $obj_member) {
-		// 	$this->{$obj_member} = $setting_obj->{$obj_member};
-		// }
+		$this->unique_clinic_name = trim(strtoupper(Auth::user()->roles->first()->name));
+		foreach (['logo', 'clinic_name_kh', 'clinic_name_en', 'description', 'address', 'phone', 'sign_name_kh', 'sign_name_en', 'echo_description', 'echo_address'] as $obj_member) {
+			$this->{$obj_member} = $setting_obj->{$obj_member};
+		}
 		
 	}
 
 	public function PrintHeader($module = 'invoice', $object = null)
 	{
 		$html_header = '';
-		$title_module = ($module == 'invoice' ? 'វិក្កយបត្រ' : ($module == 'prescription' ? 'វេជ្ជបញ្ជា' : ($module == 'labor' ? 'លទ្ធផលពិនិត្យឈាម' : '_______________')));
+		$title_module = ($module == 'invoice' ? 'វិក្កយបត្រ' : ($module == 'prescription' ? 'វេជ្ជបញ្ជា' : ($module == 'labor' ? 'ប័ណ្ណវិភាគវេជ្ជសាស្រ្ត' : '_______________')));
 		// Top Header
 		if ($module == 'echo') {
 			if ($object->echo_default_description->slug == 'letter-form-the-hospital') {
@@ -80,12 +80,15 @@ class GlobalComponent extends Controller
 		} else {
 			$html_header .= '		
 				<table class="table-header" width="100%">
-					<div style="position: absolute; left: 15px; top: 30px; width: 110px;">
-						<img src="/images/setting/logo.png" alt="IMG">
-					</div>
 					<tr>					
+						<td rowspan="2" width="100px">
+							<img src="/images/setting/logo.png" alt="IMG">
+						</td>
 						<td class="text-center" style="padding: 5px 0;">
 							<h3 class="color_light_blue KHOSMoulLight">' . $this->clinic_name_kh . '</h3>
+						</td>
+						<td rowspan="2" width="100px">
+							<img src="/images/setting/logo.png" alt="IMG">
 						</td>
 					</tr>
 					<tr>
@@ -94,17 +97,17 @@ class GlobalComponent extends Controller
 						</td>
 					</tr>
 					<tr>
-						<td class="text-center" style="padding: 1px 0;">
+						<td colspan="3" class="text-center" style="padding: 1px 0;">
 							<div class="color_light_blue">'. $this->description .'</div>
 						</td>
 					</tr>
 					<tr>
-						<td class="text-center" style="padding: 1px 0;">
+						<td colspan="3" class="text-center" style="padding: 1px 0;">
 							<div class="color_light_blue">'. $this->address .'</div>
 						</td>
 					</tr>
 					<tr>
-						<td class="text-center" style="padding-bottom: 5px;">
+						<td colspan="3" class="text-center" style="padding-bottom: 5px;">
 							<div class="color_light_blue">លេខទូរស័ព្ទ: <b>'. $this->phone .'</b></div>
 						</td>
 					</tr>
@@ -164,7 +167,7 @@ class GlobalComponent extends Controller
 				<table class="table-information" width="100%" style="margin: 5px 0 15px 0;">
 					<tr>
 						<td colspan="4">
-							<h5 class="text-center KHOSMoulLight" style="padding: 10px 0 10px 0;">' . $title_module . '</h5>
+							<h5 class="text-center KHOSMoulLight" style="padding: 10px 0 10px 0; text-decoration: underline;">' . $title_module . '</h5>
 						</td>
 					</tr>
 					<tr>

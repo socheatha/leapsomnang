@@ -53,6 +53,7 @@ class LaborController extends Controller
 	{
 		$this->data = [
 			'type' => $type,
+			'item_list' => $this->labor->getCheckedServicesList($type),
 			'provinces' => Province::getSelectData(),
 			'districts' => [],
 			'labor_number' => $this->labor->labor_number(),
@@ -68,10 +69,10 @@ class LaborController extends Controller
 	public function store(LaborRequest $request, $type)
 	{
 		
-		$labor = $this->labor->create($request);
+		$labor = $this->labor->create($request, $type);
 		if ($labor) {
 			// Redirect
-			return redirect()->route('labor.edit', $labor->id)
+			return redirect()->route('labor.edit', [$type, $labor->id])
 				->with('success', __('alert.crud.success.create', ['name' => Auth::user()->module()]) . $request->date);
 		}
 	}
@@ -80,7 +81,7 @@ class LaborController extends Controller
 	{
 		if ($this->labor->save_order($request)) {
 			// Redirect
-			return redirect()->route('labor.edit', $labor->id)
+			return redirect()->route('labor.edit', [$type, $labor->id])
 				->with('success', __('alert.crud.success.update', ['name' => Auth::user()->module()]));
 		}
 	}
@@ -144,6 +145,7 @@ class LaborController extends Controller
 
 		$this->data = [
 			'labor' => $labor,
+			'type' => $type,
 			'provinces' => Province::getSelectData(),
 			'categories' => LaborCategory::getSelectData('id', 'name', '', 'id' ,'asc'),
 			'districts' => (($labor->pt_district_id=='')? [] : $labor->province->getSelectDistrict()),
@@ -170,10 +172,10 @@ class LaborController extends Controller
 
 	public function update(LaborRequest $request, $type, Labor $labor)
 	{
-		if ($this->labor->update($request, $labor)) {
+		if ($this->labor->update($request, $type, $labor)) {
 
 			// Redirect
-			return redirect()->route('labor.edit', $labor->id)
+			return redirect()->route('labor.edit', [$type, $labor->id])
 				->with('success', __('alert.crud.success.update', ['name' => Auth::user()->module()]));
 		}
 	}

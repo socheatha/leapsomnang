@@ -36,7 +36,7 @@
 
 	</div>
 
-	{!! Form::open(['url' => route('labor.update', $labor->id),'id' => 'submitForm','method' => 'post','class' => 'mt-3']) !!}
+	{!! Form::open(['url' => route('labor.update', [$type, $labor->id]),'id' => 'submitForm','method' => 'post','class' => 'mt-3']) !!}
 	{!! Form::hidden('_method', 'PUT') !!}
 
 	<div class="card-body">
@@ -65,7 +65,7 @@
 									<th width="200px">{!! __('module.table.labor.result') !!}</th>
 									<th width="200px">{!! __('module.table.labor_service.unit') !!}</th>
 									<th width="200px">{!! __('module.table.labor_service.reference') !!}</th>
-									<th width="90px">{!! __('module.table.action') !!}</th>
+									<th width="90px" class="sr-only">{!! __('module.table.action') !!}</th>
 								</tr>
 							</thead>
 							<tbody class="item_list">
@@ -74,87 +74,34 @@
 									<?php
 										$reference = '';
 										if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to != '') {
-											$reference = '(<'. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')';
+											$reference = '<'.  number_format($labor_detail->service->ref_to, 2) .' '. $labor_detail->service->unit;
 										}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to ==''){
-											$reference = '('. $labor_detail->service->ref_from .'> '. $labor_detail->service->unit .')';
+											$reference = number_format($labor_detail->service->ref_from, 2) .'> '. $labor_detail->service->unit;
 										}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to!=''){
-											$reference = '('. $labor_detail->service->ref_from .'-'. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')';
-										}else{
-											$reference = '';
+											$reference = number_format($labor_detail->service->ref_from, 2) .'-'.  number_format($labor_detail->service->ref_to, 2) .' '. $labor_detail->service->unit;
 										}
 									?>
 
-									@if ($labor_detail->name=='TH' || $labor_detail->name=='TO')
-										<tr class="labor_item" id="{{ $labor_detail->result }}">
-											<td class="text-center">{{ ++$order }}</td>
-											<td>
-												<input type="hidden" name="labor_detail_ids[]" value="{{ $labor_detail->id }}">
-												{{ $labor_detail->name }}
-											</td>
-											<td class="text-center">
-												<input type="text" name="result[]" value="{{ $labor_detail->result }}" class="form-control"/>
-											</td>
-											<td class="text-center">
-												<select name="unit[]" class="form-control">
-													<option value="" {{ (($labor_detail->result == '')? 'selected' : '') }}>None</option>
-													<option value="Négatif" {{ (($labor_detail->unit == 'Négatif')? 'selected' : '') }}>Négatif</option>
-													<option value="Positif" {{ (($labor_detail->unit == 'Positif')? 'selected' : '') }}>Positif</option>
-												</select>
-											</td>
-											<td class="text-center">
-												{!! $reference !!}
-											</td>
-											<td class="text-center">
-												<button type="button" onclick="deleteLaborDetail('{{ $labor_detail->id }}')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
-											</td>
-										</tr>
-									@elseif ($labor_detail->name=='Test Hélicobactaire Pylorie' || $labor_detail->name=='Test Malaria' || $labor_detail->name=='Test Syphilis')
-										<tr class="labor_item" id="{{ $labor_detail->result }}">
-											<td class="text-center">{{ ++$order }}</td>
-											<td>
-												<input type="hidden" name="labor_detail_ids[]" value="{{ $labor_detail->id }}">
-												{{ $labor_detail->name }}
-											</td>
-											<td class="text-center">
-												<input type="hidden" name="unit[]" value="">
-												{!! $labor_detail->service->unit !!}
-											</td>
-											<td class="text-center">
-												<select name="result[]" class="form-control">
-													<option value="" {{ (($labor_detail->result == '')? 'selected' : '') }}>None</option>
-													<option value="Négatif" {{ (($labor_detail->result == 'Négatif')? 'selected' : '') }}>Négatif</option>
-													<option value="Positif" {{ (($labor_detail->result == 'Positif')? 'selected' : '') }}>Positif</option>
-												</select>
-											</td>
-											<td class="text-center">
-												{!! $reference !!}
-											</td>
-											<td class="text-center">
-												<button type="button" onclick="deleteLaborDetail('{{ $labor_detail->id }}')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
-											</td>
-										</tr>
-									@else
-										<tr class="labor_item" id="{{ $labor_detail->result }}">
-											<td class="text-center">{{ ++$order }}</td>
-											<td>
-												<input type="hidden" name="labor_detail_ids[]" value="{{ $labor_detail->id }}">
-												{{ $labor_detail->name }}
-											</td>
-											<td class="text-center">
-												<input type="text" name="result[]" value="{{ $labor_detail->result }}" class="form-control"/>
-											</td>
-											<td class="text-center">
-												<input type="hidden" name="unit[]" value="">
-												{{ $labor_detail->service->unit }}
-											</td>
-											<td class="text-center">
-												{!! $reference !!}
-											</td>
-											<td class="text-center">
-												<button type="button" onclick="deleteLaborDetail('{{ $labor_detail->id }}')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
-											</td>
-										</tr>
-									@endif
+									<tr class="labor_item" id="{{ $labor_detail->result }}">
+										<td class="text-center">{{ ++$order }}</td>
+										<td>
+											<input type="hidden" name="labor_detail_ids[]" value="{{ $labor_detail->id }}">
+											{{ $labor_detail->name }}
+										</td>
+										<td class="text-center">
+											<input type="text" name="result[]" value="{{ $labor_detail->result }}" class="form-control"/>
+										</td>
+										<td class="text-center">
+											<input type="hidden" name="unit[]" value="">
+											{{ $labor_detail->service->unit }}
+										</td>
+										<td class="text-center">
+											{!! $reference !!}
+										</td>
+										<td class="text-center sr-only">
+											<button type="button" onclick="deleteLaborDetail('{{ $labor_detail->id }}')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
+										</td>
+									</tr>
 								@endforeach
 							</tbody>
 						</table>

@@ -3,6 +3,10 @@
   font-family: 'Aharoni';
 }
 @font-face{
+  src: url('/fonts/calibri/arial.ttf');
+  font-family: 'Arial';
+}
+@font-face{
   src: url('/fonts/calibri/ariblk.ttf');
   font-family: 'Arial Black';
 }

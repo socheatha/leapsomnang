@@ -17,6 +17,8 @@ class CreateLaborsTable extends Migration
 		  $table->bigIncrements('id');
 		  $table->date('date');
 		  $table->integer('labor_number');
+		  $table->string('price', 255);
+		  $table->string('type', 255);
 		  $table->string('pt_no');
 		  $table->string('pt_name');
 		  $table->string('pt_age')->nullable();

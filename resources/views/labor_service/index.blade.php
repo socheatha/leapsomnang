@@ -40,8 +40,8 @@
 				@foreach($labor_services as $i => $labor_service)
 					<tr>
 						<td class="text-center">{{ ++$i }}</td>
-						<td>{{ $labor_service->name }}</td>
-						<td>{{ $labor_service->category->name }}</td>
+						<td>{!! $labor_service->name !!}</td>
+						<td>{!! $labor_service->category->name !!}</td>
 						<td>{!! $labor_service->unit !!}</td>
 						<td class="text-center">{{ $labor_service->reference }}</td>
 						<td>{{ $labor_service->description }}</td>
