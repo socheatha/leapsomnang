@@ -118,7 +118,7 @@ class EchoesRepository
 							<br/>
 							<br/>
 							<br/>
-							<div>'. Auth::user()->setting->sign_name_en .'</div>
+							<div>'. Auth::user()->setting()->sign_name_en .'</div>
 						</td>
 					</tr>
 				</table>

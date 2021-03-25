@@ -81,19 +81,19 @@ class GlobalComponent extends Controller
 			$html_header .= '		
 				<table class="table-header" width="100%">
 					<tr>					
-						<td rowspan="2" width="100px">
+						<td rowspan="2" width="80px">
 							<img src="/images/setting/logo.png" alt="IMG">
 						</td>
-						<td class="text-center" style="padding: 5px 0;">
-							<h3 class="color_light_blue KHOSMoulLight">' . $this->clinic_name_kh . '</h3>
+						<td class="text-center" style="padding-bottom: 2px;">
+							<h4 class="color_light_blue KHOSMoulLight">' . $this->clinic_name_kh . '</h4>
 						</td>
-						<td rowspan="2" width="100px">
+						<td rowspan="2" width="80px">
 							<img src="/images/setting/logo.png" alt="IMG">
 						</td>
 					</tr>
 					<tr>
-						<td class="text-center" style="padding: 2px 0;">
-							<h3 class="color_light_blue roboto_b">'. $this->clinic_name_en .'</h3>
+						<td class="text-center">
+							<h4 class="color_light_blue roboto_b">'. $this->clinic_name_en .'</h4>
 						</td>
 					</tr>
 					<tr>
@@ -167,7 +167,7 @@ class GlobalComponent extends Controller
 				<table class="table-information" width="100%" style="margin: 5px 0 15px 0;">
 					<tr>
 						<td colspan="4">
-							<h5 class="text-center KHOSMoulLight" style="padding: 10px 0 10px 0; text-decoration: underline;">' . $title_module . '</h5>
+							<h5 class="text-center KHOSMoulLight" style="padding: 0 0 5px 0; text-decoration: underline;">' . $title_module . '</h5>
 						</td>
 					</tr>
 					<tr>

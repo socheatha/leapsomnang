@@ -129,7 +129,7 @@ class InvoiceRepository
 					<td width="32%" class="text-center">
 						<div><b class="color_light_blue" style="font-size: 16px;">គ្រូពេទ្យព្យាបាល</b></div>
 						<div class="sign_box"></div>
-						<div style="color: blue;"><span class="color_blue KHOSMoulLight">វេជ្ជ. '. Auth::user()->setting->sign_name_kh .'</span></div>
+						<div style="color: blue;"><span class="color_blue KHOSMoulLight">វេជ្ជ. '. Auth::user()->setting()->sign_name_kh .'</span></div>
 					</td>
 				</tr>
 			</table>
