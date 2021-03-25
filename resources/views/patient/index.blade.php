@@ -42,7 +42,7 @@
                     <td class="text-center">{{ str_pad($patient->id, 6, "0", STR_PAD_LEFT) }}</td>
                     <td>{{ $patient->name }}</td>
                     <td class="text-center">{{ (($patient->gender==1)? __('label.form.male') : __('label.form.female')) }}</td>
-                    <td class="text-center">{{ $patient->age }}</td>
+                    <td class="text-center">{{ $patient->age }} {{ __('module.table.selection.age_type_' . $patient->age_type) }}</td>
                     <td>{{ $patient->email }}</td>
                     <td>{{ $patient->phone }}</td>
                     <td class="text-right">
@@ -133,10 +133,12 @@
 						</tr>
 					`;
                 hisory.forEach((h, i) => {
+                    _age_type = "{!! __('module.table.selection.age_type_1') !!}";
+                    if (h['pt_age_type'] && h['pt_age_type'] == 2)_age_type = "{!! __('module.table.selection.age_type_2') !!}";
                     html_structure += `<tr>
 							<td><a href="javascript:getPatientInfo(${id})">${h['pt_name']}</a></td>
 							<td class="text-center">${h['date']}</td>
-							<td class="text-center">${h['pt_age']}</td>
+							<td class="text-center">${bss_number(h['pt_age'])} ${_age_type}</td>
 							<td class="text-center"><a href="javascript:getPrintPage('${h['link']}')">${h['label_info']}</a></td>
 						</tr>`;
                 });

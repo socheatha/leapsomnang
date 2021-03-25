@@ -28,7 +28,7 @@
 	{!! Form::hidden('_method', 'PUT') !!}
 
 	<div class="card-body">
-		@include('invoice.form')
+		@include('invoice.form', ['pre_select_obj' => $invoice])
 		
 		<div class="card card-outline card-primary mt-4">
 			<div class="card-header">

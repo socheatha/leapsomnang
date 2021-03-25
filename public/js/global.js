@@ -65,14 +65,14 @@ $(document).ready(function () {
             data: bss_string(_form.serialize()),
             success: function (res) {
                 if (typeof onAjaxSuccess == 'string') {
-                    BssSwalSuccess(onAjaxSuccess);
+                    bss_swal_Success(onAjaxSuccess);
                     onAjaxSuccess = '';
                 } else if (typeof onAjaxSuccess == 'function') {
                     onAjaxSuccess(res); onAjaxSuccess = function () { };
                 }
             },
             error: function (request, status, error) {
-                BssSwalError(bss_string(request.responseText) + ' : ' + bss_string(status) + ' : ' + bss_string(error));
+                bss_swal_Error(bss_string(request.responseText) + ' : ' + bss_string(status) + ' : ' + bss_string(error));
             }
         });
     });

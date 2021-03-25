@@ -16,6 +16,7 @@ class Patient extends BaseModel
     'phone',
     'gender',
     'age',
+    'age_type',
     'description',
     'full_address',
     'address_village',
