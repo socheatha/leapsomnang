@@ -13,6 +13,7 @@ class Prescription extends Model
 		'code',
 		'pt_no',
 		'pt_age',
+		'pt_age_type',
 		'pt_name',
 		'pt_gender',
 		'pt_phone',

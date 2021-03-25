@@ -144,7 +144,7 @@ class GlobalComponent extends Controller
 							ឈ្មោះ:<span class="pt_name">'. ($object->pt_name ?? '') .'</span>
 						</td>
 						<td>
-							អាយុ:<span class="pt_age">'. ($object->pt_age ?? '') .'</span>
+							អាយុ: <span class="pt_age">'. ($object->pt_age ?? '') . ' ' .  (($object->pt_age_type ? __('module.table.selection.age_type_' . $object->pt_age_type) : '')) .'</span>
 						</td>
 						<td>
 							ភេទ:<span class="pt_gender">'. ($object->pt_gender ?? '') . '</span>
@@ -224,6 +224,7 @@ class GlobalComponent extends Controller
 				$created_patient = Patient::create([
 					'name' => $patient_name,
 					'age' => $request->pt_age ?? '0',
+					'age_type' => $request->pt_age_type ?: '1',
 					'gender' => (($request->pt_gender == 'ប្រុស' || strtolower(trim($request->pt_gender)) == 'male') ? '1' : '2'),
 					'phone' => $request->pt_phone ?? '',
 					'address_village' => $request->pt_village ?? '',

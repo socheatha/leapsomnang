@@ -2,52 +2,33 @@
 
 	<div class="col-sm-6">
 		<div class="row">
-			<div class="col-sm-12">
+			<div class="col-sm-8">
 				<div class="form-group">
 					{!! Html::decode(Form::label('name', __('label.form.name') .'<small>*</small>')) !!}
 					{!! Form::text('name', ((isset($patient->name))? $patient->name : '' ), ['class' => 'form-control '. (($errors->has("name"))? "is-invalid" : ""),'placeholder' => 'name','required']) !!}
 					{!! $errors->first('name', '<div class="invalid-feedback">:message</div>') !!}
 				</div>
 			</div>
-			<div class="col-sm-6">
+			<div class="col-sm-4">
+				<div class="form-group">
+					{!! Html::decode(Form::label('gender', __('label.form.gender'))) !!}
+					{!! Form::select('gender', ['1' => __('label.form.male'), '2' => __('label.form.female')], $patient->gender ?? '', ['class' => 'form-control custom-select']) !!}
+					{!! $errors->first('gender', '<div class="invalid-feedback">:message</div>') !!}
+				</div>
+			</div>
+			<div class="col-sm-4">
 				<div class="form-group">
 					{!! Html::decode(Form::label('age', __('label.form.patient.age')." <small>*</small>")) !!}
-					{!! Form::text('age', ((isset($patient->age))? $patient->age : '' ), ['class' => 'form-control is_integer '. (($errors->has("age"))? "is-invalid" : ""),'placeholder' => 'age']) !!}
+					{!! Form::number('age', ((isset($patient->age))? $patient->age : '' ), ['class' => 'form-control is_integer '. (($errors->has("age"))? "is-invalid" : ""),'placeholder' => 'age']) !!}
 					{!! $errors->first('age', '<div class="invalid-feedback">:message</div>') !!}
 				</div>
 			</div>
 
-			<div class="col-sm-6">
+			<div class="col-sm-4">
 				<div class="form-group">
-					{!! Html::decode(Form::label('gender', __('label.form.gender')." <small>*</small>")) !!}
-					<div class="px-3 pt-2">
-						<div class="row">
-							<div class="col-sm-6">
-								<div class="icheck-primary d-inline">
-									<input type="radio" value="1" name="gender" id="male" {{ ((isset($patient->gender) && $patient->gender == 2 )? '' : 'checked' ) }}>
-									<label for="male">
-									</label>
-								</div>
-								{!! Html::decode(Form::label('male', __('label.form.male'))) !!}
-							</div>
-							<div class="col-sm-6">
-								<div class="icheck-primary d-inline">
-									<input type="radio" value="2" name="gender" id="female" {{ ((isset($patient->gender) && $patient->gender == 2 )? 'checked' : '' ) }}>
-									<label for="female">
-									</label>
-								</div>
-								{!! Html::decode(Form::label('female', __('label.form.female'))) !!}
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-sm-12 col-md-12 col-lg-4">
-				<div class="form-group">
-					{!! Html::decode(Form::label('id_card', __('label.form.patient.id_card'))) !!}
-					{!! Form::text('id_card', ((isset($patient->id_card))? $patient->id_card : '' ), ['class' => 'form-control '. (($errors->has("id_card"))? "is-invalid" : ""),'placeholder' => 'id card']) !!}
-					{!! $errors->first('id_card', '<div class="invalid-feedback">:message</div>') !!}
+					{!! Html::decode(Form::label('age_type', __('label.form.patient.age_type'))) !!}
+					{!! Form::select('age_type', ['1' => __('module.table.selection.age_type_1'), '2' => __('module.table.selection.age_type_2')], ($patient->age_type ?? '1'), ['class' => 'form-control custom-select']) !!}
+					{!! $errors->first('age_type', '<div class="invalid-feedback">:message</div>') !!}
 				</div>
 			</div>
 
@@ -59,7 +40,15 @@
 				</div>
 			</div>
 
-			<div class="col-sm-12 col-md-12 col-lg-4">
+			<div class="col-sm-12 col-md-12 col-lg-6">
+				<div class="form-group">
+					{!! Html::decode(Form::label('id_card', __('label.form.patient.id_card'))) !!}
+					{!! Form::text('id_card', ((isset($patient->id_card))? $patient->id_card : '' ), ['class' => 'form-control '. (($errors->has("id_card"))? "is-invalid" : ""),'placeholder' => 'id card']) !!}
+					{!! $errors->first('id_card', '<div class="invalid-feedback">:message</div>') !!}
+				</div>
+			</div>
+
+			<div class="col-sm-12 col-md-12 col-lg-6">
 				<div class="form-group">
 					{!! Html::decode(Form::label('email', __('label.form.email'))) !!}
 					{!! Form::email('email', ((isset($patient->email))? $patient->email : '' ), ['class' => 'form-control '. (($errors->has("email"))? "is-invalid" : ""),'placeholder' => 'email']) !!}

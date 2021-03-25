@@ -42,7 +42,7 @@
 	{!! Form::hidden('_method', 'PUT') !!}
 
 	<div class="card-body">
-		@include('prescription.form')
+		@include('prescription.form', ['pre_select_obj' => $prescription])
 
 		<div class="card card-outline card-primary mt-4">
 			<div class="card-header">
