@@ -26,7 +26,7 @@ class CreateLaborTypesTable extends Migration
 				$labor_types = [
 						[
 							'name' => 'Labo',
-							'slug' => 'labo-standard',
+							'slug' => 'labor-standard',
 							'description' => '',
 						],
 						[
