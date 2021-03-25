@@ -14,14 +14,6 @@
 .invoice-print .table-information td{
 	padding-bottom: 8px;
 }
-.invoice-print .table-detail thead th,
-.invoice-print .table-detail tfoot th:nth-child(3),
-.invoice-print .table-detail tfoot th:nth-child(4),
-.invoice-print .table-detail td{
-	padding: 6px;
-	border: 1px solid #ededed;
-}
-
 .invoice-print .table-detail tfoot th{
 	padding: 6px;
 }
@@ -30,7 +22,7 @@
 	font-size: 10px !important;
 }
 .sign_box{
-	height: 100px;
+	height: 70px;
 }
 
 /* Aharoni
@@ -51,19 +43,12 @@ Arial Black */
 	margin: 0 auto;
 	background: #fff;
 	border: 1px solid #ededed;
-	padding: 1cm 1cm 1cm 1cm;
-	font-size: 11px;
-	/* color: blue; */
+	padding: 1cm 0.8cm 1cm 0.8cm;
+	font-size: 13px;
+	color: #0070C0;
 }
 .labor-print .table-information td{
 	padding-bottom: 8px;
-}
-.labor-print .table-detail thead th,
-.labor-print .table-detail tfoot th:nth-child(3),
-.labor-print .table-detail tfoot th:nth-child(4),
-.labor-print .table-detail td{
-	padding: 6px;
-	border: 1px solid #ededed;
 }
 
 .labor-print .table-detail tfoot th{
@@ -114,13 +99,11 @@ Arial Black */
 .prescription-print .table-detail tfoot th{
 	padding: 6px;
 }
-
 .prescription-print small{
 	font-size: 13px;
 }
 .prescription-print .table-detail td{
 	font-size: 15px;
-	/* font-weight: bold; */
 }	
 
 .echoes-print .echo_description{
@@ -153,6 +136,15 @@ Arial Black */
 }
 
 @media print {
+
+		
+	.labor-print *{
+		color: #0070C0 !important;
+		-webkit-print-color-adjust: exact !important;
+		-moz-print-color-adjust: exact !important;
+		-o-print-color-adjust: exact !important;
+	}
+
 	@page {
 		size: 21cm 29.7cm;
 		margin: 0;

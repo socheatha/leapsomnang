@@ -84,8 +84,8 @@ class GlobalComponent extends Controller
 						<td rowspan="2" width="80px">
 							<img src="/images/setting/logo.png" alt="IMG">
 						</td>
-						<td class="text-center" style="padding-bottom: 2px;">
-							<h4 class="color_light_blue KHOSMoulLight">' . $this->clinic_name_kh . '</h4>
+						<td class="text-center">
+							<div style="font-size: 25px;" class="color_light_blue KHOSMoulLight">' . $this->clinic_name_kh . '</div>
 						</td>
 						<td rowspan="2" width="80px">
 							<img src="/images/setting/logo.png" alt="IMG">
@@ -93,7 +93,7 @@ class GlobalComponent extends Controller
 					</tr>
 					<tr>
 						<td class="text-center">
-							<h4 class="color_light_blue roboto_b">'. $this->clinic_name_en .'</h4>
+							<div style="font-size: 25px;" class="color_light_blue roboto_b">'. $this->clinic_name_en .'</div>
 						</td>
 					</tr>
 					<tr>
@@ -167,7 +167,7 @@ class GlobalComponent extends Controller
 				<table class="table-information" width="100%" style="margin: 5px 0 15px 0;">
 					<tr>
 						<td colspan="4">
-							<h5 class="text-center KHOSMoulLight" style="padding: 0 0 5px 0; text-decoration: underline;">' . $title_module . '</h5>
+							<div class="text-center KHOSMoulLight"  style="font-size: 18px; padding: 0 0 5px 0; text-decoration: underline;">' . $title_module . '</div>
 						</td>
 					</tr>
 					<tr>
@@ -193,7 +193,8 @@ class GlobalComponent extends Controller
 	public static function DoctorSignature($doctor_name = '', $title_signature = 'គ្រូពេទ្យព្យាបាល')
 	{
 		return "
-			<div class='text-center' style='position: absolute; right: 70px; bottom: 70px;'>
+		<div class='text-center' style='position: absolute; right: 30px; bottom: 40px;'>
+			<div>ចំការលើ.ថ្ងៃទី.........ខែ..........ឆ្នាំ២០.....</div>
 				<div><strong>$title_signature</strong></div>
 				<div class='sign_box'></div>
 				<div><span class='KHOSMoulLight'>" . ($doctor_name ?: Auth::user()->setting()->sign_name_kh) . "</span></div>

@@ -91,7 +91,7 @@ class LaborRepository
 		$service_check_list = '';
 
 		$ids = [];
-		if ($request->type == 'labo-standard') {
+		if ($request->type == 'labor-standard') {
 			$ids = [1,2,3,4,5];
 		}else if ($request->type == 'hematology') {
 			$ids = [1];
@@ -137,7 +137,7 @@ class LaborRepository
 		$ids = [];
 		$no = 0;
 		$checked_services_list = '';
-		if ($type == 'labo-standard') {
+		if ($type == 'labor-standard') {
 			$ids = [1,2,3,4,5];
 		}else if ($type == 'hematology') {
 			$ids = [1];
@@ -196,7 +196,6 @@ class LaborRepository
 
 			}
 		}
-		
 		return $checked_services_list;
 
 		// return response()->json([
@@ -346,11 +345,13 @@ class LaborRepository
 
 		$title = 'Labor ('. str_pad($labor->labor_number, 6, "0", STR_PAD_LEFT) .')';
 
-		if ($labor->type=='labo-standard') {
+		if ($labor->type=='labor-standard') {
 			$hematology = '';
 			$biologie = '';
 			$urine = '';
+			$urine_first = '';
 			$serologie = '';
+			$serologie_first = '';
 			$blood_type = '';
 			$labor_categories = LaborCategory::whereIn('id', [1,2,3,4,5])->get();
 			
@@ -359,14 +360,14 @@ class LaborRepository
 				$labor_details = $labor->labor_details()->whereIn('service_id', $labor_category->services->pluck('id'))->get();
 
 				foreach ($labor_details as $jey => $labor_detail) {
-					$reference = '';
-					if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to != '') {
-						$reference = '<'.  $labor_detail->service->ref_to;
-					}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to ==''){
-						$reference = $labor_detail->service->ref_from .'> ';
-					}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to!=''){
-						$reference = $labor_detail->service->ref_from .'-'.  $labor_detail->service->ref_to;
-					}
+					$reference = $labor_detail->service->ref_from .'-'.  $labor_detail->service->ref_to;
+					// if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to != '') {
+					// 	$reference = '<'.  $labor_detail->service->ref_to;
+					// }else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to ==''){
+					// 	$reference = $labor_detail->service->ref_from .'> ';
+					// }else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to!=''){
+					// 	$reference = $labor_detail->service->ref_from .'-'.  $labor_detail->service->ref_to;
+					// }
 
 
 					if ($labor_category->name === 'HEMATOLOGIE') {
@@ -386,19 +387,30 @@ class LaborRepository
 														<td>'. $labor_detail->service->unit .'</td>
 													</tr>';
 					}elseif ($labor_category->name === 'URINE') {
-						$urine .= '<tr>
-												<td>'. $labor_detail->name .'</td>
-												<td>'. $labor_detail->result .'</td>
-												<td>'. $reference .'</td>
-												<td>'. $labor_detail->service->unit .'</td>
-											</tr>';
+						if ($urine_first=='') {
+							$urine_first = '<td width="35%">'. $labor_detail->name .'</td>
+															<td style="border-bottom: 1px dashed #0070C0; text-align: center;">'. $labor_detail->result .'</td>';
+						}else {
+							$urine .= '<tr>
+													'. $urine_first .'
+													<td width="20%">'. $labor_detail->name .'</td>
+													<td style="border-bottom: 1px dashed #0070C0; text-align: center;">'. $labor_detail->result .'</td>
+												</tr>';
+							$urine_first = '';
+						}
+
 					}elseif ($labor_category->name === 'SEROLOGIE') {
-						$serologie .= '<tr>
-															<td>'. $labor_detail->name .'</td>
-															<td>'. $labor_detail->result .'</td>
-															<td>'. $reference .'</td>
-															<td>'. $labor_detail->service->unit .'</td>
-														</tr>';
+						if ($serologie_first=='') {
+							$serologie_first = '<td width="35%">'. $labor_detail->name .'</td>
+															<td style="border-bottom: 1px dashed #0070C0; text-align: center;">'. $labor_detail->result .'</td>';
+						}else {
+							$serologie .= '<tr>
+													'. $serologie_first .'
+													<td width="20%">'. $labor_detail->name .'</td>
+													<td style="'.(($labor_detail->name=='▢ Widal:')? '' : 'border-bottom: 1px dashed #0070C0;').' text-align: center;">'. $labor_detail->result .'</td>
+												</tr>';
+							$serologie_first = '';
+						}
 					}elseif ($labor_category->name === 'Blood Type') {
 						$blood_type = '<tr>
 														<td width="12%"></td>
@@ -410,18 +422,18 @@ class LaborRepository
 				}
 
 				$labor_detail_item_list = '<tr>
-																			<td colspan="5" width="50%" style="border: 1px solid red; text-align: center;"><b>HEMATOLOGIE</b></td>
-																			<td colspan="5" width="50%" style="border: 1px solid red; text-align: center;"><b>BIOLOGIE</b></td>
+																			<td colspan="5" width="40%" style="border: 1px solid #0070C0; text-align: center;"><b>HEMATOLOGIE</b></td>
+																			<td colspan="5" width="60%" style="border: 1px solid #0070C0; text-align: center;"><b>BIOLOGIE</b></td>
 																		</tr>
 																		<tr>
-																			<td rowspan="6" colspan="5" style="border: 1px solid red;">
+																			<td rowspan="6" colspan="5" style="border: 1px solid #0070C0;">
 																				<div style="padding: 5px 8px;">
 																					<table width="100%">
 																						'. $hematology .'
 																					</table>
 																				</div>
 																			</td>
-																			<td style="border: 1px solid red;">
+																			<td style="border: 1px solid #0070C0;">
 																				<div style="padding: 5px 8px;">
 																					<table width="100%">
 																						'. $biologie .'
@@ -430,10 +442,10 @@ class LaborRepository
 																			</td>
 																		</tr>
 																		<tr>
-																			<td width="50%" style="border: 1px solid red; text-align: center;"><b>URINE</b></td>
+																			<td width="50%" style="border: 1px solid #0070C0; text-align: center;"><b>URINE</b></td>
 																		</tr>
 																		<tr>
-																			<td style="border: 1px solid red;">
+																			<td style="border: 1px solid #0070C0;">
 																				<div style="padding: 5px 8px;">
 																					<table width="100%">
 																						'. $urine .'
@@ -442,10 +454,10 @@ class LaborRepository
 																			</td>
 																		</tr>
 																		<tr>
-																			<td width="50%" style="border: 1px solid red; text-align: center;"><b>SEROLOGIE</b></td>
+																			<td width="50%" style="border: 1px solid #0070C0; text-align: center;"><b>SEROLOGIE</b></td>
 																		</tr>
 																		<tr>
-																			<td style="border: 1px solid red;">
+																			<td style="border: 1px solid #0070C0;">
 																				<div style="padding: 5px 8px;">
 																					<table width="100%">
 																						'. $serologie .'
@@ -454,7 +466,7 @@ class LaborRepository
 																			</td>
 																		</tr>
 																		<tr>
-																			<td style="border: 1px solid red;">
+																			<td style="border: 1px solid #0070C0;">
 																				<div style="padding: 5px 8px;">
 																					<table width="100%">
 																						'. $blood_type .'
@@ -470,12 +482,114 @@ class LaborRepository
 
 		}else if ($labor->type == 'hematology') {
 			
+			$hematology = '';
+			foreach ($labor->labor_details as $jey => $labor_detail) {
+				$reference = $labor_detail->service->ref_from .'-'.  $labor_detail->service->ref_to;
+				$hematology .= '<tr>
+					<td width="20%" style="padding: 1px 0;">'. $labor_detail->name .'</td>
+					<td width="35%" style="padding: 1px 0; border-bottom: 1px dashed #0070C0; text-align: center;">'. $labor_detail->result .'</td>
+					<td width="5%" style="padding: 1px 0;"></td>
+					<td width="25%" style="padding: 1px 0;">'. $reference .'</td>
+					<td width="15%" style="padding: 1px 0;">'. $labor_detail->service->unit .'</td>
+				</tr>';
+			}
+			
+			$labor_detail_item_list = '<tr>
+																	<td width="40%" style="border: 1px solid #0070C0; text-align: center;"><b>HEMATOLOGIE</b></td>
+																</tr>
+																<tr>
+																	<td style="border: 1px solid #0070C0;">
+																		<div style="padding: 8px 100px;">
+																			<table width="100%">
+																				'. $hematology .'
+																			</table>
+																		</div>
+																	</td>
+																</tr>';
+
 		}else if ($labor->type == 'biologie') {
-			
+			$biologie = '';
+			foreach ($labor->labor_details as $jey => $labor_detail) {
+				$reference = $labor_detail->service->ref_from .'-'.  $labor_detail->service->ref_to;
+				$biologie .= '<tr>
+												<td>'. $labor_detail->name .'</td>
+												<td width="2%"></td>
+												<td>'. $labor_detail->result .'</td>
+												<td>'. $reference .'</td>
+												<td>'. $labor_detail->service->unit .'</td>
+											</tr>';
+			}
+			$labor_detail_item_list = '<tr>
+																	<td width="40%" style="border: 1px solid #0070C0; text-align: center;"><b>HEMATOLOGIE</b></td>
+																</tr>
+																<tr>
+																	<td style="border: 1px solid #0070C0;">
+																		<div style="padding: 8px 100px;">
+																			<table width="100%">
+																				'. $biologie .'
+																			</table>
+																		</div>
+																	</td>
+																</tr>';
+
 		}else if ($labor->type == 'urine') {
-			
+			$urine = '';
+			$urine_first = '';
+			foreach ($labor->labor_details as $jey => $labor_detail) {
+				$reference = $labor_detail->service->ref_from .'-'.  $labor_detail->service->ref_to;
+				if ($urine_first=='') {
+					$urine_first = '<td width="35%">'. $labor_detail->name .'</td>
+													<td style="border-bottom: 1px dashed #0070C0; text-align: center;">'. $labor_detail->result .'</td>';
+				}else {
+					$urine .= '<tr>
+											'. $urine_first .'
+											<td width="20%">'. $labor_detail->name .'</td>
+											<td style="border-bottom: 1px dashed #0070C0; text-align: center;">'. $labor_detail->result .'</td>
+										</tr>';
+					$urine_first = '';
+				}
+			}
+			$labor_detail_item_list = '<tr>
+																	<td width="40%" style="border: 1px solid #0070C0; text-align: center;"><b>HEMATOLOGIE</b></td>
+																</tr>
+																<tr>
+																	<td style="border: 1px solid #0070C0;">
+																		<div style="padding: 8px 100px;">
+																			<table width="100%">
+																				'. $urine .'
+																			</table>
+																		</div>
+																	</td>
+																</tr>';
 		}else if ($labor->type == 'serologie') {
-			
+			$serologie = '';
+			$serologie_first = '';
+			foreach ($labor->labor_details as $jey => $labor_detail) {
+				$reference = $labor_detail->service->ref_from .'-'.  $labor_detail->service->ref_to;
+				if ($serologie_first=='') {
+					$serologie_first = '<td width="35%">'. $labor_detail->name .'</td>
+													<td style="border-bottom: 1px dashed #0070C0; text-align: center;">'. $labor_detail->result .'</td>';
+				}else {
+					$serologie .= '<tr>
+											'. $serologie_first .'
+											<td width="20%">'. $labor_detail->name .'</td>
+											<td style="'.(($labor_detail->name=='▢ Widal:')? '' : 'border-bottom: 1px dashed #0070C0;').' text-align: center;">'. $labor_detail->result .'</td>
+										</tr>';
+					$serologie_first = '';
+				}
+			}
+			$labor_detail_item_list = '<tr>
+																	<td width="40%" style="border: 1px solid #0070C0; text-align: center;"><b>HEMATOLOGIE</b></td>
+																</tr>
+																<tr>
+																	<td style="border: 1px solid #0070C0;">
+																		<div style="padding: 8px 100px;">
+																			<table width="100%">
+																				'. $serologie .'
+																			</table>
+																		</div>
+																	</td>
+																</tr>';
 		}else if ($labor->type == 'blood-type') {
 			$labor_detail_item_list .= '<tr style="border: 2px solid #000; font-size: 19px;">
 																		<td width="15%"></td>
@@ -494,13 +608,11 @@ class LaborRepository
 			' . ($labor->labor_type == 1 ? ('<small class="remark">'. $labor->remark .'</small>') : '') . '
 			<br/>
 			' . $GlobalComponent->FooterComeBackText('សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើកក្រោយ') . '
-			<table class="table-footer mt---5" width="100%">
+			<table width="100%">
 				<tr>
 					<td></td>
-					<td width="28%" class="text-center" style="position: absolute; right: 0px; bottom: 40px;">
-						<div><strong class="color_light_blue" style="font-size: 16px;">Technicien</strong></div>
-						<div class="sign_box"></div>
-						<div><span class="KHOSMoulLight color_light_blue">គឹម ស្រ៊ុន</span></div>
+					<td width="28%" class="text-center">
+						' . $GlobalComponent->DoctorSignature() . '
 					</td>
 				</tr>
 			</table>

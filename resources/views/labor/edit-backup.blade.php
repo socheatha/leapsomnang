@@ -56,65 +56,101 @@
 				</div>
 				<!-- /.card-header -->
 				<div class="card-body">
-					@if($labor_type == 1)
-						<table class="table table-bordered" width="100%">
-							<thead>
-								<tr>
-									<th width="60px">{!! __('module.table.no') !!}</th>
-									<th>{!! __('module.table.name') !!}</th>
-									<th width="200px">{!! __('module.table.labor.result') !!}</th>
-									<th width="200px">{!! __('module.table.labor_service.unit') !!}</th>
-									<th width="200px">{!! __('module.table.labor_service.reference') !!}</th>
-									<th width="90px" class="sr-only">{!! __('module.table.action') !!}</th>
-								</tr>
-							</thead>
-							<tbody class="item_list">
-								@foreach ($labor->labor_details as $order => $labor_detail)
-								
-									<?php
-										// $reference = '';
-										// if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to != '') {
-										// 	$reference = '<'.  $labor_detail->service->ref_to .' '. $labor_detail->service->unit;
-										// }else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to ==''){
-										// 	$reference = $labor_detail->service->ref_from .'> '. $labor_detail->service->unit;
-										// }else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to!=''){
-										// 	$reference = $labor_detail->service->ref_from .'-'.  $labor_detail->service->ref_to .' '. $labor_detail->service->unit;
-										// }
-										$reference = $labor_detail->service->ref_from .'-'.  $labor_detail->service->ref_to .' '. $labor_detail->service->unit;
-										if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to == '') {
-											$reference = '';
-										}
-									?>
+					<?php
+						$HEMATOLOGIE = '';
+						$OTHER = '';
 
-									<tr class="labor_item" id="{{ $labor_detail->result }}">
-										<td class="text-center">{{ ++$order }}</td>
-										<td>
-											<input type="hidden" name="labor_detail_ids[]" value="{{ $labor_detail->id }}">
-											{{ $labor_detail->name }}
-										</td>
-										<td class="text-center">
-											<input type="text" name="result[]" value="{{ $labor_detail->result }}" class="form-control"/>
-										</td>
-										<td class="text-center">
-											<input type="hidden" name="unit[]" value="">
-											{{ $labor_detail->service->unit }}
-										</td>
-										<td class="text-center">
-											{!! $reference !!}
-										</td>
-										<td class="text-center sr-only">
-											<button type="button" onclick="deleteLaborDetail('{{ $labor_detail->id }}')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
-										</td>
+						foreach ($labor->labor_details as $order => $labor_detail) {
+
+							$reference = $labor_detail->service->ref_from .'-'.  $labor_detail->service->ref_to;
+							if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to == '') {
+								$reference = '';
+							}
+							
+							
+							if ($labor_detail->service->category->name === 'HEMATOLOGIE') {
+								$HEMATOLOGIE .= '<tr class="labor_item" id="'.$labor_detail->result .'">
+																	<td class="text-center">'.++$order .'</td>
+																	<td>
+																		<input type="hidden" name="labor_detail_ids[]" value="'.$labor_detail->id .'">
+																		'.$labor_detail->name .'
+																	</td>
+																	<td class="text-center">
+																		<input type="text" name="result[]" value="'.$labor_detail->result .'" class="form-control"/>
+																	</td>
+																	<td class="text-center">
+																		<input type="hidden" name="unit[]" value="">
+																		'.$labor_detail->service->unit .'
+																	</td>
+																	<td class="text-center">
+																		'. $reference .'
+																	</td>
+																	<td class="text-center sr-only">
+																		<button type="button" onclick="deleteLaborDetail(\''.$labor_detail->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
+																	</td>
+																</tr>';
+							} else {
+								$OTHER .= '<tr class="labor_item" id="'.$labor_detail->result .'\">
+																	<td class="text-center">'.++$order .'</td>
+																	<td>
+																		<input type="hidden" name="labor_detail_ids[]" value="'.$labor_detail->id .'">
+																		'.$labor_detail->name .'
+																	</td>
+																	<td class="text-center">
+																		<input type="text" name="result[]" value="'.$labor_detail->result .'" class="form-control"/>
+																	</td>
+																	<td class="text-center">
+																		<input type="hidden" name="unit[]" value="">
+																		'.$labor_detail->service->unit .'
+																	</td>
+																	<td class="text-center">
+																		'. $reference .'
+																	</td>
+																	<td class="text-center sr-only">
+																		<button type="button" onclick="deleteLaborDetail(\''.$labor_detail->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
+																	</td>
+																</tr>';
+							}
+							
+						}
+
+					?>
+					<div class="row">
+						<div class="col-sm-6">
+							<table class="table table-bordered" width="100%">
+								<thead>
+									<tr>
+										<th width="60px">{!! __('module.table.no') !!}</th>
+										<th>{!! __('module.table.name') !!}</th>
+										<th width="200px">{!! __('module.table.labor.result') !!}</th>
+										<th width="200px">{!! __('module.table.labor_service.unit') !!}</th>
+										<th width="200px">{!! __('module.table.labor_service.reference') !!}</th>
+										<th width="90px" class="sr-only">{!! __('module.table.action') !!}</th>
 									</tr>
-								@endforeach
-							</tbody>
-						</table>
-					@elseif($labor_type == 2)
-						<div class="form-group">
-							{!! Html::decode(Form::label('description', __('label.form.description') .'<small>*</small>')) !!}
-							{!! Form::textarea('simple_labor_detail', $labor->simple_labor_detail ?: '', ['class' => 'form-control ','style' => 'height: 121px;', 'placeholder' => 'description', 'id' => 'my-editor', 'required']) !!}							
+								</thead>
+								<tbody class="item_list">
+									{!! $HEMATOLOGIE !!}
+								</tbody>
+							</table>
 						</div>
-					@endif
+						<div class="col-sm-6">
+							<table class="table table-bordered" width="100%">
+								<thead>
+									<tr>
+										<th width="60px">{!! __('module.table.no') !!}</th>
+										<th>{!! __('module.table.name') !!}</th>
+										<th width="200px">{!! __('module.table.labor.result') !!}</th>
+										<th width="200px">{!! __('module.table.labor_service.unit') !!}</th>
+										<th width="200px">{!! __('module.table.labor_service.reference') !!}</th>
+										<th width="90px" class="sr-only">{!! __('module.table.action') !!}</th>
+									</tr>
+								</thead>
+								<tbody class="item_list">
+									{!! $OTHER !!}
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
 				<!-- /.card-body -->
 			</div>
