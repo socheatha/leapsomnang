@@ -148,7 +148,10 @@
 					{data: 'actions', name: 'actions', className: 'text-center', searchable: false, sortable: false}
 				],
 				rowCallback: function( row, data ) {
+					_age_type = "{!! __('module.table.selection.age_type_1') !!}";
+                    if (data.pt_age_type && data.pt_age_type == 2) _age_type = "{!! __('module.table.selection.age_type_2') !!}";
 
+					$('td:eq(5)', row).html(`${data.pt_age} ${_age_type}`);
 					$('td:eq(7)', row).html( `@Can("Labor Print")
 						<button type="button" data-url="/labor/${ data.id }/print" class="btn btn-sm btn-flat btn-success btn-print-labor"><i class="fa fa-print"></i></button>
 					@endCan 

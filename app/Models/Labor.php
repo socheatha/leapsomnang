@@ -14,6 +14,7 @@ class Labor extends Model
 		'rate',
 		'pt_no',
 		'pt_age',
+		'pt_age_type',
 		'pt_name',
 		'pt_gender',
 		'pt_phone',

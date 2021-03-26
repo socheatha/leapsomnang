@@ -40,7 +40,7 @@
 	{!! Form::hidden('_method', 'PUT') !!}
 
 	<div class="card-body">
-		@include('labor.form')
+		@include('labor.form', ['pre_select_obj' => $labor])
 		@if(in_array($labor_type, [1, 2]))
 			<div class="card card-outline card-primary mt-4">
 				<div class="card-header">

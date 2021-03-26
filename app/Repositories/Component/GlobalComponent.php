@@ -175,7 +175,7 @@ class GlobalComponent extends Controller
 							ឈ្មោះ: <span class="pt_name">'. ($object->pt_name ?? '') .'</span>
 						</td>
 						<td width="18%">
-							អាយុ: <span class="pt_age">'. ($object->pt_age ?? '') .'</span>
+							អាយុ: <span class="pt_age">'. ($object->pt_age ?? '') . ' ' .  (($object->pt_age_type ? __('module.table.selection.age_type_' . $object->pt_age_type) : '')).'</span>
 						</td>
 						<td width="18%">
 							ភេទ: <span class="pt_gender">'. ($object->pt_gender ?? '') .'</span>
