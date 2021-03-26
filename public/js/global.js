@@ -1,3 +1,6 @@
+var _provinceRequestUrl = '/province/getSelectDistrict';
+var _patientRequestUrl = '/patient/getSelectDetail';
+
 function bss_number(number) {
     return (!number || typeof number == 'undefined' || number == 'undefined' || number == '0') ? 0 : parseInt(number);
 }
@@ -98,5 +101,48 @@ $(document).ready(function () {
                 getDatatable(start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'))
             }
         )
+    }
+
+    if ($('[name="patient_id"]').length >= 1) {
+        $(document).on('change', '[name="patient_id"]', function () {
+            if ($(this).val() != '') {
+                $.ajax({
+                    url: bss_string(_patientRequestUrl),
+                    type: 'post',
+                    data: { id: bss_number($(this).val()) },
+                }).done(function (result) {
+                    // $('[name="pt_no"]').val(result.patient.no);
+                    $('[name="pt_name"]').val(bss_string(result.patient.name));
+                    $('[name="pt_phone"]').val(bss_string(result.patient.phone));
+                    $('[name="pt_age"]').val(bss_string(result.patient.age));
+                    $('[name="pt_age_type"]').val(bss_string(result.patient.age_type));
+                    $('[name="pt_gender"]').val(bss_string(result.patient.pt_gender));
+                    $('[name="pt_village"]').val(bss_string(result.patient.address_village));
+                    $('[name="pt_commune"]').val(bss_string(result.patient.address_commune));
+
+                    $('[name="pt_province_id"]').attr('data-bss_district_id', bss_number(result.patient.address_district_id));
+                    $('[name="pt_province_id"]').val(bss_number(result.patient.address_province_id)).trigger('change');
+                });
+            }
+        });
+    }
+
+    if ($('[name="pt_province_id"]').length >= 1) {
+        $(document).on('change', '[name="pt_province_id"]', function (e) {
+            let bss_district_id = $(this).data('bss_district_id');
+            $('[name="pt_district_id"]').attr({ "disabled": true }); 
+            $('[name="pt_district_id"]').html('<option value=""></option>');
+
+            $.ajax({
+                url: bss_string(_provinceRequestUrl),
+                method: 'post',
+                data: { id: bss_number($(this).val()) },
+                success: function (data) {
+                    $('[name="pt_district_id"]').attr({ "disabled": false });
+                    $('[name="pt_district_id"]').html(data);
+                    $('[name="pt_district_id"]').val(bss_number(bss_district_id));
+                }
+            });
+        });
     }
 });

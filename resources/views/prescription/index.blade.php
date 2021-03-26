@@ -70,12 +70,8 @@
 
 @section('js')
 	<script src="{{ asset('/js/daterangepicker.js') }}"></script>
-	<script type="text/javascript">
-    // $('#dateRangePicker').val('');
-
-	
+	<script type="text/javascript">	
 		getDatatable(moment().startOf('month').format('YYYY-MM-DD'), moment().endOf('month').format('YYYY-MM-DD'));
-
 
 		function getDatatable(from, to) {
 			// Load Data to datatable
