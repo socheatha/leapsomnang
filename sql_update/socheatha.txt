@@ -14,3 +14,4 @@ ALTER TABLE `labors`  ADD `simple_labor_detail` TEXT NULL  AFTER `remark`;
 ALTER TABLE `patients` ADD `age_type` ENUM('1','2') NOT NULL DEFAULT '1' AFTER `age`;
 ALTER TABLE `prescriptions` ADD `pt_age_type` ENUM('1','2') NOT NULL DEFAULT '1' AFTER `pt_age`;
 ALTER TABLE `invoices` ADD `pt_age_type` ENUM('1','2') NOT NULL DEFAULT '1' AFTER `pt_age`;
+ALTER TABLE `labors` ADD `pt_age_type` ENUM('1','2') NOT NULL DEFAULT '1' AFTER `pt_age`;

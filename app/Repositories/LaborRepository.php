@@ -71,7 +71,7 @@ class LaborRepository
 									<td class="text-center">'. date('d/M/Y', strtotime($labor->date)) .'</td>
 									<td class="text-center font-weight-bold">៛ '. number_format($labor->price, 0) .'</td>
 									<td>'. $labor->pt_name .'</td>
-									<td class="text-center">'. $labor->pt_age .'</td>
+									<td class="text-center">'. $labor->pt_age . ' ' . __('module.table.selection.age_type_' . $labor->pt_age_type) . '</td>
 									<td class="text-center">'. $labor->pt_gender .'</td>
 									<td class="text-right">
 									<button class="btn btn-sm btn-info" onclick="getDetail('. $labor->id .')"><i class="fa fa-list"></i></button>
@@ -634,40 +634,14 @@ class LaborRepository
 
 	public function create($request, $type)
 	{
-
-		$patient_id = $request->patient_id;
-
-
-		if (isset($request->patient_id) && $request->patient_id!='') {
-			# code...
-		}else{
-			$patient = Patient::where('name', $request->pt_name)->first();
-
-			if ($patient!=null) {
-				$patient_id = $patient->id;
-			}else{
-				$created_patient = Patient::create([
-					'name' => $request->pt_name,
-					'age' => $request->pt_age,
-					'gender' => (($request->pt_gender=='ប្រុស' || $request->pt_gender == 'male' || $request->pt_gender == 'Male')? '1' : '2'),
-					'phone' => $request->pt_phone,
-					'address_village' => $request->pt_village,
-					'address_commune' => $request->pt_commune,
-					'address_district_id' => $request->pt_district_id,
-					'address_province_id' => $request->pt_province_id,
-					'created_by' => Auth::user()->id,
-					'updated_by' => Auth::user()->id,
-				]);
-				$patient_id = $created_patient->id;
-			}
-		}
-
-
+		$patient_id = GlobalComponent::GetPatientIdOrCreate($request);
+		
 		$labor = Labor::create([
 			'date' => $request->date,
 			'labor_number' => $request->labor_number,
 			'pt_no' => str_pad($patient_id, 6, "0", STR_PAD_LEFT),
 			'pt_age' => $request->pt_age,
+			'pt_age_type' => $request->pt_age_type ?: '1',
 			'pt_name' => $request->pt_name,
 			'pt_gender' => $request->pt_gender,
 			'pt_phone' => $request->pt_phone,
@@ -708,6 +682,7 @@ class LaborRepository
 		$labor->update([
 			'date' => $request->date,
 			'pt_age' => $request->pt_age,
+			'pt_age_type' => $request->pt_age_type ?: '1',
 			'pt_name' => $request->pt_name,
 			'pt_gender' => $request->pt_gender,
 			'pt_phone' => $request->pt_phone,

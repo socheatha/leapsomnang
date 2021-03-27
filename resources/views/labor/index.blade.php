@@ -45,7 +45,7 @@
 							<div class="input-group-prepend">
 								<span class="input-group-text"><i class="fa fa-calendar-alt"></i></span>
 							</div>
-							<input type="text" class="form-control pull-right" id="dateRangePicker" autocomplete="off">
+							<input type="text" class="form-control pull-right bssDateRangePicker" autocomplete="off">
 							<input type="hidden" class="form-control" value="" id="from">
 							<input type="hidden" class="form-control" value="" id="to">
 						</div>
@@ -84,34 +84,9 @@
 @section('js')
 	<script src="{{ asset('/js/daterangepicker.js') }}"></script>
 	<script type="text/javascript">
-
-		
-		$('#dateRangePicker').daterangepicker(
-      {
-        ranges   : {
-          'Today'       : [moment(), moment()],
-          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
-          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
-          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        },
-        startDate: moment().startOf('month'),
-        endDate  : moment().endOf('month')
-      },
-      function (start, end) {
-        $('#from').val(start.format('YYYY-MM-DD'));
-        $('#to').val(end.format('YYYY-MM-DD'));
-				getDatatable($('#from').val(), $('#to').val(), $('#labor_number').val())
-      }
-    )
-    // $('#dateRangePicker').val('');
-
-	
 		$('#from').val(moment().startOf('month').format('YYYY-MM-DD'));
 		$('#to').val(moment().endOf('month').format('YYYY-MM-DD'));
 		getDatatable($('#from').val(), $('#to').val(), $('#labor_number').val());
-
 
 		$('#btn-search-filter').click(function () {
 			if ($('#from').val()!='' && $('#to').val()!='') {
@@ -148,7 +123,10 @@
 					{data: 'actions', name: 'actions', className: 'text-center', searchable: false, sortable: false}
 				],
 				rowCallback: function( row, data ) {
+					_age_type = "{!! __('module.table.selection.age_type_1') !!}";
+                    if (data.pt_age_type && data.pt_age_type == 2) _age_type = "{!! __('module.table.selection.age_type_2') !!}";
 
+					$('td:eq(5)', row).html(`${data.pt_age} ${_age_type}`);
 					$('td:eq(7)', row).html( `@Can("Labor Print")
 						<button type="button" data-url="/labor/${ data.id }/print" class="btn btn-sm btn-flat btn-success btn-print-labor"><i class="fa fa-print"></i></button>
 					@endCan 
