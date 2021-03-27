@@ -41,76 +41,65 @@
 
 	<div class="card-body">
 		@include('labor.form', ['pre_select_obj' => $labor])
-		@if(in_array($labor_type, [1, 2]))
-			<div class="card card-outline card-primary mt-4">
-				<div class="card-header">
-					<h3 class="card-title">
-						<i class="fas fa-list"></i>&nbsp;
-						{{ __('alert.modal.title.labor_detail') }}
-					</h3>
-					@if($labor_type == 1)
-					<div class="card-tools">
-						<button type="button" class="btn btn-flat btn-sm btn-success btn-prevent-submit" id="btn_add_service"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button>
-					</div>
-					@endif
+		<div class="card card-outline card-primary mt-4">
+			<div class="card-header">
+				<h3 class="card-title">
+					<i class="fas fa-list"></i>&nbsp;
+					{{ __('alert.modal.title.labor_detail') }}
+				</h3>
+				<div class="card-tools">
+					{{-- <button type="button" class="btn btn-flat btn-sm btn-success btn-prevent-submit" id="btn_add_service"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button> --}}
 				</div>
-				<!-- /.card-header -->
-				<div class="card-body">
-					@if($labor_type == 1)
-						<table class="table table-bordered" width="100%">
-							<thead>
-								<tr>
-									<th width="60px">{!! __('module.table.no') !!}</th>
-									<th>{!! __('module.table.name') !!}</th>
-									<th width="200px">{!! __('module.table.labor.result') !!}</th>
-									<th width="200px">{!! __('module.table.labor_service.unit') !!}</th>
-									<th width="200px">{!! __('module.table.labor_service.reference') !!}</th>
-									<th width="90px" class="sr-only">{!! __('module.table.action') !!}</th>
-								</tr>
-							</thead>
-							<tbody class="item_list">
-								@foreach ($labor->labor_details as $order => $labor_detail)
-								
-									<?php
-										$reference = $labor_detail->service->ref_from .'-'.  $labor_detail->service->ref_to .' '. $labor_detail->service->unit;
-										if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to == '') {
-											$reference = '';
-										}
-									?>
-
-									<tr class="labor_item" id="{{ $labor_detail->result }}">
-										<td class="text-center">{{ ++$order }}</td>
-										<td>
-											<input type="hidden" name="labor_detail_ids[]" value="{{ $labor_detail->id }}">
-											{{ $labor_detail->name }}
-										</td>
-										<td class="text-center">
-											<input type="text" name="result[]" value="{{ $labor_detail->result }}" class="form-control"/>
-										</td>
-										<td class="text-center">
-											<input type="hidden" name="unit[]" value="">
-											{{ $labor_detail->service->unit }}
-										</td>
-										<td class="text-center">
-											{!! $reference !!}
-										</td>
-										<td class="text-center sr-only">
-											<button type="button" onclick="deleteLaborDetail('{{ $labor_detail->id }}')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
-										</td>
-									</tr>
-								@endforeach
-							</tbody>
-						</table>
-					@elseif($labor_type == 2)
-						<div class="form-group">
-							{!! Html::decode(Form::label('description', __('label.form.description') .'<small>*</small>')) !!}
-							{!! Form::textarea('simple_labor_detail', $labor->simple_labor_detail ?: '', ['class' => 'form-control ','style' => 'height: 121px;', 'placeholder' => 'description', 'id' => 'my-editor', 'required']) !!}							
-						</div>
-					@endif
-				</div>
-				<!-- /.card-body -->
 			</div>
-		@endif
+			<!-- /.card-header -->
+			<div class="card-body">
+				<table class="table table-bordered" width="100%">
+					<thead>
+						<tr>
+							<th width="60px">{!! __('module.table.no') !!}</th>
+							<th>{!! __('module.table.name') !!}</th>
+							<th width="200px">{!! __('module.table.labor.result') !!}</th>
+							<th width="200px">{!! __('module.table.labor_service.unit') !!}</th>
+							<th width="200px">{!! __('module.table.labor_service.reference') !!}</th>
+							<th width="90px" class="sr-only">{!! __('module.table.action') !!}</th>
+						</tr>
+					</thead>
+					<tbody class="item_list">
+						@foreach ($labor->labor_details as $order => $labor_detail)
+						
+							<?php
+								$reference = $labor_detail->service->ref_from .'-'.  $labor_detail->service->ref_to .' '. $labor_detail->service->unit;
+								if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to == '') {
+									$reference = '';
+								}
+							?>
+
+							<tr class="labor_item" id="{{ $labor_detail->result }}">
+								<td class="text-center">{{ ++$order }}</td>
+								<td>
+									<input type="hidden" name="labor_detail_ids[]" value="{{ $labor_detail->id }}">
+									{{ $labor_detail->name }}
+								</td>
+								<td class="text-center">
+									<input type="text" name="result[]" value="{{ $labor_detail->result }}" class="form-control"/>
+								</td>
+								<td class="text-center">
+									<input type="hidden" name="unit[]" value="">
+									{{ $labor_detail->service->unit }}
+								</td>
+								<td class="text-center">
+									{!! $reference !!}
+								</td>
+								<td class="text-center sr-only">
+									<button type="button" onclick="deleteLaborDetail('{{ $labor_detail->id }}')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
+								</td>
+							</tr>
+						@endforeach
+					</tbody>
+				</table>
+			</div>
+			<!-- /.card-body -->
+		</div>
 	</div>
 	<!-- ./card-body -->
 	

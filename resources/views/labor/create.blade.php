@@ -36,11 +36,9 @@
 					<i class="fas fa-list"></i>&nbsp;
 					{{ __('alert.modal.title.labor_detail') }}
 				</h3>
-				@if($labor_type == 1)
-					<div class="card-tools">
-						<button type="button" class="btn btn-flat btn-sm btn-success btn-prevent-submit" id="btn_add_service"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button>
-					</div>
-				@endif
+				<div class="card-tools">
+					{{-- <button type="button" class="btn btn-flat btn-sm btn-success btn-prevent-submit" id="btn_add_service"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button> --}}
+				</div>
 			</div>
 			<!-- /.card-header -->
 			<div class="card-body">
