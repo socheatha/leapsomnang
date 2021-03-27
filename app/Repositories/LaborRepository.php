@@ -63,7 +63,7 @@ class LaborRepository
 
 			$description = '';
 			foreach ($labor->labor_details as $j => $labor_detail) {
-				$description .= '<div>- '. $labor_detail->name .' : '. $labor_detail->result .' '. $labor_detail->service->unit .' ('. $labor_detail->service->ref_from .' - '. $labor_detail->service->ref_from .')</div>';
+				$description .= '<div class="col-sm-6">- '. $labor_detail->name .' : '. $labor_detail->result .' '. $labor_detail->service->unit .' ('. $labor_detail->service->ref_from .' - '. $labor_detail->service->ref_from .')</div>';
 			}
 
 			$tbody .= '<tr>
@@ -73,7 +73,10 @@ class LaborRepository
 									<td>'. $labor->pt_name .'</td>
 									<td class="text-center">'. $labor->pt_age .'</td>
 									<td class="text-center">'. $labor->pt_gender .'</td>
-									<td>'. $description .'</td>
+									<td class="text-right">
+									<button class="btn btn-sm btn-info" onclick="getDetail('. $labor->id .')"><i class="fa fa-list"></i></button>
+									<div class="sr-only" id="detail-'. $labor->id .'">'. $description .'</div>
+									</td>
 								</tr>';
 		}
 
