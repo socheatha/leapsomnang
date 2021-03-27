@@ -69,15 +69,12 @@
 							<ul class="nav nav-treeview">
 
 							@foreach (Auth::user()->LaborTypes()->get() as $jjey => $llabor_type )
-								@can('Echo Index', 'Echo Create', 'Echo Edit', 'Echo Delete')
 								<li class="nav-item">
 									<a href="{{ route('labor.create', $llabor_type->slug) }}" class="nav-link {{ (($llabor_type->slug == @$type )? 'active':'') }}">
 										<i class="far fa-circle nav-icon"></i>
 										<p>{{ $llabor_type->name }}</p>
 									</a>
 								</li>
-								@endcan
-									
 							@endforeach
 		
 							</ul>
