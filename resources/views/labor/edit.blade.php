@@ -72,14 +72,6 @@
 								@foreach ($labor->labor_details as $order => $labor_detail)
 								
 									<?php
-										// $reference = '';
-										// if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to != '') {
-										// 	$reference = '<'.  $labor_detail->service->ref_to .' '. $labor_detail->service->unit;
-										// }else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to ==''){
-										// 	$reference = $labor_detail->service->ref_from .'> '. $labor_detail->service->unit;
-										// }else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to!=''){
-										// 	$reference = $labor_detail->service->ref_from .'-'.  $labor_detail->service->ref_to .' '. $labor_detail->service->unit;
-										// }
 										$reference = $labor_detail->service->ref_from .'-'.  $labor_detail->service->ref_to .' '. $labor_detail->service->unit;
 										if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to == '') {
 											$reference = '';

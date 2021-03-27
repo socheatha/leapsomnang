@@ -2,6 +2,7 @@
 
 @section('css')
 <link href="{{ asset('/css/daterangepicker.css') }}" rel="stylesheet">
+{{ Html::style('/css/invoice-print-style.css') }}
 <style type="text/css">
 	div.labor-detail-expanded{
 		position: relative;
@@ -62,7 +63,7 @@
 						<th class="text-center">{!! __('module.table.labor.pt_name') !!}</th>
 						<th class="text-center" width="10%">{!! __('module.table.labor.pt_age') !!}</th>
 						<th class="text-center" width="10%">{!! __('label.form.labor.pt_gender') !!}</th>
-						<th class="text-center" width="10%">{!! __('module.table.action') !!}</th>
+						<th class="text-center" width="10%">{!! __('module.table.labor.detail') !!}</th>
 					</tr>
 				</thead>
 				<tbody>
