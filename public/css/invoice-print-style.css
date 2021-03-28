@@ -101,6 +101,9 @@
 .table-header *{
   font-family: 'Arial Black','Khmer OS Siemreap' !important;
 }
+.KHOSMoulLight{
+  font-family: 'Arial Black','Khmer OS Muol Light' !important;
+}
 .sign_box{
 	height: 70px;
 }
