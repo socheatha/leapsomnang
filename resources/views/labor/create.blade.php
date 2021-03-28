@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
+	{{ Html::style('/css/invoice-print-style.css') }}
 	<style type="text/css">
 		.table td{
 			vertical-align: middle;

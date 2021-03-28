@@ -144,6 +144,7 @@ class LaborController extends Controller
 	{
 
 		$this->data = [
+			'item_list' => $this->labor->getLaborDetail($labor->id),
 			'labor' => $labor,
 			'type' => $type,
 			'provinces' => Province::getSelectData(),

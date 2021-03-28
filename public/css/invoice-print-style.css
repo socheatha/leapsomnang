@@ -1,8 +1,3 @@
-
-.invoice-print *{
-  font-family: 'Arial Black','Khmer OS Battambang';
-}
-
 .invoice-print{
 	width: 21cm;
 	height: 29.7cm;
@@ -17,64 +12,30 @@
 .invoice-print .table-detail tfoot th{
 	padding: 6px;
 }
-
+.invoice-print .table-detail thead th,
+.invoice-print .table-detail tfoot th:nth-child(3),
+.invoice-print .table-detail tfoot th:nth-child(4),
+.invoice-print .table-detail td{
+	padding: 6px;
+	border: 1px solid #0070C0;
+}
 .invoice-print small{
 	font-size: 10px !important;
-}
-.sign_box{
-	height: 70px;
-}
-
-/* Aharoni
-Arial Black */
-
-.labor-print *{
-  font-family: 'Arial','Khmer OS Battambang';
-	color: #0070C0;
-}
-
-.labor-print .KHOSMoulLight{
-  font-family: 'Arial Black','Khmer OS Muol Light' !important;
 }
 
 .labor-print{
 	width: 21cm;
-	height: 29.7cm;
+	height: 32.5cm;
 	margin: 0 auto;
 	background: #fff;
 	border: 1px solid #ededed;
-	padding: 1cm 0.8cm 1cm 0.8cm;
-	font-size: 13px;
-	color: #0070C0;
+	padding: 1cm;
 }
-.labor-print .table-information td{
-	padding-bottom: 8px;
-}
-
-.labor-print .table-detail tfoot th{
+.labor-print .table-detail td{
 	padding: 6px;
 }
-
 .labor-print small{
 	font-size: 10px !important;
-}
-.color_red{
-	color: red;
-}
-.color_green{
-	color: green !important;
-}
-.color_blue{
-	color: blue !important;
-}
-.color_light_blue{
-	color: #0070C0 !important;
-}
-
-
-
-.prescription-print *{
-  font-family: 'Arial Black','Khmer OS Battambang';
 }
 
 .prescription-print{
@@ -92,10 +53,8 @@ Arial Black */
 .prescription-print .table-detail td{
 	font-size: 13px;
 	padding: 6px;
-	border: 1px solid #ededed;
+	border: 1px solid #0070C0;
 }
-/* .prescription-print .table-detail td{ font-size: 16px; } */
-
 .prescription-print .table-detail tfoot th{
 	padding: 6px;
 }
@@ -107,9 +66,8 @@ Arial Black */
 }	
 
 .echoes-print .echo_description{
-  font-family: 'Arial Black','Khmer OS Battambang';
+  font-family: 'Arial Black','Khmer OS Siemreap';
 }
-
 .echoes-print{
 	width: 21cm;
 	height: 29.7cm;
@@ -126,31 +84,60 @@ Arial Black */
 	font-size: 13px;
 	padding: 8px 6px;
 }
-
 .echoes-print .table-detail tfoot th{
 	padding: 6px;
 }
-
 .echoes-print small{
 	font-size: 10px !important;
 }
 
+
+.invoice-print *,
+.prescription-print *,
+.labor-print *{
+  font-family: 'Arial','Khmer OS Siemreap';
+	color: #0070C0;
+}
+.table-header *{
+  font-family: 'Arial Black','Khmer OS Siemreap' !important;
+}
+.sign_box{
+	height: 70px;
+}
+.color_red{
+	color: red;
+}
+.color_green{
+	color: green !important;
+}
+.color_blue{
+	color: blue !important;
+}
+.color_light_blue{
+	color: #0070C0 !important;
+}
+
 @media print {
 
+	@page {
+		size: 21cm 29.7cm;
+		margin: 0;
+	}
 		
-	.labor-print *{
+	.labor-print *,
+	.invoice-print *,
+	.prescription-print *{
 		color: #0070C0 !important;
 		-webkit-print-color-adjust: exact !important;
 		-moz-print-color-adjust: exact !important;
 		-o-print-color-adjust: exact !important;
 	}
 
-	@page {
-		size: 21cm 29.7cm;
-		margin: 0;
-	}
-
-	.invoice-print{
+	.labor-print,
+	.invoice-print,
+	.prescription-print{
+		width: 21cm;
+		height: 29.7cm;
 		display: block;
 		margin: 0 !important;
 		box-shadow: none;

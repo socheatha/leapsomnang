@@ -1,4 +1,8 @@
 @font-face{
+  src: url('/fonts/khmer/KhmerOSsiemreap.ttf');
+  font-family: 'Khmer OS Siemreap';
+}
+@font-face{
   src: url('/fonts/ahronbd.ttf');
   font-family: 'Aharoni';
 }

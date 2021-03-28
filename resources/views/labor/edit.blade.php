@@ -58,6 +58,7 @@
 						<tr>
 							<th width="60px">{!! __('module.table.no') !!}</th>
 							<th>{!! __('module.table.name') !!}</th>
+							<th>{!! __('module.table.labor_service.category') !!}</th>
 							<th width="200px">{!! __('module.table.labor.result') !!}</th>
 							<th width="200px">{!! __('module.table.labor_service.unit') !!}</th>
 							<th width="200px">{!! __('module.table.labor_service.reference') !!}</th>
@@ -65,36 +66,7 @@
 						</tr>
 					</thead>
 					<tbody class="item_list">
-						@foreach ($labor->labor_details as $order => $labor_detail)
-						
-							<?php
-								$reference = $labor_detail->service->ref_from .'-'.  $labor_detail->service->ref_to .' '. $labor_detail->service->unit;
-								if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to == '') {
-									$reference = '';
-								}
-							?>
-
-							<tr class="labor_item" id="{{ $labor_detail->result }}">
-								<td class="text-center">{{ ++$order }}</td>
-								<td>
-									<input type="hidden" name="labor_detail_ids[]" value="{{ $labor_detail->id }}">
-									{{ $labor_detail->name }}
-								</td>
-								<td class="text-center">
-									<input type="text" name="result[]" value="{{ $labor_detail->result }}" class="form-control"/>
-								</td>
-								<td class="text-center">
-									<input type="hidden" name="unit[]" value="">
-									{{ $labor_detail->service->unit }}
-								</td>
-								<td class="text-center">
-									{!! $reference !!}
-								</td>
-								<td class="text-center sr-only">
-									<button type="button" onclick="deleteLaborDetail('{{ $labor_detail->id }}')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
-								</td>
-							</tr>
-						@endforeach
+						{!! $item_list !!}
 					</tbody>
 				</table>
 			</div>

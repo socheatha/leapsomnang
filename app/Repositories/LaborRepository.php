@@ -149,56 +149,191 @@ class LaborRepository
 			$ids = [5];
 		}
 
+		$hematology = '';
+		$biologie = '';
+		$urine = '';
+		$serologie = '';
+		$blood_type = '';
+		$service_check_list = '';
 		$labor_categories = LaborCategory::whereIn('id', $ids)->get();
 
 		foreach ($labor_categories as $key => $labor_category) {
-
-			$service_check_list = '';
-			foreach ($labor_category->services as $jey => $service) {
-			
-				$reference = '';
-				if ($service->ref_from == '' && $service->ref_to != '') {
-					$reference = '<'.  number_format($service->ref_to, 2) .' '. $service->unit;
-				}else if($service->ref_from != '' && $service->ref_to ==''){
-					$reference = number_format($service->ref_from, 2) .'> '. $service->unit;
-				}else if($service->ref_from != '' && $service->ref_to!=''){
-					$reference = number_format($service->ref_from, 2) .'-'.  number_format($service->ref_to, 2) .' '. $service->unit;
+				foreach ($labor_category->services as $jey => $service) {
+					
+					$reference = '';
+					if ($service->ref_from == '' && $service->ref_to != '') {
+						$reference = '(<'. $service->ref_to .' '. $service->unit .')';
+					}else if($service->ref_from != '' && $service->ref_to ==''){
+						$reference = '('. $service->ref_from .'> '. $service->unit .')';
+					}else if($service->ref_from != '' && $service->ref_to!=''){
+						$reference = '('. $service->ref_from .'-'. $service->ref_to .' '. $service->unit .')';
+					}else{
+						$reference = '';
+					}
+		
+					if ($service->category->name === 'HEMATOLOGIE') {
+						$hematology .= '<tr class="labor_item" id="'. $jey.'-'.$service->id .'">
+															<td class="text-center">'. $jey .'</td>
+															<td>
+																<input type="hidden" name="service_id[]" value="'. $service->id .'">
+																<input type="hidden" name="service_name[]" value="'. $service->name .'">
+																'. $service->name .'
+															</td>
+															<td>
+																'. $service->category->name .'
+															</td>
+															<td class="text-center">
+																<input type="text" name="result[]" class="form-control">
+															</td>
+															<td class="text-center">
+																<input type="hidden" name="unit[]" value="">
+																'. $service->unit .'
+															</td>
+															<td class="text-center">
+																<input type="hidden" name="reference[]" value="'. $reference .'">
+																'. $reference .'
+															</td>
+															<td class="text-center sr-only">
+																<button type="button" onclick="removeCheckedService(\''. $jey.'-'.$service->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
+															</td>
+														</tr>';
+					}elseif ($service->category->name === 'BIOLOGIE') {
+						$biologie .= '<tr class="labor_item" id="'. $jey.'-'.$service->id .'">
+														<td class="text-center">'. $jey .'</td>
+														<td>
+															<input type="hidden" name="service_id[]" value="'. $service->id .'">
+															<input type="hidden" name="service_name[]" value="'. $service->name .'">
+															'. $service->name .'
+														</td>
+														<td>
+															'. $service->category->name .'
+														</td>
+														<td class="text-center">
+															<input type="text" name="result[]" class="form-control">
+														</td>
+														<td class="text-center">
+															<input type="hidden" name="unit[]" value="">
+															'. $service->unit .'
+														</td>
+														<td class="text-center">
+															<input type="hidden" name="reference[]" value="'. $reference .'">
+															'. $reference .'
+														</td>
+														<td class="text-center sr-only">
+															<button type="button" onclick="removeCheckedService(\''. $jey.'-'.$service->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
+														</td>
+													</tr>';
+					}elseif ($service->category->name === 'URINE') {
+						$urine .= '<tr class="labor_item" id="'. $jey.'-'.$service->id .'">
+												<td class="text-center">'. $jey .'</td>
+												<td>
+													<input type="hidden" name="service_id[]" value="'. $service->id .'">
+													<input type="hidden" name="service_name[]" value="'. $service->name .'">
+													'. $service->name .'
+												</td>
+												<td>
+													'. $service->category->name .'
+												</td>
+												<td class="text-center">
+													<input type="text" name="result[]" class="form-control">
+												</td>
+												<td class="text-center">
+													<input type="hidden" name="unit[]" value="">
+													'. $service->unit .'
+												</td>
+												<td class="text-center">
+													<input type="hidden" name="reference[]" value="'. $reference .'">
+													'. $reference .'
+												</td>
+												<td class="text-center sr-only">
+													<button type="button" onclick="removeCheckedService(\''. $jey.'-'.$service->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
+												</td>
+											</tr>';
+					}elseif ($service->category->name === 'SEROLOGIE') {
+						if ($service->name=='▢ Widal:') {
+							# code...
+						} else {
+							$serologie .= '<tr class="labor_item" id="'. $jey.'-'.$service->id .'">
+															<td class="text-center">'. $jey .'</td>
+															<td>
+																<input type="hidden" name="service_id[]" value="'. $service->id .'">
+																<input type="hidden" name="service_name[]" value="'. $service->name .'">
+																'. $service->name .'
+															</td>
+															<td>
+																'. $service->category->name .'
+															</td>
+															<td class="text-center">
+																<input type="text" name="result[]" class="form-control">
+															</td>
+															<td class="text-center">
+																<input type="hidden" name="unit[]" value="">
+																'. $service->unit .'
+															</td>
+															<td class="text-center">
+																<input type="hidden" name="reference[]" value="'. $reference .'">
+																'. $reference .'
+															</td>
+															<td class="text-center sr-only">
+																<button type="button" onclick="removeCheckedService(\''. $jey.'-'.$service->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
+															</td>
+														</tr>';
+						}
+						
+					}elseif ($service->category->name === 'Blood Type') {
+						$blood_type = '<tr class="labor_item" id="'. $jey.'-'.$service->id .'">
+														<td class="text-center">'. $jey .'</td>
+														<td>
+															<input type="hidden" name="service_id[]" value="'. $service->id .'">
+															<input type="hidden" name="service_name[]" value="'. $service->name .'">
+															'. $service->name .'
+														</td>
+														<td>
+															'. $service->category->name .'
+														</td>
+														<td class="text-center">
+															<input type="text" name="result[]" class="form-control">
+														</td>
+														<td class="text-center">
+															<input type="hidden" name="unit[]" value="">
+															'. $service->unit .'
+														</td>
+														<td class="text-center">
+															<input type="hidden" name="reference[]" value="'. $reference .'">
+															'. $reference .'
+														</td>
+														<td class="text-center sr-only">
+															<button type="button" onclick="removeCheckedService(\''. $jey.'-'.$service->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
+														</td>
+													</tr>';
+					}
+		
 				}
-
-				$no++;
-				$checked_services_list .= '<tr class="labor_item" id="'. $no.'-'.$service->id .'">
-																		<td class="text-center">'. $no .'</td>
-																		<td>
-																			<input type="hidden" name="service_id[]" value="'. $service->id .'">
-																			<input type="hidden" name="service_name[]" value="'. $service->name .'">
-																			'. $service->name .'
-																		</td>
-																		<td>
-																			'. $service->category->name .'
-																		</td>
-																		<td class="text-center">
-																			<input type="text" name="result[]" class="form-control">
-																		</td>
-																		<td class="text-center">
-																			<input type="hidden" name="unit[]" value="">
-																			'. $service->unit .'
-																		</td>
-																		<td class="text-center">
-																			<input type="hidden" name="reference[]" value="'. $reference .'">
-																			'. $reference .'
-																		</td>
-																		<td class="text-center sr-only">
-																			<button type="button" onclick="removeCheckedService(\''. $no.'-'.$service->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
-																		</td>
-																	</tr>';
-
-			}
 		}
+
+		if ($type == 'labor-standard') {
+			$checked_services_list .= '<tr>
+															<td colspan="7" class="text-center"><strong class="color_blue">HEMATOLOGIE</strong></td>
+														</tr>'. $hematology .'
+														<tr>
+															<td colspan="7" class="text-center"><strong class="color_blue">BIOLOGIE</strong></td>
+														</tr>'. $biologie .'
+														<tr>
+															<td colspan="7" class="text-center"><strong class="color_blue">URINE</strong></td>
+														</tr>'. $urine .'
+														<tr>
+															<td colspan="7" class="text-center"><strong class="color_blue">SEROLOGIE</strong></td>
+														</tr>'. $serologie .'
+														<tr>
+															<td colspan="7" class="text-center"><strong class="color_blue">Blood Type</strong></td>
+														</tr>
+														'. $blood_type;
+		}else{
+			$checked_services_list .= $hematology . $biologie . $urine . $serologie . $blood_type;
+		}
+
 		return $checked_services_list;
 
-		// return response()->json([
-		// 	'checked_services_list' => $checked_services_list,
-		// ]);
 	}
 
 	public function getLaborDetail($id)
@@ -206,6 +341,11 @@ class LaborRepository
 		
 		$labor_detail_list = '';
 		$labor = Labor::find($id);
+		$hematology = '';
+		$biologie = '';
+		$urine = '';
+		$serologie = '';
+		$blood_type = '';
 		foreach ($labor->labor_details as $order => $labor_detail) {
 			
 			$reference = '';
@@ -219,29 +359,154 @@ class LaborRepository
 				$reference = '';
 			}
 
-			$labor_detail_list .= '<tr class="labor_item" id="'. $labor_detail->result .'">
-																<td class="text-center">'. ++$order .'</td>
-																<td>
-																	<input type="hidden" name="labor_detail_ids[]" value="'. $labor_detail->id .'">
-																	'. $labor_detail->name .'
-																</td>
-																<td>
-																	'. $service->category->name .'
-																</td>
-																<td class="text-center">
-																	<input type="text" name="result[]" value="'. $labor_detail->result .'" class="form-control"/>
-																</td>
-																<td class="text-center">
-																	<input type="hidden" name="unit[]" value="">
-																	'. $labor_detail->service->unit .'
-																</td>
-																<td class="text-center">
-																	'. $reference .'
-																</td>
-																<td class="text-center">
-																	<button type="button" onclick="deleteLaborDetail(\''. $labor_detail->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
-																</td>
-															</tr>';
+			if ($labor_detail->service->category->name === 'HEMATOLOGIE') {
+				$hematology .= '<tr class="labor_item" id="'. $labor_detail->result .'">
+													<td class="text-center">'. ++$order .'</td>
+													<td>
+														<input type="hidden" name="labor_detail_ids[]" value="'. $labor_detail->id .'">
+														'. $labor_detail->name .'
+													</td>
+													<td>
+														'. $labor_detail->service->category->name .'
+													</td>
+													<td class="text-center">
+														<input type="text" name="result[]" value="'. $labor_detail->result .'" class="form-control"/>
+													</td>
+													<td class="text-center">
+														<input type="hidden" name="unit[]" value="">
+														'. $labor_detail->service->unit .'
+													</td>
+													<td class="text-center">
+														'. $reference .'
+													</td>
+													<td class="text-center sr-only">
+														<button type="button" onclick="deleteLaborDetail(\''. $labor_detail->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
+													</td>
+												</tr>';
+			}elseif ($labor_detail->service->category->name === 'BIOLOGIE') {
+				$biologie .= '<tr class="labor_item" id="'. $labor_detail->result .'">
+												<td class="text-center">'. ++$order .'</td>
+												<td>
+													<input type="hidden" name="labor_detail_ids[]" value="'. $labor_detail->id .'">
+													'. $labor_detail->name .'
+												</td>
+												<td>
+													'. $labor_detail->service->category->name .'
+												</td>
+												<td class="text-center">
+													<input type="text" name="result[]" value="'. $labor_detail->result .'" class="form-control"/>
+												</td>
+												<td class="text-center">
+													<input type="hidden" name="unit[]" value="">
+													'. $labor_detail->service->unit .'
+												</td>
+												<td class="text-center">
+													'. $reference .'
+												</td>
+												<td class="text-center sr-only">
+													<button type="button" onclick="deleteLaborDetail(\''. $labor_detail->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
+												</td>
+											</tr>';
+			}elseif ($labor_detail->service->category->name === 'URINE') {
+				$urine .= '<tr class="labor_item" id="'. $labor_detail->result .'">
+										<td class="text-center">'. ++$order .'</td>
+										<td>
+											<input type="hidden" name="labor_detail_ids[]" value="'. $labor_detail->id .'">
+											'. $labor_detail->name .'
+										</td>
+										<td>
+											'. $labor_detail->service->category->name .'
+										</td>
+										<td class="text-center">
+											<input type="text" name="result[]" value="'. $labor_detail->result .'" class="form-control"/>
+										</td>
+										<td class="text-center">
+											<input type="hidden" name="unit[]" value="">
+											'. $labor_detail->service->unit .'
+										</td>
+										<td class="text-center">
+											'. $reference .'
+										</td>
+										<td class="text-center sr-only">
+											<button type="button" onclick="deleteLaborDetail(\''. $labor_detail->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
+										</td>
+									</tr>';
+			}elseif ($labor_detail->service->category->name === 'SEROLOGIE') {
+
+				if ($labor_detail->service->name=='▢ Widal:') {
+					# code...
+				} else {
+					$serologie .= '<tr class="labor_item" id="'. $labor_detail->result .'">
+													<td class="text-center">'. ++$order .'</td>
+													<td>
+														<input type="hidden" name="labor_detail_ids[]" value="'. $labor_detail->id .'">
+														'. $labor_detail->name .'
+													</td>
+													<td>
+														'. $labor_detail->service->category->name .'
+													</td>
+													<td class="text-center">
+														<input type="text" name="result[]" value="'. $labor_detail->result .'" class="form-control"/>
+													</td>
+													<td class="text-center">
+														<input type="hidden" name="unit[]" value="">
+														'. $labor_detail->service->unit .'
+													</td>
+													<td class="text-center">
+														'. $reference .'
+													</td>
+													<td class="text-center sr-only">
+														<button type="button" onclick="deleteLaborDetail(\''. $labor_detail->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
+													</td>
+												</tr>';
+				}
+				
+			}elseif ($labor_detail->service->category->name === 'Blood Type') {
+				$blood_type = '<tr class="labor_item" id="'. $labor_detail->result .'">
+												<td class="text-center">'. ++$order .'</td>
+												<td>
+													<input type="hidden" name="labor_detail_ids[]" value="'. $labor_detail->id .'">
+													'. $labor_detail->name .'
+												</td>
+												<td>
+													'. $labor_detail->service->category->name .'
+												</td>
+												<td class="text-center">
+													<input type="text" name="result[]" value="'. $labor_detail->result .'" class="form-control"/>
+												</td>
+												<td class="text-center">
+													<input type="hidden" name="unit[]" value="">
+													'. $labor_detail->service->unit .'
+												</td>
+												<td class="text-center">
+													'. $reference .'
+												</td>
+												<td class="text-center sr-only">
+													<button type="button" onclick="deleteLaborDetail(\''. $labor_detail->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
+												</td>
+											</tr>';
+			}
+
+		}
+		if ($labor->type == 'labor-standard') {
+			$labor_detail_list .= '<tr>
+															<td colspan="7" class="text-center"><strong class="color_blue">HEMATOLOGIE</strong></td>
+														</tr>'. $hematology .'
+														<tr>
+															<td colspan="7" class="text-center"><strong class="color_blue">BIOLOGIE</strong></td>
+														</tr>'. $biologie .'
+														<tr>
+															<td colspan="7" class="text-center"><strong class="color_blue">URINE</strong></td>
+														</tr>'. $urine .'
+														<tr>
+															<td colspan="7" class="text-center"><strong class="color_blue">SEROLOGIE</strong></td>
+														</tr>'. $serologie .'
+														<tr>
+															<td colspan="7" class="text-center"><strong class="color_blue">Blood Type</strong></td>
+														</tr>
+														'. $blood_type;
+		}else{
+			$labor_detail_list .= $hematology . $biologie . $urine . $serologie . $blood_type;
 		}
 		return $labor_detail_list;
 	}
@@ -308,9 +573,9 @@ class LaborRepository
 
 				foreach ($labor_details as $jey => $labor_detail) {
 					$reference = $labor_detail->service->ref_from .'-'.  $labor_detail->service->ref_to;
-
 					if ($labor_category->name === 'HEMATOLOGIE') {
-						$hematology .= '<tr>
+
+						$hematology .= '<tr '. (($labor_detail->service->name == 'RBC' || $labor_detail->service->name == 'PLT')? 'style="font-weight: bold;"' : '') .'>
 															<td width="20%">'. $labor_detail->name .'</td>
 															<td width="18%" style="border-bottom: 1px dashed #0070C0; text-align: center;">'. $labor_detail->result .'</td>
 															<td width="4%"></td>
@@ -390,7 +655,7 @@ class LaborRepository
 																					</table>
 																				</div>
 																			</td>
-																			<td style="border: 1px solid #0070C0;">
+																			<td style="border: 1px solid #0070C0; border-right: 2px solid #0070C0;">
 																				<div style="padding: 5px 8px;">
 																					<table width="100%">
 																						'. $biologie .'
@@ -399,10 +664,10 @@ class LaborRepository
 																			</td>
 																		</tr>
 																		<tr>
-																			<td width="50%" style="border: 1px solid #0070C0; text-align: center;"><b>URINE</b></td>
+																			<td width="50%" style="border: 1px solid #0070C0; border-right: 2px solid #0070C0; text-align: center;"><b>URINE</b></td>
 																		</tr>
 																		<tr>
-																			<td style="border: 1px solid #0070C0;">
+																			<td style="border: 1px solid #0070C0; border-right: 2px solid #0070C0;">
 																				<div style="padding: 5px 8px;">
 																					<table width="100%">
 																						'. $urine .'
@@ -411,10 +676,10 @@ class LaborRepository
 																			</td>
 																		</tr>
 																		<tr>
-																			<td width="50%" style="border: 1px solid #0070C0; text-align: center;"><b>SEROLOGIE</b></td>
+																			<td width="50%" style="border: 1px solid #0070C0; border-right: 2px solid #0070C0; text-align: center;"><b>SEROLOGIE</b></td>
 																		</tr>
 																		<tr>
-																			<td style="border: 1px solid #0070C0;">
+																			<td style="border: 1px solid #0070C0; border-right: 2px solid #0070C0;">
 																				<div style="padding: 5px 8px;">
 																					<table width="100%">
 																						'. $serologie .'
@@ -423,7 +688,7 @@ class LaborRepository
 																			</td>
 																		</tr>
 																		<tr>
-																			<td style="border: 1px solid #0070C0;">
+																			<td style="border: 1px solid #0070C0; border-right: 2px solid #0070C0;">
 																				<div style="padding: 5px 8px;">
 																					<table width="100%">
 																						'. $blood_type .'
@@ -477,7 +742,7 @@ class LaborRepository
 											</tr>';
 			}
 			$labor_detail_item_list = '<tr>
-																	<td width="40%" style="border: 1px solid #0070C0; text-align: center;"><b>HEMATOLOGIE</b></td>
+																	<td width="40%" style="border: 1px solid #0070C0; text-align: center;"><b>BIOLOGIE</b></td>
 																</tr>
 																<tr>
 																	<td style="border: 1px solid #0070C0;">
@@ -516,7 +781,7 @@ class LaborRepository
 				}
 			}
 			$labor_detail_item_list = '<tr>
-																	<td width="40%" style="border: 1px solid #0070C0; text-align: center;"><b>HEMATOLOGIE</b></td>
+																	<td width="40%" style="border: 1px solid #0070C0; text-align: center;"><b>URINE</b></td>
 																</tr>
 																<tr>
 																	<td style="border: 1px solid #0070C0;">
@@ -554,7 +819,7 @@ class LaborRepository
 				}
 			}
 			$labor_detail_item_list = '<tr>
-																	<td width="40%" style="border: 1px solid #0070C0; text-align: center;"><b>HEMATOLOGIE</b></td>
+																	<td width="40%" style="border: 1px solid #0070C0; text-align: center;"><b>SEROLOGIE</b></td>
 																</tr>
 																<tr>
 																	<td style="border: 1px solid #0070C0;">
@@ -577,7 +842,7 @@ class LaborRepository
 		$labor_detail = '<section class="labor-print" style="position: relative;">
 			' . $GlobalComponent->PrintHeader('labor', $labor) . '
 			
-			<table width="100%">
+			<table width="100%" style="border: 2px solid #0070C0 !important;">
 				'. $labor_detail_item_list .'
 			</table>	
 			' . ($labor->labor_type == 1 ? ('<small class="remark">'. $labor->remark .'</small>') : '') . '

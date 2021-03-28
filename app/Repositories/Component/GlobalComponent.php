@@ -93,7 +93,7 @@ class GlobalComponent extends Controller
 					</tr>
 					<tr>
 						<td class="text-center">
-							<div style="font-size: 25px;" class="color_light_blue roboto_b">'. $this->clinic_name_en .'</div>
+							<div style="font-size: 25px;" class="color_light_blue">'. $this->clinic_name_en .'</div>
 						</td>
 					</tr>
 					<tr>
@@ -120,84 +120,48 @@ class GlobalComponent extends Controller
 		if(empty($object->province)){ $object->province = new \stdClass(); $object->province->name = ''; }
 		if(empty($object->district)){ $object->district = new \stdClass(); $object->district->name = ''; }
 
-		if (in_array($module, ['invoice', 'prescription'])) {				
-			$html_header .= '
-				<table class="table-information" width="100%" style="border-top: 2px solid #999; border-bottom: 2px solid #999; margin: 10px 0;">
-					<tr>
-						<td colspan="3">
-							<h5 class="text-center KHOSMoulLight" style="padding-top: 8px;">' . $title_module . '</h5>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							កាលបរិច្ឆេទ:<span class="date">'. date('d/m/Y', strtotime($object->date ?? '')) .'</span>
-						</td>
-						<td>
-							លេខអ្នកជំងឺ:<span class="pt_no">'. str_pad($object->pt_no ?? 0, 6, "0", STR_PAD_LEFT) .'</span>
-						</td>
-						<td>
-							រោគវិនិច្ឆ័យ:<span class="code">'. ($object->pt_diagnosis ?? '') .'</span>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							ឈ្មោះ:<span class="pt_name">'. ($object->pt_name ?? '') .'</span>
-						</td>
-						<td>
-							អាយុ: <span class="pt_age">'. ($object->pt_age ?? '') . ' ' .  (($object->pt_age_type ? __('module.table.selection.age_type_' . $object->pt_age_type) : '')) .'</span>
-						</td>
-						<td>
-							ភេទ:<span class="pt_gender">'. ($object->pt_gender ?? '') . '</span>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="3">
-							អាសយដ្ឋាន: <span class="pt_name">' .
-								(!empty($object->pt_village) ? 'ភូមិ' . ($object->pt_village ?? '') : '') . 
-								(!empty($object->pt_commune) ? (($object->province->name == 'ភ្នំពេញ') ? ' សង្កាត់' . $object->pt_commune : ' ឃុំ' . $object->pt_commune) : '') . 
-								(($object->district->name != '') ? (($object->province->name == 'ភ្នំពេញ') ? ' ខណ្ឌ' . $object->district->name : ' ស្រុក' . $object->district->name) : '') . 
-								(($object->province->name != '') ? (($object->province->name == 'ភ្នំពេញ') ? ' រាជធានីភ្នំពេញ' . $object->province->name : ' ខេត្ត' . $object->province->name) : '')
-							. '</span>
-						</td>
-					</tr>
-				</table>
-			';
-		} elseif ($module == 'labor') {
-			$html_header .= '
-				<table class="table-information" width="100%" style="margin: 5px 0 15px 0;">
-					<tr>
-						<td colspan="4">
-							<div class="text-center KHOSMoulLight"  style="font-size: 18px; padding: 0 0 5px 0; text-decoration: underline;">' . $title_module . '</div>
-						</td>
-					</tr>
-					<tr>
-						<td width="35%" style="padding-left: 55px;">
-							ឈ្មោះ: <span class="pt_name">'. ($object->pt_name ?? '') .'</span>
-						</td>
-						<td width="18%">
-							អាយុ: <span class="pt_age">'. ($object->pt_age ?? '') . ' ' .  (($object->pt_age_type ? __('module.table.selection.age_type_' . $object->pt_age_type) : '')).'</span>
-						</td>
-						<td width="18%">
-							ភេទ: <span class="pt_gender">'. ($object->pt_gender ?? '') .'</span>
-						</td>
-						<td width="25%" style="padding-left: 25px;">
-							លេខរៀង: <span class="labor_number">'. str_pad(($object->labor_number ?? 0), 6, "0", STR_PAD_LEFT) .'</span>
-						</td>
-					</tr>
-				</table>
-			';
-		}
+		$html_header .= '
+			<table class="table-information" width="100%" style="margin: 5px 0 15px 0;">
+				<tr>
+					<td colspan="4">
+						<div class="text-center KHOSMoulLight"  style="font-size: 18px; padding: 0 0 5px 0; text-decoration: underline;">' . $title_module . '</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="35%" style="padding-left: 55px;">
+						ឈ្មោះអ្នកជំងឺ: <span class="pt_name">'. ($object->pt_name ?? '') .'</span>
+					</td>
+					<td width="18%">
+						អាយុ: <span class="pt_age">'. ($object->pt_age ?? '') . ' ' .  (($object->pt_age_type ? __('module.table.selection.age_type_' . $object->pt_age_type) : '')).'</span>
+					</td>
+					<td width="18%">
+						ភេទ: <span class="pt_gender">'. ($object->pt_gender ?? '') .'</span>
+					</td>
+					<td width="25%" style="padding-left: 25px;">
+						លេខកូដអ្នកជំងឺ: <span class="labor_number">'. str_pad(($object->labor_number ?? 0), 6, "0", STR_PAD_LEFT) .'</span>
+					</td>
+				</tr>
+				<tr>
+					<td width="35%" style="padding-left: 55px;">
+						កាលបរិច្ឆេទ: <span>'. date('d/M/Y', strtotime($object->pt_name)) .'</span>
+					</td>
+					<td colspan="3">
+						អាសយដ្ឋាន: <span>'. (($object->pt_village!='')? 'ភូមិ'.$object->pt_village : '') . (($object->pt_commune!='')? (($object->province->name=='ភ្នំពេញ')? ' សង្កាត់'.$object->pt_commune : ' ឃុំ'.$object->pt_commune) : '') . (($object->district->name!='')? (($object->province->name=='ភ្នំពេញ')? ' ខណ្ឌ'.$object->district->name : ' ស្រុក'.$object->district->name) : ''). (($object->province->name!='')? (($object->province->name=='ភ្នំពេញ')? ' រាជធានីភ្នំពេញ'.$object->province->name : ' ខេត្ត'.$object->province->name) : '') .'</span>
+					</td>
+				</tr>
+			</table>
+		';
 		return $html_header;		
 	}
 
 	public static function DoctorSignature($doctor_name = '', $title_signature = 'គ្រូពេទ្យព្យាបាល')
 	{
 		return "
-		<div class='text-center' style='position: absolute; right: 30px; bottom: 40px;'>
-			<div>ចំការលើ.ថ្ងៃទី.........ខែ..........ឆ្នាំ២០.....</div>
-				<div><strong>$title_signature</strong></div>
+		<div class='text-center' style='position: absolute; right: 30px; bottom: 1.5cm;'>
+			<div class='sr-only'>ចំការលើ.ថ្ងៃទី.........ខែ..........ឆ្នាំ២០.....</div>
+				<div class='KHOSMoulLight'>$title_signature</div>
 				<div class='sign_box'></div>
-				<div><span class='KHOSMoulLight'>" . ($doctor_name ?: Auth::user()->setting()->sign_name_kh) . "</span></div>
+				<div><span class='KHOSMoulLight'>វេជ្ជបណ្ឌិត. " . ($doctor_name ?: Auth::user()->setting()->sign_name_kh) . "</span></div>
 			</div>
 		";
 	}
@@ -205,8 +169,11 @@ class GlobalComponent extends Controller
 	public function FooterComeBackText($text = '', $color = 'color_red')
 	{
 		$html_footer_comeback ="
-													<div class='color_light_blue' style=' text-align: center; position: absolute; bottom: 25px; left: 0; width: 100%;'>
-														<span class='KHOSMoulLight'>កំណត់ចំណាំ:</span> " . ($text ?: 'សូមយកវេជ្ជបញ្ជាមកវិញពេលមកពិនិត្យលើក្រោយ') . "
+													<div class='KHOSMoulLight' style='position: absolute; bottom: 2.5cm;'>ពេទ្យថាច លេខ II</div>
+													<div class='color_light_blue' style=' text-align: center; position: absolute; bottom: 0.4cm; left: 0; width: 100%; padding: 0 0.8cm;'>
+														<div style=' border-top: 2px solid #0070C0; padding-top: 10px;'>
+															<span class='KHOSMoulLight'>កំណត់ចំណាំ:</span> " . ($text ?: 'សូមយកវេជ្ជបញ្ជាមកវិញពេលមកពិនិត្យលើក្រោយ') . "
+														</div>
 													</div>
 												";
 		return $html_footer_comeback;
