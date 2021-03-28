@@ -251,7 +251,31 @@ class LaborRepository
 											</tr>';
 					}elseif ($service->category->name === 'SEROLOGIE') {
 						if ($service->name=='▢ Widal:') {
-							# code...
+							$serologie .= '<tr class="labor_item" id="'. $jey.'-'.$service->id .'">
+															<td class="text-center">'. $jey .'</td>
+															<td>
+																<input type="hidden" name="service_id[]" value="'. $service->id .'">
+																<input type="hidden" name="service_name[]" value="'. $service->name .'">
+																'. $service->name .'
+															</td>
+															<td>
+																'. $service->category->name .'
+															</td>
+															<td class="text-center">
+																<input type="hidden" name="result[]" class="form-control">
+															</td>
+															<td class="text-center">
+																<input type="hidden" name="unit[]" value="">
+																'. $service->unit .'
+															</td>
+															<td class="text-center">
+																<input type="hidden" name="reference[]" value="'. $reference .'">
+																'. $reference .'
+															</td>
+															<td class="text-center sr-only">
+																<button type="button" onclick="removeCheckedService(\''. $jey.'-'.$service->id .'\')" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash-alt"></i></button>
+															</td>
+														</tr>';
 						} else {
 							$serologie .= '<tr class="labor_item" id="'. $jey.'-'.$service->id .'">
 															<td class="text-center">'. $jey .'</td>
@@ -583,31 +607,33 @@ class LaborRepository
 															<td width="20%">'. $labor_detail->service->unit .'</td>
 														</tr>';
 					}elseif ($labor_category->name === 'BIOLOGIE') {
+						
+						$reference = $labor_detail->service->unit .' ('. $labor_detail->service->ref_from .'-'.  $labor_detail->service->ref_to .')';
+						
 						$biologie .= '<tr>
-														<td>'. $labor_detail->name .'</td>
+														<td width="38%">'. $labor_detail->name .'</td>
 														<td width="2%"></td>
-														<td>'. $labor_detail->result .'</td>
-														<td>'. $reference .'</td>
-														<td>'. $labor_detail->service->unit .'</td>
+														<td width="30%" style="border-bottom: 1px dashed #0070C0; text-align: center;">'. $labor_detail->result .'</td>
+														<td width="30%" colspan="2">'. $reference .'</td>
 													</tr>';
 					}elseif ($labor_category->name === 'URINE') {
 						if ($urine_first=='') {
 							if (count($labor_details) == ($jey+1)) {
 								$urine .= '<tr>
 														<td width="35%">'. $labor_detail->name .'</td>
-														<td style="border-bottom: 1px dashed #0070C0; text-align: center;">'. $labor_detail->result .'</td>
+														<td width="25%" style="border-bottom: 1px dashed #0070C0; text-align: center;">'. $labor_detail->result .'</td>
 														<td width="20%"></td>
 														<td width="20%"></td>
 													</tr>';
 							} else {
 								$urine_first = '<td width="35%">'. $labor_detail->name .'</td>
-																<td style="border-bottom: 1px dashed #0070C0; text-align: center;">'. $labor_detail->result .'</td>';
+																<td width="25%" style="border-bottom: 1px dashed #0070C0; text-align: center;">'. $labor_detail->result .'</td>';
 							}
 						}else {
 							$urine .= '<tr>
 													'. $urine_first .'
 													<td width="20%">'. $labor_detail->name .'</td>
-													<td style="border-bottom: 1px dashed #0070C0; text-align: center;">'. $labor_detail->result .'</td>
+													<td width="20%" style="border-bottom: 1px dashed #0070C0; text-align: center;">'. $labor_detail->result .'</td>
 												</tr>';
 							$urine_first = '';
 						}
@@ -617,13 +643,13 @@ class LaborRepository
 							if (count($labor_details) == ($jey+1)) {
 								$serologie .= '<tr>
 																	<td width="35%">'. $labor_detail->name .'</td>
-																	<td style="border-bottom: 1px dashed #0070C0; text-align: center;">'. $labor_detail->result .'</td>
+																	<td width="25%" style="border-bottom: 1px dashed #0070C0; text-align: center;">'. $labor_detail->result .'</td>
 																	<td width="20%"></td>
 																	<td width="20%"></td>
 																</tr>';
 							} else {
 								$serologie_first = '<td width="35%">'. $labor_detail->name .'</td>
-																<td style="border-bottom: 1px dashed #0070C0; text-align: center;">'. $labor_detail->result .'</td>';
+																<td width="25%" style="border-bottom: 1px dashed #0070C0; text-align: center;">'. $labor_detail->result .'</td>';
 							}
 						}else {
 							$serologie .= '<tr>
@@ -707,7 +733,7 @@ class LaborRepository
 			$hematology = '';
 			foreach ($labor->labor_details as $jey => $labor_detail) {
 				$reference = $labor_detail->service->ref_from .'-'.  $labor_detail->service->ref_to;
-				$hematology .= '<tr>
+				$hematology .= '<tr '. (($labor_detail->service->name == 'RBC' || $labor_detail->service->name == 'PLT')? 'style="font-weight: bold;"' : '') .'>
 					<td width="20%" style="padding: 1px 0;">'. $labor_detail->name .'</td>
 					<td width="35%" style="padding: 1px 0; border-bottom: 1px dashed #0070C0; text-align: center;">'. $labor_detail->result .'</td>
 					<td width="5%" style="padding: 1px 0;"></td>
