@@ -30,6 +30,7 @@
 					<th width="30px">{!! __('module.table.no') !!}</th>
 					<th>{!! __('module.table.name') !!}</th>
 					<th>{!! __('module.table.labor_service.category') !!}</th>
+					<th width="15%">{!! __('module.table.labor_service.default_value') !!}</th>
 					<th width="15%">{!! __('module.table.labor_service.unit') !!}</th>
 					<th width="15%">{!! __('module.table.labor_service.reference') !!}</th>
 					<th>{!! __('module.table.description') !!}</th>
@@ -42,6 +43,7 @@
 						<td class="text-center">{{ ++$i }}</td>
 						<td>{!! $labor_service->name !!}</td>
 						<td>{!! $labor_service->category->name !!}</td>
+						<td class="text-center">{!! $labor_service->default_value !!}</td>
 						<td>{!! $labor_service->unit !!}</td>
 						<td class="text-center">{{ $labor_service->reference }}</td>
 						<td>{{ $labor_service->description }}</td>

@@ -183,7 +183,7 @@ class LaborRepository
 																'. $service->category->name .'
 															</td>
 															<td class="text-center">
-																<input type="text" name="result[]" class="form-control">
+																<input type="text" name="result[]" value="'. $service->default_value .'" class="form-control">
 															</td>
 															<td class="text-center">
 																<input type="hidden" name="unit[]" value="">

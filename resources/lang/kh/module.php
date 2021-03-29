@@ -39,6 +39,7 @@ return [
     
     'labor_service' => [
 	    'category' => 'ប្រភេទ',
+	    'default_value' => 'តម្លៃលំនាំដើម',
 	    'unit' => 'ឯកតា',
 	    'reference' => 'យោង',
     ],
