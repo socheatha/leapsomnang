@@ -246,14 +246,6 @@
 
 	$(document).ready(function() {
 		var data = [];
-		$(".select2_pagination").each(function() {
-			data.push({
-				id: '{{ $prescription->patient_id }}',
-				text: '{{ str_pad($prescription->patient_id, 6, "0", STR_PAD_LEFT) }} :: {{ (($prescription->patient_id != '
-				')? $prescription->patient->name : '
-				' )}}'
-			});
-		});
 		$(".select2_pagination").select2({
 			theme: 'bootstrap4',
 			placeholder: "{{ __('label.form.choose') }}",

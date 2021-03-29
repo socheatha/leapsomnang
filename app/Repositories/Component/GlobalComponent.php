@@ -34,6 +34,7 @@ class GlobalComponent extends Controller
 	{
 		$html_header = '';
 		$title_module = ($module == 'invoice' ? 'វិក្កយបត្រ' : ($module == 'prescription' ? 'វេជ្ជបញ្ជា' : ($module == 'labor' ? 'ប័ណ្ណវិភាគវេជ្ជសាស្រ្ត' : '_______________')));
+		$number = ($module == 'invoice' ? 'inv_number' : ($module == 'prescription' ? 'code' : ($module == 'labor' ? 'labor_number' : 'number')));
 		// Top Header
 		if ($module == 'echo') {
 			if ($object->echo_default_description->slug == 'letter-form-the-hospital') {
@@ -81,40 +82,39 @@ class GlobalComponent extends Controller
 			$html_header .= '		
 				<table class="table-header" width="100%">
 					<tr>					
-						<td rowspan="2" width="80px">
+						<td rowspan="2" width="130px">
 							<img src="/images/setting/logo.png" alt="IMG">
 						</td>
 						<td class="text-center">
-							<div style="font-size: 25px;" class="color_light_blue KHOSMoulLight">' . $this->clinic_name_kh . '</div>
+							<div style="font-size: 35px;" class="color_blue KHOSMoulLight">' . $this->clinic_name_kh . '</div>
 						</td>
-						<td rowspan="2" width="80px">
+						<td rowspan="2" width="130px">
 							<img src="/images/setting/logo.png" alt="IMG">
 						</td>
 					</tr>
 					<tr>
 						<td class="text-center">
-							<div style="font-size: 25px;" class="color_light_blue">'. $this->clinic_name_en .'</div>
+							<div style="font-size: 18px;" class="color_green KHOSMoulLight">'. $this->clinic_name_en .'</div>
 						</td>
 					</tr>
 					<tr>
 						<td colspan="3" class="text-center" style="padding: 1px 0;">
-							<div class="color_light_blue">'. $this->description .'</div>
+							<div class="color_blue">'. $this->description .'</div>
 						</td>
 					</tr>
 					<tr>
 						<td colspan="3" class="text-center" style="padding: 1px 0;">
-							<div class="color_light_blue">'. $this->address .'</div>
+							<div class="color_blue">'. $this->address .'</div>
 						</td>
 					</tr>
 					<tr>
 						<td colspan="3" class="text-center" style="padding-bottom: 5px;">
-							<div class="color_light_blue">លេខទូរស័ព្ទ: <b>'. $this->phone .'</b></div>
+							<div class="color_blue">លេខទូរស័ព្ទ: <b>'. $this->phone .'</b></div>
 						</td>
 					</tr>
 				</table>
 			';
 		}
-
 		// Sub Header
 		if(empty($object)){ $object = new \stdClass(); }
 		if(empty($object->province)){ $object->province = new \stdClass(); $object->province->name = ''; }
@@ -124,7 +124,7 @@ class GlobalComponent extends Controller
 			<table class="table-information" width="100%" style="margin: 5px 0 15px 0;">
 				<tr>
 					<td colspan="4">
-						<div class="text-center KHOSMoulLight"  style="font-size: 18px; padding: 0 0 5px 0; text-decoration: underline;">' . $title_module . '</div>
+						<div class="color_red text-center KHOSMoulLight"  style="font-size: 18px; padding: 0 0 5px 0; text-decoration: underline;">' . $title_module . '</div>
 					</td>
 				</tr>
 				<tr>
@@ -138,17 +138,21 @@ class GlobalComponent extends Controller
 						ភេទ: <span class="pt_gender">'. ($object->pt_gender ?? '') .'</span>
 					</td>
 					<td width="25%" style="padding-left: 25px;">
-						លេខកូដអ្នកជំងឺ: <span class="labor_number">'. str_pad(($object->labor_number ?? 0), 6, "0", STR_PAD_LEFT) .'</span>
+						លេខកូដអ្នកជំងឺ: <span class="labor_number">'. str_pad(($object->$number ?? 0), 6, "0", STR_PAD_LEFT) .'</span>
 					</td>
 				</tr>
 				<tr>
-					<td width="35%" style="padding-left: 55px;">
-						កាលបរិច្ឆេទ: <span>'. date('d/M/Y', strtotime($object->pt_name)) .'</span>
-					</td>
-					<td colspan="3">
+					<td colspan="4" style="padding-left: 55px;">
 						អាសយដ្ឋាន: <span>'. (($object->pt_village!='')? 'ភូមិ'.$object->pt_village : '') . (($object->pt_commune!='')? (($object->province->name=='ភ្នំពេញ')? ' សង្កាត់'.$object->pt_commune : ' ឃុំ'.$object->pt_commune) : '') . (($object->district->name!='')? (($object->province->name=='ភ្នំពេញ')? ' ខណ្ឌ'.$object->district->name : ' ស្រុក'.$object->district->name) : ''). (($object->province->name!='')? (($object->province->name=='ភ្នំពេញ')? ' រាជធានីភ្នំពេញ'.$object->province->name : ' ខេត្ត'.$object->province->name) : '') .'</span>
 					</td>
 				</tr>
+				'.(($module == 'labor')?
+						'<tr>
+							<td colspan="4">
+								<div class="text-center KHOSMoulLight"  style="font-size: 18px; padding: 0 0 5px 0; text-decoration: underline;">លទ្ធផលពិនិត្យ</div>
+							</td>
+						</tr>'
+					: '').'
 			</table>
 		';
 		return $html_header;		
@@ -158,7 +162,6 @@ class GlobalComponent extends Controller
 	{
 		return "
 		<div class='text-center' style='position: absolute; right: 30px; bottom: 1.5cm;'>
-			<div class='sr-only'>ចំការលើ.ថ្ងៃទី.........ខែ..........ឆ្នាំ២០.....</div>
 				<div class='KHOSMoulLight'>$title_signature</div>
 				<div class='sign_box'></div>
 				<div><span class='KHOSMoulLight'>វេជ្ជបណ្ឌិត. " . ($doctor_name ?: Auth::user()->setting()->sign_name_kh) . "</span></div>
@@ -168,14 +171,14 @@ class GlobalComponent extends Controller
 
 	public function FooterComeBackText($text = '', $color = 'color_red')
 	{
-		$html_footer_comeback ="
-													<div class='KHOSMoulLight' style='position: absolute; bottom: 3.88cm;'>ពេទ្យថាច លេខ II</div>
-													<div class='color_light_blue' style=' text-align: center; position: absolute; bottom: 0.4cm; left: 0; width: 100%; padding: 0 0.8cm;'>
-														<div style=' border-top: 2px solid #0070C0; padding-top: 10px;'>
-															<span class='KHOSMoulLight'>កំណត់ចំណាំ:</span> " . ($text ?: 'សូមយកវេជ្ជបញ្ជាមកវិញពេលមកពិនិត្យលើក្រោយ') . "
-														</div>
-													</div>
-												";
+		// $html_footer_comeback ="
+		// 											<div class='color_light_blue' style=' text-align: center; position: absolute; bottom: 0.4cm; left: 0; width: 100%; padding: 0 0.8cm;'>
+		// 												<div style=' border-top: 2px solid #0070C0; padding-top: 10px;'>
+		// 													<span class='KHOSMoulLight'>កំណត់ចំណាំ:</span> " . ($text ?: 'សូមយកវេជ្ជបញ្ជាមកវិញពេលមកពិនិត្យលើក្រោយ') . "
+		// 												</div>
+		// 											</div>
+		// 										";
+		$html_footer_comeback ="";
 		return $html_footer_comeback;
 	}
 
