@@ -82,19 +82,24 @@ class GlobalComponent extends Controller
 			$html_header .= '		
 				<table class="table-header" width="100%">
 					<tr>					
-						<td rowspan="2" width="130px">
+						<td rowspan="3" width="130px">
 							<img src="/images/setting/logo.png" alt="IMG">
 						</td>
 						<td class="text-center">
-							<div style="font-size: 35px;" class="color_blue KHOSMoulLight">' . $this->clinic_name_kh . '</div>
+							<div style="font-size: 25px;" class="color_blue KHOSMoulLight">' . $this->clinic_name_kh . '</div>
 						</td>
-						<td rowspan="2" width="130px">
+						<td rowspan="3" width="130px">
 							<img src="/images/setting/logo.png" alt="IMG">
 						</td>
 					</tr>
 					<tr>
 						<td class="text-center">
-							<div style="font-size: 18px;" class="color_green KHOSMoulLight">'. $this->clinic_name_en .'</div>
+							<div style="font-size: 25px;" class="color_blue KHOSMoulLight">'. $this->clinic_name_en .'</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="text-center">
+							<div style="font-size: 18px;" class="color_green KHOSMoulLight">ពិនិត្យ~ព្យាបាល ជំងឺទូទៅ កុមារ និង មនុស្សចាស់</div>
 						</td>
 					</tr>
 					<tr>
@@ -131,10 +136,10 @@ class GlobalComponent extends Controller
 					<td width="35%" style="padding-left: 55px;">
 						ឈ្មោះអ្នកជំងឺ: <span class="pt_name">'. ($object->pt_name ?? '') .'</span>
 					</td>
-					<td width="18%">
+					<td width="18%" style="padding: 5px 0;">
 						អាយុ: <span class="pt_age">'. ($object->pt_age ?? '') . ' ' .  (($object->pt_age_type ? __('module.table.selection.age_type_' . $object->pt_age_type) : '')).'</span>
 					</td>
-					<td width="18%">
+					<td width="18%" style="padding: 5px 0;">
 						ភេទ: <span class="pt_gender">'. ($object->pt_gender ?? '') .'</span>
 					</td>
 					<td width="25%" style="padding-left: 25px;">
@@ -200,8 +205,8 @@ class GlobalComponent extends Controller
 					'phone' => $request->pt_phone ?? '',
 					'address_village' => $request->pt_village ?? '',
 					'address_commune' => $request->pt_commune ?? '',
-					'address_district_id' => $request->pt_district_id ?? '',
-					'address_province_id' => $request->pt_province_id ?? '',
+					'address_district_id' => $request->pt_district_id ?? null,
+					'address_province_id' => $request->pt_province_id ?? null,
 					'created_by' => Auth::user()->id,
 					'updated_by' => Auth::user()->id,
 				]);
