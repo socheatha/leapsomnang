@@ -575,7 +575,8 @@ class LaborRepository
 			foreach ($labor->labor_details as $jey => $labor_detail) {
 				
 				$class = '';
-				if (str_contains($labor_detail->result, '+') || $labor_detail->result == '7.5' || $labor_detail->result == '1.010') {
+				$result = (($labor_detail->result==null)? '' : $labor_detail->result);
+				if (str_contains($result, '+') || $result == '7.5' || $result == '1.010') {
 					$class = 'color_red';
 				}
 
