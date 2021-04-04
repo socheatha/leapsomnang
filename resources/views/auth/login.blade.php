@@ -92,8 +92,12 @@
 							<i class="fa fa-long-arrow-alt-right m-l-5" aria-hidden="true"></i>
 						</a>
 						@if(!empty(env('GIT_USR')) && !empty(env('GIT_PWD')) && !empty(env('GIT_PATH')))
-							<br><a class="txt2" href="#">
-								Synchronize local project<i class="fa fa-spin fa-sync m-l-5" aria-hidden="true"></i><br>
+							<br><a class="txt2" href="/login?sync=1">
+								@if($_SERVER['HTTP_HOST'] == 'localhost')
+									Synchronize local project<i class="fa fa-spin fa-sync m-l-5" aria-hidden="true"></i><br><mark>Status : {{ shell_exec('git pull https://' . env('GIT_USR') . ':' . env('GIT_PWD') . '@' . env('GIT_PATH')) }}</mark>
+								@else
+									Synchronize local project<i class="fa fa-spin fa-sync m-l-5" aria-hidden="true"></i><br><mark>Status : {{ shell_exec('git pull') }}</mark>
+								@endif
 							</a>
 						@endif
 					</div>
