@@ -18,10 +18,8 @@ class Invoice extends Model
 		'pt_name',
 		'pt_gender',
 		'pt_phone',
-		'pt_village',
-		'pt_commune',
-		'pt_district_id',
-		'pt_province_id',
+		'pt_address_code',
+		'pt_address_full_text',
 		'pt_diagnosis',
 		'status',
 		'remark',
@@ -71,15 +69,5 @@ class Invoice extends Model
   {
   	return $this->belongsTo(Patient::class, 'patient_id');
 	}
-	
-  public function province()
-  {
-  	return $this->belongsTo(Province::class, 'pt_province_id');
-  }
-
-  public function district()
-  {
-  	return $this->belongsTo(District::class, 'pt_district_id');
-  }
 
 }

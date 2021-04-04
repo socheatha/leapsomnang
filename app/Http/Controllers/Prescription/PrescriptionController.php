@@ -67,8 +67,6 @@ class PrescriptionController extends Controller
 	public function create()
 	{
 		$this->data = [
-			'provinces' => Province::getSelectData(),
-			'districts' => [],
 			'code' => $this->prescription->code(),
 			'medicines' => Medicine::getSelectData('id', 'name', '', 'name' ,'asc'),
 			'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),
@@ -157,8 +155,6 @@ class PrescriptionController extends Controller
 	{
 
 		$this->data = [
-			'provinces' => Province::getSelectData(),
-			'districts' => (($prescription->pt_district_id=='')? [] : $prescription->province->getSelectDistrict()),
 			'prescription' => $prescription,
 			'medicines' => Medicine::getSelectData('id', 'name', '', 'name' ,'asc'),
 			'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),

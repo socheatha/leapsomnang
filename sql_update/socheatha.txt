@@ -15,3 +15,22 @@ ALTER TABLE `patients` ADD `age_type` ENUM('1','2') NOT NULL DEFAULT '1' AFTER `
 ALTER TABLE `prescriptions` ADD `pt_age_type` ENUM('1','2') NOT NULL DEFAULT '1' AFTER `pt_age`;
 ALTER TABLE `invoices` ADD `pt_age_type` ENUM('1','2') NOT NULL DEFAULT '1' AFTER `pt_age`;
 ALTER TABLE `labors` ADD `pt_age_type` ENUM('1','2') NOT NULL DEFAULT '1' AFTER `pt_age`;
+
+
+
+===============================31/03/2121=================================
+ALTER TABLE `patients` ADD `address_code` CHAR(10) NULL AFTER `address_village`;
+
+ALTER TABLE `prescriptions` ADD `pt_address_code` CHAR(10) NULL AFTER `pt_village`;
+ALTER TABLE `invoices` ADD `pt_address_code` CHAR(10) NULL AFTER `pt_village`;
+ALTER TABLE `echoes` ADD `pt_address_code` CHAR(10) NULL AFTER `pt_village`;
+ALTER TABLE `labors` ADD `pt_address_code` CHAR(10) NULL AFTER `pt_village`;
+
+ALTER TABLE `prescriptions` ADD `pt_address_full_text` VARCHAR(1000) NULL AFTER `pt_address_code`;
+ALTER TABLE `invoices` ADD `pt_address_full_text` VARCHAR(1000) NULL AFTER `pt_address_code`;
+ALTER TABLE `echoes` ADD `pt_address_full_text` VARCHAR(1000) NULL AFTER `pt_address_code`;
+ALTER TABLE `labors` ADD `pt_address_full_text` VARCHAR(1000) NULL AFTER `pt_address_code`;
+
+ALTER TABLE `echoes` ADD `pt_no` VARCHAR(191) NULL AFTER `date`;
+
+

@@ -4,6 +4,7 @@ namespace App\Repositories\Component;
 
 use App\Http\Controllers\Controller;
 use App\Models\Patient;
+use App\Models\FourLevelAddress;
 use Auth;
 
 class GlobalComponent extends Controller
@@ -121,9 +122,6 @@ class GlobalComponent extends Controller
 			';
 		}
 		// Sub Header
-		if(empty($object)){ $object = new \stdClass(); }
-		if(empty($object->province)){ $object->province = new \stdClass(); $object->province->name = ''; }
-		if(empty($object->district)){ $object->district = new \stdClass(); $object->district->name = ''; }
 
 		$html_header .= '
 			<table class="table-information" width="100%" style="margin: 5px 0 15px 0;">
@@ -148,7 +146,7 @@ class GlobalComponent extends Controller
 				</tr>
 				<tr>
 					<td colspan="4" style="padding-left: 55px;">
-						អាសយដ្ឋាន: <span>'. (($object->pt_village!='')? 'ភូមិ'.$object->pt_village : '') . (($object->pt_commune!='')? (($object->province->name=='ភ្នំពេញ')? ' សង្កាត់'.$object->pt_commune : ' ឃុំ'.$object->pt_commune) : '') . (($object->district->name!='')? (($object->province->name=='ភ្នំពេញ')? ' ខណ្ឌ'.$object->district->name : ' ស្រុក'.$object->district->name) : ''). (($object->province->name!='')? (($object->province->name=='ភ្នំពេញ')? ' រាជធានីភ្នំពេញ'.$object->province->name : ' ខេត្ត'.$object->province->name) : '') .'</span>
+						អាសយដ្ឋាន: <span>'. ($object->pt_address_full_text ?: $this->GetAddressFullText($object->pt_address_code)) .'</span>
 					</td>
 				</tr>
 				'.(($module == 'labor')?
@@ -202,10 +200,7 @@ class GlobalComponent extends Controller
 					'age_type' => $request->pt_age_type ?: '1',
 					'gender' => (($request->pt_gender == 'ប្រុស' || strtolower(trim($request->pt_gender)) == 'male') ? '1' : '2'),
 					'phone' => $request->pt_phone ?? '',
-					'address_village' => $request->pt_village ?? '',
-					'address_commune' => $request->pt_commune ?? '',
-					'address_district_id' => $request->pt_district_id ?? null,
-					'address_province_id' => $request->pt_province_id ?? null,
+					'address_code' => $request->pt_village_id,
 					'created_by' => Auth::user()->id,
 					'updated_by' => Auth::user()->id,
 				]);
@@ -214,6 +209,25 @@ class GlobalComponent extends Controller
 		}
 		
 		return $patient_id;		
+	}
+
+	public static function MergeRequestPatient($request, $array)
+	{
+		return array_merge([
+			'patient_id' => $request->patient_id ?: self::GetPatientIdOrCreate($request),
+			'pt_no' => str_pad($request->patient_id, 6, "0", STR_PAD_LEFT),
+			'pt_name' => $request->pt_name,
+			'pt_gender' => $request->pt_gender,
+			'pt_age' => $request->pt_age,
+			'pt_age_type' => $request->pt_age_type ?: '1',
+			'pt_phone' => $request->pt_phone,
+			'pt_address_code' => $request->pt_village_id,
+			'pt_address_full_text' => self::GetAddressFullText($request->pt_village_id),
+		], $array);
+	}
+
+	public static function GetAddressFullText($code) {
+		return $code ? FourLevelAddress::select('_path_kh')->where('_code', $code)->first()['_path_kh'] : null;
 	}
 }
 

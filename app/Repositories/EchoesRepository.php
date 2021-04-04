@@ -75,29 +75,6 @@ class EchoesRepository
 		}else{
 			$echoes_detail = '<section class="echoes-print" style="position: relative;">
 				' . $GlobalComponent->PrintHeader('echo', $echoes) . '
-				<table class="table-information" width="100%" style="border-top: 4px solid red; margin: 10px 0 6px 0;">
-					<tr>
-						<td colspan="3">
-							<h5 class="text-center KHOSMoulLight" style="padding: 20px 0 10px; color: blue;">'. $echoes->echo_default_description->name .'</h5>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							ឈ្មោះ: <span class="pt_name">'. $echoes->pt_name .'</span>
-						</td>
-						<td>
-							ភេទ: <span class="pt_gender">'. $echoes->pt_gender .'</span>
-						</td>
-						<td>
-							អាយុ: <span class="pt_age">'. $echoes->pt_age .'</span>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="3">
-							អាសយដ្ឋាន: <span class="pt_name">'. (($echoes->pt_village!='')? 'ភូមិ'.$echoes->pt_village : '') . (($echoes->pt_commune!='')? (($echoes->province->name=='ភ្នំពេញ')? ' សង្កាត់'.$echoes->pt_commune : ' ឃុំ'.$echoes->pt_commune) : '') . (($echoes->district->name!='')? (($echoes->province->name=='ភ្នំពេញ')? ' ខណ្ឌ'.$echoes->district->name : ' ស្រុក'.$echoes->district->name) : ''). (($echoes->province->name!='')? (($echoes->province->name=='ភ្នំពេញ')? ' រាជធានីភ្នំពេញ'.$echoes->province->name : ' ខេត្ត'.$echoes->province->name) : '') .'</span>
-						</td>
-					</tr>
-				</table>
 				<div class="echo_description">
 					<div style="margin-bottom: 10px;">
 						រោគវិនិច្ឆ័យ: '. $echoes->pt_diagnosis .'
@@ -134,52 +111,16 @@ class EchoesRepository
 
 	public function create($request, $path, $type)
 	{
-		
-		$patient_id = $request->patient_id;
-
-		if (isset($request->patient_id) && $request->patient_id!='') {
-			# code...
-		}else{
-			$patient = Patient::where('name', $request->pt_name)->first();
-
-			if ($patient!=null) {
-				$patient_id = $patient->id;
-			}else{
-				$created_patient = Patient::create([
-					'name' => $request->pt_name,
-					'age' => $request->pt_age,
-					'gender' => (($request->pt_gender=='ប្រុស' || $request->pt_gender == 'male' || $request->pt_gender == 'Male')? '1' : '2'),
-					'phone' => $request->pt_phone,
-					'address_village' => $request->pt_village,
-					'address_commune' => $request->pt_commune,
-					'address_district_id' => $request->pt_district_id,
-					'address_province_id' => $request->pt_province_id,
-					'created_by' => Auth::user()->id,
-					'updated_by' => Auth::user()->id,
-				]);
-				$patient_id = $created_patient->id;
-			}
-		}
-
-
 		$echo_default_description = EchoDefaultDescription::where('slug', $type)->first();
-		$echoes = Echoes::create([
+		$request->patient_id = GlobalComponent::GetPatientIdOrCreate($request);
+		$echoes = Echoes::create(GlobalComponent::MergeRequestPatient($request, [
 			'date' => $request->date,
-			'pt_age' => $request->pt_age,
-			'pt_name' => $request->pt_name,
-			'pt_gender' => $request->pt_gender,
-			'pt_phone' => $request->pt_phone,
-			'pt_village' => $request->pt_village,
-			'pt_commune' => $request->pt_commune,
-			'pt_district_id' => $request->pt_district_id,
-			'pt_province_id' => $request->pt_province_id,
 			'pt_diagnosis' => $request->pt_diagnosis,
 			'description' => $request->description,
-			'patient_id' => $patient_id,
 			'echo_default_description_id' => $echo_default_description->id,
 			'created_by' => Auth::user()->id,
 			'updated_by' => Auth::user()->id,
-		]);
+		]));
 		
 		if ($request->file('image')) {
 			$image = $request->file('image');
@@ -187,27 +128,17 @@ class EchoesRepository
 			$img = Image::make($image->getRealPath())->save($path.$echoes_image);
 			$echoes->update(['image'=>$echoes_image]);
 		}
-
 		return $echoes;
 	}
 
 	public function update($request, $echoes, $path)
 	{
-		$echoes->update([
+		$echoes->update(GlobalComponent::MergeRequestPatient($request, [
 			'date' => $request->date,
-			'pt_age' => $request->pt_age,
-			'pt_name' => $request->pt_name,
-			'pt_gender' => $request->pt_gender,
-			'pt_phone' => $request->pt_phone,
-			'pt_village' => $request->pt_village,
-			'pt_commune' => $request->pt_commune,
-			'pt_district_id' => $request->pt_district_id,
-			'pt_province_id' => $request->pt_province_id,
 			'pt_diagnosis' => $request->pt_diagnosis,
 			'description' => $request->description,
-			'patient_id' => $request->patient_id,
 			'updated_by' => Auth::user()->id,
-		]);
+		]));
 		
 		if ($request->file('image')) {
 			$image = $request->file('image');
@@ -215,9 +146,7 @@ class EchoesRepository
 			$img = Image::make($image->getRealPath())->save($path.$echoes_image);
 			$echoes->update(['image'=>$echoes_image]);
 		}
-
 		return $echoes;
-
 	}
 
 	public function destroy($request, $echoes, $path)

@@ -107,27 +107,15 @@ class PrescriptionRepository
 
 	public function create($request)
 	{
-
-		$patient_id = GlobalComponent::GetPatientIdOrCreate($request);
-		$prescription = Prescription::create([
+		$request->patient_id = GlobalComponent::GetPatientIdOrCreate($request);
+		$prescription = Prescription::create(GlobalComponent::MergeRequestPatient($request, [
 			'date' => $request->date,
 			'code' => $request->code,
-			'pt_no' => str_pad($patient_id, 6, "0", STR_PAD_LEFT),
-			'pt_age' => $request->pt_age,
-			'pt_age_type' => $request->pt_age_type ?: '1',
-			'pt_name' => $request->pt_name,
-			'pt_gender' => $request->pt_gender,
-			'pt_phone' => $request->pt_phone,
-			'pt_village' => $request->pt_village,
-			'pt_commune' => $request->pt_commune,
-			'pt_district_id' => $request->pt_district_id,
-			'pt_province_id' => $request->pt_province_id,
 			'pt_diagnosis' => $request->pt_diagnosis,
 			'remark' => $request->remark,
-			'patient_id' => $patient_id,
 			'created_by' => Auth::user()->id,
 			'updated_by' => Auth::user()->id,
-		]);
+		]));
 
 		if (isset($request->medicine_name) && isset($request->medicine_usage)) {
 			for ($i = 0; $i < count($request->medicine_name); $i++) {
@@ -232,27 +220,14 @@ class PrescriptionRepository
 
 	public function update($request, $prescription)
 	{
-		$prescription->update([
+		$prescription->update(GlobalComponent::MergeRequestPatient($request, [
 			'date' => $request->date,
 			'code' => $request->code,
-			'pt_no' => str_pad($request->patient_id, 6, "0", STR_PAD_LEFT),
-			'pt_age' => $request->pt_age,
-			'pt_age_type' => $request->pt_age_type ?: '1',
-			'pt_name' => $request->pt_name,
-			'pt_gender' => $request->pt_gender,
-			'pt_phone' => $request->pt_phone,
-			'pt_village' => $request->pt_village,
-			'pt_commune' => $request->pt_commune,
-			'pt_district_id' => $request->pt_district_id,
-			'pt_province_id' => $request->pt_province_id,
 			'pt_diagnosis' => $request->pt_diagnosis,
 			'remark' => $request->remark,
-			'patient_id' => $request->patient_id,
 			'updated_by' => Auth::user()->id,
-		]);
-		
+		]));
 		return $prescription;
-
 	}
 
 	public function status($prescription, $status)

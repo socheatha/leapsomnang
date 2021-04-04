@@ -50,10 +50,11 @@
 				<thead>
 					<tr>
 						{{-- <th class="text-center" width="30px"></th> --}}
-						<th class="text-center" width="8%">{!! __('module.table.prescription.code') !!}</th>
-						<th class="text-center" width="8%">{!! __('module.table.date') !!}</th>
-						<th class="text-center" width="25%">{!! __('module.table.prescription.pt_name') !!}</th>
-						<th class="text-center" width="10%">{!! __('module.table.prescription.pt_phone') !!}</th>
+						<th class="text-center">{!! __('module.table.prescription.code') !!}</th>
+						<th class="text-center">{!! __('module.table.date') !!}</th>
+						<th class="text-center">{!! __('module.table.prescription.pt_name') !!}</th>
+						<th class="text-center">{!! __('module.table.prescription.pt_phone') !!}</th>
+						<th class="text-center">{!! __('module.table.address') !!}</th>
 						<th width="12%" class="text-center">{!! __('module.table.action') !!}</th>
 					</tr>
 				</thead>
@@ -97,11 +98,12 @@
 					{data: 'date', name: 'date', className: 'text-center'},
 					{data: 'pt_name', name: 'pt_name'},
 					{data: 'pt_phone', name: 'pt_phone'},
-					{data: 'actions', name: 'actions', className: 'text-right', searchable: false, sortable: false}
+					{data: 'pt_address_full_text', name: 'pt_address_full_text'},
+					{data: 'actions', name: 'actions', className: 'text-center', searchable: false, sortable: false}
 				],
 				rowCallback: function( row, data ) {
 
-					$('td:eq(4)', row).html( `@Can("Prescription Edit")
+					$('td:eq(5)', row).html( `@Can("Prescription Edit")
 						<button type="button" data-url="/prescription/${ data.id }/print" class="btn btn-sm btn-flat btn-success btn-print-prescription"><i class="fa fa-print"></i></button>
 					@endCan 
 					@Can("Prescription Edit")

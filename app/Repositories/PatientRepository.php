@@ -86,9 +86,13 @@ class PatientRepository
 		$patient = Patient::find($request->id);
 		$patient->no = str_pad($patient->id, 6, "0", STR_PAD_LEFT);
 		$patient->pt_gender = (($patient->gender==1)? 'ប្រុស' : 'ស្រី');
-		return response()->json([
-			'patient' => $patient
-		]);
+
+		$return_result['patient'] = $patient;
+		if ($request->with_address_selection && $patient->address_code && strlen(trim($patient->address_code)) == 8) {
+			$_4level_address = new \App\Http\Controllers\Location\FourLevelAddressController();
+			$return_result['address'] = $_4level_address->BSSFullAddress($patient->address_code, 'option');
+		}
+		return response()->json($return_result);
 	}
 
 
@@ -103,10 +107,7 @@ class PatientRepository
 			'phone' => $request->phone,
 			'email' => $request->email,
 			'full_address' => $request->full_address,
-			'address_district_id' => $request->address_district_id,
-			'address_province_id' => $request->address_province_id,
-			'address_commune' => $request->address_commune,
-			'address_village' => $request->address_village,
+			'address_code' => $request->pt_village_id,
 			'description' => $request->description,
 			'created_by' => Auth::user()->id,
 			'updated_by' => Auth::user()->id,
@@ -128,10 +129,7 @@ class PatientRepository
 			'phone' => $request->phone,
 			'email' => $request->email,
 			'full_address' => $request->full_address,
-			'address_district_id' => $request->address_district_id,
-			'address_province_id' => $request->address_province_id,
-			'address_commune' => $request->address_commune,
-			'address_village' => $request->address_village,
+			'address_code' => $request->pt_village_id,
 			'description' => $request->description,
 			'updated_by' => Auth::user()->id,
 		]);

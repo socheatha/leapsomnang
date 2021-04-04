@@ -63,8 +63,6 @@ class EchoesController extends Controller
 		$echo_default_description = EchoDefaultDescription::where('slug', $type)->first();
 		if ($echo_default_description != null) {
 			$this->data = [
-				'provinces' => Province::getSelectData(),
-				'districts' => [],
 				'echo_default_description' => $echo_default_description,
 				'type' => $type,
 			];
@@ -101,8 +99,6 @@ class EchoesController extends Controller
 		$echo_default_description = EchoDefaultDescription::where('slug', $type)->first();
 		if ($echo_default_description != null) {
 			$this->data = [
-				'provinces' => Province::getSelectData(),
-				'districts' => (($echoes->pt_district_id=='')? [] : $echoes->province->getSelectDistrict()),
 				'echo_default_description' => $echo_default_description,
 				'echoes_preview' => $this->echoes->getEchoesPreview($echoes->id)->getData()->echoes_detail,
 				'echoes' => $echoes,

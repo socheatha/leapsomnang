@@ -41,32 +41,34 @@
     </div>
   </div>
 
-
+<?php 
+  $_4level_address = new \App\Http\Controllers\Location\FourLevelAddressController();
+  $_4level_level = $_4level_address->BSSFullAddress($pre_select_obj->pt_address_code ?? 'xxxxxxxxxxxxxxx', 'array_selection');
+  $_data_properties = ['class' => 'form-control select2', 'data-width'=>'100%', 'placeholder' => __('label.form.choose'), 'required' => 'required'];
+?>
   <div class="col-sm-6">
     <div class="form-group">
       {!! Html::decode(Form::label('province_id', __('label.form.patient.province'))) !!}
-      {!! Form::select('pt_province_id', $provinces, ((isset($pre_select_obj->pt_province_id))? $pre_select_obj->pt_province_id : '' ), ['class' => 'form-control select2 province_id', 'data-width'=>'100%', 'placeholder' => __('label.form.choose')]) !!}
+      {!! Form::select('pt_province_id', $_4level_level[0][0], $_4level_level[0][1], $_data_properties) !!}
     </div>
   </div>
   <div class="col-sm-6">
     <div class="form-group">
       {!! Html::decode(Form::label('district_id', __('label.form.patient.district'))) !!}
-      {!! Form::select('pt_district_id', $districts, ((isset($pre_select_obj->pt_district_id))? $pre_select_obj->pt_district_id : '' ), ['class' => 'form-control select2 district_id','data-width'=>'100%', 'placeholder' => __('label.form.choose'), (($districts==[])? 'disabled' : '' )]) !!}
+      {!! Form::select('pt_district_id', $_4level_level[1][0], $_4level_level[1][1], $_data_properties) !!}
     </div>
   </div>
 
   <div class="col-sm-6">
     <div class="form-group">
-      {!! Html::decode(Form::label('pt_commune', __('label.form.patient.commune'))) !!}
-      {!! Form::text('pt_commune', ((isset($pre_select_obj->pt_commune))? $pre_select_obj->pt_commune : '' ), ['class' => 'form-control '. (($errors->has("pt_commune"))? "is-invalid" : ""),'placeholder' => 'commune']) !!}
-      {!! $errors->first('pt_commune', '<div class="invalid-feedback">:message</div>') !!}
+      {!! Html::decode(Form::label('commune_id', __('label.form.patient.commune'))) !!}
+      {!! Form::select('pt_commune_id', $_4level_level[2][0], $_4level_level[2][1], $_data_properties) !!}
     </div>
   </div>
   <div class="col-sm-6">
     <div class="form-group">
-      {!! Html::decode(Form::label('pt_village', __('label.form.patient.village'))) !!}
-      {!! Form::text('pt_village', ((isset($pre_select_obj->pt_village))? $pre_select_obj->pt_village : '' ), ['class' => 'form-control '. (($errors->has("pt_village"))? "is-invalid" : ""),'placeholder' => 'village']) !!}
-      {!! $errors->first('pt_village', '<div class="invalid-feedback">:message</div>') !!}
+      {!! Html::decode(Form::label('village_id', __('label.form.patient.village'))) !!}
+      {!! Form::select('pt_village_id', $_4level_level[3][0], $_4level_level[3][1], $_data_properties) !!}
     </div>
   </div>
   {{-- <div class="col-sm-12">

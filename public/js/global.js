@@ -1,5 +1,9 @@
-var _provinceRequestUrl = '/province/getSelectDistrict';
+var getCambodiaChildUrl = '/address/getFullAddress';
+var getProvinceChildUrl = '/address/getProvinceChileSelection';
+var getDistrictChileUrl = '/address/getDistrictChileSelection';
+var getCommuneChileUrl = '/address/getCommuneChileSelection';
 var _patientRequestUrl = '/patient/getSelectDetail';
+var temp_address_code = '';
 
 function bss_number(number) {
     return (!number || typeof number == 'undefined' || number == 'undefined' || number == '0') ? 0 : parseInt(number);
@@ -105,11 +109,16 @@ $(document).ready(function () {
 
     if ($('[name="patient_id"]').length >= 1) {
         $(document).on('change', '[name="patient_id"]', function () {
+            $('[name="pt_district_id"], [name="pt_commune_id"], [name="pt_village_id"]').html('<option value=""></option>');
+
             if ($(this).val() != '') {
                 $.ajax({
                     url: bss_string(_patientRequestUrl),
                     type: 'post',
-                    data: { id: bss_number($(this).val()) },
+                    data: { 
+                        id: bss_number($(this).val()),
+                        with_address_selection : true
+                    },
                 }).done(function (result) {
                     // $('[name="pt_no"]').val(result.patient.no);
                     $('[name="pt_name"]').val(bss_string(result.patient.name));
@@ -120,28 +129,56 @@ $(document).ready(function () {
                     $('[name="pt_village"]').val(bss_string(result.patient.address_village));
                     $('[name="pt_commune"]').val(bss_string(result.patient.address_commune));
 
-                    $('[name="pt_province_id"]').attr('data-bss_district_id', bss_number(result.patient.address_district_id));
-                    $('[name="pt_province_id"]').val(bss_number(result.patient.address_province_id)).trigger('change');
+                    if (result && result.address) {
+                        let _adddressLevel = result.address;
+                        $('[name="pt_province_id"]').html(_adddressLevel[0]);
+                        $('[name="pt_district_id"]').html(_adddressLevel[1]);
+                        $('[name="pt_commune_id"]').html(_adddressLevel[2]);
+                        $('[name="pt_village_id"]').html(_adddressLevel[3]);
+                    }
                 });
             }
         });
     }
 
     if ($('[name="pt_province_id"]').length >= 1) {
-        $(document).on('change', '[name="pt_province_id"]', function (e) {
-            let bss_district_id = $(this).data('bss_district_id');
-            $('[name="pt_district_id"]').attr({ "disabled": true }); 
-            $('[name="pt_district_id"]').html('<option value=""></option>');
-
+        $(document).on('change', '[name="pt_province_id"]', function (e) {            
+            $('[name="pt_district_id"], [name="pt_commune_id"], [name="pt_village_id"]').html('<option value=""></option>');
+            
+            let targetObj = $('[name="pt_district_id"]');
             $.ajax({
-                url: bss_string(_provinceRequestUrl),
+                url: bss_string(getProvinceChildUrl),
                 method: 'post',
-                data: { id: bss_number($(this).val()) },
-                success: function (data) {
-                    $('[name="pt_district_id"]').attr({ "disabled": false });
-                    $('[name="pt_district_id"]').html(data);
-                    $('[name="pt_district_id"]').val(bss_number(bss_district_id));
-                }
+                data: { parent_code: bss_string($(this).val()) },
+                success: function (data) { targetObj.html(data); }
+            });
+        });
+    }
+
+    if ($('[name="pt_district_id"]').length >= 1) {
+        $(document).on('change', '[name="pt_district_id"]', function (e) {
+            $('[name="pt_commune_id"], [name="pt_village_id"]').html('<option value=""></option>');
+            
+            let targetObj = $('[name="pt_commune_id"]');
+            $.ajax({
+                url: bss_string(getDistrictChileUrl),
+                method: 'post',
+                data: { parent_code: bss_string($(this).val()) },
+                success: function (data) { targetObj.html(data); }
+            });
+        });
+    }
+
+    if ($('[name="pt_commune_id"]').length >= 1) {
+        $(document).on('change', '[name="pt_commune_id"]', function (e) {
+            $('[name="pt_village_id"]').html('<option value=""></option>');
+
+            let targetObj = $('[name="pt_village_id"]');
+            $.ajax({
+                url: bss_string(getCommuneChileUrl),
+                method: 'post',
+                data: { parent_code: bss_string($(this).val()) },
+                success: function (data) { targetObj.html(data); }
             });
         });
     }

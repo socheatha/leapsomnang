@@ -71,14 +71,14 @@
 				<thead>
 					<tr>
 						{{-- <th class="text-center" width="30px"></th> --}}
-						<th class="text-center" width="8%">{!! __('module.table.invoice.inv_number') !!}</th>
-						<th class="text-center" width="8%">{!! __('module.table.date') !!}</th>
+						<th class="text-center">{!! __('module.table.invoice.inv_number') !!}</th>
+						<th class="text-center">{!! __('module.table.date') !!}</th>
 						<th class="text-center">{!! __('module.table.invoice.pt_name') !!}</th>
-						<th class="text-center" width="10%">{!! __('module.table.invoice.pt_phone') !!}</th>
-						<th class="text-center" width="10%">{!! __('module.table.invoice.sub_total') !!}</th>
-						<th class="text-center" width="10%">{!! __('module.table.invoice.discount') !!}</th>
-						<th class="text-center" width="10%">{!! __('module.table.invoice.grand_total') !!}</th>
-						<th class="text-center" width="7%">{!! __('module.table.invoice.status') !!}</th>
+						<th class="text-center">{!! __('module.table.invoice.pt_phone') !!}</th>
+						<th class="text-center">{!! __('module.table.invoice.sub_total') !!}</th>
+						<th class="text-center">{!! __('module.table.invoice.discount') !!}</th>
+						<th class="text-center">{!! __('module.table.invoice.grand_total') !!}</th>
+						<th class="text-center">{!! __('module.table.invoice.status') !!}</th>
 						<th width="12%" class="text-center">{!! __('module.table.action') !!}</th>
 					</tr>
 				</thead>

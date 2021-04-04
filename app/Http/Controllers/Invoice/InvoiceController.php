@@ -41,8 +41,6 @@ class InvoiceController extends Controller
 	public function create()
 	{
 		$this->data = [
-			'provinces' => Province::getSelectData(),
-			'districts' => [],
 			'inv_number' => $this->invoice->inv_number(),
 			'medicines' => Medicine::getSelectData('id', 'name', '', 'name' ,'asc'),
 			'services' => Service::select('id', 'name', 'price', 'description')->orderBy('name' ,'asc')->get(),
@@ -145,8 +143,6 @@ class InvoiceController extends Controller
 
 		$this->data = [
 			'invoice' => $invoice,
-			'provinces' => Province::getSelectData(),
-			'districts' => (($invoice->pt_district_id=='')? [] : $invoice->province->getSelectDistrict()),
 			'medicines' => Medicine::getSelectData('id', 'name', '', 'name' ,'asc'),
 			'services' => Service::select('id', 'name', 'price', 'description')->orderBy('name' ,'asc')->get(),
 			'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),

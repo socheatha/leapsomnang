@@ -18,9 +18,6 @@ Route::group(['prefix' => 'province', 'as' => 'province.', 'namespace' => 'Locat
 	Route::post('/getSelectDistrict', 'ProvinceController@getSelectDistrict')->name('getSelectDistrict');
 });
 
-
-
-
 Route::group(['prefix' => 'district', 'as' => 'district.', 'namespace' => 'Location'], function () {
 
 	Route::get('/', 'DistrictController@index')->name('index')->middleware('can:District Index');
@@ -30,6 +27,13 @@ Route::group(['prefix' => 'district', 'as' => 'district.', 'namespace' => 'Locat
 	Route::put('/{district}/update', 'DistrictController@update')->name('update')->middleware('can:District Edit');
 	Route::delete('/{district}/delete', 'DistrictController@destroy')->name('destroy')->middleware('can:District Delete');
 
+});
+
+Route::group(['prefix' => 'address', 'as' => 'address.', 'namespace' => 'Location'], function () {
+	Route::post('/getFullAddress', 'FourLevelAddressController@BSSFullAddress')->name('getFullAddress');
+	Route::post('/getProvinceChileSelection', 'FourLevelAddressController@District')->name('getProvinceChileSelection');
+	Route::post('/getDistrictChileSelection', 'FourLevelAddressController@Commune')->name('getDistrictChileSelection');
+	Route::post('/getCommuneChileSelection', 'FourLevelAddressController@Village')->name('getCommuneChileSelection');
 });
 
 

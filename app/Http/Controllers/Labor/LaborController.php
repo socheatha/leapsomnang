@@ -54,8 +54,6 @@ class LaborController extends Controller
 		$this->data = [
 			'type' => $type,
 			'item_list' => $this->labor->getCheckedServicesList($type),
-			'provinces' => Province::getSelectData(),
-			'districts' => [],
 			'labor_number' => $this->labor->labor_number(),
 			'services' => Service::select('id', 'name', 'price', 'description')->orderBy('name' ,'asc')->get(),
 			'categories' => LaborCategory::getSelectData('id', 'name', '', 'id' ,'asc'),
@@ -147,9 +145,7 @@ class LaborController extends Controller
 			'item_list' => $this->labor->getLaborDetail($labor->id),
 			'labor' => $labor,
 			'type' => $type,
-			'provinces' => Province::getSelectData(),
 			'categories' => LaborCategory::getSelectData('id', 'name', '', 'id' ,'asc'),
-			'districts' => (($labor->pt_district_id=='')? [] : $labor->province->getSelectDistrict()),
 			'medicines' => Medicine::getSelectData('id', 'name', '', 'name' ,'asc'),
 			'services' => Service::select('id', 'name', 'price', 'description')->orderBy('name' ,'asc')->get(),
 			'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),

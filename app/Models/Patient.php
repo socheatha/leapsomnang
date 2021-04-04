@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\BaseModel;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Patient extends BaseModel
 {
 	protected $table = 'patients';
@@ -23,6 +24,7 @@ class Patient extends BaseModel
     'address_commune',
     'address_district_id',
     'address_province_id',
+    'address_code',
     'created_by',
     'updated_by',
 	];
@@ -37,4 +39,8 @@ class Patient extends BaseModel
   	return $this->belongsTo(District::class, 'address_district_id');
   }
   
+  public function full_address()
+  {
+  	return $this->belongsTo(FourLevelAddress::class, 'address_code', '_code');
+  }
 }

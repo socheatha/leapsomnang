@@ -628,80 +628,55 @@ class LaborRepository
 
 	public function create($request, $type)
 	{
-		$patient_id = GlobalComponent::GetPatientIdOrCreate($request);
-		
-		$labor = Labor::create([
+		$request->patient_id = GlobalComponent::GetPatientIdOrCreate($request);
+		$labor = Labor::create(GlobalComponent::MergeRequestPatient($request, [
 			'date' => $request->date,
 			'labor_number' => $request->labor_number,
-			'pt_no' => str_pad($patient_id, 6, "0", STR_PAD_LEFT),
-			'pt_age' => $request->pt_age,
-			'pt_age_type' => $request->pt_age_type ?: '1',
-			'pt_name' => $request->pt_name,
-			'pt_gender' => $request->pt_gender,
-			'pt_phone' => $request->pt_phone,
-			'pt_village' => $request->pt_village,
-			'pt_commune' => $request->pt_commune,
-			'pt_district_id' => $request->pt_district_id,
-			'pt_province_id' => $request->pt_province_id,
 			'price' => $request->price ?: 0,
 			'type' => $type,
 			'labor_type' => $request->labor_type ?: 1,
 			'simple_labor_detail' => $request->simple_labor_detail ?: '',
 			'remark' => $request->remark,
-			'patient_id' => $patient_id,
 			'created_by' => Auth::user()->id,
 			'updated_by' => Auth::user()->id,
-		]);
+		]));
 		
 		if (isset($request->service_name) && isset($request->service_id)) {
 			for ($i = 0; $i < count($request->service_name); $i++) {
 				LaborDetail::create([
-						'name' => $request->service_name[$i],
-						'result' => $request->result[$i],
-						'unit' => $request->unit[$i],
-						'service_id' => $request->service_id[$i],
-						'labor_id' => $labor->id,
-						'created_by' => Auth::user()->id,
-						'updated_by' => Auth::user()->id,
-					]);
+					'name' => $request->service_name[$i],
+					'result' => $request->result[$i],
+					'unit' => $request->unit[$i],
+					'service_id' => $request->service_id[$i],
+					'labor_id' => $labor->id,
+					'created_by' => Auth::user()->id,
+					'updated_by' => Auth::user()->id,
+				]);
 			}
 		}
-
 		return $labor;
 	}
 
 	public function update($request, $type, $labor)
 	{
-		// dd($request->all());
-		$labor->update([
+		$labor->update(GlobalComponent::MergeRequestPatient($request, [
 			'date' => $request->date,
-			'pt_age' => $request->pt_age,
-			'pt_age_type' => $request->pt_age_type ?: '1',
-			'pt_name' => $request->pt_name,
-			'pt_gender' => $request->pt_gender,
-			'pt_phone' => $request->pt_phone,
-			'pt_village' => $request->pt_village,
-			'pt_commune' => $request->pt_commune,
-			'pt_district_id' => $request->pt_district_id,
-			'pt_province_id' => $request->pt_province_id,
 			'price' => $request->price ?: 0,
 			'type' => $type,
 			'simple_labor_detail' => $request->simple_labor_detail ?: '',
 			'remark' => $request->remark,
 			'updated_by' => Auth::user()->id,
-		]);
+		]));
 		if (isset($request->labor_detail_ids)) {
 			for ($i = 0; $i < count($request->labor_detail_ids); $i++) {
 				LaborDetail::find($request->labor_detail_ids[$i])->update([
-																														'result' => $request->result[$i],
-																														'unit' => $request->unit[$i],
-																														'updated_by' => Auth::user()->id,
-																													]);
+					'result' => $request->result[$i],
+					'unit' => $request->unit[$i],
+					'updated_by' => Auth::user()->id,
+				]);
 			}
-		}
-		
+		}		
 		return $labor;
-
 	}
 
 	public function destroy($request, $labor)

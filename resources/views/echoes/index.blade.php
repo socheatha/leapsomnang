@@ -46,9 +46,10 @@
       <table class="table table-bordered dt-server expandable-table" width="100%" id="echoes_table">
 				<thead>
 					<tr>
-						<th class="text-center" width="8%">{!! __('module.table.date') !!}</th>
+						<th class="text-center">{!! __('module.table.date') !!}</th>
 						<th class="text-center" width="25%">{!! __('module.table.echoes.pt_name') !!}</th>
 						<th class="text-center" width="10%">{!! __('module.table.echoes.pt_phone') !!}</th>
+						<th class="text-center">{!! __('module.table.address') !!}</th>
 						<th width="12%" class="text-center">{!! __('module.table.action') !!}</th>
 					</tr>
 				</thead>
@@ -118,11 +119,12 @@
 					{data: 'date', name: 'date', className: 'text-center'},
 					{data: 'pt_name', name: 'pt_name'},
 					{data: 'pt_phone', name: 'pt_phone'},
-					{data: 'actions', name: 'actions', className: 'text-right', searchable: false, sortable: false}
+					{data: 'pt_address_full_text', name: 'pt_address_full_text'},
+					{data: 'actions', name: 'actions', className: 'text-center', searchable: false, sortable: false}
 				],
 				rowCallback: function( row, data ) {
 
-					$('td:eq(3)', row).html( `@Can("Echo Print")
+					$('td:eq(4)', row).html( `@Can("Echo Print")
 																			<button type="button" data-url="/echoes/{{ $type }}/${ data.id }/print" class="btn btn-sm btn-flat btn-success btn-print-echoes"><i class="fa fa-print"></i></button>
 																		@endCan 
 																		@Can("Echo Edit")
