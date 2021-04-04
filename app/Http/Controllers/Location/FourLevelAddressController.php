@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Location;
 
 use App\Http\Controllers\Controller;
 use App\Models\FourLevelAddress;
+use Illuminate\Http\Request;
 
 class FourLevelAddressController extends Controller
 {
@@ -15,6 +16,16 @@ class FourLevelAddressController extends Controller
 	public function __construct()
 	{
 		$this->middleware('auth');
+	}
+
+	public function index(Request $request)
+	{
+		$code_length = $request->addr ? strlen($request->addr) : 0;
+		$this->data = [
+			'address' => $code_length == 2 ? $this->District($request->addr) : ($code_length == 4 ? $this->Commune($request->addr) : ($code_length == 6 ? $this->Village($request->addr) : $this->Province())),
+			'addr' => $request->addr			
+		];
+		return view('province.index', $this->data);
 	}
 
 	public function BSSFullAddress($code = '08021103', $return_type = 'selection') {

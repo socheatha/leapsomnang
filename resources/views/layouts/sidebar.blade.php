@@ -254,15 +254,6 @@
 					</li>
 					@endcan
 
-					@can('District Index', 'District Create', 'District Edit', 'District Delete')
-					<li class="nav-item">
-						<a href="{{ route('district.index') }}" class="nav-link {{ ((Auth::user()->sidebarActive() == 'district' )? 'active':'') }}">
-							<i class="fa fa-map-marker-alt nav-icon"></i>
-							<p>{{ __('sidebar.district.main') }}</p>
-						</a>
-					</li>
-					@endcan
-
 				@endcan
 
 			</ul>

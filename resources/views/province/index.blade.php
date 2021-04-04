@@ -22,41 +22,33 @@
 			@endcomponent
 
 		</div>
-
+		@php
+			$back_addr = substr_replace($addr, '', -2);
+			$code_length = $addr ? strlen($addr) : 0;
+		@endphp
 		<div class="card-body">
 			<table id="datatables" class="table table-bordered table-hover">
 				<thead>
 					<tr>
 						<th>{!! __('module.table.no') !!}</th>
-						<th>{{ __('module.table.name_kh') }}</th>
-						<th>{{ __('module.table.name_en') }}</th>
-						<th>{{ __('module.table.province.districts') }}</th>
+						<th>{{ __('module.table.name_kh') }} :: {{ __('module.table.name_en') }} ({{ $code_length == 2 ? __('label.form.patient.district') : ($code_length == 4 ? __('label.form.patient.commune') : ($code_length == 6 ? __('label.form.patient.village') : __('label.form.patient.province'))) }})</th>
+						<th>
+							{!! $code_length >=2 ? '<a href="?addr=' . $back_addr . '" class=""><i class="fa fa-undo"></i></a> -- ' : '' !!}
+							{{ $code_length == 2 ? __('label.form.patient.commune') : ($code_length == 4 ? __('label.form.patient.village') : ($code_length == 6 ? '' : __('label.form.patient.district'))) }}
+						</th>
 						<th width="10%">{{ __('module.table.action') }}</th>
 					</tr>
 				</thead>
 				<tbody>
-					@foreach($provinces as $i => $province)
+					@foreach($address as $i => $addr)
 						<tr>
 							<td class="text-center">{{ ++$i }}</td>
-							<td>{{ $province->name_en }}</td>
-							<td>{{ $province->name }}</td>
-							<td class="text-center"><b>{{ $province->districts->count() }}</b></td>
-							<td class="text-right">
-
-								@can('Province Edit')
-								{{-- Edit Button --}}
-								<a href="{{ route('province.edit',$province->id) }}" class="btn btn-info btn-sm btn-flat"><i class="fa fa-pencil-alt"></i></a>
-								@endcan
-
-								@can('Province Delete')
-								{{-- Delete Button --}}
-								<button class="btn btn-danger btn-sm btn-flat BtnDelete" value="{{ $province->id }}"><i class="fa fa-trash-alt"></i></button>
-								{{ Form::open(['url'=>route('province.destroy', $province->id), 'id' => 'form-item-'.$province->id, 'class' => 'sr-only']) }}
-								{{ Form::hidden('_method','DELETE') }}
-								{{ Form::close() }}
-								@endcan
-
+							<td>{{ $addr['_name_kh'] }} :: {{ $addr['_name_en'] }}</td>
+							<td class="text-center">
+								{!! ($code_length < 6) ? '<a href="?addr='. $addr['_code'] .'"><i class="fa fa-folder-open"></i>' : '--' !!}
+								</a>
 							</td>
+							<td class="text-center">--</td>
 						</tr>
 					@endforeach
 				</tbody>
