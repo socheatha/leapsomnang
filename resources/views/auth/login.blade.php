@@ -91,7 +91,13 @@
 							Create your Account
 							<i class="fa fa-long-arrow-alt-right m-l-5" aria-hidden="true"></i>
 						</a>
+						@if(!empty(env('GIT_USR')) && !empty(env('GIT_PWD')) && !empty(env('GIT_PATH')))
+							<br><a class="txt2" href="#">
+								Synchronize local project<i class="fa fa-spin fa-sync m-l-5" aria-hidden="true"></i><br>
+							</a>
+						@endif
 					</div>
+					
 					@csrf
 				</form>
 			</div>
