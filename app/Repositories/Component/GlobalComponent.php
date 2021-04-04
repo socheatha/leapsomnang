@@ -167,7 +167,7 @@ class GlobalComponent extends Controller
 		<div class='text-center' style='position: absolute; right: 30px; bottom: 1.5cm;'>
 				<div class='KHOSMoulLight'>$title_signature</div>
 				<div class='sign_box'></div>
-				<div><span class='KHOSMoulLight'>វេជ្ជបណ្ឌិត. " . ($doctor_name ?: Auth::user()->setting()->sign_name_kh) . "</span></div>
+				<div><span class='KHOSMoulLight' style='font-size: 11px;'>វេជ្ជបណ្ឌិត.</span> <span class='KHOSMoulLight'>" . ($doctor_name ?: Auth::user()->setting()->sign_name_kh) . "</span></div>
 			</div>
 		";
 	}
