@@ -182,4 +182,16 @@ $(document).ready(function () {
             });
         });
     }
+
+    $('#btn_upload').click(function () {
+        $('#btn_upload').html('uploading data to BSS FTP server, please wait. <i class="fa fa-spinner fa-pulse"></i>');
+        $.ajax({
+            url: bss_string('/uplaoddb'),
+            method: 'post',
+            // async: false,
+            success: function (data) {
+                if (data == true) $('#btn_upload').html('uploaded. <i class="fa fa-check"></i>');
+            }
+        });
+    });
 });

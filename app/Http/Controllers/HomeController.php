@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Models\Patient;
 use App\Models\Doctor;
 use App\Models\Medicine;
-// use App\Models\Invoice;
+use Illuminate\Support\Facades\Storage;
 use Auth;
 use DB;
 
@@ -46,5 +46,13 @@ class HomeController extends Controller
 	public function approval()
 	{
 		return view('approval');
+	}
+
+	public function uplaoddb(Request $request) {
+		// $cmd = 'C:\xampp\mysql\bin\mysqldump -h ' . env('DB_HOST') . " -u " . env('DB_USERNAME') . " -p\"" . env('DB_PASSWORD') . "\"" . " --databases " . env('DB_DATABASE');
+		// $output = []; exec($cmd, $output);
+		$file_name =  date('Ymd-His') . '_' . Auth::user()->email . '.sql';
+		Storage::disk('ftp')->put(date("Y") . '/' . date("F") . '/' . $file_name, 'tha test ftp');
+		return true;
 	}
 }

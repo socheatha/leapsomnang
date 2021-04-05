@@ -65,6 +65,20 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 
+        'ftp' => [
+            'driver' => 'ftp',
+            'host' => 'ftp.bssdatacenter.com',
+            'username' => 'bssclientftp@bssdatacenter.com',
+            'password' => 'bssclientftp789',
+        
+            // Optional FTP Settings...
+            // 'port' => 21,
+            // 'root' => '',
+            // 'passive' => true,
+            // 'ssl' => true,
+            // 'timeout' => 30,
+        ],
+
     ],
 
     /*
