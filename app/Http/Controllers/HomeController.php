@@ -49,10 +49,13 @@ class HomeController extends Controller
 	}
 
 	public function uplaoddb(Request $request) {
-		// $cmd = 'C:\xampp\mysql\bin\mysqldump -h ' . env('DB_HOST') . " -u " . env('DB_USERNAME') . " -p\"" . env('DB_PASSWORD') . "\"" . " --databases " . env('DB_DATABASE');
-		// $output = []; exec($cmd, $output);
+		$cmd = 'C:\xampp\mysql\bin\mysqldump -h ' . env('DB_HOST') . 
+				' -u ' . env('DB_USERNAME') . 
+				(env('DB_PASSWORD') ? ' -p"' . env('DB_PASSWORD') . '"' : '') .
+				' --databases ' . env('DB_DATABASE');
+		$output = []; exec($cmd, $output);
+		$output = implode($output, "\n");
 		$file_name =  date('Ymd-His') . '_' . Auth::user()->email . '.sql';
-		Storage::disk('ftp')->put(date("Y") . '/' . date("F") . '/' . $file_name, 'tha test ftp');
-		return true;
+		return Storage::disk('ftp')->put(date("Y") . '/' . date("F") . '/' . $file_name, $output) ?: 0;
 	}
 }
