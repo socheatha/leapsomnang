@@ -49,7 +49,8 @@ class HomeController extends Controller
 	}
 
 	public function uplaoddb(Request $request) {
-		$cmd = 'C:\xampp\mysql\bin\mysqldump -h ' . env('DB_HOST') . 
+		// $cmd = 'C:\xampp\mysql\bin\mysqldump -h ' . env('DB_HOST') . 
+		$cmd = '/usr/bin/mysqldump -h ' . env('DB_HOST') . 
 				' -u ' . env('DB_USERNAME') . 
 				(env('DB_PASSWORD') ? ' -p"' . env('DB_PASSWORD') . '"' : '') .
 				' --databases ' . env('DB_DATABASE');
