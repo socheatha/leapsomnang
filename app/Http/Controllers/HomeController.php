@@ -49,11 +49,9 @@ class HomeController extends Controller
 	}
 
 	public function uplaoddb(Request $request) {
-		// $cmd = 'C:\xampp\mysql\bin\mysqldump -h ' . env('DB_HOST') . 
-		$cmd = '/usr/bin/mysqldump -h ' . env('DB_HOST') . 
-				' -u ' . env('DB_USERNAME') . 
-				(env('DB_PASSWORD') ? ' -p"' . env('DB_PASSWORD') . '"' : '') .
-				' --databases ' . env('DB_DATABASE');
+		$is_localhost = in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1', 'localhost']);
+		$dump_engine_path = $is_localhost ? 'C:\xampp\mysql\bin\mysqldump' : '/usr/bin/mysqldump';
+		$cmd = $dump_engine_path . ' -h ' . env('DB_HOST') . ' -u ' . env('DB_USERNAME') . (env('DB_PASSWORD') ? ' -p"' . env('DB_PASSWORD') . '"' : '') . ' --databases ' . env('DB_DATABASE');
 		$output = []; exec($cmd, $output);
 		$output = implode($output, "\n");
 		$file_name =  date('Ymd-His') . '_' . Auth::user()->email . '.sql';
