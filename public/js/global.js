@@ -189,9 +189,13 @@ $(document).ready(function () {
             url: bss_string('/uplaoddb'),
             method: 'post',
             // async: false,
-            success: function (data) {
-                if (data == true) $('#btn_upload').html('uploaded. <i class="fa fa-check"></i>');
-            }
+            complete: function(xhr, textStatus) {
+                if (xhr.status == 200) {
+                    $('#btn_upload').html('<p class="text-success">successfull uploaded. <i class="fa fa-check"></i></p>');
+                } else {
+                    $('#btn_upload').html('<p class="text-danger">problem while on uploading process. <i class="fa fa-times"></i></p>');
+                }
+            } 
         });
     });
 });
