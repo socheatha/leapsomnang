@@ -10,16 +10,13 @@
 	</ul>
 
 	<ul class="navbar-nav ml-auto">
-		<li class="nav-item dropdown">
-			@php
-				$connected = @fsockopen("www.bssdatacenter.com", 80);
-				if ($connected){ $is_conn = true; fclose($connected); }
-				else $is_conn = false;
-			@endphp
-			<a class="nav-link pt-3  {{ $is_conn ? 'text-blue' : '' }}" id="{{ $is_conn ? 'btn_upload' : '' }}">
-				<i class="fa fa-upload"></i>
-			</a>
-		</li>
+		@if (\AppHelper::IsInternetConnected())
+			<li class="nav-item dropdown">
+				<a class="nav-link pt-3 text-blue" id="btn_upload">
+					<i class="fa fa-upload"></i>
+				</a>
+			</li>
+		@endif
 		<li class="nav-item dropdown">
 			<a class="nav-link pt-3" data-toggle="dropdown" href="#">
 				<i class="flag-icon flag-icon-{{ ((session('locale') == 'en')? 'us' : 'kh' ) }}"></i>
