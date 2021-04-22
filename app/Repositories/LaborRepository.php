@@ -83,52 +83,54 @@ class LaborRepository
 
 	}
 
-	public function getLaborServiceCheckList($request)
-	{
-		$category_check_list = '';
-		$service_check_list = '';
+	// public function getLaborServiceCheckList($request)
+	// {
+	// 	$category_check_list = '';
+	// 	$service_check_list = '';
 
-		$ids = [];
-		if ($request->type == 'labor-standard') {
-			$ids = [1,2,3,4,5];
-		}else if ($request->type == 'hematology') {
-			$ids = [1];
-		}else if ($request->type == 'biologie') {
-			$ids = [2];
-		}else if ($request->type == 'urine') {
-			$ids = [3];
-		}else if ($request->type == 'serologie') {
-			$ids = [4];
-		}else if ($request->type == 'blood-type') {
-			$ids = [5];
-		}
+	// 	$ids = [];
+	// 	if ($request->type == 'labor-standard') {
+	// 		$ids = [1,2,3,4,5];
+	// 	}else if ($request->type == 'hematology') {
+	// 		$ids = [1];
+	// 	}else if ($request->type == 'biologie') {
+	// 		$ids = [2];
+	// 	}else if ($request->type == 'urine') {
+	// 		$ids = [3];
+	// 	}else if ($request->type == 'serologie') {
+	// 		$ids = [4];
+	// 	}else if ($request->type == 'blood-type') {
+	// 		$ids = [5];
+	// 	}else if ($request->type == 'test-labor') {
+	// 		$ids = [6];
+	// 	}
 
-		$labor_categories = LaborCategory::whereIn('id', $ids)->get();
+	// 	$labor_categories = LaborCategory::whereIn('id', $ids)->get();
 
-		foreach ($labor_categories as $key => $labor_category) {
+	// 	foreach ($labor_categories as $key => $labor_category) {
 
-			$service_check_list = '';
-			foreach ($labor_category->services as $jey => $service) {
-				$service_check_list .= '<div class="col-sm-4">
-																	<div class="form-check mb-3">
-																		<input class="minimal chb_service" type="checkbox" id="'. $service->id .'" value="'. $service->id .'">
-																		<label class="form-check-label" for="'. $service->id .'">'. $service->name .'</label>
-																	</div>
-																</div>';
-			}
+	// 		$service_check_list = '';
+	// 		foreach ($labor_category->services as $jey => $service) {
+	// 			$service_check_list .= '<div class="col-sm-4">
+	// 																<div class="form-check mb-3">
+	// 																	<input class="minimal chb_service" type="checkbox" id="'. $service->id .'" value="'. $service->id .'">
+	// 																	<label class="form-check-label" for="'. $service->id .'">'. $service->name .'</label>
+	// 																</div>
+	// 															</div>';
+	// 		}
 
-			$category_check_list .= '<div class="col-sm-12">
-																<h5 class="text-center pt-3 pb-4">'. $labor_category->name .'</h5>
-															</div>
-															'. $service_check_list .'
-														';
+	// 		$category_check_list .= '<div class="col-sm-12">
+	// 															<h5 class="text-center pt-3 pb-4">'. $labor_category->name .'</h5>
+	// 														</div>
+	// 														'. $service_check_list .'
+	// 													';
 
-		}
+	// 	}
 
-		return response()->json([
-			'category_check_list' => $category_check_list,
-		]);
-	}
+	// 	return response()->json([
+	// 		'category_check_list' => $category_check_list,
+	// 	]);
+	// }
 
 	public function getCheckedServicesList($type)
 	{
@@ -143,6 +145,8 @@ class LaborRepository
 			$ids = [3,4];
 		}else if ($type == 'urine') {
 			$ids = [5];
+		}else if ($type == 'test-labor') {
+			$ids = [6];
 		}
 		
 		$service_check_list = '';
@@ -595,6 +599,40 @@ class LaborRepository
 																	</table>	
 																</div>';
 		
+		}else if ($labor->type == 'test-labor') {
+			$labor_items ='';
+			foreach ($labor->labor_details as $jey => $labor_detail) {
+				$reference = $labor_detail->service->ref_from .'-'.  $labor_detail->service->ref_to;
+
+				$class = '';
+				if ($labor_detail->result < $labor_detail->service->ref_from) {
+					$class = 'color_green';
+				}else if ($labor_detail->result > $labor_detail->service->ref_to) {
+					$class = 'color_red';
+				}
+				
+				$labor_items .= '<tr>
+					<td width="13%">'. $labor_detail->name .'</td>
+					<td width="8%" class="'. $class .' text-right">'. $labor_detail->result .'</td>
+					<td width="10%" class=""></td>
+					<td width="13%" class="">'. $labor_detail->service->unit .'</td>
+					<td width="6%" class="">'. $labor_detail->service->ref_from .'</td>
+					<td width="9%"><div style="display: block; border-top: 1px solid blue;"></div></td>
+					<td width="22%"><input type="range" class ="range_slider '. $class .'" value="'. $labor_detail->result .'" min="'. $labor_detail->service->ref_from .'" max="'. $labor_detail->service->ref_to .'" step="0.01" /></td>
+					<td width="9%"><div style="display: block; border-top: 1px solid blue;"></div></td>
+					<td width="" style="padding-left: 15px;">'. $labor_detail->service->ref_to .'</td>
+				</tr>';
+			}
+			
+			$labor_detail_item_list = '<div style="padding: 0 1.3cm;">
+																	<table width="100%">
+																		<tr>
+																			<td colspan="4"></td>
+																			<td colspan="5">Ranges</td>
+																		</tr>
+																		'. $labor_items .'
+																	</table>	
+																</div>';
 		}
 
 		$labor_detail = '<section class="labor-print" style="position: relative;">
