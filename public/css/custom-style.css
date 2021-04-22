@@ -156,9 +156,6 @@ h1,h2,h3,h4,h5,h6{
   font-family: 'Roboto Bold','Khmer OS Kuolen';
   /* font-weight: normal !important; */
 }
-.card-tools .btn{
-  /* padding: 0px 6px; */
-}
 .form-group small{
   color: red;
 }
