@@ -120,6 +120,12 @@
 	color: #0070C0 !important;
 }
 
+
+.labor-print .test_labor td{
+	padding: 0 !important;
+	font-size: 13px;
+}
+
 @media print {
 
 	@page {

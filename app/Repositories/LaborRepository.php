@@ -402,8 +402,6 @@ class LaborRepository
 		if ($labor->type == 'glycemia') {
 			$glycemia ='';
 			foreach ($labor->labor_details as $jey => $labor_detail) {
-				$reference = $labor_detail->service->ref_from .'-'.  $labor_detail->service->ref_to;
-				
 				$reference = '';
 				if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to != '') {
 					$reference = '('. $labor_detail->service->description .' <'. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')';
@@ -601,36 +599,87 @@ class LaborRepository
 		
 		}else if ($labor->type == 'test-labor') {
 			$labor_items ='';
+			$labor_to_th ='';
+			$labor_to ='';
+			$labor_glycemie ='';
 			foreach ($labor->labor_details as $jey => $labor_detail) {
 				$reference = $labor_detail->service->ref_from .'-'.  $labor_detail->service->ref_to;
-
-				$class = '';
-				if ($labor_detail->result < $labor_detail->service->ref_from) {
-					$class = 'color_green';
-				}else if ($labor_detail->result > $labor_detail->service->ref_to) {
-					$class = 'color_red';
-				}
+				if ($labor_detail->service->name == 'TO') {
 				
-				$labor_items .= '<tr>
-					<td width="13%">'. $labor_detail->name .'</td>
-					<td width="8%" class="'. $class .' text-right">'. $labor_detail->result .'</td>
-					<td width="10%" class=""></td>
-					<td width="13%" class="">'. $labor_detail->service->unit .'</td>
-					<td width="6%" class="">'. $labor_detail->service->ref_from .'</td>
-					<td width="9%"><div style="display: block; border-top: 1px solid blue;"></div></td>
-					<td width="22%"><input type="range" class ="range_slider '. $class .'" value="'. $labor_detail->result .'" min="'. $labor_detail->service->ref_from .'" max="'. $labor_detail->service->ref_to .'" step="0.01" /></td>
-					<td width="9%"><div style="display: block; border-top: 1px solid blue;"></div></td>
-					<td width="" style="padding-left: 15px;">'. $labor_detail->service->ref_to .'</td>
-				</tr>';
+					$labor_to_th .= '<tr>
+														<td width="25%">▢ Séro-Ag-de Widal</td>
+														<td colspan="3">: &nbsp;&nbsp; - '. $labor_detail->name .' : '. $labor_detail->result .'</td>
+													</tr>';
+
+				}elseif ($labor_detail->service->name == 'TH') {
+					$labor_to_th .= '<tr>
+														<td width="25%"></td>
+														<td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp; - '. $labor_detail->name .' : '. $labor_detail->result .'</td>
+													</tr>';
+				}elseif ($labor_detail->service->name == '▢ Glycémie' || $labor_detail->service->name == '▢ Test H-Pylori') {
+					$reference = '';
+					if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to != '') {
+						$reference = '('. $labor_detail->service->description .' <'. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')';
+					}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to ==''){
+						$reference = '('. $labor_detail->service->description .' '. $labor_detail->service->ref_from .'> '. $labor_detail->service->unit .')';
+					}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to!=''){
+						$reference = '('. $labor_detail->service->description .' '. $labor_detail->service->ref_from .'-'. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')';
+					}else{
+						$reference = '';
+					}
+
+					$class = '';
+					if ($labor_detail->service->ref_to=='' || $labor_detail->service->ref_from=='') {
+						$class = '';
+					}elseif ($labor_detail->result < $labor_detail->service->ref_from) {
+						$class = 'color_green';
+					}else if ($labor_detail->result > $labor_detail->service->ref_to) {
+						$class = 'color_red';
+					}
+					if ($labor_detail->result== 'positif' || $labor_detail->result== 'Positif' || $labor_detail->result== 'POSITIF') {
+						$class = 'color_red';
+					}
+					$labor_glycemie .= '<tr>
+						<td width="25%">'. $labor_detail->name .'</td>
+						<td width="25%" class="'. $class .'">: '. $labor_detail->result .'</td>
+						<td width="25%">'. (($labor_detail->service->unit=='Negatif')? '' : $labor_detail->service->unit.' ' ) .'</td>
+						<td width="25%">'. $reference .'</td>
+					</tr>';
+				}else{
+					$class = '';
+					if ($labor_detail->result < $labor_detail->service->ref_from) {
+						$class = 'color_green';
+					}else if ($labor_detail->result > $labor_detail->service->ref_to) {
+						$class = 'color_red';
+					}
+					
+					$labor_items .= '<tr>
+						<td width="13%">'. $labor_detail->name .'</td>
+						<td width="8%" class="'. $class .' text-right">'. $labor_detail->result .'</td>
+						<td width="10%" class=""></td>
+						<td width="13%" class="">'. $labor_detail->service->unit .'</td>
+						<td width="8%" class="">'. $labor_detail->service->ref_from .'</td>
+						<td width="9%"><div style="display: block; border-top: 1px solid blue;"></div></td>
+						<td width="22%"><input type="range" class ="range_slider '. $class .'" value="'. $labor_detail->result .'" min="'. $labor_detail->service->ref_from .'" max="'. $labor_detail->service->ref_to .'" step="0.01" /></td>
+						<td width="9%"><div style="display: block; border-top: 1px solid blue;"></div></td>
+						<td width="" style="padding-left: 20px !important;">'. $labor_detail->service->ref_to .'</td>
+					</tr>';
+				}
 			}
 			
 			$labor_detail_item_list = '<div style="padding: 0 1.3cm;">
-																	<table width="100%">
+																	<table width="100%" class="test_labor">
 																		<tr>
 																			<td colspan="4"></td>
 																			<td colspan="5">Ranges</td>
 																		</tr>
 																		'. $labor_items .'
+																	</table>
+																	<br/>
+																	<br/>
+																	<table width="100%" class="test_labor_glycemie">
+																		'. $labor_glycemie .'
+																		'. $labor_to_th .'
 																	</table>	
 																</div>';
 		}

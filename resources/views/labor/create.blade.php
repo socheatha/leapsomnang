@@ -10,28 +10,6 @@
 @endsection
 
 @section('content')
-
-
-
-<br/>
-<div class="row">
-	<div class="col-sm-12">
-		<input type="range" class ="slider" value="9.5" min="4" max="9.5" step="0.01" />
-	</div>
-</div>
-
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-
-
-
 <div class="card">
 	<div class="card-header">
 		<b>{!! Auth::user()->subModule() !!}</b>
