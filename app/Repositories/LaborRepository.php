@@ -654,15 +654,11 @@ class LaborRepository
 					}
 					
 					$labor_items .= '<tr>
-						<td width="13%">'. $labor_detail->name .'</td>
-						<td width="8%" class="'. $class .' text-right">'. $labor_detail->result .'</td>
-						<td width="10%" class=""></td>
-						<td width="13%" class="">'. $labor_detail->service->unit .'</td>
-						<td width="8%" class="">'. $labor_detail->service->ref_from .'</td>
-						<td width="9%"><div style="display: block; border-top: 1px solid blue;"></div></td>
-						<td width="22%"><input type="range" class ="range_slider '. $class .'" value="'. $labor_detail->result .'" min="'. $labor_detail->service->ref_from .'" max="'. $labor_detail->service->ref_to .'" step="0.01" /></td>
-						<td width="9%"><div style="display: block; border-top: 1px solid blue;"></div></td>
-						<td width="" style="padding-left: 20px !important;">'. $labor_detail->service->ref_to .'</td>
+						<td width="25%">'. $labor_detail->name .'</td>
+						<td width="10%" class="'. $class .' text-right">'. $labor_detail->result .'</td>
+						<td width="12%" class=""></td>
+						<td width="25%" class="">'. $labor_detail->service->unit .'</td>
+						<td width="">('. $labor_detail->service->ref_from .' - '. $labor_detail->service->ref_to .')</td>
 					</tr>';
 				}
 			}
@@ -671,7 +667,7 @@ class LaborRepository
 																	<table width="100%" class="test_labor">
 																		<tr>
 																			<td colspan="4"></td>
-																			<td colspan="5">Ranges</td>
+																			<td>Ranges</td>
 																		</tr>
 																		'. $labor_items .'
 																	</table>

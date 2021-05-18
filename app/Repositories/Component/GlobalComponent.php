@@ -145,8 +145,11 @@ class GlobalComponent extends Controller
 					</td>
 				</tr>
 				<tr>
-					<td colspan="4" style="padding-left: 55px;">
+					<td colspan="3" style="padding-left: 55px;">
 						អាសយដ្ឋាន: <span>'. ($object->pt_address_full_text ?: $this->GetAddressFullText($object->pt_address_code)) .'</span>
+					</td>
+					<td width="25%" style="padding-left: 25px;">
+						កាលបរិច្ឆេទ: <span>'. date('d-M-Y', strtotime($object->date)) .'</span>
 					</td>
 				</tr>
 				'.(($module == 'labor')?
@@ -166,8 +169,10 @@ class GlobalComponent extends Controller
 		return "
 		<div class='text-center' style='position: absolute; right: 30px; bottom: 1.5cm;'>
 				<div class='KHOSMoulLight'>$title_signature</div>
-				<div class='sign_box'></div>
-				<div><span class='KHOSMoulLight' style='font-size: 11px;'>វេជ្ជបណ្ឌិត.</span> <span class='KHOSMoulLight'>" . ($doctor_name ?: Auth::user()->setting()->sign_name_kh) . "</span></div>
+				<div class='sign_box'>
+					<img src='/images/signature.jpg' alt=''>
+				</div>
+				<div><span class='KHOSMoulLight' style='font-size: 11px;'>វេជ្ជបណ្ឌិត.</span> <span class='KHOSMoulLight' style='font-size: 16px;'>" . ($doctor_name ?: Auth::user()->setting()->sign_name_kh) . "</span></div>
 			</div>
 		";
 	}

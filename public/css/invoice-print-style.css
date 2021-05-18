@@ -107,6 +107,10 @@
 .sign_box{
 	height: 70px;
 }
+.sign_box img{
+	width: 123px;
+	margin-top: 15px;
+}
 .color_red{
 	color: red;
 }
