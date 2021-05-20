@@ -44,7 +44,7 @@
 <?php 
   $_4level_address = new \App\Http\Controllers\Location\FourLevelAddressController();
   $_4level_level = $_4level_address->BSSFullAddress($pre_select_obj->pt_address_code ?? 'xxxxxxxxxxxxxxx', 'array_selection');
-  $_data_properties = ['class' => 'form-control select2', 'data-width'=>'100%', 'placeholder' => __('label.form.choose'), 'required' => 'required'];
+  $_data_properties = ['class' => 'form-control select2', 'data-width'=>'100%', 'placeholder' => __('label.form.choose')];
 ?>
   <div class="col-sm-6">
     <div class="form-group">
