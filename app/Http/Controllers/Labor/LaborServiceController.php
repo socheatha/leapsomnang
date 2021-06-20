@@ -43,6 +43,7 @@ class LaborServiceController extends Controller
 	public function create()
 	{
 		$this->data = [
+			'labor_services' => LaborService::getSelectService(),
 			'categories' => LaborCategory::getSelectData('id', 'name', '', 'id' ,'asc'),
 		];
 		return view('labor_service.create', $this->data);
@@ -70,6 +71,7 @@ class LaborServiceController extends Controller
 	{
 		$this->data = [
 				'labor_service' => $labor_service,
+				'labor_services' => LaborService::getSelectService(),
 				'categories' => LaborCategory::getSelectData('id', 'name', '', 'id' ,'asc'),
 		];
 		

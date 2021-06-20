@@ -142,7 +142,7 @@ class LaborController extends Controller
 	{
 
 		$this->data = [
-			'item_list' => $this->labor->getLaborDetail($labor->id),
+			'item_list' => $this->labor->getLaborDetail($labor->id, $type),
 			'labor' => $labor,
 			'type' => $type,
 			'categories' => LaborCategory::getSelectData('id', 'name', '', 'id' ,'asc'),

@@ -33,6 +33,7 @@
 					<th width="15%">{!! __('module.table.labor_service.default_value') !!}</th>
 					<th width="15%">{!! __('module.table.labor_service.unit') !!}</th>
 					<th width="15%">{!! __('module.table.labor_service.reference') !!}</th>
+					<th width="15%">{!! __('module.table.labor_service.sub_of') !!}</th>
 					<th>{!! __('module.table.description') !!}</th>
 					<th width="10%">{!! __('module.table.action') !!}</th>
 				</tr>
@@ -46,6 +47,7 @@
 						<td class="text-center">{!! $labor_service->default_value !!}</td>
 						<td>{!! $labor_service->unit !!}</td>
 						<td class="text-center">{{ $labor_service->reference }}</td>
+						<td class="text-center">{{ (($labor_service->sub_of!=null)? $labor_service->labor_service->name : '' )}}</td>
 						<td>{{ $labor_service->description }}</td>
 						<td class="text-right">
 

@@ -8,10 +8,17 @@
 		</div>
 	</div>
 
-	<div class="col-sm-6">
+	<div class="col-sm-3">
 		<div class="form-group">
 			{!! Html::decode(Form::label('category_id', __('label.form.labor_service.category') .' <small>*</small>')) !!}
 			{!! Form::select('category_id', $categories, ((isset($labor_service->category_id))? $labor_service->category_id : '' ), ['class' => 'form-control select2 category_id','placeholder' => __('label.form.choose'), 'required']) !!}
+		</div>
+	</div>
+
+	<div class="col-sm-3">
+		<div class="form-group">
+			{!! Html::decode(Form::label('sub_of', __('label.form.labor_service.sub_of') .' <small>*</small>')) !!}
+			{!! Form::select('sub_of', $labor_services, ((isset($labor_service->sub_of))? $labor_service->sub_of : '' ), ['class' => 'form-control select2 sub_of','placeholder' => __('label.form.choose')]) !!}
 		</div>
 	</div>
 

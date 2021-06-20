@@ -51,28 +51,10 @@
 					<i class="fas fa-list"></i>&nbsp;
 					{{ __('alert.modal.title.labor_detail') }}
 				</h3>
-				<div class="card-tools">
-					{{-- <button type="button" class="btn btn-flat btn-sm btn-success btn-prevent-submit" id="btn_add_service"><i class="fa fa-plus"></i> {!! __('label.buttons.add_item') !!}</button> --}}
-				</div>
 			</div>
 			<!-- /.card-header -->
 			<div class="card-body">
-				<table class="table table-bordered" width="100%">
-					<thead>
-						<tr>
-							<th width="60px">{!! __('module.table.no') !!}</th>
-							<th>{!! __('module.table.name') !!}</th>
-							<th>{!! __('module.table.labor_service.category') !!}</th>
-							<th width="200px">{!! __('module.table.labor.result') !!}</th>
-							<th width="200px">{!! __('module.table.labor_service.unit') !!}</th>
-							<th width="200px">{!! __('module.table.labor_service.reference') !!}</th>
-							<th width="90px" class="sr-only">{!! __('module.table.action') !!}</th>
-						</tr>
-					</thead>
-					<tbody class="item_list">
-						{!! $item_list !!}
-					</tbody>
-				</table>
+				{!! $item_list !!}
 			</div>
 			<!-- /.card-body -->
 		</div>
@@ -109,6 +91,17 @@
 @section('js')
 <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 <script type="text/javascript">
+	
+	$('.service_id').change(function (event) {
+		$(this).val($(this).data('value'));
+		if ($(this).is(':checked')) {
+			$('.toggle-'+ $(this).val()).attr('disabled', false);
+		}else{
+			$('.toggle-'+ $(this).val()).attr('disabled', true);
+		}
+	});
+
+
 	$('#btn_add_service').click(function () {
 		$('#create_labor_item_modal').modal();
 		$('#category_id').val('1').trigger('change');

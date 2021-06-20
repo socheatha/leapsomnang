@@ -40,6 +40,7 @@ return [
     'labor_service' => [
 	    'category' => 'ប្រភេទ',
 	    'default_value' => 'តម្លៃលំនាំដើម',
+	    'sub_of' => 'សេវាកម្ម',
 	    'unit' => 'ឯកតា',
 	    'reference' => 'យោង',
     ],

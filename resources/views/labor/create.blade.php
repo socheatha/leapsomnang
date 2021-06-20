@@ -43,22 +43,7 @@
 			</div>
 			<!-- /.card-header -->
 			<div class="card-body">
-				<table class="table table-bordered" width="100%">
-					<thead>
-						<tr>
-							<th width="60px">{!! __('module.table.no') !!}</th>
-							<th>{!! __('module.table.name') !!}</th>
-							<th width="250px">{!! __('module.table.labor.category') !!}</th>
-							<th width="200px">{!! __('module.table.labor.result') !!}</th>
-							<th width="200px">{!! __('module.table.labor_service.unit') !!}</th>
-							<th width="200px">{!! __('module.table.labor_service.reference') !!}</th>
-							<th width="90px" class="sr-only">{!! __('module.table.action') !!}</th>
-						</tr>
-					</thead>
-					<tbody class="item_list">
-						{!! $item_list !!}
-					</tbody>
-				</table>
+				{!! $item_list !!}
 			</div>			
 			<!-- /.card-body -->
 		</div>
@@ -80,6 +65,15 @@
 @section('js')
 <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 <script type="text/javascript">
+	$('.service_id').change(function (event) {
+		$(this).val($(this).data('value'));
+		if ($(this).is(':checked')) {
+			$('.toggle-'+ $(this).val()).attr('disabled', false);
+		}else{
+			$('.toggle-'+ $(this).val()).attr('disabled', true);
+		}
+	});
+
 	$('.btn-prevent-submit').click(function (event) {
 		event.preventDefault();
 	});

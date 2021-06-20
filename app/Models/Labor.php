@@ -34,8 +34,11 @@ class Labor extends Model
 	protected $table = 'labors';
 	
 	public function labor_details(){
-		return $this->hasMany(LaborDetail::class,'labor_id')->orderBy('id',
-		'asc');
+		return $this->hasMany(LaborDetail::class,'labor_id')->orderBy('id','asc');
+	}
+	
+	public function labor_detail_bt(){
+		return $this->hasMany(LaborDetail::class,'labor_id')->orderBy('service_id', 'asc');
 	}
 
 	public function labor_detail_sub_total(){

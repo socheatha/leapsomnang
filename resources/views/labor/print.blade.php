@@ -19,6 +19,8 @@
 	<body>
 
 		{!! $labor_preview !!}
-
+		<style>
+			
+		</style>
 	</body>
  </html>

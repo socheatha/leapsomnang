@@ -14,7 +14,7 @@ class LaborServiceRepository
 
 	public function getData()
 	{
-		return LaborService::select(DB::raw("id, name, category_id, default_value, unit, description, CONCAT(`ref_from`,' - ',`ref_to`) AS reference"))->orderBy('id', 'asc')->get();
+		return LaborService::select(DB::raw("id, name, category_id, default_value, sub_of, unit, description, CONCAT(`ref_from`,' - ',`ref_to`) AS reference"))->orderBy('id', 'asc')->get();
 	}
 
 	public function reloadSelectLaborService()
@@ -47,6 +47,7 @@ class LaborServiceRepository
 			'ref_from' => $request->ref_from,
 			'ref_to' => $request->ref_to,
 			'description' => $request->description,
+			'sub_of' => $request->sub_of,
 			'category_id' => $request->category_id,
 			'created_by' => Auth::user()->id,
 			'updated_by' => Auth::user()->id,
@@ -66,6 +67,7 @@ class LaborServiceRepository
 			'ref_from' => $request->ref_from,
 			'ref_to' => $request->ref_to,
 			'description' => $request->description,
+			'sub_of' => $request->sub_of,
 			'category_id' => $request->category_id,
 			'updated_by' => Auth::user()->id,
 		]);
