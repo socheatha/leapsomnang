@@ -130,6 +130,10 @@
 	font-size: 13px;
 }
 
+.labor-print .blood-test td{
+	padding: 3px 0 !important;
+}
+
 @media print {
 
 	@page {

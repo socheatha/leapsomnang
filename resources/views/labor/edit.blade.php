@@ -92,6 +92,12 @@
 <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 <script type="text/javascript">
 	
+	setTimeout(() => {
+		if ('{{ $labor->type }}' == 'blood-test') {
+			$('.labor-print').css({'height':'auto' });
+		}
+	}, 1000);
+
 	$('.service_id').change(function (event) {
 		$(this).val($(this).data('value'));
 		if ($(this).is(':checked')) {

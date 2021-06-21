@@ -180,14 +180,14 @@ class LaborRepository
 																			<option value="Positif">Positif</option>
 																		</select>
 																		<div class="input-group-append">
-																			<span class="input-group-text">'. $reference .'</span>
+																			<span class="input-group-text text-xs px-1 font-weight-bold">'. $reference .'</span>
 																		</div>
 																	</div>'
 																:
 																	'<div class="input-group">
 																		<input type="text" class="form-control toggle-'. $service->id .'" value="'. $service->default_value .'" name="result[]" disabled/>
 																		<div class="input-group-append">
-																			<span class="input-group-text">'. $reference .'</span>
+																			<span class="input-group-text text-xs px-1 font-weight-bold">'. $reference .'</span>
 																		</div>
 																	</div>'
 															).'
@@ -366,14 +366,14 @@ class LaborRepository
 																			<option value="Positif" '. (($labor_detail!=null && $labor_detail->result=="Positif")? 'selected' : '') .'>Positif</option>
 																		</select>
 																		<div class="input-group-append">
-																			<span class="input-group-text">'. $reference .'</span>
+																			<span class="input-group-text text-xs px-1 font-weight-bold">'. $reference .'</span>
 																		</div>
 																	</div>'
 																:
 																	'<div class="input-group">
 																		<input type="text" class="form-control toggle-'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" value="'. (($labor_detail!=null)? $labor_detail->result : $service->default_value) .'" '. (($labor_detail!=null)? 'name="labor_detail_result[]" checked' : 'name="service_result[]" disabled') .'/>
 																		<div class="input-group-append">
-																			<span class="input-group-text">'. $reference .'</span>
+																			<span class="input-group-text text-xs px-1 font-weight-bold">'. $reference .'</span>
 																		</div>
 																	</div>'
 															).'
@@ -908,25 +908,25 @@ class LaborRepository
 			
 			if ($HEMATOLOGY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4" class="text-center pt-3 pb-2"><h6><strong>HEMATOLOGY</strong></h6></td>
+									<td colspan="4" class="text-center"><h6 style="padding: 15px 0 5px 0;"><strong>HEMATOLOGY</strong></h6></td>
 								</tr>' . $HEMATOLOGY;
 			}
 			if ($BIOCHEMISTRY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4" class="text-center pt-3 pb-2"><h6><strong>BIOCHEMISTRY</strong></h6></td>
+									<td colspan="4" class="text-center"><h6 style="padding: 15px 0 5px 0;"><strong>BIOCHEMISTRY</strong></h6></td>
 								</tr>' . $BIOCHEMISTRY;
 			}
 			if ($SEROLOGY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4" class="text-center pt-3 pb-2"><h6><strong>SEROLOGY</strong></h6></td>
+									<td colspan="4" class="text-center"><h6 style="padding: 15px 0 5px 0;"><strong>SEROLOGY</strong></h6></td>
 								</tr>' . $SEROLOGY;
 			}
 			if ($MICROBIOLOGY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4" class="text-center pt-3 pb-2"><h6><strong>MICROBIOLOGY</strong></h6></td>
+									<td colspan="4" class="text-center"><h6 style="padding: 15px 0 5px 0;"><strong>MICROBIOLOGY</strong></h6></td>
 								</tr>' . $MICROBIOLOGY;
 			}
-			$labor_detail_item_list = '<table width="100%">
+			$labor_detail_item_list = '<table width="100%" class="blood-test">
 											<thead>
 												<tr>
 													<th width="40%"></th>
