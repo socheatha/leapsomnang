@@ -19,8 +19,8 @@
 			<style>
 				@media print {
 					.labor-print{
+					    background: white!important;
 						padding: 0 1cm;
-						border: 1px solid red;
 					}
 					.mr-1,
 					.mx-1 {
@@ -136,6 +136,12 @@
 						margin: 1cm 0 !important;
 					}
 				}
+				.color_light_blue, .doctor_signature {
+				    z-index: -1;
+				    position : fixed!important; bottom: 0px;
+				    transform: translateY(15px);
+				}
+
 			</style>
 		@endif
 	</head>
@@ -144,18 +150,5 @@
 		{!! $labor_preview !!}
 
 		<script src="{{ asset('js/app.js') }}"></script>
-		<script type="text/javascript">
-			setTimeout(() => {
-				if ('{{ $labor->type }}' == 'blood-test') {
-					$('.labor-print').css({'height':'auto' });
-					var total_height = $('.labor-print').height();
-					var margin = 75.5905511812;
-					var a4_height = 1122.51968504082;
-					var pages = Math.ceil(total_height/a4_height);
-					var pages_height = (pages * a4_height) - ((pages) * margin);
-					$('.labor-print').css({'height':pages_height+'px' });
-				}
-			}, 500);
-    	</script>
 	</body>
  </html>
