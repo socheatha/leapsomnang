@@ -27,6 +27,12 @@
 						margin: 1cm 0 !important;
 					}
 				}
+				.color_light_blue, .doctor_signature {
+				    z-index: -1;
+				    position : fixed!important; bottom: 0px;
+				    transform: translateY(15px);
+				}
+
 			</style>
 		@endif
 	</head>

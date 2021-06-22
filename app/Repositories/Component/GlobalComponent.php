@@ -167,7 +167,7 @@ class GlobalComponent extends Controller
 	public static function DoctorSignature($doctor_name = '', $title_signature = 'គ្រូពេទ្យព្យាបាល')
 	{
 		return "
-		<div class='text-center' style='position: absolute; right: 30px; bottom: 1.5cm;'>
+		<div class='text-center doctor_signature' style='position: absolute; right: 30px; bottom: 1.5cm;'>
 				<div class='KHOSMoulLight'>$title_signature</div>
 				<div class='sign_box'>
 					<img src='/images/signature.jpg' alt=''>
