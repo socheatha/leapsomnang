@@ -130,9 +130,31 @@
 	font-size: 13px;
 }
 
-.labor-print .blood-test td{
-	padding: 3px 0 !important;
+/* Blood Test Labor */
+.blood-test{
+	width: 21cm;
+	margin: 0 auto;
+	background: #fff;
+	border: 1px solid #ededed;
+	padding: 0 1cm;
+	padding: 1cm 1cm 1.5cm 1cm;
 }
+.blood-test td{
+	padding: 3px 0 !important;
+	font-size: 14px;
+}
+.blood-test small{
+	font-size: 10px !important;
+}
+.blood-test *{
+	font-family: 'Arial','Khmer OS Siemreap', 'Wingdings 2';
+	color: blue;
+}
+
+table { page-break-inside:auto!important; }
+tr { page-break-inside:avoid!important; page-break-after:auto!important; }
+table thead { display: table-row-group!important; }
+table tfoot { display: table-row-group!important; }
 
 @media print {
 
@@ -141,6 +163,7 @@
 		margin: 0;
 	}
 		
+	.blood-test *,
 	.labor-print *,
 	.invoice-print *,
 	.prescription-print *{

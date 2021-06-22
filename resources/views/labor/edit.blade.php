@@ -95,6 +95,8 @@
 	setTimeout(() => {
 		if ('{{ $labor->type }}' == 'blood-test') {
 			$('.labor-print').css({'height':'auto' });
+			$let = $('.labor-print').height();
+			$('.labor-print').css({'height':'auto' });
 		}
 	}, 1000);
 

@@ -908,31 +908,31 @@ class LaborRepository
 			
 			if ($HEMATOLOGY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4" class="text-center"><h6 style="padding: 15px 0 5px 0;"><strong>HEMATOLOGY</strong></h6></td>
+									<td colspan="4" class="text-center"><h6 style="padding: 15px 0 5px 0; font-size: 16px;"><strong>HEMATOLOGY</strong></h6></td>
 								</tr>' . $HEMATOLOGY;
 			}
 			if ($BIOCHEMISTRY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4" class="text-center"><h6 style="padding: 15px 0 5px 0;"><strong>BIOCHEMISTRY</strong></h6></td>
+									<td colspan="4" class="text-center"><h6 style="padding: 15px 0 5px 0; font-size: 16px;"><strong>BIOCHEMISTRY</strong></h6></td>
 								</tr>' . $BIOCHEMISTRY;
 			}
 			if ($SEROLOGY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4" class="text-center"><h6 style="padding: 15px 0 5px 0;"><strong>SEROLOGY</strong></h6></td>
+									<td colspan="4" class="text-center"><h6 style="padding: 15px 0 5px 0; font-size: 16px;"><strong>SEROLOGY</strong></h6></td>
 								</tr>' . $SEROLOGY;
 			}
 			if ($MICROBIOLOGY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4" class="text-center"><h6 style="padding: 15px 0 5px 0;"><strong>MICROBIOLOGY</strong></h6></td>
+									<td colspan="4" class="text-center"><h6 style="padding: 15px 0 5px 0; font-size: 16px;"><strong>MICROBIOLOGY</strong></h6></td>
 								</tr>' . $MICROBIOLOGY;
 			}
-			$labor_detail_item_list = '<table width="100%" class="blood-test">
+			$labor_detail_item_list = '<table width="100%" style="margin-top: -20px;">
 											<thead>
 												<tr>
-													<th width="40%"></th>
-													<th width="20%"></th>
-													<th width="10%"></th>
-													<th width="30%"></th>
+													<th width="40%" style="pading: 0 !important;"></th>
+													<th width="20%" style="pading: 0 !important;"></th>
+													<th width="10%" style="pading: 0 !important;"></th>
+													<th width="30%" style="pading: 0 !important;"></th>
 												</tr>
 											</thead>
 											<tbody>
@@ -941,7 +941,7 @@ class LaborRepository
 										</table>';
 		}
 
-		$labor_detail = '<section class="labor-print" style="position: relative;">
+		$labor_detail = '<section class="'. (($labor->type == 'blood-test')? 'blood-test' : 'labor-print') .'" style="position: relative;">
 			' . $GlobalComponent->PrintHeader('labor', $labor) . '
 			
 			'. $labor_detail_item_list .'
