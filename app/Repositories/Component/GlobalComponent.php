@@ -83,24 +83,24 @@ class GlobalComponent extends Controller
 			$html_header .= '		
 				<table class="table-header" width="100%">
 					<tr>					
-						<td rowspan="3" width="130px">
+						<td rowspan="3" width="110px" style="padding: 0 !important;">
 							<img src="/images/setting/logo.png" alt="IMG">
 						</td>
 						<td class="text-center">
 							<div style="font-size: 25px;" class="color_blue KHOSMoulLight">' . $this->clinic_name_kh . '</div>
 						</td>
-						<td rowspan="3" width="130px">
+						<td rowspan="3" width="110px" style="padding: 0 !important;">
 							<img src="/images/setting/logo.png" alt="IMG">
 						</td>
 					</tr>
 					<tr>
-						<td class="text-center">
+						<td class="text-center" style="padding: 0;">
 							<div style="font-size: 25px;" class="color_blue KHOSMoulLight">'. $this->clinic_name_en .'</div>
 						</td>
 					</tr>
 					<tr>
 						<td class="text-center">
-							<div style="font-size: 18px;" class="color_green KHOSMoulLight">ពិនិត្យ~ព្យាបាល ជំងឺទូទៅ កុមារ និង មនុស្សចាស់</div>
+							<div style="font-size: 16px;" class="color_green KHOSMoulLight">ពិនិត្យ~ព្យាបាល ជំងឺទូទៅ កុមារ និង មនុស្សចាស់</div>
 						</td>
 					</tr>
 					<tr>

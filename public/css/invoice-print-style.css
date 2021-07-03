@@ -131,23 +131,8 @@
 }
 
 /* Blood Test Labor */
-.blood-test{
-	width: 21cm;
-	margin: 0 auto;
-	background: #fff;
-	border: 1px solid #ededed;
-	padding: 0 1cm;
-	padding: 1cm 1cm 1.5cm 1cm;
-}
-.blood-test td{
-	padding: 3px 0 !important;
-	font-size: 14px;
-}
-.blood-test small{
-	font-size: 10px !important;
-}
 .blood-test *{
-	font-family: 'Arial','Khmer OS Siemreap', 'Wingdings 2';
+	font-size: 12px;
 	color: blue;
 }
 
@@ -156,14 +141,39 @@ tr { page-break-inside:avoid!important; page-break-after:auto!important; }
 table thead { display: table-row-group!important; }
 table tfoot { display: table-row-group!important; }
 
+.color_blue{
+	color: blue !important;
+	-webkit-print-color-adjust: exact !important;
+	-moz-print-color-adjust: exact !important;
+	-o-print-color-adjust: exact !important;
+}
+
+.color_light_blue{
+	color: #0070C0 !important;
+	-webkit-print-color-adjust: exact !important;
+	-moz-print-color-adjust: exact !important;
+	-o-print-color-adjust: exact !important;
+}
+.color_red{
+	color: red !important;
+	-webkit-print-color-adjust: exact !important;
+	-moz-print-color-adjust: exact !important;
+	-o-print-color-adjust: exact !important;
+}
+.color_green{
+	color: green !important;
+	-webkit-print-color-adjust: exact !important;
+	-moz-print-color-adjust: exact !important;
+	-o-print-color-adjust: exact !important;
+}
+
 @media print {
 
 	@page {
 		size: 21cm 29.7cm;
 		margin: 0;
 	}
-		
-	.blood-test *,
+
 	.labor-print *,
 	.invoice-print *,
 	.prescription-print *{
