@@ -12,7 +12,12 @@
 	<ul class="navbar-nav ml-auto">
 		@if (\AppHelper::IsInternetConnected())
 			<li class="nav-item dropdown">
-				<a class="nav-link pt-3 text-blue" id="btn_upload">
+				<a class="nav-link pt-3 text-green" id="btn_complement_field" title="download missing fields or data">
+					<i class="fa fa-download"></i>
+				</a>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="nav-link pt-3 text-blue" id="btn_upload" title="backup and update database to safe place">
 					<i class="fa fa-upload"></i>
 				</a>
 			</li>

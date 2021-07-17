@@ -24,7 +24,7 @@ class AppHelper
         if (self::IsProjectHosted()) {
             return ['/usr/bin/mysqldump'];
         } else {
-            return substr(__DIR__, 0, strpos(__DIR__, 'htdoc')) . '\mysql\bin\mysqldump';
+            return env('SQL_DUMP_PATH') ?: substr(__DIR__, 0, strpos(__DIR__, 'htdoc')) . '\mysql\bin\mysqldump';
         }
     }
 }

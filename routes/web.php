@@ -20,7 +20,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::post('/uplaoddb', 'HomeController@uplaoddb')->name('uplaoddb');
+    Route::post('/uplaoddb', 'HomeController@uplaod_sync_database')->name('uplaoddb');
+    Route::post('/updatedb', 'HomeController@update_missing_sql')->name('updatedb');
 
 	Route::get('/setting', 'SettingController@index')->name('setting.index')->middleware('can:Setting Index');
 	Route::put('/setting/update', 'SettingController@update')->name('setting.update')->middleware('can:Setting Index');

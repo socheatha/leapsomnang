@@ -60,6 +60,18 @@ function bss_swal_Warning(title = '', text = '', fcCallBack) {
     });
 }
 
+function bss_openPrintWindow(url, name) {
+    var printWindow = window.open(url, name, "width="+ screen.availWidth +",height="+ screen.availHeight +",_blank");
+    var printAndClose = function () {
+        if (printWindow.document.readyState == 'complete') {
+            clearInterval(sched);
+            printWindow.print();
+            printWindow.close();
+        }
+    }  
+    var sched = setInterval(printAndClose, 2000);
+};
+
 // prepare form AJAX submission
 $(document).ready(function () {
     $(document).on('click', '.submitFormAjx', function (e) {
@@ -191,9 +203,25 @@ $(document).ready(function () {
             // async: false,
             complete: function(xhr, textStatus) {
                 if (xhr.status == 200) {
-                    $('#btn_upload').html('<p class="text-success">successfull uploaded. <i class="fa fa-check"></i></p>');
+                    $('#btn_upload').html('<p class="text-success">already <i class="fa fa-check"></i></p>');
                 } else {
-                    $('#btn_upload').html('<p class="text-danger">problem while on uploading process. <i class="fa fa-times"></i></p>');
+                    $('#btn_upload').html('<p class="text-danger">problem while uploading process. <i class="fa fa-times"></i></p>');
+                }
+            } 
+        });
+    });
+
+    $('#btn_complement_field').click(function () {
+        $('#btn_complement_field').html('updating missing fiels or data. <i class="fa fa-spinner fa-pulse"></i>');
+        $.ajax({
+            url: bss_string('/updatedb'),
+            method: 'post',
+            // async: false,
+            complete: function(xhr, textStatus) {
+                if (xhr.status == 200) {
+                    $('#btn_complement_field').html('<p class="text-success">already <i class="fa fa-check"></i></p>');
+                } else {
+                    $('#btn_complement_field').html('<p class="text-danger">problem while updating process. <i class="fa fa-times"></i></p>');
                 }
             } 
         });
