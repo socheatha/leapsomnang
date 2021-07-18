@@ -65,6 +65,19 @@
 @section('js')
 <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 <script type="text/javascript">
+	$(".main_chbox").click(function(){
+		$('.child_chbox_'+ $(this).data('id')).not(this).prop('checked', this.checked);
+		$('.child_input_'+ $(this).data('id')).not(this).prop('disabled', !this.checked);
+		var sub = $('.sub_chbox_'+ $(this).data('id'));
+		sub.not(this).prop('checked', this.checked);
+		$('.child_chbox_'+ sub.data('id')).not(this).prop('checked', this.checked);
+		$('.child_input_'+ sub.data('id')).not(this).prop('disabled', !this.checked);
+	});
+	$(".sub_chbox").click(function(){
+		$('.child_chbox_'+ $(this).data('id')).not(this).prop('checked', this.checked);
+		$('.child_input_'+ $(this).data('id')).not(this).prop('disabled', !this.checked);
+	});
+
 	$('.service_id').change(function (event) {
 		$(this).val($(this).data('value'));
 		if ($(this).is(':checked')) {

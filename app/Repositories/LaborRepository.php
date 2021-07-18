@@ -158,26 +158,32 @@ class LaborRepository
 					if ($service->description == 'main') {
 						$checked_services_list .= '<li class="bg-info color-palette">
 														<i class="fa fa-level-up-alt" style="transform: rotateZ(90deg);"></i>
+														<div class="icheck-primary d-inline ml-2">
+															<input type="checkbox" class="main_chbox" data-id="'. $service->id .'"/>
+														</div>
 														<span class="text">'. $service->name .'</span>
 													</li>';
 					}else if ($service->description == 'sub') {
 						$checked_services_list .= '<li class="ml-4">
 														<i class="fa fa-level-up-alt" style="transform: rotateZ(90deg);"></i>
+														<div class="icheck-primary d-inline ml-2">
+															<input type="checkbox" class="sub_chbox sub_chbox_'.  $service->sub_of .'" data-id="'. $service->id .'"/>
+														</div>
 														<span class="text">'. $service->name .'</span>
 													</li>';
 					}else{
 						$checked_services_list .= '<li class="'. $service->class .'">
 														<i class="fa fa-level-up-alt" style="transform: rotateZ(90deg);"></i>
 														<div class="icheck-primary d-inline ml-2">
-															<input type="checkbox" value="'. $service->id .'" class="service_id" data-value="'. $service->id .'" name="service_id[]"/>
+															<input type="checkbox" value="'. $service->id .'" class="service_id child_chbox_'.  $service->sub_of .'" data-value="'. $service->id .'" name="service_id[]"/>
 														</div>
 														<span class="text">'. $service->name .'</span>
 														<span>
-															'.(($service->unit == 'Negatif')?
+															'.(($service->unit == 'Negative')?
 																	'<div class="input-group">
-																		<select name="result[]" class="form-control toggle-'. $service->id .'" disabled>
-																			<option value="Negatif">Negatif</option>
-																			<option value="Positif">Positif</option>
+																		<select name="result[]" class="form-control child_input_'.  $service->sub_of .' toggle-'. $service->id .'" disabled>
+																			<option value="Negative">Negative</option>
+																			<option value="Positive">Positive</option>
 																		</select>
 																		<div class="input-group-append">
 																			<span class="input-group-text text-xs px-1 font-weight-bold">'. $reference .'</span>
@@ -185,7 +191,7 @@ class LaborRepository
 																	</div>'
 																:
 																	'<div class="input-group">
-																		<input type="text" class="form-control toggle-'. $service->id .'" value="'. $service->default_value .'" name="result[]" disabled/>
+																		<input type="text" class="form-control child_input_'.  $service->sub_of .' toggle-'. $service->id .'" value="'. $service->default_value .'" name="result[]" disabled/>
 																		<div class="input-group-append">
 																			<span class="input-group-text text-xs px-1 font-weight-bold">'. $reference .'</span>
 																		</div>
@@ -219,7 +225,7 @@ class LaborRepository
 						$reference = '';
 					}
 					
-					if ($service->unit == 'Negatif') {
+					if ($service->unit == 'Negative') {
 						$checked_services_list .= '<tr class="labor_item" id="'. $jey.'-'.$service->id .'">
 																				<td class="text-center">'. $jey .'</td>
 																				<td>
@@ -232,8 +238,8 @@ class LaborRepository
 																				</td>
 																				<td class="text-center">
 																					<select name="result[]" class="form-control">
-																						<option value="Negatif">Negatif</option>
-																						<option value="Positif">Positif</option>
+																						<option value="Negative">Negative</option>
+																						<option value="Positive">Positive</option>
 																					</select>
 																				</td>
 																				<td class="text-center">
@@ -343,11 +349,17 @@ class LaborRepository
 					if ($service->description == 'main') {
 						$checked_services_list .= '<li class="bg-info color-palette">
 														<i class="fa fa-level-up-alt" style="transform: rotateZ(90deg);"></i>
+														<div class="icheck-primary d-inline ml-2">
+															<input type="checkbox" class="main_chbox" data-id="'. $service->id .'"/>
+														</div>
 														<span class="text">'. $service->name .'</span>
 													</li>';
 					}else if ($service->description == 'sub') {
 						$checked_services_list .= '<li class="ml-4">
 														<i class="fa fa-level-up-alt" style="transform: rotateZ(90deg);"></i>
+														<div class="icheck-primary d-inline ml-2">
+															<input type="checkbox" class="sub_chbox sub_chbox_'. $service->sub_of .'" data-id="'. $service->id .'"/>
+														</div>
 														<span class="text">'. $service->name .'</span>
 													</li>';
 					}else{
@@ -355,15 +367,15 @@ class LaborRepository
 						$checked_services_list .= '<li class="'. $service->class .'">
 														<i class="fa fa-level-up-alt" style="transform: rotateZ(90deg);"></i>
 														<div class="icheck-primary d-inline ml-2">
-															<input type="checkbox" value="'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" class="service_id" data-value="'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" '. (($labor_detail!=null)? 'name="labor_detail_ids[]" checked' : 'name="service_ids[]"') .'/>
+															<input type="checkbox" value="'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" class="service_id child_chbox_'. $service->sub_of .'" data-value="'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" '. (($labor_detail!=null)? 'name="labor_detail_ids[]" checked' : 'name="service_ids[]"') .'/>
 														</div>
 														<span class="text">'. $service->name .'</span>
 														<span>
-															'.(($service->unit == 'Negatif')?
+															'.(($service->unit == 'Negative')?
 																	'<div class="input-group">
-																		<select class="form-control toggle-'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" '. (($labor_detail!=null)? 'name="labor_detail_result[]" ' : 'name="service_result[]" disabled') .'>
-																			<option value="Negatif" '. (($labor_detail!=null && $labor_detail->result=="Negatif")? 'selected' : '') .'>Negatif</option>
-																			<option value="Positif" '. (($labor_detail!=null && $labor_detail->result=="Positif")? 'selected' : '') .'>Positif</option>
+																		<select class="form-control child_input_'.  $service->sub_of .' toggle-'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" '. (($labor_detail!=null)? 'name="labor_detail_result[]" ' : 'name="service_result[]" disabled') .'>
+																			<option value="Negative" '. (($labor_detail!=null && $labor_detail->result=="Negative")? 'selected' : '') .'>Negative</option>
+																			<option value="Positive" '. (($labor_detail!=null && $labor_detail->result=="Positive")? 'selected' : '') .'>Positive</option>
 																		</select>
 																		<div class="input-group-append">
 																			<span class="input-group-text text-xs px-1 font-weight-bold">'. $reference .'</span>
@@ -371,7 +383,7 @@ class LaborRepository
 																	</div>'
 																:
 																	'<div class="input-group">
-																		<input type="text" class="form-control toggle-'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" value="'. (($labor_detail!=null)? $labor_detail->result : $service->default_value) .'" '. (($labor_detail!=null)? 'name="labor_detail_result[]" checked' : 'name="service_result[]" disabled') .'/>
+																		<input type="text" class="form-control child_input_'.  $service->sub_of .' toggle-'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" value="'. (($labor_detail!=null)? $labor_detail->result : $service->default_value) .'" '. (($labor_detail!=null)? 'name="labor_detail_result[]" checked' : 'name="service_result[]" disabled') .'/>
 																		<div class="input-group-append">
 																			<span class="input-group-text text-xs px-1 font-weight-bold">'. $reference .'</span>
 																		</div>
@@ -407,7 +419,7 @@ class LaborRepository
 					$reference = '';
 				}
 	
-				if ($labor_detail->service->unit == 'Negatif') {
+				if ($labor_detail->service->unit == 'Negative') {
 					$labor_detail_list .= '<tr class="labor_item" id="'. $labor_detail->result .'">
 																	<td class="text-center">'. ++$order .'</td>
 																	<td>
@@ -419,8 +431,8 @@ class LaborRepository
 																	</td>
 																	<td class="text-center">
 																		<select name="result[]" class="form-control">
-																			<option value="Negatif" '. (($labor_detail->result=="Negatif")? 'selected' : '') .'>Negatif</option>
-																			<option value="Positif" '. (($labor_detail->result=="Positif")? 'selected' : '') .'>Positif</option>
+																			<option value="Negative" '. (($labor_detail->result=="Negative")? 'selected' : '') .'>Negative</option>
+																			<option value="Positive" '. (($labor_detail->result=="Positive")? 'selected' : '') .'>Positive</option>
 																		</select>
 																	</td>
 																	<td class="text-center">
@@ -584,14 +596,14 @@ class LaborRepository
 					$class = 'color_red';
 				}
 				
-				if ($labor_detail->result== 'positif' || $labor_detail->result== 'Positif' || $labor_detail->result== 'POSITIF') {
+				if ($labor_detail->result== 'Positive' || $labor_detail->result== 'Positive' || $labor_detail->result== 'Positive') {
 					$class = 'color_red';
 				}
 
 				$glycemia .= '<tr>
 					<td width="25%" style="padding: 6px 0 6px 0.5cm;">- '. $labor_detail->name .'</td>
 					<td width="25%" class="'. $class .'">: '. $labor_detail->result .'</td>
-					<td width="25%">'. (($labor_detail->service->unit=='Negatif')? '' : $labor_detail->service->unit.' ' ) .'</td>
+					<td width="25%">'. (($labor_detail->service->unit=='Negative')? '' : $labor_detail->service->unit.' ' ) .'</td>
 					<td width="25%">'. $reference .'</td>
 				</tr>';
 			}
@@ -625,7 +637,7 @@ class LaborRepository
 				$class = '';
 				if ($labor_detail->service->ref_from == '' || $labor_detail->service->ref_to == '') {
 
-					if ($labor_detail->result== 'positif' || $labor_detail->result== 'Positif' || $labor_detail->result== 'POSITIF') {
+					if ($labor_detail->result== 'Positive' || $labor_detail->result== 'Positive' || $labor_detail->result== 'Positive') {
 						$class = 'color_red';
 					}
 
@@ -641,13 +653,13 @@ class LaborRepository
 
 				if ($labor_detail->name == 'Helicobacter pylori' || $labor_detail->name == 'BP' || $labor_detail->name == 'PR' || $labor_detail->name == 'SP02') {
 					$bio_bottom .= '<tr>
-														<td width="35%" style="padding: 6px 0.5cm 6px 0;"> '. $labor_detail->name .' : <span class="'. $class .'">'. $labor_detail->result .'</span> '. (($labor_detail->service->unit=='Negatif')? '' : $labor_detail->service->unit.' ' ) . $reference .'</td>
+														<td width="35%" style="padding: 6px 0.5cm 6px 0;"> '. $labor_detail->name .' : <span class="'. $class .'">'. $labor_detail->result .'</span> '. (($labor_detail->service->unit=='Negative')? '' : $labor_detail->service->unit.' ' ) . $reference .'</td>
 													</tr>';
 				}else{
 					$bio .= '<tr>
 										<td width="35%" style="padding: 6px 0 6px 0.5cm;">- '. $labor_detail->name .'</td>
 										<td width="20%" class="'. $class .'">: '. $labor_detail->result .'</td>
-										<td width="15%">'. (($labor_detail->service->unit=='Negatif')? '' : $labor_detail->service->unit.' ' ) .'</td>
+										<td width="15%">'. (($labor_detail->service->unit=='Negative')? '' : $labor_detail->service->unit.' ' ) .'</td>
 										<td width="30%">'. $reference .'</td>
 									</tr>';
 				}
@@ -691,7 +703,7 @@ class LaborRepository
 				$class = '';
 				if ($labor_detail->service->ref_from == '' || $labor_detail->service->ref_to == '') {
 
-					if ($labor_detail->result== 'positif' || $labor_detail->result== 'Positif' || $labor_detail->result== 'POSITIF') {
+					if ($labor_detail->result== 'Positive' || $labor_detail->result== 'Positive' || $labor_detail->result== 'Positive') {
 						$class = 'color_red';
 					}
 
@@ -709,14 +721,14 @@ class LaborRepository
 					$serologie .= '<tr>
 										<td width="25%" style="padding: 6px 0 6px 0.5cm;">- '. $labor_detail->name .'</td>
 										<td width="20%" class="'. $class .'">: '. $labor_detail->result .'</td>
-										<td width="15%">'. (($labor_detail->service->unit=='Negatif')? '' : $labor_detail->service->unit.' ' ) .'</td>
+										<td width="15%">'. (($labor_detail->service->unit=='Negative')? '' : $labor_detail->service->unit.' ' ) .'</td>
 										<td width="40%">'. $reference .'</td>
 									</tr>';
 				}else{
 					$transaminase .= '<tr>
 										<td width="25%" style="padding: 6px 0 6px 0.5cm;">- '. $labor_detail->name .'</td>
 										<td width="20%" class="'. $class .'">: '. $labor_detail->result .'</td>
-										<td width="15%">'. (($labor_detail->service->unit=='Negatif')? '' : $labor_detail->service->unit.' ' ) .'</td>
+										<td width="15%">'. (($labor_detail->service->unit=='Negative')? '' : $labor_detail->service->unit.' ' ) .'</td>
 										<td width="40%">'. $reference .'</td>
 									</tr>';
 				}
@@ -799,13 +811,13 @@ class LaborRepository
 					}else if ($labor_detail->result > $labor_detail->service->ref_to) {
 						$class = 'color_red';
 					}
-					if ($labor_detail->result== 'positif' || $labor_detail->result== 'Positif' || $labor_detail->result== 'POSITIF') {
+					if ($labor_detail->result== 'Positive' || $labor_detail->result== 'Positive' || $labor_detail->result== 'Positive') {
 						$class = 'color_red';
 					}
 					$labor_glycemie .= '<tr>
 						<td width="25%">'. $labor_detail->name .'</td>
 						<td width="25%" class="'. $class .'">: '. $labor_detail->result .'</td>
-						<td width="25%">'. (($labor_detail->service->unit=='Negatif')? '' : $labor_detail->service->unit.' ' ) .'</td>
+						<td width="25%">'. (($labor_detail->service->unit=='Negative')? '' : $labor_detail->service->unit.' ' ) .'</td>
 						<td width="25%">'. $reference .'</td>
 					</tr>';
 				}else{
@@ -860,7 +872,7 @@ class LaborRepository
 
 				$class = '';
 				if ($labor_detail->service->ref_from == '' || $labor_detail->service->ref_to == '') {
-					if ($labor_detail->result== 'positif' || $labor_detail->result== 'Positif' || $labor_detail->result== 'POSITIF') {
+					if ($labor_detail->result== 'Positive' || $labor_detail->result== 'Positive' || $labor_detail->result== 'Positive') {
 						$class = 'color_red';
 					}
 				}else{
@@ -876,7 +888,7 @@ class LaborRepository
 									.'<tr>
 										<td><div class="'. $labor_detail->service->class .'">'. $labor_detail->name .'</div></td>
 										<td class="'. $class .'">'. $labor_detail->result .'</td>
-										<td>'. (($labor_detail->unit=='Negatif')? '' : $labor_detail->unit) .'</td>
+										<td>'. (($labor_detail->unit=='Negative')? '' : $labor_detail->unit) .'</td>
 										<td>'. $reference .'</td>
 									</tr>';
 				}else if ($labor_detail->service->category->name == 'BIOCHEMISTRY') {
@@ -884,7 +896,7 @@ class LaborRepository
 									.'<tr>
 										<td><div class="'. $labor_detail->service->class .'">'. $labor_detail->name .'</div></td>
 										<td class="'. $class .'">'. $labor_detail->result .'</td>
-										<td>'. (($labor_detail->unit=='Negatif')? '' : $labor_detail->unit) .'</td>
+										<td>'. (($labor_detail->unit=='Negative')? '' : $labor_detail->unit) .'</td>
 										<td>'. $reference .'</td>
 									</tr>';
 				}else if ($labor_detail->service->category->name == 'SEROLOGY') {
@@ -892,7 +904,7 @@ class LaborRepository
 								.'<tr>
 									<td><div class="'. $labor_detail->service->class .'">'. $labor_detail->name .'</div></td>
 									<td class="'. $class .'">'. $labor_detail->result .'</td>
-									<td>'. (($labor_detail->unit=='Negatif')? '' : $labor_detail->unit) .'</td>
+									<td>'. (($labor_detail->unit=='Negative')? '' : $labor_detail->unit) .'</td>
 									<td>'. $reference .'</td>
 								</tr>';
 				}else if ($labor_detail->service->category->name == 'MICROBIOLOGY') {
@@ -900,7 +912,7 @@ class LaborRepository
 									.'<tr>
 										<td><div class="'. $labor_detail->service->class .'">'. $labor_detail->name .'</div></td>
 										<td class="'. $class .'">'. $labor_detail->result .'</td>
-										<td>'. (($labor_detail->unit=='Negatif')? '' : $labor_detail->unit) .'</td>
+										<td>'. (($labor_detail->unit=='Negative')? '' : $labor_detail->unit) .'</td>
 										<td>'. $reference .'</td>
 									</tr>';
 				}
@@ -908,22 +920,22 @@ class LaborRepository
 			
 			if ($HEMATOLOGY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4" class="text-center"><h6 style="padding: 5px 0 3px 0; font-size: 16px;"><strong>HEMATOLOGY</strong></h6></td>
+									<td colspan="4" class="text-center"><h6 style="padding: 8px 0 2px 0; margin-bottom: 2px; font-size: 16px; border-bottom: 1px solid blue;"><strong>HEMATOLOGY</strong></h6></td>
 								</tr>' . $HEMATOLOGY;
 			}
 			if ($BIOCHEMISTRY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4" class="text-center"><h6 style="padding: 5px 0 3px 0; font-size: 16px;"><strong>BIOCHEMISTRY</strong></h6></td>
+									<td colspan="4" class="text-center"><h6 style="padding: 8px 0 2px 0; margin-bottom: 2px; font-size: 16px; border-bottom: 1px solid blue;"><strong>BIOCHEMISTRY</strong></h6></td>
 								</tr>' . $BIOCHEMISTRY;
 			}
 			if ($SEROLOGY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4" class="text-center"><h6 style="padding: 5px 0 3px 0; font-size: 16px;"><strong>SEROLOGY</strong></h6></td>
+									<td colspan="4" class="text-center"><h6 style="padding: 8px 0 2px 0; margin-bottom: 2px; font-size: 16px; border-bottom: 1px solid blue;"><strong>SEROLOGY</strong></h6></td>
 								</tr>' . $SEROLOGY;
 			}
 			if ($MICROBIOLOGY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4" class="text-center"><h6 style="padding: 5px 0 3px 0; font-size: 16px;"><strong>MICROBIOLOGY</strong></h6></td>
+									<td colspan="4" class="text-center"><h6 style="padding: 8px 0 2px 0; margin-bottom: 2px; font-size: 16px; border-bottom: 1px solid blue;"><strong>MICROBIOLOGY</strong></h6></td>
 								</tr>' . $MICROBIOLOGY;
 			}
 			$labor_detail_item_list = '<table width="100%" style="margin-top: -25px;">
@@ -1030,8 +1042,11 @@ class LaborRepository
 		if ($type = 'blood-test') {
 			if (isset($request->labor_detail_ids)) {
 				for ($i = 0; $i < count($request->labor_detail_ids); $i++) {
-					LaborDetail::find($request->labor_detail_ids[$i])->update([
+					$labor_detail = LaborDetail::find($request->labor_detail_ids[$i]);
+					$service = LaborService::find($labor_detail->service_id);
+					$labor_detail->update([
 						'result' => $request->labor_detail_result[$i],
+						'unit' => $service->unit,
 						'updated_by' => Auth::user()->id,
 					]);
 				}

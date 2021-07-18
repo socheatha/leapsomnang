@@ -132,8 +132,9 @@
 
 /* Blood Test Labor */
 .blood-test *{
-	font-size: 12px;
+	font-size: 14px;
 	color: blue;
+	font-family: 'Times New Roman','Khmer OS Siemreap', 'Wingdings 2';
 }
 
 table { page-break-inside:auto!important; }
