@@ -181,7 +181,7 @@ class LaborRepository
 														<span>
 															'.(($service->unit == 'Negative')?
 																	'<div class="input-group">
-																		<select name="result[]" class="form-control child_input_'.  $service->sub_of .' toggle-'. $service->id .'" disabled>
+																		<select name="result[]" class="form-control child_input_'. $service->sub_of .' toggle-'. $service->id .'" disabled>
 																			<option value="Negative">Negative</option>
 																			<option value="Positive">Positive</option>
 																		</select>
@@ -191,7 +191,7 @@ class LaborRepository
 																	</div>'
 																:
 																	'<div class="input-group">
-																		<input type="text" class="form-control child_input_'.  $service->sub_of .' toggle-'. $service->id .'" value="'. $service->default_value .'" name="result[]" disabled/>
+																		<input type="text" class="form-control child_input_'. $service->sub_of .' toggle-'. $service->id .'" value="'. $service->default_value .'" name="result[]" disabled/>
 																		<div class="input-group-append">
 																			<span class="input-group-text text-xs px-1 font-weight-bold">'. $reference .'</span>
 																		</div>
@@ -363,34 +363,34 @@ class LaborRepository
 														<span class="text">'. $service->name .'</span>
 													</li>';
 					}else{
-						$labor_detail = LaborDetail::where('service_id', $service->id)->first();
+						$labor_detail = LaborDetail::where('labor_id', $id)->where('service_id', $service->id)->first();
 						$checked_services_list .= '<li class="'. $service->class .'">
-														<i class="fa fa-level-up-alt" style="transform: rotateZ(90deg);"></i>
-														<div class="icheck-primary d-inline ml-2">
-															<input type="checkbox" value="'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" class="service_id child_chbox_'. $service->sub_of .'" data-value="'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" '. (($labor_detail!=null)? 'name="labor_detail_ids[]" checked' : 'name="service_ids[]"') .'/>
-														</div>
-														<span class="text">'. $service->name .'</span>
-														<span>
-															'.(($service->unit == 'Negative')?
-																	'<div class="input-group">
-																		<select class="form-control child_input_'.  $service->sub_of .' toggle-'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" '. (($labor_detail!=null)? 'name="labor_detail_result[]" ' : 'name="service_result[]" disabled') .'>
-																			<option value="Negative" '. (($labor_detail!=null && $labor_detail->result=="Negative")? 'selected' : '') .'>Negative</option>
-																			<option value="Positive" '. (($labor_detail!=null && $labor_detail->result=="Positive")? 'selected' : '') .'>Positive</option>
-																		</select>
-																		<div class="input-group-append">
-																			<span class="input-group-text text-xs px-1 font-weight-bold">'. $reference .'</span>
-																		</div>
-																	</div>'
-																:
-																	'<div class="input-group">
-																		<input type="text" class="form-control child_input_'.  $service->sub_of .' toggle-'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" value="'. (($labor_detail!=null)? $labor_detail->result : $service->default_value) .'" '. (($labor_detail!=null)? 'name="labor_detail_result[]" checked' : 'name="service_result[]" disabled') .'/>
-																		<div class="input-group-append">
-																			<span class="input-group-text text-xs px-1 font-weight-bold">'. $reference .'</span>
-																		</div>
-																	</div>'
-															).'
-														</span>
-													</li>';
+													<i class="fa fa-level-up-alt" style="transform: rotateZ(90deg);"></i>
+													<div class="icheck-primary d-inline ml-2">
+														<input type="checkbox" value="'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" class="service_id child_chbox_'. $service->sub_of .'" data-value="'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" '. (($labor_detail!=null)? 'name="labor_detail_ids[]" checked' : 'name="service_ids[]"') .'/>
+													</div>
+													<span class="text">'. $service->name .'</span>
+													<span>
+														'.(($service->unit == 'Negative')?
+																'<div class="input-group">
+																	<select class="form-control child_input_'. $service->sub_of .' toggle-'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" '. (($labor_detail!=null)? 'name="labor_detail_result[]" ' : 'name="service_result[]" disabled') .'>
+																		<option value="Negative" '. (($labor_detail!=null && $labor_detail->result=="Negative")? 'selected' : '') .'>Negative</option>
+																		<option value="Positive" '. (($labor_detail!=null && $labor_detail->result=="Positive")? 'selected' : '') .'>Positive</option>
+																	</select>
+																	<div class="input-group-append">
+																		<span class="input-group-text text-xs px-1 font-weight-bold">'. $reference .'</span>
+																	</div>
+																</div>'
+															:
+																'<div class="input-group">
+																	<input type="text" class="form-control child_input_'. $service->sub_of .' toggle-'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" value="'. (($labor_detail!=null)? $labor_detail->result : $service->default_value) .'" '. (($labor_detail!=null)? 'name="labor_detail_result[]" checked' : 'name="service_result[]" disabled') .'/>
+																	<div class="input-group-append">
+																		<span class="input-group-text text-xs px-1 font-weight-bold">'. $reference .'</span>
+																	</div>
+																</div>'
+														).'
+													</span>
+												</li>';
 					}
 				}
 			
@@ -920,22 +920,22 @@ class LaborRepository
 			
 			if ($HEMATOLOGY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4" class="text-center"><h6 style="padding: 8px 0 2px 0; margin-bottom: 2px; font-size: 16px; border-bottom: 1px solid blue;"><strong>HEMATOLOGY</strong></h6></td>
+									<td colspan="4" class="text-center"><h6 style="padding: 8px 0 2px 0; margin-bottom: 2px; font-size: 16px; border-bottom: 1px dashed blue;"><strong>HEMATOLOGY</strong></h6></td>
 								</tr>' . $HEMATOLOGY;
 			}
 			if ($BIOCHEMISTRY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4" class="text-center"><h6 style="padding: 8px 0 2px 0; margin-bottom: 2px; font-size: 16px; border-bottom: 1px solid blue;"><strong>BIOCHEMISTRY</strong></h6></td>
+									<td colspan="4" class="text-center"><h6 style="padding: 8px 0 2px 0; margin-bottom: 2px; font-size: 16px; border-bottom: 1px dashed blue;"><strong>BIOCHEMISTRY</strong></h6></td>
 								</tr>' . $BIOCHEMISTRY;
 			}
 			if ($SEROLOGY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4" class="text-center"><h6 style="padding: 8px 0 2px 0; margin-bottom: 2px; font-size: 16px; border-bottom: 1px solid blue;"><strong>SEROLOGY</strong></h6></td>
+									<td colspan="4" class="text-center"><h6 style="padding: 8px 0 2px 0; margin-bottom: 2px; font-size: 16px; border-bottom: 1px dashed blue;"><strong>SEROLOGY</strong></h6></td>
 								</tr>' . $SEROLOGY;
 			}
 			if ($MICROBIOLOGY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4" class="text-center"><h6 style="padding: 8px 0 2px 0; margin-bottom: 2px; font-size: 16px; border-bottom: 1px solid blue;"><strong>MICROBIOLOGY</strong></h6></td>
+									<td colspan="4" class="text-center"><h6 style="padding: 8px 0 2px 0; margin-bottom: 2px; font-size: 16px; border-bottom: 1px dashed blue;"><strong>MICROBIOLOGY</strong></h6></td>
 								</tr>' . $MICROBIOLOGY;
 			}
 			$labor_detail_item_list = '<table width="100%" style="margin-top: -25px;">
@@ -1051,8 +1051,10 @@ class LaborRepository
 					]);
 				}
 			}
-			$delete_labor_detail_ids = array_diff($labor->labor_details()->pluck('id')->toArray(), array_map('intval', $request->labor_detail_ids));
-			LaborDetail::whereIn('id', $delete_labor_detail_ids)->delete();
+			if ($request->labor_detail_ids!=null) {
+				$delete_labor_detail_ids = array_diff($labor->labor_details()->pluck('id')->toArray(), array_map('intval', $request->labor_detail_ids));
+				LaborDetail::whereIn('id', $delete_labor_detail_ids)->delete();
+			}
 
 			if (isset($request->service_ids)) {
 				$services = LaborService::whereIn('id', $request->service_ids)->get();
