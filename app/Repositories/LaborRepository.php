@@ -337,14 +337,24 @@ class LaborRepository
 			$labor_categories = LaborCategory::whereIn('id', $ids)->get();
 			foreach ($labor_categories as $key => $labor_category) {
 				$checked_services_list = '';
-				foreach ($labor_category->services as $jey => $service) {
+				$labor_category_services = $labor_category->services;
+
+				if (in_array($labor_category->id, [10, 11, 12]) && sizeof($labor_category_services) > 1) {
+					$checked_services_list .= '
+						<a>
+							<label class="text"><input type="checkbox" class="category_check_all"/> Check all<label>
+						</a>
+					';
+				}
+
+				foreach ($labor_category_services as $jey => $service) {
 					$reference = '';
 					if ($service->ref_from == '' && $service->ref_to != '') {
 						$reference = '('. $service->description .' <'. $service->ref_to .' '. $service->unit .')';
 					}else if($service->ref_from != '' && $service->ref_to ==''){
 						$reference = '('. $service->description .' '. $service->ref_from .'> '. $service->unit .')';
 					}else if($service->ref_from != '' && $service->ref_to!=''){
-						$reference = '('. $service->description .' '. $service->ref_from .'-'. $service->ref_to .' '. $service->unit .')';
+						$reference = '('. $service->description .' '. $service->ref_from .' - '. $service->ref_to .' '. $service->unit .')';
 					}
 					if ($service->description == 'main') {
 						$checked_services_list .= '<li class="bg-info color-palette">
@@ -360,7 +370,7 @@ class LaborRepository
 														<div class="icheck-primary d-inline ml-2">
 															<input type="checkbox" class="sub_chbox sub_chbox_'. $service->sub_of .'" data-id="'. $service->id .'"/>
 														</div>
-														<span class="text">'. $service->name .'</span>
+														<span class="text">kk :'. $service->name .'</span>
 													</li>';
 					}else{
 						$labor_detail = LaborDetail::where('labor_id', $id)->where('service_id', $service->id)->first();
@@ -867,7 +877,7 @@ class LaborRepository
 				}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to ==''){
 					$reference = '('. $labor_detail->service->description .' '. $labor_detail->service->ref_from .'> '. $labor_detail->service->unit .')';
 				}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to!=''){
-					$reference = '('. $labor_detail->service->description .' '. $labor_detail->service->ref_from .'-'. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')';
+					$reference = '('. $labor_detail->service->description .' '. $labor_detail->service->ref_from .' - '. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')';
 				}
 
 				$class = '';
@@ -920,22 +930,22 @@ class LaborRepository
 			
 			if ($HEMATOLOGY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4" class="text-center"><h6 style="padding: 8px 0 2px 0; margin-bottom: 2px; font-size: 16px; border-bottom: 1px dashed blue;"><strong>HEMATOLOGY</strong></h6></td>
+									<td colspan="4"><h6 style="padding: 3px 15px; margin: 10px 0px 2px 0px; font-size: 16px; background-color: lightblue!important;"><strong>HEMATOLOGY</strong></h6></td>
 								</tr>' . $HEMATOLOGY;
 			}
 			if ($BIOCHEMISTRY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4" class="text-center"><h6 style="padding: 8px 0 2px 0; margin-bottom: 2px; font-size: 16px; border-bottom: 1px dashed blue;"><strong>BIOCHEMISTRY</strong></h6></td>
+									<td colspan="4"><h6 style="padding: 3px 15px; margin: 10px 0px 2px 0px; font-size: 16px; background-color: lightblue!important;"><strong>BIOCHEMISTRY</strong></h6></td>
 								</tr>' . $BIOCHEMISTRY;
 			}
 			if ($SEROLOGY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4" class="text-center"><h6 style="padding: 8px 0 2px 0; margin-bottom: 2px; font-size: 16px; border-bottom: 1px dashed blue;"><strong>SEROLOGY</strong></h6></td>
+									<td colspan="4"><h6 style="padding: 3px 15px; margin: 10px 0px 2px 0px; font-size: 16px; background-color: lightblue!important;"><strong>SEROLOGY</strong></h6></td>
 								</tr>' . $SEROLOGY;
 			}
 			if ($MICROBIOLOGY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4" class="text-center"><h6 style="padding: 8px 0 2px 0; margin-bottom: 2px; font-size: 16px; border-bottom: 1px dashed blue;"><strong>MICROBIOLOGY</strong></h6></td>
+									<td colspan="4"><h6 style="padding: 3px 15px; margin: 10px 0px 2px 0px; font-size: 16px; background-color: lightblue!important;"><strong>MICROBIOLOGY</strong></h6></td>
 								</tr>' . $MICROBIOLOGY;
 			}
 			$labor_detail_item_list = '<table width="100%" style="margin-top: -25px;">

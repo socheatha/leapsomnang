@@ -131,7 +131,7 @@ class GlobalComponent extends Controller
 					</td>
 				</tr>
 				<tr>
-					<td width="35%" style="padding-left: 55px;">
+					<td width="35%">
 						ឈ្មោះអ្នកជំងឺ: <span class="pt_name">'. ($object->pt_name ?? '') .'</span>
 					</td>
 					<td width="18%" style="padding: 5px 0;">
@@ -145,11 +145,11 @@ class GlobalComponent extends Controller
 					</td>
 				</tr>
 				<tr>
-					<td colspan="3" style="padding-left: 55px;">
+					<td colspan="3">
 						អាសយដ្ឋាន: <span>'. ($object->pt_address_full_text ?: $this->GetAddressFullText($object->pt_address_code)) .'</span>
 					</td>
 					<td width="25%" style="padding-left: 25px;">
-						កាលបរិច្ឆេទ: <span>'. date('d-M-Y', strtotime($object->date)) .'</span>
+						កាលបរិច្ឆេទ: <span>'. date('d-m-Y', strtotime($object->date)) .'</span>
 					</td>
 				</tr>
 				'.(($module == 'labor')?
@@ -170,9 +170,9 @@ class GlobalComponent extends Controller
 		<div class='text-center doctor_signature' style='position: absolute; right: 30px; bottom: 1.5cm;'>
 				<div class='KHOSMoulLight'>$title_signature</div>
 				<div class='sign_box'>
-					<img src='/images/signature.jpg' alt=''>
+					<img src='/images/setting/doctor_signature.jpg' alt=''>
 				</div>
-				<div><span class='KHOSMoulLight' style='font-size: 11px;'>វេជ្ជបណ្ឌិត.</span> <span class='KHOSMoulLight' style='font-size: 16px;'>" . ($doctor_name ?: Auth::user()->setting()->sign_name_kh) . "</span></div>
+				<div><span class='KHOSMoulLight' style='font-size: 14px;'>វេជ្ជបណ្ឌិត.</span> <span class='KHOSMoulLight' style='font-size: 16px;'>" . ($doctor_name ?: Auth::user()->setting()->sign_name_kh) . "</span></div>
 			</div>
 		";
 	}

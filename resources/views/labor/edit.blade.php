@@ -338,5 +338,12 @@
 			}
 		})
 	};
+
+	$(document).on('change', '.category_check_all', function () {
+		let list_subling = $(this).parent().parent().parent().find('li');
+
+		list_subling.find('input[type="checkbox"]').prop('checked', $(this).val() == 1);	
+		list_subling.find('input[type="text"]').prop('disabled', $(this).val() != 1);	
+	})
 </script>
 @endsection
