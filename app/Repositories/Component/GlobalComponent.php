@@ -131,7 +131,7 @@ class GlobalComponent extends Controller
 					</td>
 				</tr>
 				<tr>
-					<td width="35%">
+					<td width="35%" style="padding-left: 55px;">
 						ឈ្មោះអ្នកជំងឺ: <span class="pt_name">'. ($object->pt_name ?? '') .'</span>
 					</td>
 					<td width="18%" style="padding: 5px 0;">
@@ -145,7 +145,7 @@ class GlobalComponent extends Controller
 					</td>
 				</tr>
 				<tr>
-					<td colspan="3">
+					<td colspan="3" style="padding-left: 55px;">
 						អាសយដ្ឋាន: <span>'. ($object->pt_address_full_text ?: $this->GetAddressFullText($object->pt_address_code)) .'</span>
 					</td>
 					<td width="25%" style="padding-left: 25px;">

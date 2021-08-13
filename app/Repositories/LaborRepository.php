@@ -948,7 +948,7 @@ class LaborRepository
 									<td colspan="4"><h6 style="padding: 3px 15px; margin: 10px 0px 2px 0px; font-size: 16px; background-color: lightblue!important;"><strong>MICROBIOLOGY</strong></h6></td>
 								</tr>' . $MICROBIOLOGY;
 			}
-			$labor_detail_item_list = '<table width="100%" style="margin-top: -25px;">
+			$labor_detail_item_list = '<table style="margin-top: -25px; margin-left: 55px; width: calc(100% - 55px)">
 											<thead>
 												<tr>
 													<th width="40%" style="pading: 0 !important;"></th>
