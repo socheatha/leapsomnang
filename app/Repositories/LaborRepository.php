@@ -146,7 +146,16 @@ class LaborRepository
 												</tr>';
 			}else if ($type == 'blood-test') {
 				$checked_services_list = '';
-				foreach ($labor_category->services as $jey => $service) {
+				$labor_category_services = $labor_category->services;
+				if (in_array($labor_category->id, [10, 11, 12]) && sizeof($labor_category_services) > 1) {
+					$checked_services_list .= '
+						<a>
+							<label class="text"><input type="checkbox" class="category_check_all"/> Check all<label>
+						</a>
+					';
+				}
+
+				foreach ($labor_category_services as $jey => $service) {
 					$reference = '';
 					if ($service->ref_from == '' && $service->ref_to != '') {
 						$reference = '('. $service->description .' <'. $service->ref_to .' '. $service->unit .')';
@@ -905,7 +914,7 @@ class LaborRepository
 					$BIOCHEMISTRY .= $this->subService($labor_detail->service->labor_service)
 									.'<tr>
 										<td><div class="'. $labor_detail->service->class .'">'. $labor_detail->name .'</div></td>
-										<td class="'. $class .'">'. $labor_detail->result .'</td>
+										<td class="'. $class .'">' . (strpos($labor_detail->service->name, "___") ? '<span style="display: inline-block; width: 60px"> ' . explode('___', $labor_detail->service->name)[1] . ' </span>' : '' ) . $labor_detail->result .'</td>
 										<td>'. (($labor_detail->unit=='Negative')? '' : $labor_detail->unit) .'</td>
 										<td>'. $reference .'</td>
 									</tr>';
