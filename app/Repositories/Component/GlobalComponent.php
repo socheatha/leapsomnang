@@ -180,9 +180,9 @@ class GlobalComponent extends Controller
 	public function FooterComeBackText($text = '', $color = 'color_red')
 	{
 		$html_footer_comeback ="
-													<div class='color_light_blue' style=' text-align: center; position: absolute; bottom: 0.4cm; left: 0; width: 100%; padding: 0 0.8cm;'>
+													<div class='color_red' style=' text-align: center; position: absolute; bottom: 0.4cm; left: 0; width: 100%; padding: 0 0.8cm;'>
 														<div style=' border-top: 2px solid blue; padding-top: 10px;'>
-															<span class='KHOSMoulLight'>កំណត់ចំណាំ:</span> " . ($text ?: 'សូមយកវេជ្ជបញ្ជាមកវិញពេលមកពិនិត្យលើក្រោយ') . "
+															<span class='KHOSMoulLight' style='color: red;'>កំណត់ចំណាំ:</span> " . ($text ?: '<span>សូមយកវេជ្ជបញ្ជាមកវិញពេលមកពិនិត្យលើក្រោយ</span>') . "
 														</div>
 													</div>
 												";

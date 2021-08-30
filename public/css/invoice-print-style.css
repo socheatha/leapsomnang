@@ -108,7 +108,7 @@
 	height: 70px;
 }
 .sign_box img{
-	width: 123px;
+	width: 180px;
 	margin-top: 15px;
 }
 .color_red{
@@ -209,6 +209,12 @@ table tfoot { display: table-row-group!important; }
 		-o-print-color-adjust: exact !important;
 	}
 	.color_red{
+		color: red !important;
+		-webkit-print-color-adjust: exact !important;
+		-moz-print-color-adjust: exact !important;
+		-o-print-color-adjust: exact !important;
+	}
+	.color_red div span{
 		color: red !important;
 		-webkit-print-color-adjust: exact !important;
 		-moz-print-color-adjust: exact !important;

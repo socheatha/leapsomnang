@@ -57,8 +57,16 @@
 
 					@if (count(Auth::user()->LaborTypes()->get()))
 						@canany(['Labor Index', 'Labor Create', 'Labor Edit', 'Labor Delete'])
+						@foreach (Auth::user()->LaborTypes()->get() as $jjey => $llabor_type )
+							@endforeach
+								<li class="nav-item">
+									<a href="{{ route('labor.create', 'blood-test') }}" class="nav-link {{ (($llabor_type->slug == @$type )? 'active':'') }}">
+										<i class="nav-icon las la-flask"></i>
+										<p>ការពិនិត្យឈាម</p>
+									</a>
+								</li>
 					
-						<li class="nav-item has-treeview {{ ((in_array(Auth::user()->sidebarActive(), [ 'labor' ]))? 'menu-open':'') }}">
+						<!-- <li class="nav-item has-treeview {{ ((in_array(Auth::user()->sidebarActive(), [ 'labor' ]))? 'menu-open':'') }}">
 							<a href="#" class="nav-link {{ ((strpos('labor', Auth::user()->sidebarActive()) !== false)? 'active':'') }}">
 								<i class="nav-icon las la-flask"></i>
 								<p>
@@ -78,7 +86,7 @@
 							@endforeach
 		
 							</ul>
-						</li>
+						</li> -->
 						
 						@endcan
 					@endif
