@@ -181,33 +181,40 @@ class LaborRepository
 														<span class="text">'. $service->name .'</span>
 													</li>';
 					}else{
+						$servicename='';
+						if($service->name == 'Neutrophils (%)'){$servicename='80%';}
+						else if($service->name == 'Lymphocytes (%)'){$servicename='15%';}
+						else if($service->name == 'Monophocytes (%)'){$servicename='03%';}
+						else if($service->name == 'Eosinophils (%)'){$servicename='02%';}
+						else {$servicename='00%';}
 						$checked_services_list .= '<li class="'. $service->class .'">
-														<i class="fa fa-level-up-alt" style="transform: rotateZ(90deg);"></i>
-														<div class="icheck-primary d-inline ml-2">
-															<input type="checkbox" value="'. $service->id .'" class="service_id child_chbox_'.  $service->sub_of .'" data-value="'. $service->id .'" name="service_id[]"/>
-														</div>
-														<span class="text">'. $service->name .'</span>
-														<span>
-															'.(($service->unit == 'Negative')?
-																	'<div class="input-group">
-																		<select name="result[]" class="form-control child_input_'. $service->sub_of .' toggle-'. $service->id .'" disabled>
-																			<option value="Negative">Negative</option>
-																			<option value="Positive">Positive</option>
-																		</select>
-																		<div class="input-group-append">
-																			<span class="input-group-text text-xs px-1 font-weight-bold">'. $reference .'</span>
-																		</div>
-																	</div>'
-																:
-																	'<div class="input-group">
-																		<input type="text" class="form-control child_input_'. $service->sub_of .' toggle-'. $service->id .'" value="'. $service->default_value .'" name="result[]" disabled/>
-																		<div class="input-group-append">
-																			<span class="input-group-text text-xs px-1 font-weight-bold">'. $reference .'</span>
-																		</div>
-																	</div>'
-															).'
-														</span>
-													</li>';
+							<i class="fa fa-level-up-alt" style="transform: rotateZ(90deg);"></i>
+							<div class="icheck-primary d-inline ml-2">
+								<input type="checkbox" value="'. $service->id .'" class="service_id child_chbox_'.  $service->sub_of .'" data-value="'. $service->id .'" name="service_id[]"/>
+							</div>
+							<span class="text">'. $service->name .'</span>
+							<span>
+								'.(($service->unit == 'Negative')?
+										'<div class="input-group">
+											<select name="result[]" class="form-control child_input_'. $service->sub_of .' toggle-'. $service->id .'" disabled>
+												<option value="Negative">Negative</option>
+												<option value="Positive">Positive</option>
+											</select>
+											<div class="input-group-append">
+												<span class="input-group-text text-xs px-1 font-weight-bold">'. $reference .'</span>
+											</div>
+										</div>'
+									:
+										'<div class="input-group">
+											'.(($service->sub_of=='87')?'<input type="text" class="form-control child_input_'. $service->sub_of .'
+											 toggle-'. $service->id .'" value="'.$servicename.'" name="" disabled readonly/><input type="text" class="form-control child_input_'. $service->sub_of .' toggle-'. $service->id .'" value="'. $service->default_value .'" name="result[]" disabled/>':'<input type="text" class="form-control child_input_'. $service->sub_of .' toggle-'. $service->id .'" value="'. $service->default_value .'" name="result[]" disabled/>').'
+											<div class="input-group-append">
+												<span class="input-group-text text-xs px-1 font-weight-bold">'. $reference .'</span>
+											</div>
+										</div>'
+								).'
+							</span>
+						</li>';
 					}
 				}
 				
@@ -382,6 +389,13 @@ class LaborRepository
 														<span class="text">kk :'. $service->name .'</span>
 													</li>';
 					}else{
+						
+					$servicename='';
+					if($service->name == 'Neutrophils (%)'){$servicename='80%';}
+					else if($service->name == 'Lymphocytes (%)'){$servicename='15%';}
+					else if($service->name == 'Monophocytes (%)'){$servicename='03%';}
+					else if($service->name == 'Eosinophils (%)'){$servicename='02%';}
+					else {$servicename='00%';}
 						$labor_detail = LaborDetail::where('labor_id', $id)->where('service_id', $service->id)->first();
 						$checked_services_list .= '<li class="'. $service->class .'">
 													<i class="fa fa-level-up-alt" style="transform: rotateZ(90deg);"></i>
@@ -402,7 +416,10 @@ class LaborRepository
 																</div>'
 															:
 																'<div class="input-group">
-																	<input type="text" class="form-control child_input_'. $service->sub_of .' toggle-'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" value="'. (($labor_detail!=null)? $labor_detail->result : $service->default_value) .'" '. (($labor_detail!=null)? 'name="labor_detail_result[]" checked' : 'name="service_result[]" disabled') .'/>
+																'.(($service->sub_of=='87')?'<input type="text" class="form-control child_input_'. $service->sub_of .'
+											 toggle-'. $service->id .'" value="'.$servicename.'" name="" disabled readonly/><input type="text" class="form-control child_input_'. $service->sub_of .' toggle-'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" value="'. (($labor_detail!=null)? $labor_detail->result : $service->default_value) .'" '. (($labor_detail!=null)? 'name="labor_detail_result[]" checked' : 'name="service_result[]" disabled') .'/>':'<input type="text" class="form-control child_input_'. $service->sub_of .' toggle-'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" value="'. (($labor_detail!=null)? $labor_detail->result : $service->default_value) .'" '. (($labor_detail!=null)? 'name="labor_detail_result[]" checked' : 'name="service_result[]" disabled') .'/>').'	
+											 
+											
 																	<div class="input-group-append">
 																		<span class="input-group-text text-xs px-1 font-weight-bold">'. $reference .'</span>
 																	</div>
@@ -630,7 +647,7 @@ class LaborRepository
 			$labor_detail_item_list = '<div style="padding: 0 1.3cm;">
 																	<table width="100%">
 																		<tr>
-																			<td colspan="4"> <b style="text-decoration:underline;">BIO-CHIMIE</b></td>
+																			<td colspan="4"> <b style="text-decoration:underline;"><h1>Hel</h1>BIO-CHIMIE</b></td>
 																		</tr>
 																		'. $glycemia .'
 																	</table>	
@@ -886,7 +903,8 @@ class LaborRepository
 				}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to ==''){
 					$reference = '('. $labor_detail->service->description .' '. $labor_detail->service->ref_from .'> '. $labor_detail->service->unit .')';
 				}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to!=''){
-					$reference = '('. $labor_detail->service->description .' '. $labor_detail->service->ref_from .' - '. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')';
+					$reference = '('. $labor_detail->service->description .' '. $labor_detail->service->ref_from .' - '. $labor_detail->service->ref_to .')';
+					// $reference = '('. $labor_detail->service->description .' '. $labor_detail->service->ref_from .' - '. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')';
 				}
 
 				$class = '';
@@ -903,10 +921,18 @@ class LaborRepository
 				}
 
 				if ($labor_detail->service->category->name == 'HEMATOLOGY') {
+					$servicen='hello';
+						if($labor_detail->name == 'Neutrophils (%)'){$servicen='80%';}
+						else if($labor_detail->name == 'Lymphocytes (%)'){$servicen='15%';}
+						else if($labor_detail->name == 'Monophocytes (%)'){$servicen='03%';}
+						else if($labor_detail->name == 'Eosinophils (%)'){$servicen='02%';}
+						else if($labor_detail->name == 'Basophils (%)'){$servicen='00%';}
+						else {$servicen='';}
+					
 					$HEMATOLOGY .= $this->subService($labor_detail->service->labor_service)
 									.'<tr>
 										<td><div class="'. $labor_detail->service->class .'">'. $labor_detail->name .'</div></td>
-										<td class="'. $class .'">'. $labor_detail->result .'</td>
+										<td class="'. $class .'">'.$servicen.'  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'. $labor_detail->result .'</td>
 										<td>'. (($labor_detail->unit=='Negative')? '' : $labor_detail->unit) .'</td>
 										<td>'. $reference .'</td>
 									</tr>';
@@ -979,7 +1005,12 @@ class LaborRepository
 
 			<small class="remark">'. $labor->remark .'</small>
 			
-			' . $GlobalComponent->FooterComeBackText('សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើកក្រោយ') . '
+			' . $GlobalComponent->FooterComeBackText('<span class="color_red;" style="color: red;
+			
+			
+			
+			
+			">សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើកក្រោយ</span>') . '
 			<table width="100%">
 				<tr>
 					<td></td>
