@@ -207,12 +207,13 @@ class LaborRepository
 									:
 										'<div class="input-group">
 											'.(($service->sub_of=='87')?'<input type="text" class="form-control child_input_'. $service->sub_of .'
-											 toggle-'. $service->id .'" value="'.$servicename.'" name="" disabled readonly/><input type="text" class="form-control child_input_'. $service->sub_of .' toggle-'. $service->id .'" value="'. $service->default_value .'" name="result[]" disabled/>':'<input type="text" class="form-control child_input_'. $service->sub_of .' toggle-'. $service->id .'" value="'. $service->default_value .'" name="result[]" disabled/>').'
+											 toggle-'. $service->id .'" value="'.$servicename.'" name="" disabled readonly/><input type="text" class="form-control child_input_'. $service->sub_of .' toggle-'. $service->id .'" value="'. $service->default_value .'" name="result[]" disabled/>':(($service->sub_of=='115') ? '<select  class="form-control child_input_'. $service->sub_of .' toggle-'. $service->id .'" value="'. $service->default_value .'" name="result[]" disabled/>
+											 <option value=""></option><option value="1/160">1/160</option><option value="1/320">1/320</option></select>' : '<input type="text" class="form-control child_input_'. $service->sub_of .' toggle-'. $service->id .'" value="'. $service->default_value .'" name="result[]" disabled/>').'
 											<div class="input-group-append">
 												<span class="input-group-text text-xs px-1 font-weight-bold">'. $reference .'</span>
 											</div>
 										</div>'
-								).'
+								)).'
 							</span>
 						</li>';
 					}
@@ -417,14 +418,15 @@ class LaborRepository
 															:
 																'<div class="input-group">
 																'.(($service->sub_of=='87')?'<input type="text" class="form-control child_input_'. $service->sub_of .'
-											 toggle-'. $service->id .'" value="'.$servicename.'" name="" disabled readonly/><input type="text" class="form-control child_input_'. $service->sub_of .' toggle-'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" value="'. (($labor_detail!=null)? $labor_detail->result : $service->default_value) .'" '. (($labor_detail!=null)? 'name="labor_detail_result[]" checked' : 'name="service_result[]" disabled') .'/>':'<input type="text" class="form-control child_input_'. $service->sub_of .' toggle-'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" value="'. (($labor_detail!=null)? $labor_detail->result : $service->default_value) .'" '. (($labor_detail!=null)? 'name="labor_detail_result[]" checked' : 'name="service_result[]" disabled') .'/>').'	
+											 toggle-'. $service->id .'" value="'.$servicename.'" name="" disabled readonly/><input type="text" class="form-control child_input_'. $service->sub_of .' toggle-'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" value="'. (($labor_detail!=null)? $labor_detail->result : $service->default_value) .'" '. (($labor_detail!=null)? 'name="labor_detail_result[]" checked' : 'name="service_result[]" disabled') .'/>':(($service->sub_of=='115') ? '<select  class="form-control child_input_'. $service->sub_of .' toggle-'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" '. (($labor_detail!=null)? 'name="labor_detail_result[]" checked' : 'name="service_result[]" disabled') .'/>
+											 <option value="" '. (($labor_detail->result=='')? 'selected' : '') .'></option><option value="1/160"'. (($labor_detail->result=='1/160')? 'selected' : '') .'>1/160</option><option value="1/320" '. (($labor_detail->result=='1/320')? 'selected' : '') .'>1/320</option></select>':'<input type="text" class="form-control child_input_'. $service->sub_of .' toggle-'. (($labor_detail!=null)? $labor_detail->id : $service->id) .'" value="'. (($labor_detail!=null)? $labor_detail->result : $service->default_value) .'" '. (($labor_detail!=null)? 'name="labor_detail_result[]" checked' : 'name="service_result[]" disabled') .'/>').'	
 											 
 											
 																	<div class="input-group-append">
 																		<span class="input-group-text text-xs px-1 font-weight-bold">'. $reference .'</span>
 																	</div>
 																</div>'
-														).'
+														)).'
 													</span>
 												</li>';
 					}
@@ -928,6 +930,10 @@ class LaborRepository
 						else if($labor_detail->name == 'Eosinophils (%)'){$servicen='02%';}
 						else if($labor_detail->name == 'Basophils (%)'){$servicen='00%';}
 						else {$servicen='';}
+						$thto='';
+						if($labor_detail->result=='1/160'){$thto='<span style="color: red;">Negative</span>';}
+						else if($labor_detail->result=='1/320'){$thto='<span style="color: red;">Negative</span>';}
+						else{$thto='';}
 					
 					$HEMATOLOGY .= $this->subService($labor_detail->service->labor_service)
 									.'<tr>
@@ -949,7 +955,7 @@ class LaborRepository
 								.'<tr>
 									<td><div class="'. $labor_detail->service->class .'">'. $labor_detail->name .'</div></td>
 									<td class="'. $class .'">'. $labor_detail->result .'</td>
-									<td>'. (($labor_detail->unit=='Negative')? '' : $labor_detail->unit) .'</td>
+									<td>'.($labor_detail->result=='1/160'?'<span style="color: red;">Negative</span>':$labor_detail->result=='1/320'?'<span style="color: red;">Negative</span>':'').''. (($labor_detail->unit=='Negative')? '' : $labor_detail->unit) .'</td>
 									<td>'. $reference .'</td>
 								</tr>';
 				}else if ($labor_detail->service->category->name == 'MICROBIOLOGY') {
