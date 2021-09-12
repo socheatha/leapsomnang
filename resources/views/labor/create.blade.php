@@ -170,6 +170,7 @@
 
 		list_subling.find('input[type="checkbox"]').prop('checked', $(this).val() == 1);	
 		list_subling.find('input[type="text"]').prop('disabled', $(this).val() != 1);	
+		list_subling.find('select').prop('disabled', $(this).val() != 1);
 	})
 </script>
 @endsection

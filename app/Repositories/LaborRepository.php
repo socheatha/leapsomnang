@@ -955,7 +955,7 @@ class LaborRepository
 								.'<tr>
 									<td><div class="'. $labor_detail->service->class .'">'. $labor_detail->name .'</div></td>
 									<td class="'. $class .'">'. $labor_detail->result .'</td>
-									<td>'.($labor_detail->result=='1/160'?'<span style="color: red;">Negative</span>':$labor_detail->result=='1/320'?'<span style="color: red;">Negative</span>':'').''. (($labor_detail->unit=='Negative')? '' : $labor_detail->unit) .'</td>
+									<td>'.(($labor_detail->result=='1/160')? '<span style="color: red;">Negative</span>' : ($labor_detail->result=='1/320'?'<span style="color: red;">Negative</span>':'').''. (($labor_detail->unit=='Negative')? '' : $labor_detail->unit) ) .'</td>
 									<td>'. $reference .'</td>
 								</tr>';
 				}else if ($labor_detail->service->category->name == 'MICROBIOLOGY') {
