@@ -12,7 +12,7 @@ class Service extends BaseModel
 	protected $table = 'services';
 
 	protected $fillable = [
-		'name', 'price', 'description', 'created_by', 'updated_by',
+		'name','quantity', 'price', 'description', 'created_by', 'updated_by',
 	];
 
 

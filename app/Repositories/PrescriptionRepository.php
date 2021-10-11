@@ -90,7 +90,7 @@ class PrescriptionRepository
 			</table>
 			<small class="remark">'. $prescription->remark .'</small>
 			<br/>
-			' . $GlobalComponent->FooterComeBackText('សូមយកវេជ្ជបញ្ជាមកវិញពេលមកពិនិត្យលើក្រោយ') . '
+			' . $GlobalComponent->FooterComeBackText('សូមយកវេជ្ជបញ្ជាមកវិញពេលមកពិនិត្យលើកក្រោយ') . '
 			<table class="table-footer" style="position: absolute; bottom: 80px; " width="90%">
 			' . $GlobalComponent->DoctorSignature() . '
 			</table>

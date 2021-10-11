@@ -10,9 +10,9 @@
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-sm-5">
+					<div class="col-sm-6">
 						<div class="form-group">
-							{!! Html::decode(Form::label('item_service_name', __('label.form.invoice.service')." <small>*</small>")) !!}
+							{!! Html::decode(Form::label('item_service_name', __('label.form.invoice.name')." <small>*</small>")) !!}
 							<div class="input-group mb-3">
 								{!! Form::text('item_service_name', '', ['class' => 'form-control','placeholder' => __('label.form.invoice.service'),'required', 'list' => 'service_list', 'autocomplete' => 'off']) !!}
 							</div>
@@ -24,13 +24,20 @@
 							{!! Form::select('item_discount', ['0'=>'0%', '0.05'=>'5%', '0.1'=>'10%', '0.15'=>'15%', '0.2'=>'20%', '0.25'=>'25%', '0.3'=>'30%', '0.35'=>'35%', '0.4'=>'40%', '0.45'=>'45%', '0.5'=>'50%', '0.55'=>'55%', '0.6'=>'60%', '0.65'=>'65%', '0.7'=>'70%', '0.75'=>'75%', '0.8'=>'80%', '0.85'=>'85%', '0.9'=>'90%', '0.95'=>'95%', '1'=>'100%'], '0', ['class' => 'form-control select2','required']) !!}
 						</div>
 					</div> --}}
-					<div class="col-sm-2">
+					
+					<div class="col-sm-3">
 						<div class="form-group">
-							{!! Html::decode(Form::label('item_price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
+							{!! Html::decode(Form::label('item_quantity', __('label.form.invoice.quantity')." <small>*</small>")) !!}
+							{!! Form::text('item_quantity', '', ['class' => 'form-control','placeholder' => 'quantity','required']) !!}
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group">
+							{!! Html::decode(Form::label('item_price', __('label.form.invoice.price')."(៛) <small>*</small>")) !!}
 							{!! Form::text('item_price', '', ['class' => 'form-control','placeholder' => 'price','required']) !!}
 						</div>
 					</div>
-					<div class="col-sm-5">
+					<div class="col-sm-10">
 						<div class="form-group">
 							{!! Html::decode(Form::label('item_description', __('label.form.description'))) !!}
 							{!! Form::textarea('item_description', '', ['class' => 'form-control','placeholder' => 'description','style' => 'height: 38px','required']) !!}
@@ -70,10 +77,16 @@
 							{!! $errors->first('name', '<div class="invalid-feedback">:message</div>') !!}
 						</div>
 					</div>
-				
-					<div class="col-sm-6">
+					<div class="col-sm-3">
+						<div class="form-group service-quantity">
+							{!! Html::decode(Form::label('service_quantity', __('label.form.service.quantity') .' <small>*</small>')) !!}
+							{!! Form::text('service_quantity', '', ['class' => 'form-control is_number ','placeholder' => 'quantity', 'required']) !!}
+							{!! $errors->first('quantity', '<div class="invalid-feedback">:message</div>') !!}
+						</div>
+					</div>
+					<div class="col-sm-3">
 						<div class="form-group service-price">
-							{!! Html::decode(Form::label('service_price', __('label.form.service.price') .'($) <small>*</small>')) !!}
+							{!! Html::decode(Form::label('service_price', __('label.form.service.price') .'(៛) <small>*</small>')) !!}
 							{!! Form::text('service_price', '', ['class' => 'form-control is_number ','placeholder' => 'price', 'required']) !!}
 							{!! $errors->first('price', '<div class="invalid-feedback">:message</div>') !!}
 						</div>

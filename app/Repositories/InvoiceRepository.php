@@ -72,15 +72,19 @@ class InvoiceRepository
 		$title = 'Invoice (INV'. date('Y', strtotime($invoice->date)) .'-'.str_pad($invoice->inv_number, 6, "0", STR_PAD_LEFT) .')';
 
 		foreach ($invoice->invoice_details as $invoice_detail) {
-			$amount = ($invoice_detail->amount);
+			$quantity = ($invoice_detail->quantity);
+			$price = ($invoice_detail->amount);
+			$amount=$quantity*$price;
 			$total += $amount;
 			$tbody .= '<tr>
 									<td class="text-center">' . $no++ . '</td>
-									<td colspan="3">' . $invoice_detail->name . '</td>
-									<td class="text-right"><span class="pull-left float-left">$</span> ' . number_format($amount, 2) . '</td>
+									<td>' . $invoice_detail->name . '</td>
+									<td>' . $quantity . '</td>
+									<td class="text-right"><span class="pull-left float-left">៛</span> ' . $price . '</td>
+									<td class="text-right"><span class="pull-left float-left">៛</span> ' . number_format($amount, 0) . '</td>
 								</tr>';
 		}
-		$total_riel = number_format($total*$invoice->rate, 0);
+		$total_riel = number_format($total, 0);
 
 		
 		$gtt = explode(".", number_format($total,2));
@@ -88,7 +92,7 @@ class InvoiceRepository
 		$gtt_cents = $gtt[1];
 
 		$grand_total_in_word = Auth::user()->num2khtext($gtt_dollars, false) . 'ដុល្លារ' . (($gtt_cents>0)? ' និង'. Auth::user()->num2khtext($gtt_cents, false) .'សេន' : '');
-		$grand_total_riel_in_word = Auth::user()->num2khtext(round($total*$invoice->rate, 0), false);
+		$grand_total_riel_in_word = Auth::user()->num2khtext(round($total, 0), false);
 
 		$invoice_detail = '<section class="invoice-print" style="position: relative;">
 			' . $GlobalComponent->PrintHeader('invoice', $invoice) . '
@@ -97,11 +101,19 @@ class InvoiceRepository
 					<th class="text-center" width="8%">
 						<div>ល.រ</div>
 					</th>
-					<th colspan="3" class="text-center">
-						<div>បរិយាយ</div>
+					<th class="text-center" width="40%">
+						<div>ឈ្មោះ</div>
 					</th>
-					<th class="text-center" width="16%">
-						<div>តម្លៃ</div>
+					
+					<th class="text-center" width="12%">
+						<div>ចំនួន</div>
+					</th>
+					
+					<th class="text-center" width="20%">
+						<div>តម្លៃរាយ</div>
+					</th>
+					<th class="text-center" width="20%">
+						<div>តម្លៃសរុប</div>
 					</th>
 				</thead>
 				<tbody>
@@ -109,15 +121,14 @@ class InvoiceRepository
 				</tbody>
 				<tfoot>
 					<tr>
-						<th colspan="2" width="38%"><small>*** '. $grand_total_in_word .' ***</small></th>
-						<th width="30%" class="text-right">សរុប</th>
-						<th class="text-right sub_total_riel">'. $total_riel .' ៛</th>
-						<th class="text-right sub_total_dollar"><span class="float-left pull-left">$</span> '. number_format($total, 2) .'</th>
+						<th colspan="2" rowspan="4"><small>*** '. $grand_total_riel_in_word .'រៀល ***</small></th>
 					</tr>
 					<tr>
-						<th colspan="2"><small>*** '. $grand_total_riel_in_word .' ***</small></th>
-						<th colspan="4" class="text-right"></th>
+						<th class="text-right">សរុប</th>
+						<th class="text-center sub_total_riel">TOTAL</th>
+						<th class="text-right sub_total_dollar"><span class="float-left pull-left">៛</span> '. number_format($total, 0) .'</th>
 					</tr>
+					
 				</tfoot>
 			</table>
 			<small class="remark">'. $invoice->remark .'</small>
@@ -155,6 +166,7 @@ class InvoiceRepository
 			for ($i = 0; $i < count($request->service_name); $i++) {
 				InvoiceDetail::create([
 					'name' => $request->service_name[$i],
+					'quantity' => $request->quantity[$i],
 					'amount' => $request->price[$i],
 					// 'discount' => $request->discount[$i],
 					'description' => $request->description[$i],
@@ -179,6 +191,7 @@ class InvoiceRepository
 		$invoice_detail = InvoiceDetail::create([
 												'name' => $request->service_name,
 												// 'discount' => $request->discount,
+												'quantity' => $request->quantity,
 												'amount' => $request->price,
 												'description' => $request->description,
 												'index' => $index,
@@ -202,6 +215,7 @@ class InvoiceRepository
 		$invoice_detail = InvoiceDetail::find($request->id);
 		$invoice_detail->update([
 			'name' => $request->service_name,
+			'quantity' => $request->quantity,
 			'amount' => $request->price,
 			// 'discount' => $request->discount,
 			'description' => $request->description,

@@ -43,7 +43,7 @@ class InvoiceController extends Controller
 		$this->data = [
 			'inv_number' => $this->invoice->inv_number(),
 			'medicines' => Medicine::getSelectData('id', 'name', '', 'name' ,'asc'),
-			'services' => Service::select('id', 'name', 'price', 'description')->orderBy('name' ,'asc')->get(),
+			'services' => Service::select('id', 'name','quantity', 'price', 'description')->orderBy('name' ,'asc')->get(),
 			'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),
 		];
 		return view('invoice.create', $this->data);
@@ -52,7 +52,7 @@ class InvoiceController extends Controller
 
 	public function store(InvoiceRequest $request)
 	{
-		
+		// dd($request->all());
 		$invoice = $this->invoice->create($request);
 		if ($invoice) {
 			// Redirect
@@ -144,7 +144,7 @@ class InvoiceController extends Controller
 		$this->data = [
 			'invoice' => $invoice,
 			'medicines' => Medicine::getSelectData('id', 'name', '', 'name' ,'asc'),
-			'services' => Service::select('id', 'name', 'price', 'description')->orderBy('name' ,'asc')->get(),
+			'services' => Service::select('id', 'name', 'quantity', 'price', 'description')->orderBy('name' ,'asc')->get(),
 			'patients' => Patient::getSelectData('id', 'name', '', 'name' ,'asc'),
 			'invoice_preview' => $this->invoice->getInvoicePreview($invoice->id)->getData()->invoice_detail,
 		];

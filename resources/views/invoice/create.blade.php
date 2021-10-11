@@ -70,19 +70,25 @@
 		var id = Math.floor(Math.random() * 1000);
 		$('.item_list').append(`<div class="prescription_item" id="${ id }">
 		<div class="row">
-				<div class="col-sm-4">
+				<div class="col-sm-6">
 					<div class="form-group">
-						{!! Html::decode(Form::label('service_id', __('label.form.invoice.service')." <small>*</small>")) !!}
+						{!! Html::decode(Form::label('service_id', __('label.form.invoice.name')." <small>*</small>")) !!}
 						{!! Form::text('service_name[]', '', ['class' => 'form-control service_add', 'data-id'=>'${ id }', 'id'=>'input-service_id-${ id }','placeholder' => 'name','required', 'list' => 'service_list', 'onchange' => 'load_service_info(\'${id}\', this)']) !!}
 					</div>
 				</div>
-				<div class="col-sm-2">
+				<div class="col-sm-3">
 					<div class="form-group">
-						{!! Html::decode(Form::label('price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
+						{!! Html::decode(Form::label('quantity', __('label.form.invoice.quantity')." <small>*</small>")) !!}
+						{!! Form::text('quantity[]', '', ['class' => 'form-control', 'id'=>'input-quantity-${ id }','placeholder' => 'quantity','required']) !!}
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group">
+						{!! Html::decode(Form::label('price', __('label.form.invoice.unit_price')."(៛) <small>*</small>")) !!}
 						{!! Form::text('price[]', '', ['class' => 'form-control', 'id'=>'input-price-${ id }','placeholder' => 'price','required']) !!}
 					</div>
 				</div>
-				<div class="col-sm-5">
+				<div class="col-sm-10">
 					<div class="form-group">
 						{!! Html::decode(Form::label('description', __('label.form.description'))) !!}
 						{!! Form::textarea('description[]', '', ['class' => 'form-control', 'id'=>'input-description-${ id }','placeholder' => 'description','style' => 'height: 38px']) !!}
@@ -92,11 +98,11 @@
 					<div class="form-group">
 						{!! Html::decode(Form::label('', __('label.buttons.remove'))) !!}
 						<div>
-							<button class="btn btn-danger btn-flat btn-block btn-prevent-submit" onclick="removeItem(${ id })"><i class="fa fa-trash-alt"></i></button>
+							<button class="btn btn-danger btn-flat btn-block btn-prevent-submit pull-right" onclick="removeItem(${ id })"><i class="fa fa-trash-alt"></i></button>
 						</div>
 					</div>
 				</div>
-			</div>
+			</div><hr style="border-top: 3px solid black;">
 		</div>`);
 	});
 

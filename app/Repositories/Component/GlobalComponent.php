@@ -126,35 +126,40 @@ class GlobalComponent extends Controller
 		$html_header .= '
 			<table class="table-information" width="100%" style="margin: 5px 0 15px 0;">
 				<tr>
-					<td colspan="4">
+					<td colspan="3">
 						<div class="color_red text-center KHOSMoulLight"  style="font-size: 18px; padding: 0 0 5px 0; text-decoration: underline;">' . $title_module . '</div>
 					</td>
 				</tr>
 				<tr>
-					<td width="35%" style="padding-left: 55px;">
+					<td width="40%" style="">
 						ឈ្មោះអ្នកជំងឺ: <span class="pt_name">'. ($object->pt_name ?? '') .'</span>
 					</td>
-					<td width="18%" style="padding: 5px 0;">
+					<td width="20%" style="">
 						អាយុ: <span class="pt_age">'. ($object->pt_age ?? '') . ' ' .  (($object->pt_age_type ? __('module.table.selection.age_type_' . $object->pt_age_type) : '')).'</span>
 					</td>
-					<td width="18%" style="padding: 5px 0;">
+					<td width="20%" style="">
 						ភេទ: <span class="pt_gender">'. ($object->pt_gender ?? '') .'</span>
-					</td>
-					<td width="25%" style="padding-left: 25px;">
-						លេខកូដអ្នកជំងឺ: <span class="labor_number">'. str_pad(($object->$number ?? 0), 6, "0", STR_PAD_LEFT) .'</span>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="3" style="padding-left: 55px;">
-						អាសយដ្ឋាន: <span>'. ($object->pt_address_full_text ?: $this->GetAddressFullText($object->pt_address_code)) .'</span>
+					<td width="25%" style="">
+						លេខកូដអ្នកជំងឺ: <span class="labor_number">'. str_pad(($object->$number ?? 0), 6, "0", STR_PAD_LEFT) .'</span>
 					</td>
-					<td width="25%" style="padding-left: 25px;">
+					<td width="25%" style="">
 						កាលបរិច្ឆេទ: <span>'. date('d-m-Y', strtotime($object->date)) .'</span>
+					</td>
+					<td width="50%" style="">
+						រោគវិនិច្ឆ័យ: <span class="pt_diagnosis">'. ($object->pt_diagnosis ?? '') .'</span>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3" style="">
+						អាសយដ្ឋានអ្នកជំងឺ: <span>'. ($object->pt_address_full_text ?: $this->GetAddressFullText($object->pt_address_code)) .'</span>
 					</td>
 				</tr>
 				'.(($module == 'labor')?
 						'<tr>
-							<td colspan="4">
+							<td colspan="3">
 								<div class="text-center KHOSMoulLight"  style="font-size: 18px; padding: 0 0 5px 0; text-decoration: underline;">លទ្ធផលពិនិត្យ</div>
 							</td>
 						</tr>'
@@ -182,7 +187,7 @@ class GlobalComponent extends Controller
 		$html_footer_comeback ="
 													<div class='color_red' style=' text-align: center; position: absolute; bottom: 0.4cm; left: 0; width: 100%; padding: 0 0.8cm;'>
 														<div style=' border-top: 2px solid blue; padding-top: 10px;'>
-															<span class='KHOSMoulLight' style='color: red;'>កំណត់ចំណាំ:</span> " . ($text ?: '<span>សូមយកវេជ្ជបញ្ជាមកវិញពេលមកពិនិត្យលើក្រោយ</span>') . "
+															<span class='KHOSMoulLight' style='color: red;'>កំណត់ចំណាំ:</span> " . ($text ?: '<span>សូមយកវេជ្ជបញ្ជាមកវិញពេលមកពិនិត្យលើកក្រោយ</span>') . "
 														</div>
 													</div>
 												";
@@ -239,6 +244,6 @@ class GlobalComponent extends Controller
 /*
 	How to use : 
 		use App\Repositories\Component\GlobalComponent as GComponent;
-		GComponent::FooterComeBackText('សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើក្រោយ')
+		GComponent::FooterComeBackText('សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើកក្រោយ')
 		GComponent::DoctorSignature()
 */

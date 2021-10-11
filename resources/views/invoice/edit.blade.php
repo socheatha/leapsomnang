@@ -49,19 +49,25 @@
 				@foreach ($invoice->invoice_details as $order => $invoice_detail)
 					<div class="prescription_item" id="{{ $invoice_detail->id }}">
 						<div class="row">
-							<div class="col-sm-4">
+							<div class="col-sm-6">
 								<div class="form-group">
 									{!! Html::decode(Form::label('show_description', __('label.form.invoice.service')." <small>*</small>")) !!}
 									{!! Form::text('show_name', $invoice_detail->name, ['class' => 'form-control','form' => 'description','placeholder' => 'name','style' => 'height: 38px','id' => 'input-name-'. $invoice_detail->id ,'readonly']) !!}
 								</div>
 							</div>
-							<div class="col-sm-2">
+							<div class="col-sm-3">
 								<div class="form-group">
-									{!! Html::decode(Form::label('show_price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
+									{!! Html::decode(Form::label('show_quantity', __('label.form.invoice.quantity')." <small>*</small>")) !!}
+									{!! Form::text('show_quantity', $invoice_detail->quantity, ['class' => 'form-control','placeholder' => 'quantity','id' => 'input-quantity-'. $invoice_detail->id ,'readonly']) !!}
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
+									{!! Html::decode(Form::label('show_price', __('label.form.invoice.price')."(៛) <small>*</small>")) !!}
 									{!! Form::text('show_price', $invoice_detail->amount, ['class' => 'form-control','placeholder' => 'price','id' => 'input-amount-'. $invoice_detail->id ,'readonly']) !!}
 								</div>
 							</div>
-							<div class="col-sm-5">
+							<div class="col-sm-10">
 								<div class="form-group">
 									{!! Html::decode(Form::label('show_description', __('label.form.description'))) !!}
 									{!! Form::text('show_description', $invoice_detail->description, ['class' => 'form-control','form' => 'description','placeholder' => 'description','style' => 'height: 38px','id' => 'input-description-'. $invoice_detail->id ,'readonly']) !!}
@@ -82,7 +88,7 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						</div><hr style="border-top: 3px solid black;">
 					</div>
 				@endforeach
 			</div>
@@ -122,10 +128,10 @@
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-sm-5">
+					<div class="col-sm-6">
 						<div class="form-group">
 							{!! Form::hidden('edit_item_id', '') !!}
-							{!! Html::decode(Form::label('edit_item_service_name', __('label.form.invoice.service')." <small>*</small>")) !!}
+							{!! Html::decode(Form::label('edit_item_service_name', __('label.form.invoice.name')." <small>*</small>")) !!}
 							<div class="input-group">
 								{!! Form::text('edit_item_service_name', '', ['class' => 'form-control','placeholder' => 'name','required', 'list' => 'service_list', 'autocomplete' => 'off']) !!}
 							</div>
@@ -137,13 +143,19 @@
 							{!! Form::select('edit_item_discount', ['0'=>'0%', '0.05'=>'5%', '0.1'=>'10%', '0.15'=>'15%', '0.2'=>'20%', '0.25'=>'25%', '0.3'=>'30%', '0.35'=>'35%', '0.4'=>'40%', '0.45'=>'45%', '0.5'=>'50%', '0.55'=>'55%', '0.6'=>'60%', '0.65'=>'65%', '0.7'=>'70%', '0.75'=>'75%', '0.8'=>'80%', '0.85'=>'85%', '0.9'=>'90%', '0.95'=>'95%', '1'=>'100%'], '0', ['class' => 'form-control select2','required']) !!}
 						</div>
 					</div> --}}
-					<div class="col-sm-2">
+					<div class="col-sm-3">
+						<div class="form-group invoice_item_quantity">
+							{!! Html::decode(Form::label('edit_item_quantity', __('label.form.invoice.quantity')." <small>*</small>")) !!}
+							{!! Form::text('edit_item_quantity', '', ['class' => 'form-control','placeholder' => 'quantity','required']) !!}
+						</div>
+					</div>
+					<div class="col-sm-3">
 						<div class="form-group invoice_item_price">
 							{!! Html::decode(Form::label('edit_item_price', __('label.form.invoice.price')." <small>*</small>")) !!}
 							{!! Form::text('edit_item_price', '', ['class' => 'form-control','placeholder' => 'price','required']) !!}
 						</div>
 					</div>
-					<div class="col-sm-5">
+					<div class="col-sm-10">
 						<div class="form-group invoice_item_description">
 							{!! Html::decode(Form::label('edit_item_description', __('label.form.description'))) !!}
 							{!! Form::textarea('edit_item_description', '', ['class' => 'form-control','placeholder' => 'description','style' => 'height: 38px','required']) !!}
@@ -302,6 +314,7 @@
 	$('[name="item_service_name"]').on('change', function () {
 		if ($(this).val()!='') {
 			var value = $(this).val();
+			if ($('option[value="'+value+'"]').data('quantity')) $('[name="item_quantity"]').val($('option[value="'+value+'"]').data('quantity'));
 			if ($('option[value="'+value+'"]').data('price')) $('[name="item_price"]').val($('option[value="'+value+'"]').data('price'));
 			if ($('option[value="'+value+'"]').data('description')) $('[name="item_description"]').val($('option[value="'+value+'"]').data('description'));			
 		}
@@ -311,6 +324,7 @@
 	$('[name="edit_item_service_name"]').on('change', function () {
 		if ($(this).val()!='') {
 			var value = $(this).val();
+			if ($('option[value="'+value+'"]').data('quantity')) $('[name="edit_item_quantity"]').val($('option[value="'+value+'"]').data('quantity'));
 			if ($('option[value="'+value+'"]').data('price')) $('[name="edit_item_price"]').val($('option[value="'+value+'"]').data('price'));
 			if ($('option[value="'+value+'"]').data('description')) $('[name="edit_item_description"]').val($('option[value="'+value+'"]').data('description'));			
 		}
@@ -326,6 +340,7 @@
 		})
 		.done(function( result ) {
 			$('[name="edit_item_service_name"]').val(result.invoice_detail.name).trigger('change');
+			$('[name="edit_item_quantity"]').val(result.invoice_detail.quantity).trigger('change');
 			$('[name="edit_item_price"]').val(result.invoice_detail.amount);
 			// $('[name="edit_item_discount"]').val(result.invoice_detail.discount).trigger('change');
 			$('[name="edit_item_description"]').val(result.invoice_detail.description);
@@ -381,6 +396,7 @@
 			type: 'post',
 			data: {
 				id: $('[name="edit_item_id"]').val(),
+				quantity: $('[name="edit_item_quantity"]').val(),
 				price: $('[name="edit_item_price"]').val(),
 				// discount: $('[name="edit_item_discount"]').val(),
 				service_name: $('[name="edit_item_service_name"]').val(),
@@ -405,31 +421,38 @@
 			}
 			if (data.success) {
 				$('[name="edit_item_service_name"]').val('').trigger('change');
+				$('[name="edit_item_quantity"]').val('');
 				$('[name="edit_item_price"]').val('');
 				$('[name="edit_item_discount"]').val('').trigger('change');
 				$('[name="edit_item_description"]').val('');
 				$('[name="edit_item_id"]').val('');
 				$('.print-preview').html(data.invoice_preview);
 				$("#"+ data.invoice_detail.id ).html(`<div class="row">
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							<div class="form-group">
 								{!! Html::decode(Form::label('show_description', __('label.form.description')." <small>*</small>")) !!}
 								<input name="show_service_name" class="form-control" style="height: 38px;" id="input-name-${ data.invoice_detail.id }" value="${ data.invoice_detail.name }" placeholder="description" readonly="" />
 							</div>
 						</div>
-						{{-- <div class="col-sm-2">
+						{{-- <div class="col-sm-3">
 							<div class="form-group">
 								{!! Html::decode(Form::label('show_discount', __('label.form.invoice.discount')." <small>*</small>")) !!}
 								<input name="show_discount" class="form-control" id="input-discount-${ data.invoice_detail.id }" value="${ data.invoice_detail.discount * 100 }%" placeholder="discount" readonly="" />
 							</div>
 						</div> --}}
-						<div class="col-sm-2">
+						<div class="col-sm-3">
 							<div class="form-group">
-								{!! Html::decode(Form::label('show_price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
+								{!! Html::decode(Form::label('show_quantity', __('label.form.invoice.quantity')." <small>*</small>")) !!}
+								<input name="show_quantity" class="form-control" id="input-quantity-${ data.invoice_detail.id }" value="${ data.invoice_detail.quantity }" placeholder="quantity" readonly="" />
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<div class="form-group">
+								{!! Html::decode(Form::label('show_price', __('label.form.invoice.price')."(៛) <small>*</small>")) !!}
 								<input name="show_price" class="form-control" id="input-price-${ data.invoice_detail.id }" value="${ data.invoice_detail.amount }" placeholder="price" readonly="" />
 							</div>
 						</div>
-						<div class="col-sm-5">
+						<div class="col-sm-10">
 							<div class="form-group">
 								{!! Html::decode(Form::label('show_description', __('label.form.description'))) !!}
 								<input name="show_description" class="form-control" style="height: 38px;" id="input-description-${ data.invoice_detail.id }" value="${ data.invoice_detail.description ? data.invoice_detail.description : '' }" placeholder="description" readonly="" />
@@ -467,6 +490,7 @@
 						medicine_id: (($('[name="item_medicine_id"]'))? $('[name="item_medicine_id"]').val() : ''),
 						service_name: (($('[name="item_service_name"]'))? $('[name="item_service_name"]').val() : ''),
 						discount: $('[name="item_discount"]').val(),
+						quantity: $('[name="item_quantity"]').val(),
 						price: $('[name="item_price"]').val(),
 						description: $('[name="item_description"]').val(),
 				},
@@ -475,21 +499,28 @@
 					$('[name="item_medicine_id"]').val('').trigger('change');
 					$('[name="item_service_name"]').val('').trigger('change');
 					$('[name="item_discount"]').val('0').trigger('change');
+					$('[name="item_quantity"]').val( '' );
 					$('[name="item_price"]').val( '' );
 					$('[name="item_description"]').val( '' );
 					$('#create_invoice_item_modal').modal('hide');
 					
 					$(".item_list").append(`<div class="prescription_item" id="${ data.invoice_detail.id }">
 								<div class="row">
-									<div class="col-sm-4">
+									<div class="col-sm-6">
 										<div class="form-group">
-											{!! Html::decode(Form::label('show_description', __('label.form.description')." <small>*</small>")) !!}
+											{!! Html::decode(Form::label('show_description', __('label.form.invoice.name')." <small>*</small>")) !!}
 											<input name="show_service_name" class="form-control" style="height: 38px;" id="input-name-${ data.invoice_detail.id }" value="${ data.invoice_detail.name }" placeholder="description" readonly="" />
 										</div>
 									</div>
-									<div class="col-sm-2">
+									<div class="col-sm-3">
 										<div class="form-group">
-											{!! Html::decode(Form::label('show_price', __('label.form.invoice.price')."($) <small>*</small>")) !!}
+											{!! Html::decode(Form::label('show_quantity', __('label.form.invoice.quantity')." <small>*</small>")) !!}
+											<input name="show_quantity" class="form-control" id="input-quantity-${ data.invoice_detail.id }" value="${ data.invoice_detail.quantity }" placeholder="quantity" readonly="" />
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="form-group">
+											{!! Html::decode(Form::label('show_price', __('label.form.invoice.price')."(៛) <small>*</small>")) !!}
 											<input name="show_price" class="form-control" id="input-price-${ data.invoice_detail.id }" value="${ data.invoice_detail.amount }" placeholder="price" readonly="" />
 										</div>
 									</div>
@@ -499,7 +530,7 @@
 											<input name="show_discount" class="form-control" id="input-discount-${ data.invoice_detail.id }" value="${ parseFloat(data.invoice_detail.discount) * 100 }%" placeholder="discount" readonly="" />
 										</div>
 									</div> --}}
-									<div class="col-sm-5">
+									<div class="col-sm-10">
 										<div class="form-group">
 											{!! Html::decode(Form::label('show_description', __('label.form.description')." <small>*</small>")) !!}
 											<input name="show_description" class="form-control" style="height: 38px;" id="input-description-${ data.invoice_detail.id }" value="${ data.invoice_detail.description ? data.invoice_detail.description : '' }" placeholder="description" readonly="" />
