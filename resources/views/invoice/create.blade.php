@@ -84,7 +84,7 @@
 				</div>
 				<div class="col-sm-3">
 					<div class="form-group">
-						{!! Html::decode(Form::label('price', __('label.form.invoice.unit_price')."(៛) <small>*</small>")) !!}
+						{!! Html::decode(Form::label('price', __('label.form.invoice.price')."(៛) <small>*</small>")) !!}
 						{!! Form::text('price[]', '', ['class' => 'form-control', 'id'=>'input-price-${ id }','placeholder' => 'price','required']) !!}
 					</div>
 				</div>

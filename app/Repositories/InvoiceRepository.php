@@ -84,14 +84,14 @@ class InvoiceRepository
 									<td class="text-right"><span class="pull-left float-left">៛</span> ' . number_format($amount, 0) . '</td>
 								</tr>';
 		}
-		$total_riel = number_format($total, 0);
+		$total_dollar = number_format($total/$invoice->rate, 2);
 
 		
-		$gtt = explode(".", number_format($total,2));
+		$gtt = explode(".", number_format($total_dollar,2));
 		$gtt_dollars = $gtt[0];
 		$gtt_cents = $gtt[1];
 
-		$grand_total_in_word = Auth::user()->num2khtext($gtt_dollars, false) . 'ដុល្លារ' . (($gtt_cents>0)? ' និង'. Auth::user()->num2khtext($gtt_cents, false) .'សេន' : '');
+		$grand_total_in_word = Auth::user()->num2khtext($gtt_dollars, false) . 'ដុល្លារ' . (($gtt_cents>0)? Auth::user()->num2khtext($gtt_cents, false) .'សេន' : '');
 		$grand_total_riel_in_word = Auth::user()->num2khtext(round($total, 0), false);
 
 		$invoice_detail = '<section class="invoice-print" style="position: relative;">
@@ -121,14 +121,16 @@ class InvoiceRepository
 				</tbody>
 				<tfoot>
 					<tr>
-						<th colspan="2" rowspan="4"><small>*** '. $grand_total_riel_in_word .'រៀល ***</small></th>
-					</tr>
-					<tr>
-						<th class="text-right">សរុប</th>
-						<th class="text-center sub_total_riel">TOTAL</th>
+						<th colspan="3"><small>*** '. $grand_total_riel_in_word .'រៀល ***</small></th>
+						<th class="text-right">សរុបជាប្រាក់រៀល</th>
 						<th class="text-right sub_total_dollar"><span class="float-left pull-left">៛</span> '. number_format($total, 0) .'</th>
 					</tr>
 					
+					<tr>
+						<th colspan="3"><small>*** '. $grand_total_in_word .' ***</small></th>
+						<th class="text-right">សរុបជាប្រាក់ដុល្លារ</th>
+						<th class="text-right sub_total_dollar"><span class="float-left pull-left">$</span> '. number_format($total_dollar, 2) .'</th>
+					</tr>
 				</tfoot>
 			</table>
 			<small class="remark">'. $invoice->remark .'</small>
