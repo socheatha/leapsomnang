@@ -14,6 +14,18 @@
 				width: 21cm;
 				height: 29.7cm;
 			}
+			@media print {
+				header { position: fixed; top: 0px; left: 0px; width: 100%; padding: 50px; }
+				footer { position: fixed; bottom: 0px; left: 0px; width: 100%; }
+				table#table_split tr td:nth-child(1) { width: 250px; }
+				table#table_split tr td:nth-child(2) { width: 80px; }
+				table#table_split tr td:nth-child(3) { width: 90px; }
+				table#table_split tr td:nth-child(4) { width: 200px; }
+				table#table_split tr td[colspan] { width: 900px; }
+				table#table_split, table#table_split tbody { page-break-inside: auto; width: 21cm; }
+				table#table_split tr { display: block;  }
+				table#table_split .splitter { page-break-before: always; margin-top: 370px; width: 100%; }
+			}
 		</style>
 		@if ( $labor->type == 'blood-test')
 			<style>
@@ -22,7 +34,7 @@
 		@endif
 	</head>
 	<body>
-
+	
 		{!! $labor_preview !!}
 
 		<script src="{{ asset('js/app.js') }}"></script>
@@ -43,6 +55,14 @@
 
 			// 	$('.blood-test').css({'height':pages_height+'px' });
 			// }
+			$(document).ready(function () {
+				$('table').eq(2).attr('id', 'table_split');
+				$('table#table_split').find('tr').each(function (i) {
+					if (i % 29 == 0) {
+						$('table#table_split').find('tr').eq(i).attr("class", "splitter");
+					}
+				});
+			});
     	</script>
 	</body>
  </html>

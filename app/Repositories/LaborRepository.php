@@ -1023,23 +1023,23 @@ class LaborRepository
 		}
 
 		$labor_detail = '<section class="'. (($labor->type == 'blood-test')? 'blood-test labor-print' : 'labor-print') .'" style="position: relative;">
-			' . $GlobalComponent->PrintHeader('labor', $labor) . '
+			<header>' . $GlobalComponent->PrintHeader('labor', $labor) . '</header>
 			
 			'. $labor_detail_item_list .'
-
 			<small class="remark">'. $labor->remark .'</small>
 			
-			' . $GlobalComponent->FooterComeBackText('<span class="color_red;" style="color: red;
-			
-			">សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើកក្រោយ</span>') . '
-			<table width="100%">
-				<tr>
-					<td></td>
-					<td width="28%" class="text-center">
-						' . $GlobalComponent->DoctorSignature() . '
-					</td>
-				</tr>
-			</table>
+			<footer>
+				' . $GlobalComponent->FooterComeBackText('<span class="color_red;" style="color: red;				
+				">សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើកក្រោយ</span>') . '
+				<table width="100%">
+					<tr>
+						<td></td>
+						<td width="28%" class="text-center">
+							' . $GlobalComponent->DoctorSignature() . '
+						</td>
+					</tr>
+				</table>
+			</footer>
 		</section>';
 
 		return response()->json(['labor_detail' => $labor_detail, 'title' => $title]);
