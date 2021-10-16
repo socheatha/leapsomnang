@@ -157,11 +157,12 @@ class LaborRepository
 
 				foreach ($labor_category_services as $jey => $service) {
 					$reference = '';
-					if ($service->ref_from == '' && $service->ref_to != '') {
-						$reference = '('. $service->description .' <'. $service->ref_to .' '. $service->unit .')';
-					}else if($service->ref_from != '' && $service->ref_to ==''){
-						$reference = '('. $service->description .' '. $service->ref_from .'> '. $service->unit .')';
-					}else if($service->ref_from != '' && $service->ref_to!=''){
+					// if ($service->ref_from == '' && $service->ref_to != '') {
+					// 	$reference = '('. $service->description .' <'. $service->ref_to .' '. $service->unit .')';
+					// }else if($service->ref_from != '' && $service->ref_to ==''){
+					// 	$reference = '('. $service->description .' '. $service->ref_from .'> '. $service->unit .')';
+					// }else 
+					if($service->ref_from != '' && $service->ref_to!=''){
 						$reference = '('. $service->description .' '. $service->ref_from .'-'. $service->ref_to .' '. $service->unit .')';
 					}
 					if ($service->description == 'main') {
@@ -366,11 +367,12 @@ class LaborRepository
 
 				foreach ($labor_category_services as $jey => $service) {
 					$reference = '';
-					if ($service->ref_from == '' && $service->ref_to != '') {
-						$reference = '('. $service->description .' <'. $service->ref_to .' '. $service->unit .')';
-					}else if($service->ref_from != '' && $service->ref_to ==''){
-						$reference = '('. $service->description .' '. $service->ref_from .'> '. $service->unit .')';
-					}else if($service->ref_from != '' && $service->ref_to!=''){
+					// if ($service->ref_from == '' && $service->ref_to != '') {
+					// 	$reference = '('. $service->description .' <'. $service->ref_to .' '. $service->unit .')';
+					// }else if($service->ref_from != '' && $service->ref_to ==''){
+					// 	$reference = '('. $service->description .' '. $service->ref_from .'> '. $service->unit .')';
+					// }else 
+					if($service->ref_from != '' && $service->ref_to!=''){
 						$reference = '('. $service->description .' '. $service->ref_from .' - '. $service->ref_to .' '. $service->unit .')';
 					}
 					if ($service->description == 'main') {
@@ -900,17 +902,24 @@ class LaborRepository
 			foreach ($labor->labor_detail_bt as $jey => $labor_detail) {
 				
 				$reference = '';
-				if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to != '') {
-					$reference = '('. $labor_detail->service->description .' <'. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')';
-				}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to ==''){
-					$reference = '('. $labor_detail->service->description .' '. $labor_detail->service->ref_from .'> '. $labor_detail->service->unit .')';
-				}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to!=''){
+				// if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to != '') {
+				// 	$reference = '('. $labor_detail->service->description .' <'. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')';
+				// }else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to ==''){
+				// 	$reference = '('. $labor_detail->service->description .' '. $labor_detail->service->ref_from .'> '. $labor_detail->service->unit .')';
+				// }else 
+				if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to!=''){
 					$reference = '('. $labor_detail->service->description .' '. $labor_detail->service->ref_from .' - '. $labor_detail->service->ref_to .')';
 					// $reference = '('. $labor_detail->service->description .' '. $labor_detail->service->ref_from .' - '. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')';
 				}
 
 				$class = '';
 				if ($labor_detail->service->ref_from == '' || $labor_detail->service->ref_to == '') {
+					if ($labor_detail->service->ref_from != '' && $labor_detail->result < $labor_detail->service->ref_from) {
+						$class = 'color_green';
+					}else if ($labor_detail->service->ref_to != '' && $labor_detail->result > $labor_detail->service->ref_to) {
+						$class = 'color_red';
+					}
+
 					if ($labor_detail->result== 'Positive' || $labor_detail->result== 'Positive' || $labor_detail->result== 'Positive') {
 						$class = 'color_red';
 					}
@@ -954,15 +963,15 @@ class LaborRepository
 					$SEROLOGY .= $this->subService($labor_detail->service->labor_service)
 								.'<tr>
 									<td><div class="'. $labor_detail->service->class .'">'. $labor_detail->name .'</div></td>
-									<td class="'. $class .'">'. $labor_detail->result .'</td>
-									<td>'.(($labor_detail->result=='1/160')? '<span style="color: red;">Negative</span>' : ($labor_detail->result=='1/320'?'<span style="color: red;">Negative</span>':'').''. (($labor_detail->unit=='Negative')? '' : $labor_detail->unit) ) .'</td>
+									<td class="'. (($labor_detail->result=='1/160' || $labor_detail->result=='1/320')? 'color_red' : $class ) .'">'. $labor_detail->result .'</td>
+									<td></td>
 									<td>'. $reference .'</td>
 								</tr>';
 				}else if ($labor_detail->service->category->name == 'MICROBIOLOGY') {
 					$MICROBIOLOGY .= $this->subService($labor_detail->service->labor_service)
 									.'<tr>
 										<td><div class="'. $labor_detail->service->class .'">'. $labor_detail->name .'</div></td>
-										<td class="'. $class .'">'. $labor_detail->result .'</td>
+										<td class="'. (($labor_detail->result<>$labor_detail->service->default_value)? 'color_red' : $class ) .'">'. $labor_detail->result .'</td>
 										<td>'. (($labor_detail->unit=='Negative')? '' : $labor_detail->unit) .'</td>
 										<td>'. $reference .'</td>
 									</tr>';
@@ -1012,9 +1021,6 @@ class LaborRepository
 			<small class="remark">'. $labor->remark .'</small>
 			
 			' . $GlobalComponent->FooterComeBackText('<span class="color_red;" style="color: red;
-			
-			
-			
 			
 			">សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើកក្រោយ</span>') . '
 			<table width="100%">
