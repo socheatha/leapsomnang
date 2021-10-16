@@ -898,31 +898,35 @@ class LaborRepository
 			$SEROLOGY = '';
 			$MICROBIOLOGY = '';
 			foreach ($labor->labor_detail_bt as $jey => $labor_detail) {
-				
+				$category_name = $labor_detail->service->category->name;
+				$labor_service_description = $category_name == 'BIOCHEMISTRY' ? '' : $labor_detail->service->description . ' ';
+				$labor_service_ref_to = $labor_detail->service->ref_to;
+				$labor_service_ref_to = $category_name == 'BIOCHEMISTRY' && $labor_service_ref_to < 10 ? number_format($labor_service_ref_to, 1) : $labor_service_ref_to;
+
 				$reference = '';
-				if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to != '') {
-					$reference = '('. $labor_detail->service->description .' <'. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')';
-				}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to ==''){
-					$reference = '('. $labor_detail->service->description .' '. $labor_detail->service->ref_from .'> '. $labor_detail->service->unit .')';
-				}else if($labor_detail->service->ref_from != '' && $labor_detail->service->ref_to!=''){
-					$reference = '('. $labor_detail->service->description .' '. $labor_detail->service->ref_from .' - '. $labor_detail->service->ref_to .')';
-					// $reference = '('. $labor_detail->service->description .' '. $labor_detail->service->ref_from .' - '. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')';
+				if ($labor_detail->service->ref_from == '' && $labor_service_ref_to != '') {
+					$reference = '('. $labor_service_description .'<'. $labor_service_ref_to .' '. $labor_detail->service->unit .')';
+				}else if($labor_detail->service->ref_from != '' && $labor_service_ref_to ==''){
+					$reference = '('. $labor_service_description .''. $labor_detail->service->ref_from .'> '. $labor_detail->service->unit .')';
+				}else if($labor_detail->service->ref_from != '' && $labor_service_ref_to!=''){
+					$reference = '('. $labor_service_description .''. $labor_detail->service->ref_from .' - '. $labor_service_ref_to .')';
+					// $reference = '('. $labor_service_description .''. $labor_detail->service->ref_from .' - '. $labor_service_ref_to .' '. $labor_detail->service->unit .')';
 				}
 
 				$class = '';
-				if ($labor_detail->service->ref_from == '' || $labor_detail->service->ref_to == '') {
+				if ($labor_detail->service->ref_from == '' || $labor_service_ref_to == '') {
 					if ($labor_detail->result== 'Positive' || $labor_detail->result== 'Positive' || $labor_detail->result== 'Positive') {
 						$class = 'color_red';
 					}
 				}else{
 					if ($labor_detail->result < $labor_detail->service->ref_from) {
 						$class = 'color_green';
-					}else if ($labor_detail->result > $labor_detail->service->ref_to) {
+					}else if ($labor_detail->result > $labor_service_ref_to) {
 						$class = 'color_red';
 					}
 				}
 
-				if ($labor_detail->service->category->name == 'HEMATOLOGY') {
+				if ($category_name == 'HEMATOLOGY') {
 					$servicen='hello';
 						if($labor_detail->name == 'Neutrophils (%)'){$servicen='80%';}
 						else if($labor_detail->name == 'Lymphocytes (%)'){$servicen='15%';}
@@ -942,7 +946,7 @@ class LaborRepository
 										<td>'. (($labor_detail->unit=='Negative')? '' : $labor_detail->unit) .'</td>
 										<td>'. $reference .'</td>
 									</tr>';
-				}else if ($labor_detail->service->category->name == 'BIOCHEMISTRY') {
+				}else if ($category_name == 'BIOCHEMISTRY') {
 					$BIOCHEMISTRY .= $this->subService($labor_detail->service->labor_service)
 									.'<tr>
 										<td><div class="'. $labor_detail->service->class .'">'. $labor_detail->name .'</div></td>
@@ -950,7 +954,7 @@ class LaborRepository
 										<td>'. (($labor_detail->unit=='Negative')? '' : $labor_detail->unit) .'</td>
 										<td>'. $reference .'</td>
 									</tr>';
-				}else if ($labor_detail->service->category->name == 'SEROLOGY') {
+				}else if ($category_name == 'SEROLOGY') {
 					$SEROLOGY .= $this->subService($labor_detail->service->labor_service)
 								.'<tr>
 									<td><div class="'. $labor_detail->service->class .'">'. $labor_detail->name .'</div></td>
@@ -958,7 +962,7 @@ class LaborRepository
 									<td>'.(($labor_detail->result=='1/160')? '<span style="color: red;">Negative</span>' : ($labor_detail->result=='1/320'?'<span style="color: red;">Negative</span>':'').''. (($labor_detail->unit=='Negative')? '' : $labor_detail->unit) ) .'</td>
 									<td>'. $reference .'</td>
 								</tr>';
-				}else if ($labor_detail->service->category->name == 'MICROBIOLOGY') {
+				}else if ($category_name == 'MICROBIOLOGY') {
 					$MICROBIOLOGY .= $this->subService($labor_detail->service->labor_service)
 									.'<tr>
 										<td><div class="'. $labor_detail->service->class .'">'. $labor_detail->name .'</div></td>
