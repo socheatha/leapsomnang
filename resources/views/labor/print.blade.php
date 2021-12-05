@@ -58,7 +58,7 @@
 			$(document).ready(function () {
 				$('table').eq(2).attr('id', 'table_split');
 				$('table#table_split').find('tr').each(function (i) {
-					if (i % 29 == 0) {
+					if (i % 30 == 0) {
 						$('table#table_split').find('tr').eq(i).attr("class", "splitter");
 					}
 				});
