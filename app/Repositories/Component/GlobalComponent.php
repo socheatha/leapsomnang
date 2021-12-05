@@ -124,7 +124,7 @@ class GlobalComponent extends Controller
 		// Sub Header
 
 		$html_header .= '
-			<table class="table-information" width="100%" style="margin: 5px 0 15px 0;">
+			<table class="table-information" width="100%" style="margin: 5px 0 15px 55px;">
 				<tr>
 					<td colspan="3">
 						<div class="color_red text-center KHOSMoulLight"  style="font-size: 18px; padding: 0 0 5px 0; text-decoration: underline;">' . $title_module . '</div>
@@ -147,9 +147,6 @@ class GlobalComponent extends Controller
 					</td>
 					<td width="25%" style="">
 						កាលបរិច្ឆេទ: <span>'. date('d-m-Y', strtotime($object->date)) .'</span>
-					</td>
-					<td width="50%" style="">
-						រោគវិនិច្ឆ័យ: <span class="pt_diagnosis">'. ($object->pt_diagnosis ?? '') .'</span>
 					</td>
 				</tr>
 				<tr>
