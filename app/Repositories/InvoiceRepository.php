@@ -84,7 +84,8 @@ class InvoiceRepository
 									<td class="text-right"><span class="pull-left float-left">៛</span> ' . number_format($amount, 0) . '</td>
 								</tr>';
 		}
-		$total_dollar = number_format($total/$invoice->rate, 2);
+		// $total_dollar = number_format($total/$invoice->rate, 2);
+		$total_dollar = number_format($total/4100, 2);
 
 		
 		$gtt = explode(".", number_format($total_dollar,2));
