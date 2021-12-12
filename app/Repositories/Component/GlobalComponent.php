@@ -36,6 +36,12 @@ class GlobalComponent extends Controller
 		$html_header = '';
 		$title_module = ($module == 'invoice' ? 'វិក្កយបត្រ' : ($module == 'prescription' ? 'វេជ្ជបញ្ជា' : ($module == 'labor' ? 'ប័ណ្ណវិភាគវេជ្ជសាស្រ្ត' : '_______________')));
 		$number = ($module == 'invoice' ? 'inv_number' : ($module == 'prescription' ? 'code' : ($module == 'labor' ? 'labor_number' : 'number')));
+		$html_diagnosis = $module == 'labor' ? '' : ('
+			<td width="50%" style="">
+				រោគវិនិច្ឆ័យ: <span class="pt_diagnosis">'. ($object->pt_diagnosis ?? '') .'</span>
+			</td>
+		');
+		
 		// Top Header
 		if ($module == 'echo') {
 			if ($object->echo_default_description->slug == 'letter-form-the-hospital') {
@@ -148,6 +154,7 @@ class GlobalComponent extends Controller
 					<td width="25%" style="">
 						កាលបរិច្ឆេទ: <span>'. date('d-m-Y', strtotime($object->date)) .'</span>
 					</td>
+					' . $html_diagnosis . '
 				</tr>
 				<tr>
 					<td colspan="3" style="">
