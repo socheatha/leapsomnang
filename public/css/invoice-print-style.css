@@ -95,8 +95,8 @@
 .invoice-print *,
 .prescription-print *,
 .labor-print *{
-  font-family: 'Arial','Khmer OS Siemreap', 'Wingdings 2';
-	color: blue;
+	font-family: 'Arial','Khmer OS Siemreap', 'Wingdings 2';
+	/* color: blue; */
 }
 .table-header *{
   font-family: 'Arial Black','Khmer OS Siemreap' !important;

@@ -2,18 +2,18 @@
 
 namespace App\Repositories;
 
+use Auth;
+use Hash;
 use Carbon\Carbon;
 use App\Models\Labor;
-use App\Models\LaborCategory;
-use App\Models\LaborService;
-use App\Models\LaborDetail;
 use App\Models\Patient;
 use App\Models\Service;
+use App\Models\LaborDetail;
+use App\Models\LaborService;
+use App\Models\LaborCategory;
+use Illuminate\Support\Facades\DB;
 use App\Repositories\PatientRepository;
 use Yajra\DataTables\Facades\DataTables;
-use Hash;
-use Auth;
-use DB;
 use App\Repositories\Component\GlobalComponent;
 
 
@@ -343,7 +343,16 @@ class LaborRepository
 	{ 
 		$blood_test_category = [];
 		$labor_detail_list = '';
-		$labor = Labor::find($id);
+		$labor = Labor::with([
+							'labor_details' => function ($query){
+								$query->with([
+									'service' => function ($query){
+										$query->with(['category']);
+									},
+								]);
+							},
+						])
+						->find($id);
 		$hematology = '';
 		$biologie = '';
 		$urine = '';
@@ -611,14 +620,25 @@ class LaborRepository
 	public function getLaborPreview($id)
 	{
 		$GlobalComponent = new GlobalComponent;
-
 		$labor_detail = '';
 		$labor_detail_item_list = '';
-		$labor = Labor::find($id);
-
+		$labor = Labor::select([
+							"labors.*",
+							DB::raw("CONCAT(createdBy.first_name,' ',createdBy.last_name) AS created_by_name")
+						])
+						->join('users as createdBy', 'createdBy.id' ,'=', 'labors.created_by')
+						->with([
+							'labor_details' => function ($query){
+								$query->with([
+									'service' => function ($query){
+										$query->with(['category']);
+									},
+								]);
+							},
+						])
+						->find($id);
 		$title = 'Labor ('. str_pad($labor->labor_number, 6, "0", STR_PAD_LEFT) .')';
 
-		
 		if ($labor->type == 'glycemia') {
 			$glycemia ='';
 			foreach ($labor->labor_details as $jey => $labor_detail) {
@@ -666,7 +686,6 @@ class LaborRepository
 			$bio_bottom ='';
 			foreach ($labor->labor_details as $jey => $labor_detail) {
 				$reference = $labor_detail->service->ref_from .'-'.  $labor_detail->service->ref_to;
-				
 				$reference = '';
 				if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to != '') {
 					$reference = '('. $labor_detail->service->description .' <'. $labor_detail->service->ref_to .' '. $labor_detail->service->unit .')';

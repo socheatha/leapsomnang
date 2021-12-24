@@ -55,4 +55,9 @@ class Labor extends Model
   	return $this->belongsTo(Patient::class, 'patient_id');
 	}
 
+	public function createdBy()
+	{
+		return $this->belongsTo(User::class, 'created_by');
+	}
+
 }
