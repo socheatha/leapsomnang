@@ -626,16 +626,8 @@ class LaborRepository
 							"labors.*",
 							DB::raw("CONCAT(createdBy.first_name,' ',createdBy.last_name) AS created_by_name")
 						])
+						->with('labor_details.service.category')
 						->join('users as createdBy', 'createdBy.id' ,'=', 'labors.created_by')
-						->with([
-							'labor_details' => function ($query){
-								$query->with([
-									'service' => function ($query){
-										$query->with(['category']);
-									},
-								]);
-							},
-						])
 						->find($id);
 		$title = 'Labor ('. str_pad($labor->labor_number, 6, "0", STR_PAD_LEFT) .')';
 
