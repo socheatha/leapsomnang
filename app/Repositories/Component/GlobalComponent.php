@@ -34,14 +34,8 @@ class GlobalComponent extends Controller
 	public function PrintHeader($module = 'invoice', $object = null)
 	{
 		$html_header = '';
-		$title_module = ($module == 'invoice' ? 'វិក្កយបត្រ' : ($module == 'prescription' ? 'វេជ្ជបញ្ជា' : ($module == 'labor' ? 'Laboratory Report' : '_______________')));
+		$title_module = ($module == 'invoice' ? 'វិក្កយបត្រ' : ($module == 'prescription' ? 'វេជ្ជបញ្ជា' : ($module == 'labor' ? 'ប័ណ្ណវិភាគវេជ្ជសាស្រ្ត' : '_______________')));
 		$number = ($module == 'invoice' ? 'inv_number' : ($module == 'prescription' ? 'code' : ($module == 'labor' ? 'labor_number' : 'number')));
-		$html_diagnosis = $module == 'labor' ? '' : ('
-			<td width="50%" style="">
-				រោគវិនិច្ឆ័យ: <span class="pt_diagnosis">'. ($object->pt_diagnosis ?? '') .'</span>
-			</td>
-		');
-		
 		// Top Header
 		if ($module == 'echo') {
 			if ($object->echo_default_description->slug == 'letter-form-the-hospital') {
@@ -88,22 +82,29 @@ class GlobalComponent extends Controller
 		} else {
 			$html_header .= '		
 				<table class="table-header" width="100%">
-					<tr>					
-						<td rowspan="3" width="110px" style="padding: 0 !important;">
-							<img src="/images/setting/logo.png" alt="IMG">
-						</td>
+					<tr>
 						<td class="text-center">
-							<div style="font-size: 25px; color: #14a5b6;" class="KHOSMoulLight">' . $this->clinic_name_kh . '</div>
+							<div style="font-size: 25px;" class="color_blue KHOSMoulLight">' . $this->clinic_name_kh . '</div>
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2" class="text-center" style="padding: 0;">
-							<div style="font-size: 20px; color: #fa6f1e;" class="KHOSMoulLight">'. $this->clinic_name_en .'</div>
+						<td class="text-center" style="padding: 0;">
+							<div style="font-size: 25px;" class="color_blue KHOSMoulLight">'. $this->clinic_name_en .'</div>
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2" class="text-center" style="padding: 1px 0;">
-							<div>'. $this->description .'</div>
+						<td class="text-center" style="padding: 1px 0;">
+							<div class="color_blue">'. $this->description .'</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="text-center" style="padding: 1px 0;">
+							<div class="color_blue">'. $this->address .'</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="text-center" style="padding-bottom: 5px;">
+							<div class="color_blue">លេខទូរស័ព្ទ: <b>'. $this->phone .'</b></div>
 						</td>
 					</tr>
 				</table>
@@ -112,45 +113,49 @@ class GlobalComponent extends Controller
 		// Sub Header
 
 		$html_header .= '
-			<table class="table-information" width="100%" style="margin: 10px 0;">
+			<table class="table-information" width="100%" style="margin: 5px 0 15px 0;">
 				<tr>
-					<td colspan="3" style="border-top: 1px solid #555; padding-top: 5px;">
-						<div class="text-center KHOSMoulLight"  style="font-size: 18px; padding: 0 0 5px 0;">' . $title_module . '</div>
+					<td colspan="3">
+						<div class="color_red text-center KHOSMoulLight"  style="font-size: 18px; padding: 0 0 5px 0; text-decoration: underline;">' . $title_module . '</div>
 					</td>
 				</tr>
 				<tr>
-					<td width="35%">
-						កាលបរិច្ឆេទ/Date: <span>'. date('d-m-Y', strtotime($object->date)) .'</span>
+					<td width="40%" style="">
+						ឈ្មោះអ្នកជំងឺ: <span class="pt_name">'. ($object->pt_name ?? '') .'</span>
 					</td>
-					<td width="35%" style="">
-						លេខកូដអ្នកជំងឺ/Patien ID: <span class="labor_number">'. str_pad(($object->$number ?? 0), 6, "0", STR_PAD_LEFT) .'</span>
+					<td width="20%" style="">
+						អាយុ: <span class="pt_age">'. ($object->pt_age ?? '') . ' ' .  (($object->pt_age_type ? __('module.table.selection.age_type_' . $object->pt_age_type) : '')).'</span>
 					</td>
-					<td width="30%" style="">
-						លេខកូដ/Code: <span class="labor_number">'. str_pad(($object->$number ?? 0), 6, "0", STR_PAD_LEFT) .'</span>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						ឈ្មោះ/Name: <span class="pt_name">'. ($object->pt_name ?? '') .'</span>
-					</td>
-					<td>
-						អាយុ/Age: <span class="pt_age">'. ($object->pt_age ?? '') . ' ' .  (($object->pt_age_type ? __('module.table.selection.age_type_' . $object->pt_age_type) : '')).'</span>
-					</td>
-					<td>
-						ភេទ/Sex: <span class="pt_gender">'. ($object->pt_gender ?? '') .'</span>
+					<td width="20%" style="">
+						ភេទ: <span class="pt_gender">'. ($object->pt_gender ?? '') .'</span>
 					</td>
 				</tr>
 				<tr>
-					<td style="border-bottom: 1px solid #555; padding-bottom: 5px;">
-						ស្នើដោយ/Prescripteur: <span>'. ($object->created_by_name ?? '') .'</span>
+					<td width="25%" style="">
+						លេខកូដអ្នកជំងឺ: <span class="labor_number">'. str_pad(($object->$number ?? 0), 6, "0", STR_PAD_LEFT) .'</span>
 					</td>
-					<td colspan="2" style="border-bottom: 1px solid #555; padding-bottom: 5px;">
-						គំរូ/Sample: <span>'. ($object->type ?? '') .'</span>
+					<td width="25%" style="">
+						កាលបរិច្ឆេទ: <span>'. date('d-m-Y', strtotime($object->date)) .'</span>
+					</td>
+					<td width="50%" style="">
+						រោគវិនិច្ឆ័យ: <span class="pt_diagnosis">'. ($object->pt_diagnosis ?? '') .'</span>
 					</td>
 				</tr>
+				<tr>
+					<td colspan="3" style="">
+						អាសយដ្ឋានអ្នកជំងឺ: <span>'. ($object->pt_address_full_text ?: $this->GetAddressFullText($object->pt_address_code)) .'</span>
+					</td>
+				</tr>
+				'.(($module == 'labor')?
+						'<tr>
+							<td colspan="3">
+								<div class="text-center KHOSMoulLight"  style="font-size: 18px; padding: 0 0 5px 0; text-decoration: underline;">លទ្ធផលពិនិត្យ</div>
+							</td>
+						</tr>'
+					: '').'
 			</table>
 		';
-		return $html_header;		
+		return $html_header;
 	}
 
 	public static function DoctorSignature($doctor_name = '', $title_signature = 'គ្រូពេទ្យព្យាបាល')
@@ -168,11 +173,7 @@ class GlobalComponent extends Controller
 
 	public function FooterComeBackText($text = '', $color = 'color_red')
 	{
-		$html_footer_comeback ="<div style=' text-align: center; position: absolute; bottom: 0.4cm; left: 0; width: 100%; padding: 0 0.8cm;'>
-										<div style=' border-top: 1px solid #555; padding-top: 10px;'>អាសយដ្ឋាន៖ ". $this->address ."</div>
-										<div style='padding-top: 2px;'>ទូរស័ព្ទទំនាក់ទំនង៖ ". $this->phone ."</div>
-									</div>
-								";
+		$html_footer_comeback ="";
 		return $html_footer_comeback;
 	}
 
