@@ -80,16 +80,22 @@ class GlobalComponent extends Controller
 				';
 			}
 		} else {
-			$html_header .= '		
+			$html_header .= '
 				<table class="table-header" width="100%">
 					<tr>
+						<td rowspan="3" width="115px" style="padding: 0 !important;">
+							<img src="/images/setting/logo.png" alt="IMG">
+						</td>
 						<td class="text-center">
-							<div style="font-size: 25px;" class="color_blue KHOSMoulLight">' . $this->clinic_name_kh . '</div>
+							<div style="font-size: 22px;" class="color_blue KHOSMoulLight">' . $this->clinic_name_kh . '</div>
+						</td>
+						<td rowspan="3" width="115px" style="padding: 0 !important;">
+							<img src="/images/setting/logo.png" alt="IMG">
 						</td>
 					</tr>
 					<tr>
 						<td class="text-center" style="padding: 0;">
-							<div style="font-size: 25px;" class="color_blue KHOSMoulLight">'. $this->clinic_name_en .'</div>
+							<div style="font-size: 22px;" class="color_blue KHOSMoulLight">'. $this->clinic_name_en .'</div>
 						</td>
 					</tr>
 					<tr>
@@ -98,12 +104,12 @@ class GlobalComponent extends Controller
 						</td>
 					</tr>
 					<tr>
-						<td class="text-center" style="padding: 1px 0;">
+						<td colspan="3" class="text-center" style="padding: 1px 0;">
 							<div class="color_blue">'. $this->address .'</div>
 						</td>
 					</tr>
 					<tr>
-						<td class="text-center" style="padding-bottom: 5px;">
+						<td colspan="3" class="text-center" style="padding-bottom: 5px;">
 							<div class="color_blue">លេខទូរស័ព្ទ: <b>'. $this->phone .'</b></div>
 						</td>
 					</tr>
@@ -161,14 +167,15 @@ class GlobalComponent extends Controller
 	public static function DoctorSignature($doctor_name = '', $title_signature = 'គ្រូពេទ្យព្យាបាល')
 	{
 		return "
-		<div class='text-center doctor_signature' style='position: absolute; right: 30px; bottom: 2.2cm;'>
+			<div class='text-center doctor_signature' style='position: absolute; right: 30px; bottom: 2.2cm;'>
 				<div class='KHOSMoulLight'>$title_signature</div>
 				<div class='sign_box'>
 					<img src='/images/setting/doctor_signature.jpg' class='sr-only' alt=''>
 				</div>
-				<div><span class='KHOSMoulLight' style='font-size: 14px;'>វេជ្ជបណ្ឌិត.</span> <span class='KHOSMoulLight' style='font-size: 16px;'>" . ($doctor_name ?: auth()->user()->setting()->sign_name_kh) . "</span></div>
 			</div>
 		";
+
+		// <div><span class='KHOSMoulLight' style='font-size: 14px;'>វេជ្ជបណ្ឌិត.</span> <span class='KHOSMoulLight' style='font-size: 16px;'>" . ($doctor_name ?: auth()->user()->setting()->sign_name_kh) . "</span></div>
 	}
 
 	public function FooterComeBackText($text = '', $color = 'color_red')

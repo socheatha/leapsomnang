@@ -837,15 +837,15 @@ class LaborRepository
 				if ($labor_detail->service->name == 'TO') {
 				
 					$labor_to_th .= '<tr>
-														<td width="25%">▢ Séro-Ag-de Widal</td>
-														<td colspan="3">: &nbsp;&nbsp; - '. $labor_detail->name .' : '. $labor_detail->result .'</td>
-													</tr>';
+										<td width="25%">▢ Séro-Ag-de Widal</td>
+										<td colspan="3">: &nbsp;&nbsp; - '. $labor_detail->name .' : '. $labor_detail->result .'</td>
+									</tr>';
 
 				}elseif ($labor_detail->service->name == 'TH') {
 					$labor_to_th .= '<tr>
-														<td width="25%"></td>
-														<td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp; - '. $labor_detail->name .' : '. $labor_detail->result .'</td>
-													</tr>';
+										<td width="25%"></td>
+										<td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp; - '. $labor_detail->name .' : '. $labor_detail->result .'</td>
+									</tr>';
 				}elseif ($labor_detail->service->name == '▢ Glycémie' || $labor_detail->service->name == '▢ Test H-Pylori') {
 					$reference = '';
 					if ($labor_detail->service->ref_from == '' && $labor_detail->service->ref_to != '') {
@@ -1000,22 +1000,22 @@ class LaborRepository
 			
 			if ($HEMATOLOGY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4"><h6 style="padding: 3px 15px; margin: 10px 0px 2px 0px; font-size: 16px; background-color: lightblue!important;"><strong>HEMATOLOGY</strong></h6></td>
+									<td colspan="4"><h6 style="padding: 3px 15px; margin: 10px 0px 2px 0px; font-size: 16px;"><strong>HEMATOLOGY</strong></h6></td>
 								</tr>' . $HEMATOLOGY;
 			}
 			if ($BIOCHEMISTRY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4"><h6 style="padding: 3px 15px; margin: 10px 0px 2px 0px; font-size: 16px; background-color: lightblue!important;"><strong>BIOCHEMISTRY</strong></h6></td>
+									<td colspan="4"><h6 style="padding: 3px 15px; margin: 10px 0px 2px 0px; font-size: 16px;"><strong>BIOCHEMISTRY</strong></h6></td>
 								</tr>' . $BIOCHEMISTRY;
 			}
 			if ($SEROLOGY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4"><h6 style="padding: 3px 15px; margin: 10px 0px 2px 0px; font-size: 16px; background-color: lightblue!important;"><strong>SEROLOGY</strong></h6></td>
+									<td colspan="4"><h6 style="padding: 3px 15px; margin: 10px 0px 2px 0px; font-size: 16px;"><strong>SEROLOGY</strong></h6></td>
 								</tr>' . $SEROLOGY;
 			}
 			if ($MICROBIOLOGY != '') {
 				$labor_items .= '<tr>
-									<td colspan="4"><h6 style="padding: 3px 15px; margin: 10px 0px 2px 0px; font-size: 16px; background-color: lightblue!important;"><strong>MICROBIOLOGY</strong></h6></td>
+									<td colspan="4"><h6 style="padding: 3px 15px; margin: 10px 0px 2px 0px; font-size: 16px;"><strong>MICROBIOLOGY</strong></h6></td>
 								</tr>' . $MICROBIOLOGY;
 			}
 			$labor_detail_item_list = '<table style="margin-top: -25px; margin-left: 55px; width: calc(100% - 55px)">

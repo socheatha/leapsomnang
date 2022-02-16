@@ -133,8 +133,10 @@
 /* Blood Test Labor */
 .blood-test *{
 	font-size: 14px;
-	color: blue;
 	font-family: 'Times New Roman','Khmer OS Siemreap', 'Wingdings 2';
+}
+.blood-test .table-information *{
+	color: blue;
 }
 
 table { page-break-inside:auto!important; }
