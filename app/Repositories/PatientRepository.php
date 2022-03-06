@@ -14,7 +14,7 @@ class PatientRepository
 
 	public function getData()
 	{
-		return Patient::all();
+		return Patient::with(['labors', 'echoes', 'prescriptions', 'invoices'])->orderBy('name', 'asc')->get();
 	}
 
 

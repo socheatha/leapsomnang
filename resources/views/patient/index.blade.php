@@ -48,22 +48,20 @@
                     <td class="text-right">
                         <button type="button" class="btn btn-info btn-sm btn-flat" onclick="getDetail({{ $patient->id }})" data-toggle="tooltip" data-placement="left" title="{{ __('label.buttons.show') }}"><i class="fa fa-list"></i></button>
 
-                        {{-- @can('Patient Show')
-							<button type="button" class="btn btn-warning btn-sm btn-flat" onclick="getDetail({{ $patient->id }})" data-toggle="tooltip" data-placement="left" title="{{ __('label.buttons.show') }}"><i class="fa fa-eye"></i></button>
-                        @endcan --}}
-
                         @can('Patient Edit')
                         {{-- Edit Button --}}
                         <a href="{{ route('patient.edit', $patient->id) }}" class="btn btn-info btn-sm btn-flat" data-toggle="tooltip" data-placement="left" title="{{ __('label.buttons.edit') }}"><i class="fa fa-pencil-alt"></i></a>
                         @endcan
-
+						
                         @can('Patient Delete')
-                        {{-- Delete Button --}}
-                        <button class="btn btn-danger btn-sm btn-flat BtnDeleteConfirm" value="{{ $patient->id }}" data-toggle="tooltip" data-placement="left" title="{{ __('label.buttons.delete') }}"><i class="fa fa-trash-alt"></i></button>
-                        {{ Form::open(['url'=>route('patient.destroy', $patient->id), 'id' => 'form-item-'.$patient->id, 'class' => 'sr-only']) }}
-                        {{ Form::hidden('_method','DELETE') }}
-                        {{ Form::hidden('passwordDelete','') }}
-                        {{ Form::close() }}
+							@if (!$patient->isInUse())
+								{{-- Delete Button --}}
+								<button class="btn btn-danger btn-sm btn-flat BtnDeleteConfirm" value="{{ $patient->id }}" data-toggle="tooltip" data-placement="left" title="{{ __('label.buttons.delete') }}"><i class="fa fa-trash-alt"></i></button>
+								{{ Form::open(['url'=>route('patient.destroy', $patient->id), 'id' => 'form-item-'.$patient->id, 'class' => 'sr-only']) }}
+								{{ Form::hidden('_method','DELETE') }}
+								{{ Form::hidden('passwordDelete','') }}
+								{{ Form::close() }}
+							@endif
                         @endcan
 
                     </td>

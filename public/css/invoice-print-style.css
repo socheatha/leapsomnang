@@ -177,7 +177,8 @@ table tfoot { display: table-row-group!important; }
 		margin: 0;
 	}
 
-	.labor-print *,
+	.labor-print .table-header *,
+	.labor-print .table-information tr:not(:first-child) *,
 	.invoice-print *,
 	.prescription-print *{
 		color: blue !important;

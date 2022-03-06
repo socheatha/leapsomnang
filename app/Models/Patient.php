@@ -29,6 +29,31 @@ class Patient extends BaseModel
     'updated_by',
 	];
 
+  public function isInUse()
+  {
+	$total = count($this->prescriptions) + count($this->labors) + count($this->invoices) + count($this->echoes);
+  	return (($total>0)? true : false);
+  }
+
+  public function prescriptions()
+  {
+  	return $this->hasMany(Prescription::class, 'patient_id');
+  }
+  public function labors()
+  {
+  	return $this->hasMany(Labor::class, 'patient_id');
+  }
+  public function invoices()
+  {
+  	return $this->hasMany(Invoice::class, 'patient_id');
+  }
+  public function echoes()
+  {
+  	return $this->hasMany(Echoes::class, 'patient_id');
+  }
+
+
+
   public function province()
   {
   	return $this->belongsTo(Province::class, 'address_province_id');
