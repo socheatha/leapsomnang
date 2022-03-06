@@ -1048,8 +1048,12 @@ class LaborRepository
 			<small class="remark">'. $labor->remark .'</small>
 			
 			<footer>
-				' . $GlobalComponent->FooterComeBackText('<span class="color_red;" style="color: red;				
-				">សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើកក្រោយ</span>') . '
+				<div class="color_red" style="text-align: center; position: absolute; bottom: 0.4cm; left: 0; width: 100%; padding: 0 0.8cm;">
+					<div style="border-top: 2px solid blue; padding-top: 10px;">
+						<span class="KHOSMoulLight" style="color: red;">កំណត់ចំណាំ:</span>
+						<span class="color_red;" style="color: red;">សូមយកលទ្ធផលពិនិត្យឈាមនេះមកវិញពេលមកពិនិត្យលើកក្រោយ</span>
+					</div>
+				</div>
 				<table width="100%">
 					<tr>
 						<td></td>
